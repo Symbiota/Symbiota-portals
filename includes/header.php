@@ -9,7 +9,7 @@ if (top.frames.length!=0)
 		<td id="header" colspan="3">
 			<div style="clear:both;">
 				<div style="clear:both;margin-left:auto;margin-right:auto;">
-					<a href="http://www.madreandiscovery.com"><img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/header.jpg" width="100%" /></a>
+					<a href="<?php echo $CLIENT_ROOT; ?>/../base/"><img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/header.jpg" width="100%" /></a>
 				</div>
 			</div>
 			<div id="top_navbar">
