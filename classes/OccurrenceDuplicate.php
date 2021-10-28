@@ -205,28 +205,19 @@ class OccurrenceDuplicate {
 		//Check exsiccati dupes
 		if(is_numeric($ometid) && $exsNumber){
 			$occArr = $this->getDupesExsiccati($ometid, $exsNumber, $currentOccid);
-			//Remove current occid
-			if($occArr){
-				$retStr = 'exsic:'.implode(',',$occArr);
-			}
+			if($occArr) $retStr = 'exsic:'.implode(',',$occArr);
 		}
 
 		//Check for exact dupes
 		if(!$retStr){
 			$occArr = $this->getDupesCollector($collName, $collNum, $currentOccid);
-			//Remove current occid
-			if($occArr){
-				$retStr = 'exact:'.implode(',',$occArr);
-			}
+			if($occArr) $retStr = 'exact:'.implode(',',$occArr);
 		}
 
 		//Check for duplicate events
 		if(!$retStr){
 			$occArr = $this->getDupesCollectorEvent($collName, $collNum, $collDate, $currentOccid);
-			//Remove current occid
-			if($occArr){
-				$retStr = 'event:'.implode(',',$occArr);
-			}
+			if($occArr) $retStr = 'event:'.implode(',',$occArr);
 		}
 		return $retStr;
 	}
@@ -256,8 +247,7 @@ class OccurrenceDuplicate {
 				$sql .= 'WHERE (o.recordedby LIKE "%'.$lastName.'%") ';
 			}
 			else{
-				$sql .= 'INNER JOIN omoccurrencesfulltext f ON o.occid = f.occid '.
-					'WHERE (MATCH(f.recordedby) AGAINST("'.$lastName.'")) ';
+				$sql .= 'INNER JOIN omoccurrencesfulltext f ON o.occid = f.occid WHERE (MATCH(f.recordedby) AGAINST("'.$lastName.'")) ';
 			}
 			$sql .= 'AND (o.recordnumber = "'.$collNum.'") AND (o.occid != '.$skipOccid.') ';
 			//echo $sql;
@@ -308,8 +298,7 @@ class OccurrenceDuplicate {
 				$sql .= 'WHERE (o.recordedby LIKE "%'.$lastName.'%") ';
 			}
 			else{
-				$sql .= 'INNER JOIN omoccurrencesfulltext f ON o.occid = f.occid '.
-					'WHERE (MATCH(f.recordedby) AGAINST("'.$lastName.'")) ';
+				$sql .= 'INNER JOIN omoccurrencesfulltext f ON o.occid = f.occid WHERE (MATCH(f.recordedby) AGAINST("'.$lastName.'")) ';
 			}
 			$sql .= 'AND (o.processingstatus IS NULL OR o.processingstatus != "unprocessed" OR o.locality IS NOT NULL) AND (o.occid != '.$skipOccid.') ';
 
@@ -382,7 +371,7 @@ class OccurrenceDuplicate {
 			$targetFields = array('family', 'sciname', 'scientificNameAuthorship',
 				'identifiedBy', 'dateIdentified', 'identificationReferences', 'identificationRemarks', 'taxonRemarks', 'identificationQualifier',
 				'recordedBy', 'recordNumber', 'associatedCollectors', 'eventDate', 'verbatimEventDate',
-				'country', 'stateProvince', 'county', 'locality', 'decimalLatitude', 'decimalLongitude', 'geodeticDatum',
+				'country', 'stateProvince', 'county', 'locality', 'locationID', 'decimalLatitude', 'decimalLongitude', 'geodeticDatum',
 				'coordinateUncertaintyInMeters', 'verbatimCoordinates', 'georeferencedBy', 'georeferenceProtocol',
 				'georeferenceSources', 'georeferenceVerificationStatus', 'georeferenceRemarks',
 				'minimumElevationInMeters', 'maximumElevationInMeters', 'verbatimElevation',
@@ -486,12 +475,11 @@ class OccurrenceDuplicate {
 	private function getDupeLocality($sqlFrag, $target = ''){
 		$retArr = array();
 		if($sqlFrag){
-			$locArr = Array('associatedcollectors','verbatimeventdate','country','stateprovince','county','municipality','locality','locationid',
-				'decimallatitude','decimallongitude','verbatimcoordinates','coordinateuncertaintyinmeters','geodeticdatum','minimumelevationinmeters',
-				'maximumelevationinmeters','verbatimelevation','verbatimcoordinates','georeferencedby','georeferenceprotocol','georeferencesources',
-				'georeferenceverificationstatus','georeferenceremarks','habitat','substrate','associatedtaxa');
+			$locArr = Array('country','stateprovince','county','municipality','locality','locationid','locationRemarks','decimallatitude','decimallongitude','verbatimcoordinates',
+				'coordinateuncertaintyinmeters','geodeticdatum','minimumelevationinmeters','maximumelevationinmeters','verbatimelevation','minimumDepthInMeters',
+				'maximumDepthInMeters','verbatimDepth','georeferencedby','georeferenceprotocol','georeferencesources','georeferenceverificationstatus','georeferenceremarks',
+				'habitat','substrate','associatedtaxa');
 			$sql = 'SELECT DISTINCT o.'.implode(',o.',$locArr).' FROM omoccurrences o '.$sqlFrag;
-			//echo $sql;
 			$rs = $this->conn->query($sql);
 			$cnt = 0;
 			while($r = $rs->fetch_assoc()){
@@ -500,7 +488,7 @@ class OccurrenceDuplicate {
 				}
 				$loc = $r['locality'];
 				if($target == 'locationID') $loc = $r['locationid'];
-				if($r['decimallatitude']) $loc .= '; '.$r['decimallatitude'].' '.$r['decimallongitude'];
+				if($r['decimallatitude']) $loc .= ' || '.$r['decimallatitude'].' '.$r['decimallongitude'];
 				$retArr[$cnt]['value'] = $loc;
 				$cnt++;
 			}

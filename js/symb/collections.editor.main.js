@@ -143,6 +143,7 @@ $(document).ready(function() {
 						fieldChanged(k);
 					}
 				});
+				ui.item.value = ui.item.locality; 
 			}
 		});
 		if($( "input[name=localautodeactivated]" ).is(':checked')){
@@ -163,6 +164,7 @@ $(document).ready(function() {
 		},
 		minLength: 3,
 		select: function( event, ui ) {
+			event.preventDefault();
 			$.each(ui.item, function(k, v) {
 				var elem = $( "input[name="+k+"]" );
 				if(!elem.length) elem = $( "textarea[name="+k+"]" );
@@ -172,6 +174,9 @@ $(document).ready(function() {
 					fieldChanged(k);
 				}
 			});
+			let baseValue = ui.item.value;
+			baseValue = baseValue.substring(0,baseValue.indexOf(" || "));
+			this.value = baseValue;
 		}
 	});
 
@@ -273,12 +278,6 @@ $(document).ready(function() {
 	//Remember Auto Duplicate search status 
 	if(getCookie("autodupe") == 1) editForm.autodupe.checked = true; 
 });
-
-function toggleQueryForm(){
-	toggle("querydiv");
-	var statusDiv = document.getElementById('statusdiv');
-	if(statusDiv) statusDiv.style.display = 'none';
-}
 
 //Field changed and verification functions
 function verifyFullFormSciName(){
