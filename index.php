@@ -1,6 +1,6 @@
 <?php
-include_once("config/symbini.php");
-header("Content-Type: text/html; charset=".$CHARSET);
+include_once('config/symbini.php');
+header('Content-Type: text/html; charset='.$CHARSET);
 ?>
 <html>
 <head>
