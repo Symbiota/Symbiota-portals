@@ -49,7 +49,7 @@ if (top.frames.length!=0)
 				</div>
 				<ul id="hor_dropdown">
 					<li>
-						<a href="<?php echo $CLIENT_ROOT; ?>/index.php" >Home</a>
+						<a href="<?php echo $CLIENT_ROOT; ?>/../" >Home</a>
 					</li>
                     <li>
                     	<a href="<?php echo $CLIENT_ROOT; ?>/../flora/collections/harvestparams.php">Flora Database</a>
