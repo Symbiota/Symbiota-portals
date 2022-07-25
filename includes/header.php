@@ -9,7 +9,7 @@ if (top.frames.length!=0)
 		<td id="header" colspan="3">
 			<div style="clear:both;">
 				<div style="clear:both;margin-left:auto;margin-right:auto;">
-					<a href="<?php echo $CLIENT_ROOT; ?>/../base/" ><img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/header.jpg" width="100%"/></a>
+					<a href="<?php echo $CLIENT_ROOT; ?>/../" ><img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/header.jpg" width="100%"/></a>
 				</div>
 			</div>
 			<div id="top_navbar">
@@ -52,7 +52,7 @@ if (top.frames.length!=0)
 						<a href="<?php echo $CLIENT_ROOT; ?>/index.php" >Home</a>
 					</li>
                     <li>
-                    	<a href="<?php echo $CLIENT_ROOT; ?>/../flora/index.php">Flora Database</a>
+                    	<a href="<?php echo $CLIENT_ROOT; ?>/../flora/collections/harvestparams.php">Flora Database</a>
                     </li>
 					<li>
 						<a href="<?php echo $CLIENT_ROOT; ?>/collections/index.php" >Search Collections</a>
