@@ -931,7 +931,7 @@ $traitArr = $indManager->getTraitArr();
 											<img border="1" src="<?php echo $thumbUrl; ?>" title="<?php echo $imgArr['caption']; ?>" style="max-width:170;" />
 										</a>
 										<?php
-										if($imgArr['photographer']) echo '<div>'.(isset($LANG['AUTHOR'])?$LANG['AUTHOR']:'Author').':'.$imgArr['photographer'].'</div>';
+										if($imgArr['photographer']) echo '<div>'.(isset($LANG['AUTHOR'])?$LANG['AUTHOR']:'Author').': '.$imgArr['photographer'].'</div>';
 										if($imgArr['url'] && substr($thumbUrl,0,7)!='process' && $imgArr['url'] != $imgArr['lgurl']) echo '<div><a href="'.$imgArr['url'].'" target="_blank">'.(isset($LANG['OPENMED'])?$LANG['OPENMED']:'Open Medium Image').'</a></div>';
 										if($imgArr['lgurl']) echo '<div><a href="'.$imgArr['lgurl'].'" target="_blank">'.(isset($LANG['OPENLARGE'])?$LANG['OPENLARGE']:'Open Large Image').'</a></div>';
 										if($imgArr['sourceurl']) echo '<div><a href="'.$imgArr['sourceurl'].'" target="_blank">'.(isset($LANG['OPENSRC'])?$LANG['OPENSRC']:'Open Source Image').'</a></div>';
@@ -966,9 +966,11 @@ $traitArr = $indManager->getTraitArr();
 								if(substr($occArr['othercatalognumbers'],0,1) == '{'){
 									if($ocnArr = json_decode($occArr['othercatalognumbers'],true)){
 										foreach($ocnArr as $idKey => $idArr){
-											if(!$displayStr || ($idKey && $idKey == 'NEON sampleID')){
+											if(!$displayStr || $idKey == 'NEON sampleID' || $idKey == 'NEON sampleCode (barcode)'){
 												$displayStr = $idArr[0];
+												if($idKey == 'NEON sampleCode (barcode)') $iUrl = str_replace('sampleTag','barcode',$iUrl);
 												$indUrl = str_replace('--OTHERCATALOGNUMBERS--',$idArr[0],$iUrl);
+												if($idKey == 'NEON sampleCode (barcode)') break;
 											}
 										}
 									}
@@ -1015,12 +1017,10 @@ $traitArr = $indManager->getTraitArr();
 						<div style="margin-top:10px;clear:both;">
 							<?php
 							if($collMetadata['contact']){
-								echo (isset($LANG['ADDITIONALINFO'])?$LANG['ADDITIONALINFO']:'For additional information about this specimen, please contact').':'.$collMetadata['contact'];
+								echo (isset($LANG['ADDITIONALINFO'])?$LANG['ADDITIONALINFO']:'For additional information about this specimen, please contact').': '.$collMetadata['contact'];
 								if($collMetadata['email']){
 									$emailSubject = $DEFAULT_TITLE.' occurrence: '.$occArr['catalognumber'].' ('.$occArr['othercatalognumbers'].')';
-									$refPath = 'http://';
-									if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) $refPath = 'https://';
-									$refPath .= $_SERVER['SERVER_NAME'].$CLIENT_ROOT.'/collections/individual/index.php?occid='.$occArr['occid'];
+									$refPath = $indManager->getDomain().$CLIENT_ROOT.'/collections/individual/index.php?occid='.$occArr['occid'];
 									$emailBody = (isset($LANG['SPECREFERENCED'])?$LANG['SPECREFERENCED']:'Specimen being referenced').': '.$refPath;
 									$emailRef = 'subject='.$emailSubject.'&cc='.$ADMIN_EMAIL.'&body='.$emailBody;
 									echo ' (<a href="mailto:'.$collMetadata['email'].'?'.$emailRef.'">'.$collMetadata['email'].'</a>)';

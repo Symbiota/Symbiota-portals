@@ -141,7 +141,7 @@ class OccurrenceUtilities {
 			}
 			//Do some cleaning
 			if(strlen($y) == 2){
-				if($y < 20) $y = '20'.$y;
+				if($y <= date('y')) $y = '20'.$y;
 				else $y = '19'.$y;
 			}
 			//Build
@@ -530,7 +530,7 @@ class OccurrenceUtilities {
 		//Transfer DMS to verbatim coords
 		if(isset($recMap['latdeg']) && $recMap['latdeg'] && isset($recMap['lngdeg']) && $recMap['lngdeg']){
 			//Attempt to create decimal lat/long
-			if(is_numeric($recMap['latdeg']) && is_numeric($recMap['lngdeg']) && (!isset($recMap['decimallatitude']) || !isset($recMap['decimallongitude']))){
+			if(is_numeric($recMap['latdeg']) && is_numeric($recMap['lngdeg']) && (!isset($recMap['decimallatitude']) || !$recMap['decimallatitude'] || !isset($recMap['decimallongitude']) || $recMap['decimallongitude'])){
 				$latDec = abs($recMap['latdeg']);
 				if(isset($recMap['latmin']) && $recMap['latmin'] && is_numeric($recMap['latmin'])) $latDec += $recMap['latmin']/60;
 				if(isset($recMap['latsec']) && $recMap['latsec'] && is_numeric($recMap['latsec'])) $latDec += $recMap['latsec']/3600;
