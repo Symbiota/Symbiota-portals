@@ -3,11 +3,18 @@ include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/DwcArchiverCore.php');
 header("Content-Type: text/html; charset=".$CHARSET);
 
-$sourcePage = array_key_exists("sourcepage",$_REQUEST)?$_REQUEST["sourcepage"]:"specimen";
-$downloadType = array_key_exists("dltype",$_REQUEST)?$_REQUEST["dltype"]:"specimen";
-$taxonFilterCode = array_key_exists("taxonFilterCode",$_REQUEST)?$_REQUEST["taxonFilterCode"]:0;
-$displayHeader = array_key_exists("displayheader",$_REQUEST)?$_REQUEST["displayheader"]:0;
-$searchVar = array_key_exists("searchvar",$_REQUEST)?$_REQUEST['searchvar']:'';
+$sourcePage = array_key_exists('sourcepage',$_REQUEST)?$_REQUEST['sourcepage']:'specimen';
+$downloadType = array_key_exists('dltype',$_REQUEST)?$_REQUEST['dltype']:'specimen';
+$taxonFilterCode = array_key_exists('taxonFilterCode',$_REQUEST)?$_REQUEST['taxonFilterCode']:0;
+$displayHeader = array_key_exists('displayheader',$_REQUEST)?$_REQUEST['displayheader']:0;
+$searchVar = array_key_exists('searchvar',$_REQUEST)?$_REQUEST['searchvar']:'';
+
+//Sanitation
+$sourcePage = filter_var($sourcePage, FILTER_SANITIZE_STRING);
+$downloadType = filter_var($downloadType, FILTER_SANITIZE_STRING);
+if(!is_numeric($taxonFilterCode)) $taxonFilterCode = 0;
+if(!is_numeric($displayHeader)) $displayHeader = 0;
+$searchVar = filter_var($searchVar, FILTER_SANITIZE_STRING);
 
 $dwcManager = new DwcArchiverCore();
 ?>
@@ -17,14 +24,7 @@ $dwcManager = new DwcArchiverCore();
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $CHARSET; ?>"/>
 	<?php
 	$activateJQuery = true;
-	if(file_exists($SERVER_ROOT.'/includes/head.php')){
-		include_once($SERVER_ROOT.'/includes/head.php');
-	}
-	else{
-		echo '<link href="'.$CLIENT_ROOT.'/css/jquery-ui.css" type="text/css" rel="stylesheet" />';
-		echo '<link href="'.$CLIENT_ROOT.'/css/base.css?ver=1" type="text/css" rel="stylesheet" />';
-		echo '<link href="'.$CLIENT_ROOT.'/css/main.css?ver=1" type="text/css" rel="stylesheet" />';
-	}
+	include_once($SERVER_ROOT.'/includes/head.php');
 	include_once($SERVER_ROOT.'/includes/googleanalytics.php');
 	?>
 	<script src="../../js/jquery.js" type="text/javascript"></script>
@@ -67,7 +67,8 @@ $dwcManager = new DwcArchiverCore();
 			if(obj.checked == false){
 				obj.form.images.checked = false;
 				obj.form.identifications.checked = false;
-				obj.form.attributes.checked = false;
+				if(obj.form.attributes) obj.form.attributes.checked = false;
+				if(obj.form.materialsample) obj.form.materialsample.checked = false;
 			}
 		}
 
@@ -157,6 +158,7 @@ $dwcManager = new DwcArchiverCore();
 								<input type="checkbox" name="images" value="1" onchange="extensionSelected(this)" checked /> include Image Records<br/>
 								<?php
 								if($dwcManager->hasAttributes()) echo '<input type="checkbox" name="attributes" value="1" onchange="extensionSelected(this)" checked /> include Occurrence Trait Attributes<br/>';
+								if($dwcManager->hasMaterialSamples()) echo '<input type="checkbox" name="materialsample" value="1" onchange="extensionSelected(this)" checked /> include Material Samples<br/>';
 								?>
 								*Output must be a compressed archive
 							</div>
