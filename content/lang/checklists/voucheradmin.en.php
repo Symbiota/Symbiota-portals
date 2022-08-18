@@ -6,7 +6,7 @@ Language: English
 */
 
 $LANG['NAV_HOME'] = 'Home';
-$LANG['CHECKADMIN'] = 'Checklist Administration';
+$LANG['CHECKLIST_ADMIN'] = 'Checklist Administration';
 $LANG['RETURNCHECK'] = 'Return to Checklist';
 $LANG['ADDIMGVOUCHER'] = 'Add Image Voucher';
 $LANG['EDITSEARCH'] = 'Edit Search Statement';
@@ -26,7 +26,6 @@ $LANG['LONGW'] = 'Long West';
 $LANG['ONLYCOORD'] = 'Only include occurrences with coordinates';
 $LANG['POLYGON_SEARCH'] = 'Search based on polygon defining checklist research boundaries';
 $LANG['EXCLUDE'] = 'Exclude cultivated/captive occurrences';
-$LANG['TAXON'] = 'Taxon';
 $LANG['SAVESEARCH'] = 'Save Search Terms';
 $LANG['REMOVESEARCH'] = 'Remove Search Statement';
 $LANG['NEWVOUCH'] = 'New Vouchers';
