@@ -3,22 +3,35 @@
  **/
 body{
 	width: 80%;
-	min-width:1400px;
+	min-width:950px;
 	margin-top:0px;
-	font-family: Verdana, Geneva, sans-serif;
-	background-color:#e9e9e9;
-	font-size: 12px;
 }
 
 /*Main table framework*/
 #maintable{
 	width: 100%;
 	background-color:#FFFFFF;
-	border:1px solid grey;
+	border:1px solid #333333;
 }
 
 #maintable td{
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+#header{
+	color:#FFFFFF;
+	background-color:#026B6E;
+	text-align:left;
+	padding:0px;
+}
+
+#header a{
+
+}
+
+#header a:hover{
+
 }
 
 #middleleft{
@@ -28,7 +41,7 @@ body{
 }
 
 #middlecenter{
-	padding: 0px;
+	padding:0px;
 }
 
 #middleright{
@@ -45,7 +58,7 @@ body{
 
 }
 
-.navpath {
+div.navpath {
 }
 
 /* Image thumbnails   */
@@ -65,57 +78,26 @@ div.tnimg img{
 
 }	
 
-#cloptiondiv {
-}
-
 /*Misc general items*/
 table{
 
 }
 
 h1{
+
 }
 
 h2{
+
 }
 
 h3{
-}
 
-table.styledtable{
-}
-
-table.styledtable th {
-}
-
-table.styledtable td {
-}
-table.styledtable tr.alt td {
-}
-
-/* Quick Search Plugin */
-#quicksearchtext{
-}
-
-#quicksearchbutton{
-}
-
-/*  
- *  Header elements, including header menu
- */
-
-#header{
-	color:#FFFFFF;
-	background-color:#000000;
-	text-align:left;
-	padding: 0px;
-	padding-bottom: 0px;
-	border-bottom:1px solid #333333;
 }
 
 #top_navbar{
 	clear:both;
-	height:32px;
+	height:33px;
 	background-image:url(images/menu_pri_background.jpg);
 	background-repeat:repeat-x;
 	background-position:top;
@@ -128,8 +110,7 @@ table.styledtable tr.alt td {
 	color:#000000;
 	margin-top:9px;
 }
-
-#hor_dropdown{
+ul#hor_dropdown{
 	list-style:none;
 	float:left;
 	position:relative;
@@ -144,13 +125,13 @@ table.styledtable tr.alt td {
 	background-position:top;
 	background-color:#c2c2c2;
 }
-#hor_dropdown li{		
+ul#hor_dropdown li{		
 	float:left;
 	position:relative;
 	padding:0;
 	margin:0;
 }
-#hor_dropdown a{
+ul#hor_dropdown a{
 	display:block;
 	color:#000000;
 	text-decoration:none;
@@ -162,7 +143,7 @@ table.styledtable tr.alt td {
     background-repeat: no-repeat;
     background-position: right bottom;
 }
-#hor_dropdown a:hover{
+ul#hor_dropdown a:hover{
 	background-color:#999999;
 	color:#FFFFFF;
 	padding-top:8px;
@@ -172,7 +153,7 @@ table.styledtable tr.alt td {
 	background-image:none;
 }
 /* Submenu */
-#hor_dropdown ul {
+ul#hor_dropdown ul {
 	list-style:none;
 	position:absolute;
 	left:-9999px;
@@ -180,19 +161,19 @@ table.styledtable tr.alt td {
 	background-color:#dcdcdc;
 	z-index:1000;
 }
-#hor_dropdown ul li{
+ul#hor_dropdown ul li{
 	float:none;
 }
-#hor_dropdown ul a{
+ul#hor_dropdown ul a{
 	white-space:nowrap;
 }
-#hor_dropdown li:hover ul {
+ul#hor_dropdown li:hover ul {
 	left:0;
-	top:32px;
+	top:33px;
 	padding:0px;
 	z-index:1000;
 }
-#hor_dropdown li:hover ul a {
+ul#hor_dropdown li:hover ul a {
 	padding:5px;
 	text-decoration:none;
 	text-indent:8px;
@@ -201,37 +182,33 @@ table.styledtable tr.alt td {
 	background-color:#dcdcdc;
 	z-index:1000;
 }
-#hor_dropdown li:hover ul li a:hover { 
+ul#hor_dropdown li:hover ul li a:hover { 
 	background:#999999; 
 }
 
-#hor_dropdown li ul li ul {
-	display: none;
-}
-#hor_dropdown li ul li:hover ul {
-	left:100%;
-	top:0;
-	display: block;
-	padding:0px;
-	z-index:1000;
-}
-#hor_dropdown li ul li:hover ul a {
-	padding:5px;
-	text-decoration:none;
-	text-indent:8px;
-	padding-right:8px;
-	background-image: none;
-	background-color:#dcdcdc;
-	z-index:1000;
-}
-#hor_dropdown li ul li:hover ul li a:hover { 
-	background:#999999; 
+/* Quick Search Plugin */
+#quicksearchtext{
+	margin-top:0px;
+	padding-bottom:0px;
 }
 
-/*  
- *  Footer elements
- */
-.footer{ padding:0px; }
-#footer p{ text-align: justify; margin: 20px 200px 0px 200px;  }
-#footer p img{ display:inline-block; width: 100px; margin-top: auto; margin-bottom: auto; vertical-align: middle; }
-#footer p:after{ content:""; display: inline-block; width: 100%; height: 0; }
+#quicksearchtaxon{
+	width: 250px;
+	margin-bottom:0px;
+	padding-bottom:0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#quicksearchbutton{
+	margin-left:10px;
+	margin-top:0px;
+	margin-bottom:0px;
+	padding-bottom:0px;
+}
+
+/* Slideshow Plugin */
+#slideshowcontainer{
+	border: 2px solid black;
+	border-radius:10px;
+	padding:10px;
+}
