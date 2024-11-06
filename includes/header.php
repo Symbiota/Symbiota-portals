@@ -25,11 +25,6 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					<?php
 				} else {
 					?>
-					<span class="button button-tertiary">
-						<a onclick="window.location.href='#'">
-							<?= $LANG['H_CONTACT_US'] ?>
-						</a>
-					</span>
 					<span class="button button-secondary">
 						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
 							<?= $LANG['H_LOGIN'] ?>
@@ -41,13 +36,13 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 			</nav>
 			<div class="top-brand">
 				<a href="<?= $CLIENT_ROOT ?>">
-					<div class="image-container">
+					<!--<div class="image-container">
 						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
-					</div>
+					</div>-->
 				</a>
 				<div class="brand-name">
-					<h1>Symbiota Brand New Portal</h1>
-					<h2>Redesigned by the Symbiota Support Hub</h2>
+					<h1>Neotropical Portal</h1>
+					<!--<h2>Redesigned by the Symbiota Support Hub</h2>-->
 				</div>
 			</div>
 		</div>
@@ -64,24 +59,76 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						</a>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">
-							<?= $LANG['H_SEARCH'] ?>
-						</a>
+						<a href="#"><?= $LANG['H_SEARCH'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/collections/search/index.php" rel="noopener noreferrer"><?= $LANG['H_COLLECTIONS'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/collections/map/index.php" rel="noopener noreferrer"><?= $LANG['H_MAP'] ?></a>
+							</li>
+						</ul>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT ?>/collections/map/index.php" rel="noopener noreferrer">
-							<?= $LANG['H_MAP_SEARCH'] ?>
-						</a>
+						<a href="#"><?= $LANG['H_IMAGES'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/imagelib/index.php" rel="noopener noreferrer"><?= $LANG['H_IMAGE_BROWSER'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/imagelib/search.php" rel="noopener noreferrer"><?= $LANG['H_IMAGE_SEARCH'] ?></a>
+							</li>
+						</ul>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT ?>/checklists/index.php">
-							<?= $LANG['H_INVENTORIES'] ?>
-						</a>
+						<a href="#"><?= $LANG['H_MESOAMERICA'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=10" rel="noopener noreferrer"><?= $LANG['H_COSTA_RICA'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=15" rel="noopener noreferrer"><?= $LANG['H_PANAMA'] ?></a>
+							</li>
+						</ul>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT ?>/imagelib/search.php">
-							<?= $LANG['H_IMAGES'] ?>
-						</a>
+						<a href="#"><?= $LANG['H_SOUTH_AMERICA'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=17" rel="noopener noreferrer"><?= $LANG['H_COLOMBIA'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=1" rel="noopener noreferrer"><?= $LANG['H_ECUADOR'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=16" rel="noopener noreferrer"><?= $LANG['H_PERU'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=2" rel="noopener noreferrer"><?= $LANG['H_GALAPAGOS'] ?></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#"><?= $LANG['H_TAXONOMIC_LISTS'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=9" rel="noopener noreferrer"><?= $LANG['H_NEW_WORLD_MYRTACEAE'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=23" rel="noopener noreferrer"><?= $LANG['H_PODOSTEMACEAE'] ?></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#"><?= $LANG['H_DYNAMIC_TOOLS'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/dynamicmap.php?interface=checklist" rel="noopener noreferrer"><?= $LANG['H_DYNAMIC_CHECKLIST'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/dynamicmap.php?interface=key" rel="noopener noreferrer"><?= $LANG['H_DYNAMIC_KEY'] ?></a>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<a href="<?= $CLIENT_ROOT ?>/includes/usagepolicy.php">
@@ -89,40 +136,16 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						</a>
 					</li>
 					<li>
-						<a href="https://symbiota.org/docs" target="_blank" rel="noopener noreferrer">
-							<?= $LANG['H_HELP'] ?>
-						</a>
-					</li>
-					<li>
 						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
 							<?= $LANG['H_SITEMAP'] ?>
 						</a>
-					</li>
-					<li>
-						<a href="#">Example Dropdown</a>
-						<ul>
-							<li>
-								<a href="#">Link 1</a>
-							</li>
-							<li>
-								<a href="#">Link 2</a>
-							</li>
-							<li>
-								<a href="#">Sub Menu</a>
-								<ul>
-									<li>
-										<a href="#">Link 3</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
 					<li id="lang-select-li">
 						<label for="language-selection"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
 						<select oninput="setLanguage(this)" id="language-selection" name="language-selection">
 							<option value="en">English</option>
 							<option value="es" <?= ($LANG_TAG=='es'?'SELECTED':'') ?>>Español</option>
-							<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>
+							<!--<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>-->
 						</select>
 					</li>
 				</ul>
