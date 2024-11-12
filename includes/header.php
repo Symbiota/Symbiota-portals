@@ -16,16 +16,16 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					<div class="welcome-text bottom-breathing-room-rel">
 						<?= $LANG['H_WELCOME'] . ' ' . $USER_DISPLAY_NAME ?>!
 					</div>
-					<span style="white-space: nowrap;" class="button button-tertiary bottom-breathing-room-rel">
+					<span style="white-space: nowrap;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" class="button button-tertiary bottom-breathing-room-rel">
 						<a href="<?= $CLIENT_ROOT ?>/profile/viewprofile.php"><?= $LANG['H_MY_PROFILE'] ?></a>
 					</span>
-					<span style="white-space: nowrap;" class="button button-secondary bottom-breathing-room-rel">
+					<span style="white-space: nowrap;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" class="button button-secondary bottom-breathing-room-rel">
 						<a href="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout"><?= $LANG['H_LOGOUT'] ?></a>
 					</span>
 					<?php
 				} else {
 					?>
-					<span class="button button-secondary">
+					<span class="button button-secondary" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
 						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
 							<?= $LANG['H_LOGIN'] ?>
 						</a>
@@ -41,7 +41,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					</div>-->
 				</a>
 				<div class="brand-name">
-					<h1>Neotropical Portal</h1>
+					<h1>Neotropical Flora</h1>
 					<!--<h2>Redesigned by the Symbiota Support Hub</h2>-->
 				</div>
 			</div>
