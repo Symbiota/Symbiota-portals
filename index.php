@@ -26,7 +26,8 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 <body>
 	<?php
 	include($SERVER_ROOT."/includes/header.php");
-	?> 
+	?>
+	<div class="navpath"></div>
 	<!-- This is inner text! -->
 	<main  id="innertext">
 		<h1>North American Network of Small Herbaria</h1>
