@@ -1,14 +1,22 @@
-    	</td>
-	</tr>
-	<tr>
-		<td id="footer" colspan="3">
-	        <div style="width:650px;height:100px;margin-left:auto;margin-right:auto;margin-bottom:15px;display:table;" >
-				<img src="<?php echo $CLIENT_ROOT; ?>/images/layout/NSF_web_transperent.gif" width="100" height="100" alt="The U.S. National Science Foundation" /> 
-                	<div style="padding-left:10px;display:table-cell;vertical-align: middle;">
-					<b>This project made possible by <a href="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1410069&HistoricalAwards=false" target="_blank">U.S. National Science Foundation Award 1410069</a></b><br>
-					Powered by <a href="https://symbiota.org/" target="_blank">Symbiota</a>.
-			</div>
-		</div>
-		</td>
-	</tr>
-</table>
+<footer>
+	<div class="logo-gallery">
+		<?php
+		//include($SERVER_ROOT . '/accessibility/module.php');
+		?>
+		<a href="https://www.nsf.gov" target="_blank" aria-label="<?= $LANG['F_VISIT_NSF'] ?>">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo_nsf.gif" alt="<?= $LANG['F_NSF_LOGO'] ?>" />
+		</a>
+		<a href="http://idigbio.org" target="_blank" title="iDigBio" aria-label="<?= $LANG['F_VISIT_IDIGBIO'] ?>">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo_idig.png" alt="<?= $LANG['F_IDIGBIO_LOGO'] ?>" />
+		</a>
+		<a href="https://biokic.asu.edu" target="_blank" title="<?= $LANG['F_BIOKIC'] ?>" aria-label="Visit BioKIC website">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo-asu-biokic.png"  alt="<?= $LANG['F_BIOKIC_LOGO'] ?>" />
+		</a>
+	</div>
+	<p>
+		This project made possible by U.S. National Science Foundation Award <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1410069" target="_blank">#1410069</a>.
+	</p>
+	<p>
+		<?= $LANG['F_POWERED_BY'] ?> <a href="https://symbiota.org/" target="_blank">Symbiota</a>.
+	</p>
+</footer>

@@ -1,13 +1,13 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
-  --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --header-bg-image: url("../../images/layout/header_1.jpg");
+  --header-bg-color: #eadcc670; /** Transparent color if adding header bg-image #e0dfa4**/
+  --header-font-color: #666668;
+  --brand-font-size: 3.5rem;
   --title-font-family: "Averia Serif Libre", serif;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #99916b;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
@@ -15,11 +15,11 @@
   --body-font-family: "Arial", sans-serif;
   --footer-bg-color: #f2f0e9;
   --heading-font-family: "Roboto", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --link-color: #7a7a4d;
+  --darkest-color: #2b2b2d;
+  --medium-color: #7a7a4d;
+  --light-color: #dfdec3;
+  --bright-color: #363628;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
