@@ -24,7 +24,8 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 <body>
 	<?php
 	include($SERVER_ROOT.'/includes/header.php');
-	?> 
+	?>
+	<div class="navpath"></div>
         <!-- This is inner text! -->
         <main id="innertext">
 		<h2>Welcome to CoTRAM</h2>
