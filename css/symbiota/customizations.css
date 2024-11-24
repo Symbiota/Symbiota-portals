@@ -2,4 +2,40 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+
+ .button-secondary > a {
+    color: white;
+  }
+
+  .button-tertiary {
+    background-color: #ffffff75;
+    border: 3px solid var(--bright-color);
+    padding: 0.5rem 0.9rem;
+  }
+
+  .button-tertiary > a {
+    color: var(--bright-color);
+  }
+  
+  .welcome-text {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    font-weight: bold;
+    text-shadow: 0 0 3px black;
+  }
+
+.brand-name h1 {
+  color: var(--bright-color);
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 5px white;
+  font-family: "Cinzel"
+}
+
+header a:hover {
+    color: var(--light-color);
+    text-decoration: none;
+  }

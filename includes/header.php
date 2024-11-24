@@ -1,145 +1,148 @@
-<SCRIPT LANGUAGE=JAVASCRIPT>
-<!--
-if (top.frames.length!=0)
-  top.location=self.document.location;
-// -->
-</SCRIPT>
-<script type="text/javascript" src="<?php echo $CLIENT_ROOT; ?>/js/slideshow.js">
-</script>
-
-<script type="text/javascript">
-<!--
-
-// Create the slideshow object
-ss = new slideshow("ss");
-
-// Set the delay between slides, 1000 = 1 sec
-// ss.timeout = 3000;
-
-// By default, all of the slideshow images are prefetched.
-// If you have a large number of slides you can limit the
-// number of images that are prefetched.
-// ss.prefetch = 1;
-
-// By default the slideshow will repeat when you get to the end.
-// ss.repeat = false;
-
-// Create the slides and add them to the slideshow.
-
-s = new slide();
-s.src =  "<?php echo $CLIENT_ROOT; ?>/images/layout/header1.jpg";
-ss.add_slide(s);
-
-s = new slide();
-s.src =  "<?php echo $CLIENT_ROOT; ?>/images/layout/header2.jpg";
-ss.add_slide(s);
-
-s = new slide();
-s.src =  "<?php echo $CLIENT_ROOT; ?>/images/layout/header3.jpg";
-ss.add_slide(s);
-
-s = new slide();
-s.src =  "<?php echo $CLIENT_ROOT; ?>/images/layout/header4.jpg";
-ss.add_slide(s);
-
-s = new slide();
-s.src =  "<?php echo $CLIENT_ROOT; ?>/images/layout/header5.jpg";
-ss.add_slide(s);
-
-// The following loop sets an attribute for all of the slides.
-// This is easier than setting the attributes individually.
-
-for (var i=0; i < ss.slides.length; i++) {
-
-  s = ss.slides[i];
-  s.target = "ss_popup";
-  s.attr = "width=750,height=115,resizable=no,scrollbars=no,border=0";
-
-}
-//-->
-</script>
-<table id="maintable" cellspacing="0">
-	<tr>
-		<td id="header" colspan="3">
-			<div id="bannerslideshow" style="height:115px;" onload="ss.restore_position('SS_POSITION');ss.update();" onunload="ss.save_position('SS_POSITION');" >
-				<form id="ss_form" name="ss_form" action="" method="get" style="margin-bottom:0px;">
-					<div id="ss_img_div" style="">
-						<img id="ss_img" name="ss_img" src="<?php echo $CLIENT_ROOT; ?>/images/layout/header1.jpg" style="margin-bottom:0px;width: 900px; filter: progid:DXImageTransform.Microsoft.Fade();" alt="Slideshow image"/>
+<?php
+if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/header.' . $LANG_TAG . '.php'))
+	include_once($SERVER_ROOT . '/content/lang/templates/header.en.php');
+else include_once($SERVER_ROOT . '/content/lang/templates/header.' . $LANG_TAG . '.php');
+$SHOULD_USE_HARVESTPARAMS = $SHOULD_USE_HARVESTPARAMS ?? false;
+$collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '/collections/search/index.php';
+?>
+<div class="header-wrapper">
+	<header>
+		<div class="top-wrapper">
+			<a class="screen-reader-only" href="#end-nav"><?= $LANG['H_SKIP_NAV'] ?></a>
+			<nav class="top-login" aria-label="horizontal-nav">
+				<?php
+				if ($USER_DISPLAY_NAME) {
+					?>
+					<div class="welcome-text bottom-breathing-room-rel">
+						<?= $LANG['H_WELCOME'] . ' ' . $USER_DISPLAY_NAME ?>!
 					</div>
-				</form>
-	           </div>
-		</td>
-	</tr>
-	<tr>
-	<?php 
-	if($displayLeftMenu){
-		?> 
-		<td id='middleleft' background="<?php echo $CLIENT_ROOT;?>/images/layout/defaultleftstrip.gif" style="background-repeat:repeat-y;"> 
-			<div style="">
-				<?php include($SERVER_ROOT."/includes/leftmenu.php"); ?>
+					<span style="white-space: nowrap;" class="button button-tertiary bottom-breathing-room-rel">
+						<a href="<?= $CLIENT_ROOT ?>/profile/viewprofile.php"><?= $LANG['H_MY_PROFILE'] ?></a>
+					</span>
+					<span style="white-space: nowrap;" class="button button-secondary bottom-breathing-room-rel">
+						<a href="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout"><?= $LANG['H_LOGOUT'] ?></a>
+					</span>
+					<?php
+				} else {
+					?>
+					<span class="button button-secondary">
+						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
+							<?= $LANG['H_LOGIN'] ?>
+						</a>
+					</span>
+					<?php
+				}
+				?>
+			</nav>
+			<div class="top-brand">
+				<a href="<?= $CLIENT_ROOT ?>">
+					<!--
+					<div class="image-container">
+						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
+					</div>
+					-->
+				</a>
+				<div class="brand-name">
+					<h1>Consortium of Northern Great Plains Herbaria</h1>
+					<h2></h2>
+				</div>
 			</div>
-		</td>
-		<?php 
-	}
-	else{
-		?>
-        	<td id="middleleftnomenu" background="<?php echo $CLIENT_ROOT;?>/images/layout/defaultleftstrip.gif">
-        		<div style='width:20px;'></div>
-        	</td>
-		<?php 
-	}
-	?>
-	<td id='middlecenter'>
-<Script type="text/javascript">
-// Finish defining and activating the slideshow
-
-// Set up the select list with the slide titles
-function config_ss_select() {
-  var selectlist = document.forms[0].ss_select;
- // selectlist.options.length = 0;
- // for (var i = 0; i < ss.slides.length; i++) {
- //   selectlist.options[i] = new Option();
- //   selectlist.options[i].text = (i + 1) + '. ' + ss.slides[i].title;
- // }
- // selectlist.selectedIndex = ss.current;
-}
-
-// If you want some code to be called before or
-// after the slide is updated, define the functions here
-
-ss.pre_update_hook = function() {
-  return;
-}
-
-ss.post_update_hook = function() {
-  // For the select list with the slide titles,
-  // set the selected item to the current slide
-  //document.forms[0].ss_select.selectedIndex = this.current;
-  //document.ss_form.ss_select.selectedIndex = this.current;
-  return;
-}
-
-if (document.images) {
-
-  // Tell the slideshow which image object to use
-  ss.image = document.images.ss_img;
-
-  // Tell the slideshow the ID of the element
-  // that will contain the text for the slide
-  ss.textid = "ss_text";
-
-  // Randomize the slideshow?
-  ss.shuffle();
-
-  // Set up the select list with the slide titles
-  config_ss_select();
-
-  // Update the image and the text for the slideshow
-  ss.update();
-
-  // Auto-play the slideshow
-  ss.play();
-}
-//-->
-</Script>
-
+		</div>
+		<div class="menu-wrapper">
+			<!-- Hamburger icon -->
+			<input class="side-menu" type="checkbox" id="side-menu" name="side-menu" />
+			<label class="hamb hamb-line hamb-label" for="side-menu" tabindex="0">☰</label>
+			<!-- Menu -->
+			<nav class="top-menu" aria-label="hamburger-nav">
+				<ul class="menu">
+					<li>
+						<a href="<?= $CLIENT_ROOT ?>/index.php">
+							<?= $LANG['H_HOME'] ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">
+							Search Collections
+						</a>
+					</li>
+					<li>
+						<a href="#">Great Plains Inventories</a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/checklist.php?cl=3412&pid=86">
+									Iowa
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/checklist.php?cl=3410&pid=86">
+									Kansas
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/checklist.php?cl=3411&pid=86">
+									Missouri
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/checklist.php?cl=3409&pid=86">
+									Nebraska
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/checklist.php?cl=3408&pid=86">
+									South Dakota
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=4">
+							Teaching Checklists
+						</a>
+					</li>
+					<li>
+						<a href="#">Dynamic Tools</a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/dynamicmap.php?interface=checklist">
+									Dynamic Checklist
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/checklists/dynamicmap.php?interface=key">
+									Dynamic Key
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="<?= $CLIENT_ROOT ?>/imagelib/index.php">
+							Image Library
+						</a>
+					</li>
+					<li>
+						<a href='<?= $CLIENT_ROOT ?>/includes/usagepolicy.php'>
+							Data Usage
+						</a>
+					</li>
+					<li>
+						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
+							<?= $LANG['H_SITEMAP'] ?>
+						</a>
+					</li>
+					<!--
+					<li id="lang-select-li">
+						<label for="language-selection"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
+						<select oninput="setLanguage(this)" id="language-selection" name="language-selection">
+							<option value="en">English</option>
+							<option value="es" <?= ($LANG_TAG=='es'?'SELECTED':'') ?>>Español</option>
+							<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>
+						</select>
+					</li>
+					-->
+				</ul>
+			</nav>
+		</div>
+		<div id="end-nav"></div>
+	</header>
+</div>
