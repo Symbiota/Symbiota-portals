@@ -1,8 +1,11 @@
 <?php
-include_once("config/symbini.php");
-header("Content-Type: text/html; charset=".$CHARSET);
+include_once('config/symbini.php');
+if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/templates/index.en.php');
+else include_once($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php');
+header('Content-Type: text/html; charset=' . $CHARSET);
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="<?php echo $LANG_TAG ?>">
 <head>
 	<title><?php echo $DEFAULT_TITLE; ?> Home</title>
 	<?php
@@ -11,8 +14,8 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	?>
 	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $CSS_BASE_PATH; ?>/quicksearch.css" type="text/css" rel="Stylesheet" />
-	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
-	<script src="js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
@@ -24,14 +27,15 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	include($SERVER_ROOT."/includes/header.php");
 	?> 
         <!-- This is inner text! -->
-        <div  id="innertext">
+		<div class="navpath"></div>
+        <main  id="innertext">
             <div style="float:right;width:380px;">
 		<div id="quicksearchdiv">
 			<!-- -------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
-			<form name="quicksearch" id="quicksearch" action="<?php echo $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
-				<div id="quicksearchtext" ><?php echo (isset($LANG['QSEARCH_SEARCH'])?$LANG['QSEARCH_SEARCH']:'Search Taxon'); ?></div>
+			<form name="quicksearch" id="quicksearch" action="<?= $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
+				<div id="quicksearchtext" ><?php echo $LANG['QSEARCH_SEARCH']; ?></div>
 				<input id="taxa" type="text" name="taxon" />
-				<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?php echo (isset($LANG['QSEARCH_SEARCH_BUTTON'])?$LANG['QSEARCH_SEARCH_BUTTON']:'Search'); ?></button>
+				<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?= $LANG['QSEARCH_SEARCH_BUTTON']; ?></button>
 			</form>
 		</div>
 		<?php
@@ -59,7 +63,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 		</div>
 	</div>
 			<h1>Welcome to SEINet</h1>
-			<div style="padding: 0px 15px;">
+			<p>
             	The SEINet data portal was created
 				to serve as a gateway to distributed data resources of interest to the environmental
 				research community within Arizona and New Mexico. Through a common web interface,
@@ -67,14 +71,14 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				SEINet is more than just a web site - it is a suite of data access technologies
 				and a distributed network of collections, museums and agencies that provide
 				environmental information.
-            </div>
-			<div style="margin-top:15px;padding: 0px 10px;">
+			</p>
+			<p>
 				Join SEINet as a regular visitor and please send your feedback to 
 				<a class="bodylink" href="mailto:help@symbiota.org?subject=SEINet Feedback">Support Hub HelpDesk (help@symbiota.org)</a>. 
 				Visit the <a href="includes/usagepolicy.php">Data Usage Policy</a> 
 				page for information on how to cite data obtained from this web resource.
-            </div>
-			<div style="margin-top:15px;padding: 0px 10px;">
+			</p>
+			<p>
  	           	Visit some of the other regional data portals that are fellow members of the SEINet Portal Network:
 				<ul>
                                         <li><a href="https://midwestherbaria.org" target="_blank">Consortium of Midwest Herbaria</a></li>
@@ -88,8 +92,8 @@ header("Content-Type: text/html; charset=".$CHARSET);
 					<li><a href="https://sernecportal.org" target="_blank">SERNEC (Southeast USA)</a></li>
 					<li><a href="https://portal.torcherbaria.org" target="_blank">Texas Oklahoma Regional Consortium of Herbaria (TORCH)</a></li>
 				</ul>
-			</div>
-		</div>
+			</p>
+		</main>
 
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");

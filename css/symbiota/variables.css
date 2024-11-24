@@ -1,13 +1,13 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/grand_canyon.jpg");
+  --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 3.2em;
   --title-font-family: "Averia Serif Libre", serif;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #4c6c88;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
@@ -15,11 +15,11 @@
   --body-font-family: "Arial", sans-serif;
   --footer-bg-color: #f2f0e9;
   --heading-font-family: "Roboto", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --link-color: #4c6c88;
+  --darkest-color: #343958;
+  --medium-color: #a76048;
+  --light-color: #e0bea2;
+  --bright-color: #4c6c88;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
