@@ -109,9 +109,6 @@ class OccurrenceDownload{
 			fclose($fh);
 		}
 		//Send data file out
-		ob_start();
-		ob_clean();
-		ob_end_flush();
 		header('Content-Description: '.$contentDesc);
 		header('Content-Type: '.$this->getContentType());
 		header('Content-Disposition: attachment; filename='.$fileName);
@@ -321,7 +318,7 @@ class OccurrenceDownload{
 			$itemElem->appendChild($itemTitleElem);
 			$collLinkElem = $newDoc->createElement('collectionName',$r->collectionname.' ('.$r->instcode.')');
 			$itemElem->appendChild($collLinkElem);
-			$catalogLinkElem = $newDoc->createElement('catalogNumber', $r->catalognumber ?? '');
+			$catalogLinkElem = $newDoc->createElement('catalogNumber',$r->catalognumber);
 			$itemElem->appendChild($catalogLinkElem);
 
 			if($r->guidtarget){
@@ -332,7 +329,7 @@ class OccurrenceDownload{
 				if($r->guidtarget == 'catalogNumber'){
 					$occID = $r->catalognumber;
 				}
-				$guidLinkElem = $newDoc->createElement('occurrenceID', $occID ?? '');
+				$guidLinkElem = $newDoc->createElement('occurrenceID',$occID);
 				$itemElem->appendChild($guidLinkElem);
 			}
 
@@ -353,21 +350,21 @@ class OccurrenceDownload{
 			$tnLinkElem->appendChild($newDoc->createTextNode($tnUrl));
 			$itemElem->appendChild($tnLinkElem);
 
-			$latLinkElem = $newDoc->createElement('decimalLatitude',$r->decimallatitude ?? '');
+			$latLinkElem = $newDoc->createElement('decimalLatitude',$r->decimallatitude);
 			$itemElem->appendChild($latLinkElem);
-			$lngLinkElem = $newDoc->createElement('decimalLongitude',$r->decimallongitude ?? '');
+			$lngLinkElem = $newDoc->createElement('decimalLongitude',$r->decimallongitude);
 			$itemElem->appendChild($lngLinkElem);
 			$eventDateLinkElem = $newDoc->createElement('verbatimEventDate');
-			$eventDateLinkElem->appendChild($newDoc->createTextNode($r->eventdate ?? ''));
+			$eventDateLinkElem->appendChild($newDoc->createTextNode($r->eventdate));
 			$itemElem->appendChild($eventDateLinkElem);
 			//$pubDateLinkElem = $newDoc->createElement('pubDate',$r->datelastmodified);
 			$pubDateLinkElem = $newDoc->createElement('pubDate',gmdate(DATE_RSS, strtotime($r->datelastmodified)));
 			$itemElem->appendChild($pubDateLinkElem);
-			$creatorLinkElem = $newDoc->createElement('creator', $r->recordenteredby ?? '');
+			$creatorLinkElem = $newDoc->createElement('creator',$r->recordenteredby);
 			$itemElem->appendChild($creatorLinkElem);
 
 			if($r->genericcolumn2){
-				$ipAddr = $newDoc->createElement('ipAddress', $r->genericcolumn2 ?? '');
+				$ipAddr = $newDoc->createElement('ipAddress',$r->genericcolumn2);
 				$itemElem->appendChild($ipAddr);
 				//<decimalLatitudeTranscribing>Transcription Lat</decimalLatitudeTranscribing>
 				//<decimalLongitudeTranscribing>Transcription Long</decimalLongitudeTranscribing>
@@ -383,7 +380,7 @@ class OccurrenceDownload{
 	public function addCondition($field, $cond, $value = ''){
 		if($field){
 			if(!trim($cond)) $cond = 'EQUALS';
-			if($value || ($cond == 'IS_NULL' || $cond == 'NOT_NULL')){
+			if($value || ($cond == 'NULL' || $cond == 'NOTNULL')){
 				$this->conditionArr[$field][$cond][] = $this->cleanInStr($value);
 			}
 		}
@@ -415,33 +412,33 @@ class OccurrenceDownload{
 
 	private function getSqlFragment($field, $cond, $valueArr){
 		$sqlFrag = '';
-		if($cond == 'IS_NULL'){
+		if($cond == 'NULL'){
 			$sqlFrag .= 'OR o.'.$field.' IS NULL ';
 		}
-		elseif($cond == 'NOT_NULL'){
+		elseif($cond == 'NOTNULL'){
 			$sqlFrag .= 'OR o.'.$field.' IS NOT NULL ';
 		}
 		elseif($cond == 'EQUALS'){
 			$sqlFrag .= 'OR o.'.$field.' IN("'.implode('","',$valueArr).'") ';
 		}
-		elseif($cond == 'NOT_EQUALS'){
+		elseif($cond == 'NOTEQUALS'){
 			$sqlFrag .= 'OR o.'.$field.' NOT IN("'.implode('","',$valueArr).'") OR o.'.$field.' IS NULL ';
 		}
 		else{
 			foreach($valueArr as $value){
-				if($cond == 'STARTS_WITH'){
+				if($cond == 'STARTS'){
 					$sqlFrag .= 'OR o.'.$field.' LIKE "'.$value.'%" ';
 				}
 				elseif($cond == 'LIKE'){
 					$sqlFrag .= 'OR o.'.$field.' LIKE "%'.$value.'%" ';
 				}
-				elseif($cond == 'NOT_LIKE'){
+				elseif($cond == 'NOTLIKE'){
 					$sqlFrag .= 'OR o.'.$field.' NOT LIKE "%'.$value.'%" OR o.'.$field.' IS NULL ';
 				}
-				elseif($cond == 'LESS_THAN'){
+				elseif($cond == 'LESSTHAN'){
 					$sqlFrag .= 'OR o.'.$field.' < "'.$value.'" ';
 				}
-				elseif($cond == 'GREATER_THAN'){
+				elseif($cond == 'GREATERTHAN'){
 					$sqlFrag .= 'OR o.'.$field.' > "'.$value.'" ';
 				}
 			}
@@ -531,9 +528,9 @@ class OccurrenceDownload{
 	}
 
 	private function getOutputFilePath(){
-		$retStr = $GLOBALS['TEMP_DIR_ROOT'];
+		$retStr = $GLOBALS['tempDirRoot'];
 		if(!$retStr){
-			$retStr = $GLOBALS['SERVER_ROOT'];
+			$retStr = $GLOBALS['serverRoot'];
 			if(substr($retStr,-1) != '/' && substr($retStr,-1) != "\\") $retStr .= '/';
 			$retStr .= 'temp/';
 		}

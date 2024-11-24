@@ -14,9 +14,9 @@ class OccurrenceEditorImages extends OccurrenceEditorManager {
 
 	public function __construct(){
  		parent::__construct();
- 		$this->imageRootPath = $GLOBALS['IMAGE_ROOT_PATH'];
+ 		$this->imageRootPath = $GLOBALS["imageRootPath"];
  		if(substr($this->imageRootPath,-1) != "/") $this->imageRootPath .= "/";
- 		$this->imageRootUrl = $GLOBALS['IMAGE_ROOT_URL'];
+ 		$this->imageRootUrl = $GLOBALS["imageRootUrl"];
  		if(substr($this->imageRootUrl,-1) != "/") $this->imageRootUrl .= "/";
 	}
 

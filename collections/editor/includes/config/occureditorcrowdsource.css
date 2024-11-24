@@ -1,15 +1,22 @@
 body{
 	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
 }
 
 #innertext{
 	padding:	10px;
+	font-size:	12px;
 	background-color: #ffffff;;
 }
 
 #titleDiv{
 	font-weight: bold;
+	font-size: 16px;
 	width: 595px;
+}
+
+#querySymbolDiv{
+	float:right;
 }
 
 #navDiv{
@@ -19,19 +26,18 @@ body{
 
 #occdiv{
 	position: relative;
+	width: 595px;
+	height: 600px;
 }
 
 #admindiv{
 	width: 595px;
 }
 
-#innertext {
-	max-width: 70%;
-	width: fit-content;
-}
-
 #occedittabs{
 	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	height: 730px;
 }
 
 
@@ -47,10 +53,6 @@ body{
 
 #otherCatalogNumbersDiv input {
 	width: 95px;
-}
-
-#identifierDiv{
-	display: none;
 }
 
 #recordedByDiv {
@@ -76,14 +78,6 @@ body{
 }
 
 #eventDateDiv input{
-	width:	110px;
-}
-
-#eventDate2Div {
-	float:left;
-}
-
-#eventDate2Div input{
 	width:	110px;
 }
 
@@ -120,6 +114,15 @@ body{
 	padding:3px;
 }
 
+#dateToggleDiv{
+	float:left;
+	margin:15px 5px;
+}
+
+#dateextradiv{
+	display: block;
+}
+
 #idrefToggleDiv{
 	display:none;
 }
@@ -139,6 +142,14 @@ body{
 	display: block;
 }
 
+#ymdDiv {
+	display: none;
+}
+
+#dayOfYearDiv {
+	display:none;
+}
+
 #endDateDiv {
 	display:none;
 }
@@ -153,7 +164,7 @@ body{
 }
 
 #exstitleinput {
-	width: 400px;
+	width: 500px;
 }
 
 #exsnumberDiv {
@@ -286,13 +297,13 @@ body{
 	width:	70px;
 }
 
-#mapIconDiv{
+#googleDiv{
 	float:left;
 	margin: 17px 2px 0px 2px;
 	cursor:	pointer;
 }
 
-#mapIconDiv img{
+#googleDiv img{
 	border:	0px;
 	width:	13px;
 }
@@ -391,7 +402,7 @@ body{
 }
 
 #verbatimCoordinatesDiv input{
-	width:	200px;
+	width:	225px;
 }
 
 #georeferencedByDiv{
@@ -496,20 +507,11 @@ body{
 	display:none;
 }
 
-#behaviorDiv{
-	display:none;
-}
-
-#vitalityDiv{
-	display:none;
-}
-
 #establishmentMeansDiv{
 	display:none;
 }
 
 #cultivationStatusDiv{
-	width:100%;
 	float: left;
 	margin-top:2px;
 }
@@ -637,5 +639,5 @@ img.editimg {
 
 table { 
 	font-family: 	Arial, Helvetica, sans-serif; 
-	/*font-size: 		12px;*/
+	font-size: 		12px;
 }

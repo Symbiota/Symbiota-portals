@@ -72,7 +72,7 @@ function traitChanged(elem){
 			}
 		});
 	}
-	$('button[name="submitform"]').prop('disabled', false);
+	$('input[name="submitform"]').prop('disabled', false);
 }
 
 function setAttributeTree(triggerElem){
