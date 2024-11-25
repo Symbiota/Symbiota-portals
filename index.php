@@ -39,7 +39,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?= $LANG['QSEARCH_SEARCH_BUTTON']; ?></button>
 				</form>
 			</div>
-			<div style="margin-left:0px;">
+			<div>
 				<?php
 				//---------------------------SLIDESHOW SETTINGS---------------------------------------
 				//If more than one slideshow will be active, assign unique numerical ids for each slideshow.
