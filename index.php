@@ -13,11 +13,12 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	include_once($SERVER_ROOT.'/includes/head.php');
 	include_once($SERVER_ROOT.'/includes/googleanalytics.php');
 	?>
+	<link href="<?= $CSS_BASE_PATH ?>/jquery-ui.css" type="text/css" rel="stylesheet">
+	<link href="<?= $CSS_BASE_PATH ?>/quicksearch.css" type="text/css" rel="Stylesheet" />
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui.min.js" type="text/javascript"></script>
 	<link href="css/quicksearch.css" type="text/css" rel="Stylesheet" />
-	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
-	<script src="js/jquery-3.71.min.js" type="text/javascript"></script>
-	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
-	<script type="text/javascript">
+=	<script type="text/javascript">
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
 	<script src="js/symb/api.taxonomy.taxasuggest.js" type="text/javascript"></script>
@@ -30,7 +31,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<!-- This is inner text! -->
 	<div class="navpath"></div>
 	<main  id="innertext">
-		<div style="float:right;width:410px;margin:0px 25px">
+		<!--<div style="float:right;width:410px;margin:0px 25px">-->
 			<div id="quicksearchdiv">
 				<!-- ---------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
 				<form name="quicksearch" id="quicksearch" action="<?php echo $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
@@ -56,7 +57,7 @@ $width = 350;
 $dayInterval = 7;
 
 //Enter amount of time (in milliseconds) between rotation of images
-$interval = 7000;
+$dayInterval = 7;
 
 //Enter checklist id, if you wish for images to be pulled from a checklist,
 //leave as 0 if you do not wish for images to come from a checklist
@@ -67,14 +68,14 @@ $clId = 4070;
 $imageType = "field";
 
 //Enter number of days of most recent images that should be included 
-$numDays = 30;
+$numDays = 240;
 
 //---------------------------DO NOT CHANGE BELOW HERE-----------------------------
 
 ini_set('max_execution_time', 120);
 include_once($SERVER_ROOT.'/classes/PluginsManager.php');
 $pluginManager = new PluginsManager();
-echo $pluginManager->createSlideShow($ssId,$numSlides,$width,$numDays,$imageType,$clId,$dayInterval,$interval);
+echo $pluginManager->createSlideShow($ssId,$numSlides,$width,$numDays,$imageType,$clid,$dayInterval);
 ?>
 			</div>
 		</div>
