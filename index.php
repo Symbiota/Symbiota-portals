@@ -31,7 +31,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<!-- This is inner text! -->
 	<div class="navpath"></div>
 	<main  id="innertext">
-		<!--<div style="float:right;width:410px;margin:0px 25px">-->
+		<div style="float:right;width:410px;margin:0px 25px">
 			<div id="quicksearchdiv">
 				<!-- ---------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
 				<form name="quicksearch" id="quicksearch" action="<?php echo $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
