@@ -18,24 +18,28 @@ This stylesheet is defined last and will override all previously loaded sheets. 
     font-size: calc(var(--brand-font-size) * 0.4);
   }
 
-  .welcome-text {
-    display: flex;
-    align-items: center;
-    margin-left: 1rem;
-    color: #a4a2a3;
-    font-weight: bold;
-  }
+.welcome-text {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  color: #a4a2a3;
+  font-weight: bold;
+}
 
-  .button-tertiary > a {
-    color: var(--bright-color);
-  }
+.button-tertiary > a {
+  color: var(--bright-color);
+}
 
-  .button-tertiary {
-    background-color: none;
-    border: 3px solid var(--bright-color);
-    padding: 0.5rem 0.9rem;
-  }
+.button-tertiary {
+  background-color: none;
+  border: 3px solid var(--bright-color);
+  padding: 0.5rem 0.9rem;
+}
 
-  .button-secondary > a {
-    color: white;
+.button-secondary > a {
+  color: white;
+}
+
+#slideshowcontainer {
+    margin-bottom: 10px;
   }
