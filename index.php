@@ -76,8 +76,8 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			Visit regularly to learn about your favorite plant or favorite part of the Great Plains. 
 			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Herbarium Network</a>.
 			Send feedback to 
-			<a class="bodylink" href="mailto:mark.gabel@bhsu.edu?subject=Feedback">mark.gabel&lt;at&gt;bhsu.edu</a> or 
-			<a class="bodylink" href="mailto:mary.barkworth@usu.edu?subject=Feedback">mary.barkworth&lt;at&gt;usu.edu</a>
+			<a class="bodylink" href="mailto:mark.gabel@bhsu.edu?subject=NGPH Feedback">mark.gabel&lt;at&gt;bhsu.edu</a> 
+			or to the Symbiota Support Hub at <a class="bodylink" href="mailto:help@symbiota.org?subject=NGPH Feedback">help@symbiota.org</a>.
 			</p>
 		</main>
 	<?php
