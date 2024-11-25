@@ -1,13 +1,13 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/MAHC_banner_v2.jpg");
+  --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 2.5rem;
   --title-font-family: "Averia Serif Libre", serif;
-  --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --logo-width: 300px;
+  --menu-top-bg-color: #476529;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
@@ -15,11 +15,11 @@
   --body-font-family: "Arial", sans-serif;
   --footer-bg-color: #f2f0e9;
   --heading-font-family: "Roboto", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --link-color: #82b2da;
+  --darkest-color: #3b5127;
+  --medium-color: #476529;
+  --light-color: #eaf5f7;
+  --bright-color: #60b443;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
