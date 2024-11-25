@@ -1,112 +1,144 @@
-<SCRIPT>
-<!--
-if (top.frames.length!=0)
-  top.location=self.document.location;
-// -->
-</SCRIPT>
-<table id="maintable" cellspacing="0">
-	<tr style="" >
-		<td id="header" colspan="3">
-			<!-- <div style="height:110px;background-image:url(<?php //echo $CLIENT_ROOT; ?>/images/layout/defaultheader.jpg);background-repeat:no-repeat;position:relative;"> -->
-			<div style="clear:both;background-color:#f2f0e6;height:200px;border-bottom:1px solid #333333;">
-				<div style="float:left;">
-					<img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/cmwh.png" />
-				</div>
-				<div style="float:right;">
-					<img style="" src="<?php echo $CLIENT_ROOT; ?>/images/layout/midwest_herbaria_banner.gif" />
+<?php
+if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/header.' . $LANG_TAG . '.php'))
+	include_once($SERVER_ROOT . '/content/lang/templates/header.en.php');
+else include_once($SERVER_ROOT . '/content/lang/templates/header.' . $LANG_TAG . '.php');
+$SHOULD_USE_HARVESTPARAMS = $SHOULD_USE_HARVESTPARAMS ?? false;
+$collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '/collections/search/index.php';
+?>
+<div class="header-wrapper">
+	<header>
+		<div class="top-wrapper">
+			<a class="screen-reader-only" href="#end-nav"><?= $LANG['H_SKIP_NAV'] ?></a>
+			<nav class="top-login" aria-label="horizontal-nav">
+				<?php
+				if ($USER_DISPLAY_NAME) {
+					?>
+					<div class="welcome-text bottom-breathing-room-rel">
+						<?= $LANG['H_WELCOME'] . ' ' . $USER_DISPLAY_NAME ?>!
+					</div>
+					<span style="white-space: nowrap;" class="button button-tertiary bottom-breathing-room-rel">
+						<a href="<?= $CLIENT_ROOT ?>/profile/viewprofile.php"><?= $LANG['H_MY_PROFILE'] ?></a>
+					</span>
+					<span style="white-space: nowrap;" class="button button-secondary bottom-breathing-room-rel">
+						<a href="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout"><?= $LANG['H_LOGOUT'] ?></a>
+					</span>
+					<?php
+				} else {
+					?>
+					<span class="button button-secondary">
+						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
+							<?= $LANG['H_LOGIN'] ?>
+						</a>
+					</span>
+					<?php
+				}
+				?>
+			</nav>
+			<div class="top-brand">
+				<!--
+				<a href="<?= $CLIENT_ROOT ?>">
+					<div class="image-container">
+						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
+					</div>
+				</a>
+				-->
+				<div class="brand-name">
+					<h2>Consortium of</h2>
+					<h1>Midwest Herbaria</h1>
 				</div>
 			</div>
-			<div id="top_navbar">
-				<div id="right_navbarlinks">
-					<?php
-					if($USER_DISPLAY_NAME){
-						?>
-						<span style="">
-							Welcome <?php echo $USER_DISPLAY_NAME; ?>!
-						</span>
-						<span style="margin-left:5px;">
-							<a href="<?php echo $CLIENT_ROOT; ?>/profile/viewprofile.php">My Profile</a>
-						</span>
-						<span style="margin-left:5px;">
-							<a href="<?php echo $CLIENT_ROOT; ?>/profile/index.php?submit=logout">Logout</a>
-						</span>
-						<?php
-					}
-					else{
-						?>
-						<span style="">
-							<a href="<?php echo $CLIENT_ROOT.'/profile/index.php?refurl='.$_SERVER['SCRIPT_NAME'].'?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
-								Log In
-							</a>
-						</span>
-						<span style="margin-left:5px;">
-							<a href="<?php echo $CLIENT_ROOT; ?>/profile/newprofile.php">
-								New Account
-							</a>
-						</span>
-						<?php
-					}
-					?>
-					<span style="margin-left:5px;margin-right:5px;">
-						<a href='<?php echo $CLIENT_ROOT; ?>/sitemap.php'>Sitemap</a>
-					</span>
-				</div>
-				<ul id="hor_dropdown">
+		</div>
+		<div class="menu-wrapper">
+			<!-- Hamburger icon -->
+			<input class="side-menu" type="checkbox" id="side-menu" name="side-menu" />
+			<label class="hamb hamb-line hamb-label" for="side-menu" tabindex="0">☰</label>
+			<!-- Menu -->
+			<nav class="top-menu" aria-label="hamburger-nav">
+				<ul class="menu">
 					<li>
-						<a href="<?php echo $CLIENT_ROOT; ?>/index.php" >Home</a>
+						<a href="<?= $CLIENT_ROOT ?>/index.php">
+							<?= $LANG['H_HOME'] ?>
+						</a>
 					</li>
-                                        <li>
-                                                <a href="#">Specimen Search</a>
-                                                <ul>
-                                                        <li>
-                                                                <a href="<?php echo $CLIENT_ROOT; ?>/collections/index.php" >Search Collections</a>
-                                                        </li>
-                                                        <li>
-                                                                <a href="<?php echo $CLIENT_ROOT; ?>/collections/map/mapinterface.php" target="_blank">Map Search</a>
-                                                        </li>
-                                                        <li>
-                                                                <a href="<?php echo $CLIENT_ROOT; ?>/collections/exsiccati/index.php">Exsiccati Search</a>
-                                                        </li>
-                                                </ul>
-                                        </li>
- 					<li>
-						<a href="<?php echo $CLIENT_ROOT; ?>/imagelib/index.php" >Images</a>
+					<li>
+						<a href="#">Specimen Search</a>
 						<ul>
 							<li>
-								<a href="<?php echo $CLIENT_ROOT; ?>/imagelib/index.php">Browse</a>
+								<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">Search Collections</a>
 							</li>
 							<li>
-								<a href="<?php echo $CLIENT_ROOT; ?>/imagelib/search.php">Search</a>
+								<a href="<?= $CLIENT_ROOT; ?>/collections/map/mapinterface.php" target="_blank">Map Search</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/collections/exsiccati/index.php">Exsiccati Search</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">Images</a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/imagelib/index.php">Browse</a>
+							</li>
+							<li>
+							<a href="<?= $CLIENT_ROOT; ?>/imagelib/search.php">Search</a>
 							</li>
 						</ul>
 					</li>
 					<li>
 						<a href="#">Flora Projects</a>
 						<ul>
-							<li><a href="<?php echo $CLIENT_ROOT; ?>/projects/index.php?pid=94">State Inventories</a></li>
-							<li><a href="<?php echo $CLIENT_ROOT; ?>/projects/index.php?pid=124">Indiana</a></li>
-							<li><a href="<?php echo $CLIENT_ROOT; ?>/projects/index.php?pid=126">Ohio</a></li>
-							<li><a href="<?php echo $CLIENT_ROOT; ?>/projects/index.php?pid=133">Wisconsin</a></li>
-							<li><a href="<?php echo $CLIENT_ROOT; ?>/checklists/checklist.php?cl=4892">Aquatic Invasive Plant Guide</a></li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=94">State Inventories</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=124">Indiana</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=126">Ohio</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=133">Wisconsin</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT; ?>/checklists/checklist.php?cl=4892">Aquatic Invasive Plant Guide</a>
+							</li>
 						</ul>
 					</li>
 					<li>
 						<a href="#" >Interactive Tools</a>
 						<ul>
 							<li>
-								<a href="<?php echo $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=checklist" >Dynamic Checklist</a>
+								<a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=checklist" >Dynamic Checklist</a>
 							</li>
 							<li>
-								<a href="<?php echo $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=key" >Dynamic Key</a>
+								<a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=key" >Dynamic Key</a>
 							</li>
 						</ul>
 					</li>
 					<li>
-						<a href="<?php echo $CLIENT_ROOT; ?>/collections/specprocessor/crowdsource/central.php" >Crowdsource</a>
+						<a href="<?= $CLIENT_ROOT ?>/includes/usagepolicy.php">
+							<?= $LANG['H_DATA_USAGE'] ?>
+						</a>
 					</li>
+					<li>
+						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
+							<?= $LANG['H_SITEMAP'] ?>
+						</a>
+					</li>
+					<!--
+					<li id="lang-select-li">
+						<label for="language-selection"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
+						<select oninput="setLanguage(this)" id="language-selection" name="language-selection">
+							<option value="en">English</option>
+							<option value="es" <?= ($LANG_TAG=='es'?'SELECTED':'') ?>>Español</option>
+							<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>
+						</select>
+					</li>
+					-->
 				</ul>
-			</div>
-		</td>
-	</tr>
-    <tr>
-	<td id='middlecenter'  colspan="3">
+			</nav>
+		</div>
+		<div id="end-nav"></div>
+	</header>
+</div>

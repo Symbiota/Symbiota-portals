@@ -1,8 +1,11 @@
 <?php
-include_once("config/symbini.php");
-header("Content-Type: text/html; charset=".$CHARSET);
+include_once('config/symbini.php');
+if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/templates/index.en.php');
+else include_once($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php');
+header('Content-Type: text/html; charset=' . $CHARSET);
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="<?php echo $LANG_TAG ?>">
 <head>
 	<title><?php echo $DEFAULT_TITLE; ?> Home</title>
 	<?php
@@ -11,8 +14,8 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	?>
 	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
 	<link href="<?php echo $CSS_BASE_PATH; ?>/quicksearch.css" type="text/css" rel="Stylesheet" />
-	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
-	<script src="js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
@@ -25,7 +28,8 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	include($SERVER_ROOT.'/includes/header.php');
 	?> 
         <!-- This is inner text! -->
-        <div id="innertext" style="height:700px;">
+		<div class="navpath"></div>
+        <div id="innertext">
                 <div style="float:right;">
 			<div id="quicksearchdiv" style="clear:both">
 				<!-- -------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
@@ -37,7 +41,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
            		</div>
 			<?php
 			$oodID = 1; 
-			$ootdGameChecklist = "3512";
+			$ootdGameChecklist = "74";
 			$ootdGameTitle = "Plant of the Day "; 
 			$ootdGameType = "plant"; 
 			//---------------------------DO NOT CHANGE BELOW HERE-----------------------------
@@ -59,26 +63,26 @@ header("Content-Type: text/html; charset=".$CHARSET);
 			</div>
 		</div>
 		<h1>Welcome to the Consortium of Midwest Herbaria</h1>
-		<div style="margin:10px 15px;margin-top:30px;font-size:120%">
+		<p>
             		While focused around the Great Lakes drainage basin, the region includes the six states 
 			that border the western Great Lakes: Illinois, Indiana, Michigan, Minnesota, Ohio, and Wisconsin. 
 			132 herbaria are listed in 
 <a href="http://sciweb.nybg.org/science2/IndexHerbariorum.asp" target="_blank">Index Herbariorum (Thiers, B. [continuously updated])</a> from this region; 
 			we hope to eventually make data available from a majority of those collections.
-            	</div>
-		<div style="margin: 10px 15px;font-size:120%;">
+		</p>
+		<p>
             		The <a href="http://www.epa.gov/greatlakes/basicinfo.html" target="_blank">Great Lakes basin includes 84% of North American surface fresh water</a>
 			and includes a mixture of habitat types amidst a landscape that has been highly modified by agricultural 
 			and industrial uses and is home to 16% of the US population (US Census Bureau, 2014 estimates). Areas 
 			to the south and west of the lakes include lands which form portions of the Mississippi and Ohio River basins; 
 			much of this land escaped major glaciation.  Plants and communities in the region are diverse, ranging from boreal 
 			forest to southern hardwoods, prairies, bogs and fens.
-            	</div>
-		<div style="margin:10px 15px;font-size:120%">
+		</p>
+		<p>
             		This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Portal Network</a>.
 			Please send questions or comments to <a href="mailto:help@symbiota.org?subject=Midwest Portal Feedback">Support Hub Help Desk (help@symbiota.org)</a>.
             	</div>
-        </div>
+		</p>
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
 	?> 
