@@ -41,7 +41,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
            		</div>
 			<?php
 			$oodID = 1; 
-			$ootdGameChecklist = "74";
+			$ootdGameChecklist = "3512";
 			$ootdGameTitle = "Plant of the Day "; 
 			$ootdGameType = "plant"; 
 			//---------------------------DO NOT CHANGE BELOW HERE-----------------------------
