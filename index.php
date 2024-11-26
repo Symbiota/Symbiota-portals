@@ -1,10 +1,11 @@
 <?php
-include_once("config/symbini.php");
-header("Content-Type: text/html; charset=ISO-8859-1");
-header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
+include_once('config/symbini.php');
+if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/templates/index.en.php');
+else include_once($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php');
+header('Content-Type: text/html; charset=' . $CHARSET);
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="<?php echo $LANG_TAG ?>">
 <head>
 	<title>IRHN</title>
 	<?php
@@ -13,8 +14,8 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	?>
 	<link href="css/quicksearch.css" type="text/css" rel="Stylesheet" />
 	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
-	<script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
-	<script src="js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
@@ -27,17 +28,13 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	include($SERVER_ROOT."/includes/header.php");
 	?> 
         <!-- This is inner text! -->
-        <div  id="innertext" style="padding:20px;font-size:120%;">
+		<div class="navpath"></div>
+        <main id="innertext">
             <h1>Welcome to Intermountain Regional Herbarium Network</h1>
-            <div style="margin:20px;">
-			The Intermountain Region is basically the region between the Sierra Nevada 
-			and the Rocky Mountains but the precise interpretation of the phrase varies. 
-			Most agree that the hydrologic Great Basin, the area with no external drainage, 
-			dominates the region. This basin is divided by north-south trending 
 			<?php
 			//---------------------------GAME SETTINGS---------------------------------------
 			$oodID = 1; 
-			$ootdGameChecklist = 3426;
+			$ootdGameChecklist = 74;
 			$ootdGameTitle = "Plant of the Day "; 
 			$ootdGameType = "plant"; 
 			//---------------------------DO NOT CHANGE BELOW HERE-----------------------------
@@ -58,17 +55,22 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 					Click here to test your knowledge
 				</a>
 			</div>
+            <p>
+			The Intermountain Region is basically the region between the Sierra Nevada 
+			and the Rocky Mountains but the precise interpretation of the phrase varies. 
+			Most agree that the hydrologic Great Basin, the area with no external drainage, 
+			dominates the region. This basin is divided by north-south trending 
 			mountain ranges that are separated by wide valleys. The mountain ranges support 
 			woods and forests that are now essentially isolated from each other as well as 
 			from the Sierra Nevada and Rocky Mountains by the intervening valleys. The 
-			region’s biota is determined in large part by its variable and scant 
+			region's biota is determined in large part by its variable and scant 
 			precipitation, most of which falls in winter, and its large fluctuations 
-			in temperature, both daily and seasonal. <br/><br/>
+			in temperature, both daily and seasonal.
 			
 			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>.
 			Please send questions or comments to <a href="mailto:Kristian.Valles@usu.edu">Kristian.Valles@usu.edu</a>. 
-	  	</div>
-        </div>
+			</p>
+		</main>
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");
 	?> 

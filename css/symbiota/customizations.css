@@ -2,4 +2,19 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ @import url("https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap");
+
+ .brand-name h1,
+.brand-name h2 {
+  color: var(--header-font-color);
+  margin: 0;
+  letter-spacing: 0.05em;
+  font-family: Inknut Antiqua;
+  text-shadow: 0 0 7px black;
+}
+
+.button-tertiary {
+    background-color: none;
+    border: 3px solid var(--bright-color);
+    padding: 0.5rem 0.9rem;
+  }
