@@ -64,7 +64,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						<a href="#">Specimen Search</a>
 						<ul>
 							<li>
-								<a href="<?= $CLIENT_ROOT ?>/collections/index.php">Search Collections</a>
+								<a href="<?= $CLIENT_ROOT ?>/collections/search/index.php">Search Collections</a>
 							</li>
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/collections/map/index.php">Map Search</a>
