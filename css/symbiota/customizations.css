@@ -18,3 +18,14 @@ This stylesheet is defined last and will override all previously loaded sheets. 
     border: 3px solid var(--bright-color);
     padding: 0.5rem 0.9rem;
   }
+
+  .top-wrapper {
+    background-color: var(--header-bg-color);
+    display: grid;
+    grid-template-areas: "brand login";
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    padding: 2rem 0;
+  }
