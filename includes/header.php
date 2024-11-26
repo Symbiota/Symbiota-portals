@@ -43,7 +43,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					-->
 				</a>
 				<div class="brand-name">
-					<h1>Consortium of Northern Great Plains Herbaria</h1>
+					<h1>Consortium of Great Plains Herbaria</h1>
 					<h2></h2>
 				</div>
 			</div>
