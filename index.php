@@ -24,7 +24,8 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	include($SERVER_ROOT.'/includes/header.php');
 	?>
 	<!-- This is inner text! -->
-	<div  id="innertext">
+	<div class="navpath"></div>
+	<main  id="innertext">
 		<h1></h1>
 
 		<div style="float:right;margin-left:15px;">
@@ -68,10 +69,9 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				?>
 			</div>
 		</div>
-		<div style="padding: 0px 10px;">
-			Description and introduction of project
+		<div>
 		</div>
-	</div>
+	</main>
 
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
