@@ -61,9 +61,15 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						</a>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">
-							Search Collections
-						</a>
+						<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">Search</a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">Search Collections</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/collections/index.php">Classic Search</a>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<a href="<?= $CLIENT_ROOT ?>/imagelib/index.php">
