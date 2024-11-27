@@ -116,7 +116,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 								<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=115">Additional Local Lists</a>
 							</li>
 							<li>
-								<a href="<?= $CLIENT_ROOT; ?>https://www.nybg.org/science-project/new-york-city-ecoflora/">More Details About Project</a>
+								<a href="https://www.nybg.org/science-project/new-york-city-ecoflora/">More Details About Project</a>
 							</li>
 						</ul>
 					</li>
