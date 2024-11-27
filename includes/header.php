@@ -101,7 +101,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						</ul>
 					</li>
 					<li>
-						<a href="#">NYC EcoFlora</a>
+						<a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=115#">NYC EcoFlora</a>
 						<ul>
 							<li>
 								<a href="<?= $CLIENT_ROOT; ?>/checklists/checklist.php?cl=5058&pid=115">Vascular Checklist</a>
