@@ -151,7 +151,7 @@ class OccurrenceTaxaManager {
 			$sql = 'SELECT DISTINCT v.VernacularName, t.tid, t.sciname, t.rankid
 				FROM taxstatus ts INNER JOIN taxavernaculars v ON ts.TID = v.TID
 				INNER JOIN taxa t ON t.TID = ts.tidaccepted
-				WHERE (ts.taxauthid = '.$this->taxAuthId.') AND (v.VernacularName IN("'.$searchTerm.'"))
+				WHERE (ts.taxauthid = '.$this->taxAuthId.') AND (v.VernacularName IN("'.$searchTerm.'")) and t.sciname != v.vernacularName
 				ORDER BY t.rankid LIMIT 10';
 			$rs = $this->conn->query($sql);
 			while($row = $rs->fetch_object()){
@@ -179,9 +179,9 @@ class OccurrenceTaxaManager {
 						if($rankid >= 180 && $rankid <= 220){
 							//Get accepted children
 							$sql1 = 'SELECT DISTINCT t.tid, t.sciname, t.rankid
-								FROM taxa t INNER JOIN taxstatus ts ON t.tid = ts.tid
-								INNER JOIN taxaenumtree e ON t.tid = e.tid
-								WHERE (e.parenttid IN('.$tid.')) AND (ts.TidAccepted = ts.tid) AND (ts.taxauthid = ' . $this->taxAuthId . ') AND (e.taxauthid = ' . $this->taxAuthId . ')' ;
+								FROM taxa t INNER JOIN taxstatus ts ON t.tid = ts.tidAccepted
+								INNER JOIN taxaenumtree e ON ts.tid = e.tid
+								WHERE (e.parenttid IN('.$tid.')) AND (ts.taxauthid = ' . $this->taxAuthId . ') AND (e.taxauthid = ' . $this->taxAuthId . ')' ;
 							/*
 							$sql1 = 'SELECT DISTINCT t.tid, t.sciname, t.rankid '.
 								'FROM taxa t INNER JOIN taxstatus ts ON t.tid = ts.tid '.
