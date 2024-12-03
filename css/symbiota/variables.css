@@ -4,22 +4,21 @@
   --header-bg-image: url("../../images/layout/digiherb_header_v3.gif");
   --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
-  --title-font-family: "Averia Serif Libre", serif;
+  --brand-font-size: 4rem;
   --logo-width: 120px;
   --menu-top-bg-color: #4a4d92;
   --menu-font-size: 1rem;
-  --body-bg-color: #fafafa;
+  --body-bg-color: #f5fdff;
   --body-text-color: #000000;
   --body-font-size: 1rem;
   --body-font-family: "Arial", sans-serif;
   --footer-bg-color: #f2f0e9;
   --heading-font-family: "Roboto", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --link-color: #000080;
+  --darkest-color: #4a4d92;
+  --medium-color: #7a7db5;
+  --light-color: #c3c4e4;
+  --bright-color: #ffcc00;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }

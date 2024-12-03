@@ -2,15 +2,50 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
+
+ @font-face {
+  font-family: 'Priori Sans OT';
+  src: url('../../css/symbiota/PrioriSansOT-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../../css/symbiota/proximanova.otf');
+}
+
+@font-face {
+  font-family: 'Priori Sans OT Light';
+  src: url('../../css/symbiota/PrioriSansOT-Light.otf');
+}
  
  .brand-name h1 {
   color: #4a4d92;
   margin: 0;
   letter-spacing: 0.05em;
+  font-family: "Priori Sans OT Light";
 }
 
 .brand-name h2 {
   color: #005952;
   margin: 0;
-  letter-spacing: 0.05em;
+  font-family: "Proxima Nova";
+  font-size: calc(var(--brand-font-size) * 0.4);
+}
+
+.welcome-text {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  text-shadow: 0 0 5px black;
+  font-weight: bold;
+}
+
+.button-tertiary {
+  background-color: #ffffff8e;
+  border: 3px solid var(--bright-color);
+  padding: 0.5rem 0.9rem;
+}
+
+.button-tertiary > a {
+  color: var(--darkest-color);
 }

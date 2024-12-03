@@ -41,11 +41,13 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			//Default Language
 			?>
 			<div>
-				<h1>Welcome</h1>
+				<h1>Welcome to the DigiHerb portal:</h1>
 				<p>
-					This data portal has been established to promote collaborative... Replace
-					with introductory text in English. If the portal is not meant to be
-					multilingual, remove the unneeded language sections
+					The DigiHerb project represents EU funded collaboration between the Consortium of North-West 
+					Europe Herbaria (CoNWEH). The current collection is comprised of samples from three herbaria; 
+					The National Herbarium of Ireland (DBN), Staatliches Museum für Naturkunde Karlsruhe (KR), 
+					and Ghent University (GENT).  The consortium aims to incorporate data from additional herbaria in the future.  
+					The DigiHerb project was funded by Interreg North-West Europe. 
 				</p>
 			</div>
 			<?php
