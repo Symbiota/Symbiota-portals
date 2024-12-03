@@ -1,13 +1,13 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/digiherb_header.gif");
+  --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
   --brand-font-size: 1.5rem;
   --title-font-family: "Averia Serif Libre", serif;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #4a4d92;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;

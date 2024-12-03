@@ -3,3 +3,14 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
+ .brand-name h1 {
+  color: #4a4d92;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.brand-name h2 {
+  color: #005952;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
