@@ -1,7 +1,7 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/digiherb_header.gif");
+  --header-bg-image: url("../../images/layout/digiherb_header_v3.gif");
   --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
   --brand-font-size: 1.5rem;
