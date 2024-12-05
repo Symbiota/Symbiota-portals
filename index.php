@@ -93,8 +93,13 @@ echo $pluginManager->createSlideShow($ssId,$numSlides,$width,$numDays,$imageType
 			Together, through all of these efforts, we will build a better virtual herbarium for the Mid-Atlantic, thus building a stronger understanding of the Mid-Atlantic flora and how it has changed along with this dynamic region. 
 		</p>
 		<p>
-			MAHC began during the NSF-funded <a href="https://www.idigbio.org/wiki/index.php/The_Mid-Atlantic_Megalopolis" target="_blank" >Mid-Atlantic Megalopolis</a> Project and builds on that critical, early digitization work.
+			MAHC began during the NSF-funded <a href="https://www.idigbio.org/wiki/index.php/The_Mid-Atlantic_Megalopolis" target="_blank" >Mid-Atlantic Megalopolis</a> Project and builds on that critical, early digitization work. 
 			Please direct any questions, comments, and requests to <a href="mailto:midatlanticherbaria@gmail.com">midatlanticherbaria@gmail.com</a>.
+		</p>
+		<p>
+			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. 
+			When you search this portal, or any of the other SEINet portal partners, you are getting results from our one central database. 
+			The SEINet portal network contains 24 million records from over 450 collections.	
 		</p>
 		</div>
 </main>

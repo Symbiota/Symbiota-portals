@@ -69,3 +69,7 @@ header {
   .menu {
     font-size: 14px;
   }
+
+  #innertext li {
+    line-height: 1.5;
+  }
