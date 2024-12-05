@@ -74,7 +74,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			</p>
             <p>
 			Visit regularly to learn about your favorite plant or favorite part of the Great Plains. 
-			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Herbarium Network</a>.
+			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Herbarium Network</a>. 
+			When you search this portal, or any of the other SEINet portal partners, you are getting results from our one central database. 
+			The SEINet portal network contains 24 million records from over 450 collections. 
 			Send feedback to 
 			<a class="bodylink" href="mailto:mark.gabel@bhsu.edu?subject=NGPH Feedback">mark.gabel&lt;at&gt;bhsu.edu</a> 
 			or to the Symbiota Support Hub at <a class="bodylink" href="mailto:help@symbiota.org?subject=NGPH Feedback">help@symbiota.org</a>.
