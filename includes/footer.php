@@ -11,9 +11,12 @@
 		</a>
 	</div>
 	<p>
+		<?= (isset($DEFAULT_TITLE) ? $DEFAULT_TITLE : 'This portal') . ' is part of the SEINet Portal Network. <a href="https://symbiota.org/seinet/" target="_blank">Learn more here</a>.'; ?>
+	</p>
 	<p>
 		<?= $LANG['F_POWERED_BY'] ?> <a href="https://symbiota.org/" target="_blank">Symbiota</a>.
 	</p>
 	<p style="font-size:10px;">
 		Header image by Tom Koerner (USFWS) <a href="https://creativecommons.org/licenses/by/2.0/" target="_blank">CC BY 2.0</a>.
+	</p>
 </footer>
