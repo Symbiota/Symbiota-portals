@@ -73,7 +73,12 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			herbaria are now poised to overcome these obstacles by making label data and specimen images readily available online through searchable 
 			electronic databases. As more institutions take advantage of open-source, community-supported digitization software, the online presence 
 			of small collections will rapidly increase and with it the volume of available biodiversity data. 
-</p>
+		</p>
+		<p>
+			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. When you search this portal, 
+			or any of the other SEINet portal partners, you are getting results from our one central database. 
+			The SEINet portal network contains 24 million records from over 450 collections.
+		</p>
 </main>
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");
