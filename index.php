@@ -66,8 +66,11 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			region's biota is determined in large part by its variable and scant 
 			precipitation, most of which falls in winter, and its large fluctuations 
 			in temperature, both daily and seasonal.
-			
-			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>.
+			</p>
+			<p>
+			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>, 
+			which contains 24 million records from over 450 collections. 
+			Collections are organized into regional consortia that are accessed through different websites but share a central database. 
 			Please send questions or comments to <a href="mailto:Kristian.Valles@usu.edu">Kristian.Valles@usu.edu</a>. 
 			</p>
 		</main>

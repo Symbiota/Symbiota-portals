@@ -29,3 +29,7 @@ This stylesheet is defined last and will override all previously loaded sheets. 
     width: 100%;
     padding: 2rem 0;
   }
+
+  #innertext li {
+    line-height: 1.5;
+  }
