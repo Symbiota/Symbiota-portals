@@ -85,16 +85,19 @@ echo $pluginManager->createSlideShow($ssId,$numSlides,$width,$numDays,$imageType
 			We invite any Mid-Atlantic herbaria to join us online in digitizing the rich resources that are our regional plant collections.
 			We offer digitization training, support, imaging equipment loans, and other services to help new Mid-Atlantic herbaria create 
 			their own virtual collections in the MAHC portal.
+		</p>
+		<p>
 			We also welcome plant collectors, citizen scientists, amateur botanists, and plant enthusiasts to add to our observation records 
 			with their own field data and images, to use the portal as a field data entry system before passing herbarium specimens to Consortium members, or to contribute to MAHC by joining us in our specimen transcription efforts 
 			through a <a href="<?php echo $CLIENT_ROOT; ?>/collections/specprocessor/crowdsource/central.php">crowd sourcing module</a>. 
 			Together, through all of these efforts, we will build a better virtual herbarium for the Mid-Atlantic, thus building a stronger understanding of the Mid-Atlantic flora and how it has changed along with this dynamic region. 
-			This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Herbarium Network</a>.
+		</p>
+		<p>
 			MAHC began during the NSF-funded <a href="https://www.idigbio.org/wiki/index.php/The_Mid-Atlantic_Megalopolis" target="_blank" >Mid-Atlantic Megalopolis</a> Project and builds on that critical, early digitization work.
 			Please direct any questions, comments, and requests to <a href="mailto:midatlanticherbaria@gmail.com">midatlanticherbaria@gmail.com</a>.
+		</p>
 		</div>
 </main>
-	</p>
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
 	?> 

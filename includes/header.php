@@ -136,6 +136,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 							Crowdsource Data Entry
 						</a>
 					</li>
+					<!--
 					<li>
 						<a href="#">Other SEINet Portals</a>
 						<ul>
@@ -171,6 +172,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 							</li>
 						</ul>
 					</li>
+					-->
 					<li>
 						<a href="<?= $CLIENT_ROOT ?>/includes/usagepolicy.php">
 							<?= $LANG['H_DATA_USAGE'] ?>
