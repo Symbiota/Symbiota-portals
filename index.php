@@ -70,6 +70,10 @@ header("Content-Type: text/html; charset=".$CHARSET);
 			</div>
 		</div>
 		<div>
+			<p>
+				This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. When you search this portal, or any of the other SEINet portal partners, 
+				you are getting results from our one central database. The SEINet portal network contains 24 million records from over 450 collections.
+			</p>
 		</div>
 	</main>
 
