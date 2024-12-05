@@ -71,7 +71,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			we hope to eventually make data available from a majority of those collections.
 		</p>
 		<p>
-            		The <a href="http://www.epa.gov/greatlakes/basicinfo.html" target="_blank">Great Lakes basin includes 84% of North American surface fresh water</a>
+            The <a href="http://www.epa.gov/greatlakes/basicinfo.html" target="_blank">Great Lakes basin includes 84% of North American surface fresh water</a>
 			and includes a mixture of habitat types amidst a landscape that has been highly modified by agricultural 
 			and industrial uses and is home to 16% of the US population (US Census Bureau, 2014 estimates). Areas 
 			to the south and west of the lakes include lands which form portions of the Mississippi and Ohio River basins; 
