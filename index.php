@@ -61,12 +61,17 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				well-informed public. These data span 200 years of botanical information housed in herbaria in the
 				Southeast and are vital to studies in biodiversity, evolution, ecology and systematics to name a few. We are also working to link our
 				efforts with those of other regional herbarium groups and with the National Resource for Advancing Digitization of
-				Biodiversity Collections, <a href="https://www.idigbio.org/" target="_blank">iDigBio</a>. This site is brought to you in
-				collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. Please send questions or
-				comments to the <?php echo '<a href="mailto:' . $ADMIN_EMAIL . '">portal manager</a>'; ?>.
+				Biodiversity Collections, <a href="https://www.idigbio.org/" target="_blank">iDigBio</a>.
 			</p>
 			<p>
-				<h3>Interested in getting more involved?</h3>
+				This site is brought to you in
+				collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. When you search this portal, 
+				or any of the other SEINet portal partners, you are getting results from our one central database. 
+				The SEINet portal network contains 24 million records from over 450 collections. Please send questions or
+				comments to the <?= '<a href="mailto:' . $ADMIN_EMAIL . '">portal manager</a>'; ?>.
+			</p>
+			<h3>Interested in getting more involved?</h3>
+			<p>
 				<a href="http://www.sernec.org" target="_blank">SERNEC</a> has many onsite and remote <a href="https://herbarium.appstate.edu/sernec/volunteer-sernec" target="_blank">volunteer opportunities</a>. 
 				We are continually running
 				expeditions on the <a href="https://www.notesfromnature.org/active-expeditions/Herbarium" target="_blank">Notes from Nature</a> platform
