@@ -64,33 +64,37 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	</div>
 			<h1>Welcome to SEINet</h1>
 			<p>
-            	The SEINet data portal was created
-				to serve as a gateway to distributed data resources of interest to the environmental
-				research community within Arizona and New Mexico. Through a common web interface,
-				we offer tools to locate, access and work with a variety of data.
-				SEINet is more than just a web site - it is a suite of data access technologies
-				and a distributed network of collections, museums and agencies that provide
-				environmental information.
+				The Arizona - New Mexico Chapter of SEINet started as a gateway to distribute botanical data of interest to the environmental research community within Arizona and New Mexico. 
+				Over time this database grew to include many collections across North America.  When you search this portal, or any of the other SEINet portal partners, you are getting results 
+				from our one central database. The SEINet portal network contains 24 million records from 456 collections. Collections are organized into regional consortia that are accessed through 
+				different websites but share a central database. Some examples include: the <a href="https://midwestherbaria.org" target="_blank">Consortium of Midwest Herbaria</a>, 
+					<a href="https://www.soroherbaria.org/portal/" target="_blank">Consortium of Southern Rocky Mountain Herbaria</a>, 
+					<a href="https://intermountainbiota.org" targert="_blank">Intermountain Regional Herbarium Network</a>, 
+					<a href="https://madreandiscovery.org" target="_blank">Madrean Discovery Expeditions (MDE)</a>, 
+					<a href="https://midatlanticherbaria.org" target="_blank">Mid-Atlantic Herbaria Consortium</a>, 
+					<a href="https://nansh.org" target="_blank">North American Network of Small Herbaria</a>, 
+					<a href="https://ngpherbaria.org" target="_blank">North Great Plains Herbaria</a>, 
+					<a href="https://herbanwmex.net" target="_blank">Red de Herbarios Mexicanos</a>, 
+					<a href="https://sernecportal.org" target="_blank">SERNEC (Southeast USA)</a>, and the 
+					<a href="https://portal.torcherbaria.org" target="_blank">Texas Oklahoma Regional Consortium of Herbaria (TORCH)</a>.
 			</p>
 			<p>
-				Join SEINet as a regular visitor and please send your feedback to 
+				Here you'll find taxon pages, checklists, and other tools to help you understand the plants in your region of interest.
+			</p>
+			<p>
+				Join SEINet as a regular visitor and please send your feedback to the 
 				<a class="bodylink" href="mailto:help@symbiota.org?subject=SEINet Feedback">Support Hub HelpDesk (help@symbiota.org)</a>. 
 				Visit the <a href="includes/usagepolicy.php">Data Usage Policy</a> 
 				page for information on how to cite data obtained from this web resource.
 			</p>
 			<p>
- 	           	Visit some of the other regional data portals that are fellow members of the SEINet Portal Network:
+ 	           	More Arizona and New Mexico specimen data can be found here:
 				<ul>
-                                        <li><a href="https://midwestherbaria.org" target="_blank">Consortium of Midwest Herbaria</a></li>
-					<li><a href="https://www.soroherbaria.org/portal/" target="_blank">Consortium of Southern Rocky Mountain Herbaria</a></li>
-					<li><a href="https://intermountainbiota.org" targert="_blank">Intermountain Regional Herbarium Network</a></li>
-					<li><a href="https://madreandiscovery.org" target="_blank">Madrean Discovery Expeditions (MDE)</a></li>
-					<li><a href="https://midatlanticherbaria.org" target="_blank">Mid-Atlantic Herbaria Consortium</a></li>
-					<li><a href="https://nansh.org" target="_blank">North American Network of Small Herbaria</a></li>
-					<li><a href="https://ngpherbaria.org" target="_blank">North Great Plains Herbaria</a></li>
-					<li><a href="https://herbanwmex.net" target="_blank">Red de Herbarios Mexicanos</a></li>
-					<li><a href="https://sernecportal.org" target="_blank">SERNEC (Southeast USA)</a></li>
-					<li><a href="https://portal.torcherbaria.org" target="_blank">Texas Oklahoma Regional Consortium of Herbaria (TORCH)</a></li>
+                    <li>Bryophytes: <a href="https://bryophyteportal.org/portal/" target="_blank">Consortium of North American Bryophyte Herbaria</a></li>
+					<li>Fungi: <a href="http://mycoportal.org/" target="_blank">Mycology Collections Portal (MyCoPortal)</a></li>
+					<li>Lichens: <a href="https://lichenportal.org/" targert="_blank">Consortium of North American Lichen Herbaria</a></li>
+					<li>Macroalgae: <a href="http://macroalgae.org/" target="_blank">Algae Herbarium Consortium</a></li>
+					<li>Pteridophytes: <a href="http://www.pteridoportal.org/portal/" target="_blank">Pteridophyte Collections Consortium</a></li>
 				</ul>
 			</p>
 		</main>
