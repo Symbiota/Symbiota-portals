@@ -79,7 +79,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			forest to southern hardwoods, prairies, bogs and fens.
 		</p>
 		<p>
-            		This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Portal Network</a>.
+            This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Portal Network</a>. 
+			When you search this portal, or any of the other SEINet portal partners, you are getting results from our one central database. 
+			The SEINet portal network contains 24 million records from over 450 collections.
 			Please send questions or comments to <a href="mailto:help@symbiota.org?subject=Midwest Portal Feedback">Support Hub Help Desk (help@symbiota.org)</a>.
             	</div>
 		</p>
