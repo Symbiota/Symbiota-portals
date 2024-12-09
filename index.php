@@ -1,6 +1,6 @@
 <?php
-include_once('config/symbini.php');
-header('Content-Type: text/html; charset='.$CHARSET);
+include_once("config/symbini.php");
+header("Content-Type: text/html; charset=".$CHARSET);
 ?>
 <html>
 <head>
@@ -24,7 +24,8 @@ header('Content-Type: text/html; charset='.$CHARSET);
 	include($SERVER_ROOT.'/includes/header.php');
 	?>
 	<!-- This is inner text! -->
-	<div  id="innertext">
+	<div class="navpath"></div>
+	<main  id="innertext">
 		<h1></h1>
 
 		<div style="float:right;margin-left:15px;">
@@ -54,7 +55,7 @@ header('Content-Type: text/html; charset='.$CHARSET);
 				//leave as 0 if you do not wish for images to come from a checklist
 				//if you would like to use more than one checklist, separate their ids with a comma ex. "1,2,3,4"
 				//$clid = '1279';
-				$clid = '330';
+				$clid = '2522';
 				//Enter field, specimen, or both to specify whether to use only field or specimen images, or both
 				$imageType = 'field';
 				//Enter number of days of most recent images that should be included
@@ -68,10 +69,13 @@ header('Content-Type: text/html; charset='.$CHARSET);
 				?>
 			</div>
 		</div>
-		<div style="padding: 0px 10px;">
-			Description and introduction of project
+		<div>
+			<p>
+				This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>. When you search this portal, or any of the other SEINet portal partners, 
+				you are getting results from our one central database. The SEINet portal network contains 24 million records from over 450 collections.
+			</p>
 		</div>
-	</div>
+	</main>
 
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
