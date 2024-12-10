@@ -62,7 +62,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						</a>
 					</li>
                     <li>
-                    	<a href="<?= $CLIENT_ROOT; ?>/../fauna/collections/harvestparams.php" >Fauna Database</a>
+                    	<a href="<?= $CLIENT_ROOT; ?>/../fauna/collections/search/index.php" >Fauna Database</a>
                     </li>
 					<li>
 						<a href="<?= $CLIENT_ROOT; ?>/collections/search/index.php" >Search Collections</a>
