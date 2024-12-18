@@ -23,7 +23,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	include($SERVER_ROOT.'/includes/header.php');
 	?> 
 	<!-- This is inner text! -->
-        <div class="navpath"></div>
+    <div class="navpath"></div>
  	<main id="innertext">
 	<div id="quicksearchdiv" style="float:right;margin-right:20px">
 		<!-- -------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
