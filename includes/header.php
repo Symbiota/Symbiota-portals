@@ -10,6 +10,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 		<div class="top-wrapper">
 			<a class="screen-reader-only" href="#end-nav"><?= $LANG['H_SKIP_NAV'] ?></a>
 			<nav class="top-login" aria-label="horizontal-nav">
+				<!--
 				<?php
 				if ($USER_DISPLAY_NAME) {
 					?>
@@ -38,6 +39,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					<?php
 				}
 				?>
+				-->
 			</nav>
 			<div class="top-brand">
 				<!--
@@ -48,8 +50,9 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 				</a>
 				-->
 				<div class="brand-name">
-					<h1>DIGI<span style="font-family:Priori Sans OT">HERB</span></h1>
-					<h2>Consortium <i>of</i> Northwest Europe Herbaria</h2>
+					<h1 style="margin-bottom:-1rem">DIGI<span style="font-family:Priori Sans OT">HERB</span></h1>
+					<h2>Consortium <i>of</i></h2>
+					<h2>Northwest Europe Herbaria</h2>
 				</div>
 			</div>
 		</div>
@@ -131,6 +134,29 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 							<?= $LANG['H_SITEMAP'] ?>
 						</a>
 					</li>
+					<?php
+					if ($USER_DISPLAY_NAME) {
+					?>
+					<li>
+						<a href="<?= $CLIENT_ROOT ?>/profile/viewprofile.php">
+							<?= $LANG['H_MY_PROFILE'] ?>
+						</a>
+					</li>
+					<li>
+						<a href="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout">
+							<?= $LANG['H_LOGOUT'] ?></a>
+					</li>
+					<?php
+					} else {
+					?>
+					<li>
+						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
+								<?= $LANG['H_LOGIN'] ?>
+						</a>
+					</li>
+					<?php
+					}
+					?>
 					<!--
 					<li>
 						<a href="#">Example Dropdown</a>

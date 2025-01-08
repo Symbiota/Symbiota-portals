@@ -1,12 +1,12 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/digiherb_header_v3.gif");
-  --header-bg-color: ; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/Digiherb_head_dotted_map_lng.png");
+  --header-bg-color: #005952; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 4rem;
+  --brand-font-size: 4.5rem;
   --logo-width: 120px;
-  --menu-top-bg-color: #4a4d92;
+  --menu-top-bg-color: #010101;
   --menu-font-size: 1rem;
   --body-bg-color: #f5fdff;
   --body-text-color: #000000;

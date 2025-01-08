@@ -19,17 +19,19 @@ This stylesheet is defined last and will override all previously loaded sheets. 
 }
  
  .brand-name h1 {
-  color: #4a4d92;
+  color: #ffffff;
   margin: 0;
   letter-spacing: 0.05em;
   font-family: "Priori Sans OT Light";
+  font-weight:normal;
 }
 
 .brand-name h2 {
-  color: #005952;
+  color: #ffffff;
   margin: 0;
   font-family: "Proxima Nova";
-  font-size: calc(var(--brand-font-size) * 0.4);
+  font-size: calc(var(--brand-font-size) * 0.35);
+  font-weight:normal;
 }
 
 .welcome-text {
@@ -40,12 +42,31 @@ This stylesheet is defined last and will override all previously loaded sheets. 
   font-weight: bold;
 }
 
-.button-tertiary {
-  background-color: #ffffff8e;
-  border: 3px solid var(--bright-color);
-  padding: 0.5rem 0.9rem;
+.menu a {
+  font-weight:normal;
 }
 
-.button-tertiary > a {
-  color: var(--darkest-color);
+header {
+  gap: 0;
+  grid-template-areas:
+    "top"
+    "menu";
+  grid-template-rows: auto fit-content(100%);
+  background-color: var(--header-bg-color);
+  background-image: var(--header-bg-image);
+  background-position: center;
+  background-size: cover;
+  min-width: 0;
+  min-height: 0;
+}
+
+.top-wrapper {
+  display: grid;
+  background-color: transparent;
+  grid-template-areas: "brand login";
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  padding: 1rem 0;
 }

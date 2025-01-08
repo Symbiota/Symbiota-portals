@@ -40,13 +40,27 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			//Default Language
 			?>
 			<div>
-				<h1>Welcome to the DigiHerb portal:</h1>
+				<h1>Welcome to the DigiHerb portal</h1>
+				<div style="float:right">
+					<img src="images/layout/DigiHerb herbarium image.jpg" style="width:200px;margin:0px 60px" alt="Herbarium specimen">
+				</div>
 				<p>
-					The DigiHerb project represents EU funded collaboration between the Consortium of North-West 
-					Europe Herbaria (CoNWEH). The current collection is comprised of samples from three herbaria; 
-					The National Herbarium of Ireland (DBN), Staatliches Museum für Naturkunde Karlsruhe (KR), 
-					and Ghent University (GENT).  The consortium aims to incorporate data from additional herbaria in the future.  
-					The DigiHerb project was funded by Interreg North-West Europe. 
+				The DigiHerb portal, developed for the Consortium of Northwest Europe Herbaria (CoNWEH), 
+				provides access to herbarium specimen data from member institutions, with a general focus on specimens 
+				collected in the region. CoNWEH originated from the <a href="https://digiherb.nweurope.eu/" target="_blank">
+				DigiHerb</a> project, an EU co-funded collaboration between the National Herbarium of 
+				Ireland (DBN), Staatliches Museum für Naturkunde Karlsruhe (KR), and Ghent University (GENT). 
+				The project aims to empower smaller regional herbaria in Northwest Europe to digitise, manage, 
+				and share their collections efficiently, ensuring their long-term preservation and accessibility.
+				</p>
+				<p>
+				The flora of the Northwest Europe represents a significant portion of Europe's overall plant diversity, 
+				includes around 20 to 30 % of the continent's vascular plant species, underscoring its crucial role in 
+				biodiversity. It provides diverse habitat like temperate forest, wetlands, and grasslands that 
+				support native species.
+				</p>
+				<p>
+				The DigiHerb project was co-funded by Interreg North-West Europe.
 				</p>
 			</div>
 			<?php

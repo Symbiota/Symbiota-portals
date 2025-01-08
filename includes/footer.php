@@ -6,7 +6,7 @@
 		<a href="https://www.nweurope.eu/" target="_blank" aria-label="Visit interreg website">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/Interreg.jpg" alt="interreg North-West Europe logo" />
 		</a>
-		<a href="https://heritageireland.ie/" target="_blank" aria-label="Office of Public Works Ireland website">
+		<a href="https://www.botanicgardens.ie/" target="_blank" aria-label="Office of Public Works Ireland website">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/OPW.png" alt="Office of Public Works Ireland logo" />
 		</a>
 		<a href="https://www.smnk.de/" target="_blank" aria-label="Naturkundemuseum Karlsruhe website">
