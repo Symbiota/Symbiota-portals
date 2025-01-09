@@ -47,7 +47,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				<p>
 				The DigiHerb portal, developed for the Consortium of Northwest Europe Herbaria (CoNWEH), 
 				provides access to herbarium specimen data from member institutions, with a general focus on specimens 
-				collected in the region. CoNWEH originated from the <a href="https://digiherb.nweurope.eu/" target="_blank">
+				collected in the region and around the world. CoNWEH originated from the <a href="https://digiherb.nweurope.eu/" target="_blank">
 				DigiHerb</a> project, an EU co-funded collaboration between the National Herbarium of 
 				Ireland (DBN), Staatliches Museum für Naturkunde Karlsruhe (KR), and Ghent University (GENT). 
 				The project aims to empower smaller regional herbaria in Northwest Europe to digitise, manage, 
