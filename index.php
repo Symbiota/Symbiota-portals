@@ -109,7 +109,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				members to manage and share biodiversity data to scientists and the general public. Participating institutions are afforded sophisticated online data 
 				management tools without the need for onsite IT support.</p>
 				<p>Do you have specimen data to contribute, problems accessing or managing data, 
-				or simply wish to provide feedback? Please send questions, comments, and requests to <a href="mailto:CSVCollAdmin@asu.edu">CSVCollAdmin@asu.edu</a></p>
+				or simply wish to provide feedback? Please send questions, comments, and requests to <a href="mailto:help@symbiota.org">help@symbiota.org</a></p>
 			</div>
 		</div>
 	</main>
