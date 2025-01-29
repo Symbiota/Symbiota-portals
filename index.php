@@ -54,6 +54,14 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				and share their collections efficiently, ensuring their long-term preservation and accessibility.
 				</p>
 				<p>
+				At DigiHerb, we recognise herbarium digitisation as an essential tool for preserving botanical heritage, 
+				advancing biodiversity research, and informing conservation policies. By making plant specimens globally accessible, 
+				digitisation enhances collaboration among stakeholders and supports species conservation in the face of global change. 
+				The DigiHerb initiative exemplifies the power of shared resources, optimizing costs while ensuring data interoperability 
+				and accessibility. We encourage policymakers, biodiversity managers, and researchers to actively use and integrate 
+				digitised herbarium data in their work to drive informed decision-making and innovative research, while also promoting its use in education.
+				</p>
+				<p>
 				The flora of the Northwest Europe represents a significant portion of Europe's overall plant diversity, 
 				includes around 20 to 30 % of the continent's vascular plant species, underscoring its crucial role in 
 				biodiversity. It provides diverse habitat like temperate forest, wetlands, and grasslands that 
