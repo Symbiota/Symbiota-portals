@@ -38,13 +38,14 @@ $isSecuredReader = false;
 $isEditor = false;
 if($SYMB_UID){
 	//Check editing status
+	$observerUid = $indManager->getOccData('observeruid');
 	if($IS_ADMIN || (array_key_exists('CollAdmin',$USER_RIGHTS) && in_array($collid,$USER_RIGHTS['CollAdmin']))){
 		$isEditor = true;
 	}
 	elseif((array_key_exists('CollEditor',$USER_RIGHTS) && in_array($collid,$USER_RIGHTS['CollEditor']))){
 		$isEditor = true;
 	}
-	elseif(isset($occArr['observeruid']) && $occArr['observeruid'] == $SYMB_UID){
+	elseif($observerUid == $SYMB_UID){
 		$isEditor = true;
 	}
 	elseif($indManager->isTaxonomicEditor()){
@@ -64,8 +65,11 @@ if($SYMB_UID){
 		$isSecuredReader = true;
 	}
 }
+
+//Appy protections and build occurrence array
 $indManager->applyProtections($isSecuredReader);
 $occArr = $indManager->getOccData();
+
 $collMetadata = $indManager->getMetadata();
 $genticArr = $indManager->getGeneticArr();
 
@@ -309,11 +313,17 @@ $traitArr = $indManager->getTraitArr();
 		.smaller-header {
 			font-size: 2rem;
 		}
-		<?php if($shouldUseMinimalMapHeader){ ?>
+		#exsiccati-div{ clear: both; }
+		#rights-div{ clear: both; }
+		<?php
+		if($shouldUseMinimalMapHeader){
+			?>
 			.minimal-header-margin{
 			   margin-top: 6rem;
 			}
-		<?php } ?>
+			<?php
+		}
+		?>
 		</style>
 </head>
 <body>
@@ -435,7 +445,7 @@ $traitArr = $indManager->getTraitArr();
 										$relID = $assocArr['objectID'];
 										$relUrl = $assocArr['resourceurl'];
 										if(!$relUrl && $assocArr['occidassoc']) $relUrl = $GLOBALS['CLIENT_ROOT'].'/collections/individual/index.php?occid='.$assocArr['occidassoc'];
-										if($relUrl) $relID = '<a href="' . $relUrl . '">' . $relID . '</a>';
+										if($relUrl) $relID = '<a href="' . $relUrl . '" target="_blank">' . ($relID ? $relID : $relUrl) . '</a>';
 										if($relID) echo $relID;
 										if($assocArr['sciname']) echo ' [' . $assocArr['sciname'] . ']';
 										echo '</div>';

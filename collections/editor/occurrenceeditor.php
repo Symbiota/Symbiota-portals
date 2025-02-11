@@ -444,10 +444,7 @@ else{
 	<link href="<?= $CSS_BASE_PATH ?>/jquery-ui.css" type="text/css" rel="stylesheet">
 	<link href="<?= $CSS_BASE_PATH ?>/symbiota/variables.css" type="text/css" rel="stylesheet">
 	<?php
-	include_once($SERVER_ROOT.'/includes/head.php');
-	?>
-
-    <?php
+	//include_once($SERVER_ROOT.'/includes/head.php');
     if($crowdSourceMode == 1){
 		?>
 		<link href="includes/config/occureditorcrowdsource.css?ver=5" type="text/css" rel="stylesheet" id="editorCssLink" />
@@ -518,7 +515,7 @@ else{
 	<script src="../../js/symb/collections.editor.query.js?ver=6" type="text/javascript"></script>
 	<style type="text/css">
 		fieldset > legend{ font-weight:bold; }
-		select{ height: 20px; margin-bottom: 2px; }
+		select{ margin-bottom: 2px; }
 		#identifierDiv img{ width:10px; margin-left: 5px; }
 		#innertext{ background-color: white; margin: 0px 10px; }
 		.fieldGroupDiv {
@@ -1385,10 +1382,12 @@ else{
 												<a href="#" onclick="return dwcDoc('establishmentMeans')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a><br/>
 												<input type="text" name="establishmentmeans" maxlength="32" value="<?php echo array_key_exists('establishmentmeans',$occArr)?$occArr['establishmentmeans']:''; ?>" onchange="fieldChanged('establishmentmeans');" />
 											</div>
+											<div>
 											<div id="cultivationStatusDiv" class="field-div">
 												<?php $hasValue = array_key_exists("cultivationstatus",$occArr)&&$occArr["cultivationstatus"]?1:0; ?>
 												<input type="checkbox" name="cultivationstatus" value="1" <?php echo $hasValue?'CHECKED':''; ?> onchange="fieldChanged('cultivationstatus');" />
 												<?php echo $LANG['CULTIVATION_STATUS']; ?>
+											</div>
 											</div>
 										</div>
 									</fieldset>
