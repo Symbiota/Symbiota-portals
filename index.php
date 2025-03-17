@@ -44,21 +44,23 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 		-->
 			<div>
 				<p>
-					The Diatom Herbarium of the Academy of Natural Sciences of Drexel University, one of the largest in the world, 
-					houses over 260,000 slides, of which about 5,000 are types, including both fossil and modern diatoms collected from fresh, brackish, and marine habitats. 
-					In addition to its world coverage and its inclusion of fossil diatoms, the herbarium has an extensive record of materials collected as part of freshwater 
-					environmental surveys from throughout the United States. These surveys were the work of the former Department of Limnology, and its successor, the Academy’s 
-					Phycology Section of the Patrick Center for Environmental Research. Often extending over decades, these surveys offer a unique resource for the study of 
-					long-term changes in diatom populations and ecology.
+					The Diatom Herbarium of the Academy of Natural Sciences of Drexel University, one of the largest in the world, houses 
+					over 260,000 slides, of which about 5,000 are types, including both fossil and modern diatoms collected from fresh, 
+					brackish, and marine habitats. In addition to its world coverage and its inclusion of fossil diatoms, the herbarium 
+					has an extensive record of materials collected as part of freshwater environmental surveys from throughout the United 
+					States. These surveys were the work of the former Department of Limnology, and its successor, the Academy’s Phycology 
+					Section of the Patrick Center for Environmental Research. Often extending over decades, these surveys offer a unique 
+					resource for the study of long-term changes in diatom populations and ecology.
 				</p>
 				<p>
-					The core research collection is a compilation of smaller collections founded in the nineteenth and early twentieth century 
-					by amateur diatomists. Many additional collections were donated by diatomists from all over the world.
+					The core research collection is a compilation of smaller collections founded in the nineteenth and early twentieth 
+					century by amateur diatomists. Many additional collections were donated by diatomists from all over the world.  
 				</p>
 				<p> 
 					The Diatom Herbarium contains many special collections named after the diatomist who put the collection together. 
-					These collections were given to the Diatom Herbarium by the diatomist, or by their family. Several collections include 
-					slides and/or materials of other diatomists, or the collections may have been part of a larger collection of another individual. 
+					These collections were given to the Diatom Herbarium by the diatomist, or by their family. Several collections 
+					include slides and/or materials of other diatomists, or the collections may have been part of a larger collection 
+					of another individual.  
 				</p>
 			</div>
     <h2>Special Collections of the Diatom Herbarium</h2>
