@@ -117,24 +117,6 @@ header('Content-Type: text/html; charset=' . $CHARSET);
                 <td>Several thousand slides from Penn State University</td>
             </tr>
             <tr>
-                <td>N. Foged</td>
-                <td></td>
-                <td></td>
-                <td>Slides from Denmark and elsewhere</td>
-            </tr>
-            <tr>
-                <td>McCail</td>
-                <td></td>
-                <td></td>
-                <td>Slides from Scotland and elsewhere</td>
-            </tr>
-            <tr>
-                <td>Manguin</td>
-                <td></td>
-                <td></td>
-                <td>Slides from France and elsewhere</td>
-            </tr>
-            <tr>
                 <td>Pergallo</td>
                 <td>1175 slides</td>
                 <td></td>
@@ -163,12 +145,6 @@ header('Content-Type: text/html; charset=' . $CHARSET);
                 <td>324 slides</td>
                 <td>1877-1882</td>
                 <td>Upsala. Collection of slides and material from many other individuals as well. Each slide lists one main species and often other forms which are present.</td>
-            </tr>
-            <tr>
-                <td>Eulenstein</td>
-                <td></td>
-                <td></td>
-                <td>Part of Febiger Collection</td>
             </tr>
             <tr>
                 <td>Loren Bahls</td>
