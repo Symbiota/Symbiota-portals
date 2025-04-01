@@ -3,3 +3,12 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
+ .brand-name h1 {
+    font-size: var(--brand-font-size);
+    text-shadow: 1px 1px 2px black;
+  }
+  
+  .brand-name h2 {
+    font-size: calc(var(--brand-font-size) * 0.7);
+    text-shadow: 1px 1px 2px black;
+  }

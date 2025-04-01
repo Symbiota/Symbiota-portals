@@ -19,7 +19,6 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	?>
 	<div class="navpath"></div>
 	<main id="innertext">
-		<h1 class="page-heading"><?php echo $DEFAULT_TITLE; ?> <?php echo $LANG['HOME']; ?></h1>
 		<?php
 		if($LANG_TAG == 'es'){
 			?>
@@ -41,12 +40,17 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			//Default Language
 			?>
 			<div>
-				<h1>Welcome</h1>
+				<h1>Welcome!</h1>
 				<p>
-					This data portal has been established to promote collaborative... Replace
-					with introductory text in English. If the portal is not meant to be
-					multilingual, remove the unneeded language sections
+					DAPPER was created to store and share data on coastal native plant materials. 
+					Several stakeholders will benefit from this database: Collectors would use the database to find the locations of known populations, 
+					Farms & Nurseries would be able to identify gaps in existing available plant materials, and Land Managers would find existing seed 
+					lots and container stock suitable for their sites. These would remove one of our persistent roadblocks to natural areas management, 
+					thus improving our work and its outcomes.
 				</p>
+				<p>
+					This site is under construction. Submit feedback or questions to <a href="mailto:help@symbiota.org">help@symbiota.org</a>.
+
 			</div>
 			<?php
 		}
