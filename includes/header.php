@@ -28,9 +28,6 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 					<?php
 				} else {
 					?>
-					<span id="contactUs">
-						<button class="button button-tertiary bottom-breathing-room-rel left-breathing-room-rel" onclick="window.location.href='#'"><?= $LANG['H_CONTACT_US'] ?></button>
-					</span>
 					<span id="login">
 						<form name="loginForm" method="post" action="<?= $CLIENT_ROOT . "/profile/index.php" ?>">
 							<input name="refurl" type="hidden" value="<?= htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES) ?>">
@@ -42,14 +39,16 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 				?>
 			</nav>
 			<div class="top-brand">
+				<!--
 				<a href="<?= $CLIENT_ROOT ?>">
 					<div class="image-container">
-						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
+						<img src="<?= $CLIENT_ROOT ?>/images/layout/dapper_logo.png" alt="DAPPER logo">
 					</div>
 				</a>
+			-->
 				<div class="brand-name">
-					<h1>Symbiota Brand New Portal</h1>
-					<h2>Redesigned by the Symbiota Support Hub</h2>
+					<h1>DAPPER</h1>
+					<h2>Data Access Portal of Propagules for Ecological Restoration</h2>
 				</div>
 			</div>
 		</div>
@@ -91,15 +90,11 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</a>
 					</li>
 					<li>
-						<a href="https://symbiota.org/docs" target="_blank" rel="noopener noreferrer">
-							<?= $LANG['H_HELP'] ?>
-						</a>
-					</li>
-					<li>
 						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
 							<?= $LANG['H_SITEMAP'] ?>
 						</a>
 					</li>
+					<!--
 					<li>
 						<a href="#">Example Dropdown</a>
 						<ul>
@@ -127,6 +122,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 							<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>
 						</select>
 					</li>
+			-->
 				</ul>
 			</nav>
 		</div>

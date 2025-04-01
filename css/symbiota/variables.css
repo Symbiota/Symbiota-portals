@@ -1,10 +1,10 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/pnw-zones_croppsed.png");
+  --header-bg-color: ; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 2rem;
   --logo-width: 120px;
   --menu-top-bg-color: #1b3d2f;
   --menu-font-size: 1rem;
@@ -12,13 +12,13 @@
   --body-text-color: #000000;
   --body-font-size: 1rem;
   --body-font-family: "Open Sans", sans-serif;
-  --footer-bg-color: #f2f0e9;
+  --footer-bg-color: #b7cdc4;
   --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --link-color: #171b16;
+  --darkest-color: #28372F;
+  --medium-color: #5F8F7B;
+  --light-color: #93BFA9;
+  --bright-color: #93BFA9;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
