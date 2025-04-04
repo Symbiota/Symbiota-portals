@@ -3,8 +3,11 @@
 		<?php
 		//include($SERVER_ROOT . '/accessibility/module.php');
 		?>
-		<a href="https://biokic.asu.edu" target="_blank" title="<?= $LANG['F_BIOKIC'] ?>" aria-label="Visit BioKIC website">
+		<a href="https://biodiversity.ku.edu/" target="_blank" title="<?= $LANG['F_BIOKIC'] ?>" aria-label="Visit BioKIC website">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo-asu-biokic.png"  alt="<?= $LANG['F_BIOKIC_LOGO'] ?>" />
+		</a>
+		<a href="https://biokic.asu.edu" target="_blank" title="KU BI" aria-label="Visit KU BI website">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/KUBI_bw.png"  alt="KU BI" />
 		</a>
 	</div>
 	<p>
