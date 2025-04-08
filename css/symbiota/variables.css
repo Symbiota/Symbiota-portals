@@ -5,14 +5,13 @@
   --header-bg-color: #66918e70; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
   --brand-font-size: 1.5rem;
-  --title-font-family: "Averia Serif Libre", serif;
   --logo-width: 120px;
   --menu-top-bg-color: #698d48;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
   --body-font-size: 1rem;
-  --body-font-family: "Arial", sans-serif;
+  --body-font-family: "Open Sans", sans-serif;
   --footer-bg-color: #f2f0e9;
   --heading-font-family: "Roboto", sans-serif;
   --link-color: #66918e;
