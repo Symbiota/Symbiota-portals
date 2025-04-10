@@ -1,8 +1,10 @@
 <?php
 include_once($SERVER_ROOT.'/config/dbconnection.php');
+include_once($SERVER_ROOT.'/traits/TaxonomyTrait.php');
 
-class TaxonomyUtilities {
+class TaxonomyUtil {
 
+	use TaxonomyTrait;
 	/*
 	 * INPUT: String representing a verbatim scientific name
 	 *        Name may have imbedded authors, cf, aff, hybrid
@@ -42,7 +44,7 @@ class TaxonomyUtilities {
 			}
 			//Remove extra spaces
 			$inStr = preg_replace('/\s\s+/',' ',$inStr);
-
+			if(!$inStr) return $retArr;
 			$sciNameArr = explode(' ',trim($inStr));
 			$okToCloseConn = true;
 			if($conn !== null) $okToCloseConn = false;
@@ -127,7 +129,19 @@ class TaxonomyUtilities {
 					//cycles through the final terms to evaluate and extract infraspecific data
 					while($sciStr = array_shift($sciNameArr)){
 						if($testArr = self::cleanInfra($sciStr)){
-							self::setInfraNode($sciStr, $sciNameArr, $retArr, $authorArr, $testArr['infra']);
+							if($sciNameArr){
+								$infraStr = array_shift($sciNameArr);
+								if(preg_match('/^[a-z]{3,}$/', $infraStr)){
+									$retArr['unitind3'] = $testArr['infra'];
+									$retArr['unitname3'] = $infraStr;
+									unset($authorArr);
+									$authorArr = array();
+								}
+								else{
+									$authorArr[] = $sciStr;
+									$authorArr[] = $infraStr;
+								}
+							}
 						}
 						elseif($kingdomName == 'Animalia' && !$retArr['unitname3'] && ($rankId == 230 || preg_match('/^[a-z]{3,}$/',$sciStr) || preg_match('/^[A-Z]{3,}$/',$sciStr))){
 							$retArr['unitind3'] = '';
@@ -163,6 +177,27 @@ class TaxonomyUtilities {
 						$retArr['unitind3'] = '×';
 						$retArr['unitname3'] = substr($retArr['author'], trim(strpos($retArr['author'], '×') + 2));
 						if(!isset($retArr['rankid']) || !$retArr['rankid']) $retArr['rankid'] = 220;
+					}
+				}
+				
+				//Check the retArr[author] array for cultivar epithet, tradename, author
+				$retArr['author'] = str_replace(['‘', '’'], "'", $retArr['author']);
+				 if (preg_match("/'([^']+)'/", $retArr['author'], $matches)){
+					$retArr['cultivarepithet'] = $matches[1];
+					$retArr['author'] = str_replace($matches[0], '', $retArr['author']);
+				}
+				if (preg_match('/\b[A-Z0-9](?!\.)([A-Z0-9,\'\.\-\&\(\)]+)\b/', $retArr['author'], $matches)) {
+					$tradeName = $matches[0];
+					if (strlen($tradeName) > 2 && $tradeName[1] !== ' ' && $tradeName[1] !== '.') {
+						$retArr['tradename'] = $tradeName;
+						$retArr['author'] = str_replace($matches[0], '', $retArr['author']);
+					}
+				}
+				if (empty($retArr['author']))
+					$retArr['author'] = " ";
+				if (preg_match_all('/\b[A-Z]\.?\s[A-Z][a-z]+\b/', $retArr['author'], $matches)) {
+					if (is_array($matches[0]) && count($matches[0]) > 0) {
+						$retArr['author'] = end($matches[0]);
 					}
 				}
 			}
@@ -211,6 +246,13 @@ class TaxonomyUtilities {
 			}
 			$sciname .= $retArr['unitname2'].' ';
 			$sciname .= trim($retArr['unitind3'].' '.$retArr['unitname3']);
+			if(!empty($retArr['cultivarepithet'])){
+				$sciname .= ' ' . self::standardizeCultivarEpithet($retArr['cultivarepithet']);
+			}
+			if(!empty($retArr['tradename'])){
+				$sciname .= ' ' . self::standardizeTradeName($retArr['tradename']);
+				
+			}
 			$retArr['sciname'] = trim($sciname);
 		}
 		return $retArr;
@@ -245,22 +287,6 @@ class TaxonomyUtilities {
 			$retArr['rankid'] = 230;
 		}
 		return $retArr;
-	}
-
-	private static function setInfraNode($sciStr, &$sciNameArr, &$retArr, &$authorArr, $rankTag){
-		if($sciNameArr){
-			$infraStr = array_shift($sciNameArr);
-			if(preg_match('/^[a-z]{3,}$/', $infraStr)){
-				$retArr['unitind3'] = $rankTag;
-				$retArr['unitname3'] = $infraStr;
-				unset($authorArr);
-				$authorArr = array();
-			}
-			else{
-				$authorArr[] = $sciStr;
-				$authorArr[] = $infraStr;
-			}
-		}
 	}
 
 	//Taxonomic indexing functions
