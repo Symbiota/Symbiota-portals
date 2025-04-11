@@ -28,9 +28,9 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	<div id="quicksearchdiv" style="float:right;margin-right:20px">
 		<!-- -------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
 		<form name="quicksearch" id="quicksearch" action="<?php echo $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
-			<div id="quicksearchtext" ><?= 'Búsqueda de Especies' ?></div>
+			<div id="quicksearchtext" ><?= $LANG['QSEARCH_SEARCH'] ?></div>
 			<input id="taxa" type="text" name="taxon" />
-			<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?= "Búsqueda" ?></button>
+			<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?= $LANG['QSEARCH_SEARCH_BUTTON'] ?></button>
 		</form>
 	</div>
 		<?php
