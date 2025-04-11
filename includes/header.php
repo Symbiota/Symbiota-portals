@@ -1,6 +1,6 @@
 <?php
 if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/header.' . $LANG_TAG . '.php'))
-	include_once($SERVER_ROOT . '/content/lang/templates/header.en.php');
+include_once($SERVER_ROOT . '/content/lang/templates/header.en.php');
 else include_once($SERVER_ROOT . '/content/lang/templates/header.' . $LANG_TAG . '.php');
 $SHOULD_USE_HARVESTPARAMS = $SHOULD_USE_HARVESTPARAMS ?? false;
 $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '/collections/search/index.php';
@@ -46,7 +46,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 					</div>
 				</a>
 				<div class="brand-name">
-					<h1>Consortium of Vertebrate Collections</h1>
+					<h1><?= $LANG['BRAND_NAME'] ?></h1>
 				</div>
 			</div>
 		</div>
@@ -77,10 +77,10 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
                                                	<a href="<?= $CLIENT_ROOT ?>/imagelib/search.php"><?= $LANG['H_IMAGES'] ?></a>
                                                 <ul>
                                                         <li>
-								<a href="<?= $CLIENT_ROOT; ?>/imagelib/index.php" >Image Browser</a>
+								<a href="<?= $CLIENT_ROOT; ?>/imagelib/index.php" ><?= $LANG['IMG_BROWSER'] ?></a>
                                                         </li>
                                                         <li>
-                                                                <a href="<?= $CLIENT_ROOT; ?>/imagelib/search.php" >Search Images</a>
+                                                                <a href="<?= $CLIENT_ROOT; ?>/imagelib/search.php" ><?= $LANG['SEARCH_IMAGES'] ?></a>
                                                         </li>
                                                 </ul>
                                         </li>
@@ -88,18 +88,18 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
                                                 <a href="<?= $CLIENT_ROOT ?>/projects/index.php"><?= $LANG['H_INVENTORIES'] ?></a>
                                                 <ul>
                                                         <li>
-                                                                <a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=14" >North American Species</a>
+                                                                <a href="<?= $CLIENT_ROOT; ?>/projects/index.php?pid=14" ><?= $LANG['NORTH_AMERICAN_SPP'] ?></a>
                                                         </li>
                                                 </ul>
                                         </li>
                                         <li>
-                                                <a href="#">Interactive Tools</a>
+                                                <a href="#"><?= $LANG['INTERACTIVE_TOOLS'] ?></a>
                                                 <ul>
                                                         <li>
-                                                                <a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=checklist" >Dynamic Checklists</a>
+                                                                <a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=checklist" ><?= $LANG['DYNAMIC_CHECKLISTS'] ?></a>
                                                         </li>
                                                         <li>
-                                                                <a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=key" >Dynamic Key</a>
+                                                                <a href="<?= $CLIENT_ROOT; ?>/checklists/dynamicmap.php?interface=key" ><?= $LANG['DYNAMIC_KEY'] ?></a>
                                                         </li>
                                                 </ul>
                                         </li>

@@ -28,11 +28,97 @@ header("Content-Type: text/html; charset=".$CHARSET);
 	<div id="quicksearchdiv" style="float:right;margin-right:20px">
 		<!-- -------------------------QUICK SEARCH SETTINGS--------------------------------------- -->
 		<form name="quicksearch" id="quicksearch" action="<?php echo $CLIENT_ROOT; ?>/taxa/index.php" method="get" onsubmit="return verifyQuickSearch(this);">
-			<div id="quicksearchtext" ><?php echo (isset($LANG['QSEARCH_SEARCH'])?$LANG['QSEARCH_SEARCH']:'Search Taxon'); ?></div>
+			<div id="quicksearchtext" ><?= 'Búsqueda de Especies' ?></div>
 			<input id="taxa" type="text" name="taxon" />
-			<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?php echo (isset($LANG['QSEARCH_SEARCH_BUTTON'])?$LANG['QSEARCH_SEARCH_BUTTON']:'Search'); ?></button>
+			<button name="formsubmit"  id="quicksearchbutton" type="submit" value="Search Terms"><?= "Búsqueda" ?></button>
 		</form>
 	</div>
+		<?php
+		if($LANG_TAG == 'es'){
+		?>
+		<h1 class="page-heading">Consorcio de Colecciones de Vertebrados</h1>
+		<div style="padding: 0px 10px;">
+			<div style="float:right;margin:10px;">
+				<?php
+				//---------------------------GAME SETTINGS---------------------------------------
+				//If more than one game will be active, assign unique numerical ids for each game.
+				//If only one game will be active, leave set to 1. 
+				$oodID = 1; 
+				//Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
+				//separate their ids with a comma ex. "1,2,3,4"
+				$ootdGameChecklist = "3";
+
+				//Change to modify title
+				$ootdGameTitle = " Reptil del Día "; 
+
+				//Replace "plant" with the type of organism, eg: plant, animal, insect, fungi, etc.
+				//This setting will appear in "Name that ______"
+				$ootdGameType = "reptil"; 
+				//---------------------------DO NOT CHANGE BELOW HERE-----------------------------
+
+				include_once($SERVER_ROOT.'/classes/GamesManager.php');
+				$gameManager = new GamesManager();
+				$gameInfo = $gameManager->setOOTD($oodID,$ootdGameChecklist);
+				?>
+				<div style="float:right;margin-right:10px;width:375px;text-align:center;">
+					<div style="font-size:130%;font-weight:bold;">
+						<?php echo $ootdGameTitle; ?>
+					</div>
+					<a href="<?php echo $CLIENT_ROOT; ?>/games/ootd/index.php?oodid=<?php echo $oodID.'&cl='.$ootdGameChecklist.'&title='.$ootdGameTitle.'&type='.$ootdGameType; ?>">
+					<img src="<?php echo $gameInfo['images'][0]; ?>" style="width:325px;border:0px;" />
+					</a><br/>
+					<b>What is this <?php echo $ootdGameType; ?>?</b><br/>
+					<a href="<?php echo $CLIENT_ROOT; ?>/games/ootd/index.php?oodid=<?php echo $oodID.'&cl='.$ootdGameChecklist.'&title='.$ootdGameTitle.'&type='.$ootdGameType; ?>">
+						Click aquí para evaluar su conocimiento.
+					</a>
+				</div>
+			</div>
+                        <div style="float:right;margin:10px;">
+                                <?php
+                                $oodID = 2;
+                                //Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
+                                //separate their ids with a comma ex. "1,2,3,4"
+                                $ootdGameChecklist = "2";
+
+                                //Change to modify title
+                                $ootdGameTitle = "Mamífero del Día ";
+
+                                //Replace "plant" with the type of organism, eg: plant, animal, insect, fungi, etc.
+                                //This setting will appear in "Name that ______"
+                                $ootdGameType = "mamífero";
+                                //---------------------------DO NOT CHANGE BELOW HERE-----------------------------
+
+                                include_once($SERVER_ROOT.'/classes/GamesManager.php');
+                                $gameManager = new GamesManager();
+                                $gameInfo = $gameManager->setOOTD($oodID,$ootdGameChecklist);
+                                ?>
+                                <div style="float:right;margin-right:10px;width:375px;text-align:center;">
+                                        <div style="font-size:130%;font-weight:bold;">
+                                                <?php echo $ootdGameTitle; ?>
+                                        </div>
+                                        <a href="<?php echo $CLIENT_ROOT; ?>/games/ootd/index.php?oodid=<?php echo $oodID.'&cl='.$ootdGameChecklist.'&title='.$ootdGameTitle.'&type='.$ootdGameType; ?>">
+                                        <img src="<?php echo $gameInfo['images'][0]; ?>" style="width:325px;border:0px;" />
+                                        </a><br/>
+                                        <b>¿Cuál es este <?php echo $ootdGameType; ?>?</b><br/>
+                                        <a href="<?php echo $CLIENT_ROOT; ?>/games/ootd/index.php?oodid=<?php echo $oodID.'&cl='.$ootdGameChecklist.'&title='.$ootdGameTitle.'&type='.$ootdGameType; ?>">
+											Click aquí para evaluar su conocimiento.
+                                        </a>
+
+                                </div>
+                        </div>
+			<div> 
+				<p>El Consorcio de Colecciones de Vertebrados es una red creciente de instituciones de investigación y museos dedicados al estudio de aves, 
+					mamíferos, peces, anfibios y reptiles. Esta iniciativa colaborativa de iDigBio y Arizona State University provee mecanismos para que los 
+					integrantes manejen y compartan datos de biodiversidad con científicos y el público en general. Las instituciones participantes tienen 
+					acceso a herramientas sofisticadas de manejo de datos sin la necesidad de infraestructura técnica local. </p>
+				<p>¿Poseen datos de especímenes que deseen integrar, problemas accediendo a los datos, o simplemente desean enviar retroalimentación? 
+					Por favor envíen preguntas, comentarios y solicitudes a <a href="mailto:help@symbiota.org">ayuda@symbiota.org</a>.</p>
+			</div>
+		</div>
+	<?php
+		}
+		else{
+	?>
 		<h1 class="page-heading">Consortium of Vertebrate Collections</h1>
 		<div style="padding: 0px 10px;">
 			<div style="float:right;margin:10px;">
@@ -43,7 +129,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				$oodID = 1; 
 				//Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
 				//separate their ids with a comma ex. "1,2,3,4"
-				$ootdGameChecklist = "315";
+				$ootdGameChecklist = "3";
 
 				//Change to modify title
 				$ootdGameTitle = "Reptile of the Day "; 
@@ -75,7 +161,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
                                 $oodID = 2;
                                 //Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
                                 //separate their ids with a comma ex. "1,2,3,4"
-                                $ootdGameChecklist = "316";
+                                $ootdGameChecklist = "2";
 
                                 //Change to modify title
                                 $ootdGameTitle = "Mammal of the Day ";
@@ -112,6 +198,9 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				or simply wish to provide feedback? Please send questions, comments, and requests to <a href="mailto:help@symbiota.org">help@symbiota.org</a></p>
 			</div>
 		</div>
+	<?php
+		}
+	?>
 	</main>
 
 	<?php

@@ -9,6 +9,12 @@
  e.g. override: $LANG['H_COLLECTIONS'] = 'Search Lichen Collections';
 */
 
-
+$LANG['BRAND_NAME'] = 'Consortium of Vertebrate Collections';
+$LANG['IMG_BROWSER'] = 'Image Browser';
+$LANG['SEARCH_IMAGES'] = 'Search Images';
+$LANG['NORTH_AMERICAN_SPP'] = 'North American Species';
+$LANG['INTERACTIVE_TOOLS'] = 'Interactive Tools';
+$LANG['DYNAMIC_CHECKLISTS'] = 'Dynamic Checklists';
+$LANG['DYNAMIC_KEY'] = 'Dynamic Checklists';
 
 ?>
