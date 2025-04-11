@@ -46,7 +46,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				$oodID = 1; 
 				//Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
 				//separate their ids with a comma ex. "1,2,3,4"
-				$ootdGameChecklist = "3";
+				$ootdGameChecklist = "315";
 
 				//Change to modify title
 				$ootdGameTitle = " Reptil del Día "; 
@@ -78,7 +78,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
                                 $oodID = 2;
                                 //Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
                                 //separate their ids with a comma ex. "1,2,3,4"
-                                $ootdGameChecklist = "2";
+                                $ootdGameChecklist = "316";
 
                                 //Change to modify title
                                 $ootdGameTitle = "Mamífero del Día ";
@@ -129,7 +129,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
 				$oodID = 1; 
 				//Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
 				//separate their ids with a comma ex. "1,2,3,4"
-				$ootdGameChecklist = "3";
+				$ootdGameChecklist = "315";
 
 				//Change to modify title
 				$ootdGameTitle = "Reptile of the Day "; 
@@ -161,7 +161,7 @@ header("Content-Type: text/html; charset=".$CHARSET);
                                 $oodID = 2;
                                 //Enter checklist id (clid) of the checklist you wish to use, if you would like to use more than one checklist,
                                 //separate their ids with a comma ex. "1,2,3,4"
-                                $ootdGameChecklist = "2";
+                                $ootdGameChecklist = "316";
 
                                 //Change to modify title
                                 $ootdGameTitle = "Mammal of the Day ";
