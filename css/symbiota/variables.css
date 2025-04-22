@@ -1,8 +1,8 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/pnw-zones_croppsed.png");
-  --header-bg-color: ; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/STZhiRez.png");
+  --header-bg-color: #0000003b; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
   --brand-font-size: 2rem;
   --logo-width: 120px;
