@@ -2,4 +2,74 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ @import url(" https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
+
+ @font-face {
+  font-family: 'Phosphate Inline';
+  src: url('../../css/symbiota/PhosphateInline.ttf');
+}
+
+ .welcome-text {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  font-weight: bold;
+  color: black;
+}
+
+.button-tertiary > a {
+  color: black;
+}
+
+.button-tertiary {
+  background-color: none;
+  border: 3px solid var(--bright-color);
+  padding: 0.5rem 0.9rem;
+}
+
+.button-secondary > a {
+  color: black;
+}
+
+.brand-name h1,
+.brand-name h2 {
+  color: #74a560;
+  margin: 0;
+  letter-spacing: 0.05em;
+  margin-left: 1em;
+  margin-bottom: 2em;
+  font-family: Phosphate Inline; 
+  font-weight: normal;
+}
+
+header {
+  gap: 0;
+  grid-template-areas:
+    "top"
+    "menu";
+  grid-template-rows: auto fit-content(100%);
+  min-width: 0;
+  min-height: 0;
+}
+
+  .top-wrapper {
+    background-color: var(--header-bg-color);
+    display: grid;
+    grid-template-areas: "brand login";
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    padding: 3rem 0;
+    background-image: var(--header-bg-image);
+    background-position: center;
+    background-size: cover;
+  }
+
+  .menu {
+    font-size: 14px;
+  }
+
+  #innertext li {
+    line-height: 1.5;
+  }
