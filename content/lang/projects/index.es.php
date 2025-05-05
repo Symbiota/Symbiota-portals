@@ -4,13 +4,13 @@
 Language: Espa�ol (Spanish)
 ------------------
 */
-
+$LANG['VIEW_INVETORY_PROJECTS'] = 'Ver Proyecto de Inventario';
 $LANG['INVPROJ'] = 'Proyectos de Inventario';
 $LANG['INVPROJLIST'] = 'Lista de proyectos de inventario';
 $LANG['PROJMANAG'] = 'Administradores de Proyectos:';
 $LANG['METADATA'] = 'Metadatos';
 $LANG['INVMANAG'] = 'Administradores de Inventarios';
-$LANG['CHECKMANAG'] = 'Administración de Listados de Comprobación';
+$LANG['CHECKMANAG'] = 'Administración de Listados de Comprobaci&oacute;n';
 $LANG['MANAG'] = 'Administradores';
 $LANG['DESCRIP'] = 'Descripción';
 $LANG['NOTES'] = 'Notas';
@@ -41,8 +41,8 @@ $LANG['CHARLONG'] = 'caracteres';
 $LANG['SELECTCHECKPULL'] = 'Elija un listado de comprobación desde la lista desplegable';
 $LANG['CHOOSEUSER'] = 'Elija un usuario desde la lista desplegable';
 $LANG['ADDNEWPR'] = 'Ingresar un Proyecto Nuevo';
-$LANG['TOGGLEEDIT'] = 'Intercambia Funciones de Edición';
-$LANG['MAPREP'] = 'Mapea representación de listados de comprobación';
+$LANG['TOGGLEEDIT'] = 'Intercambia Funciones de Edici&oacute;n';
+$LANG['MAPREP'] = 'Mapea representaci&oacute;n de listados de comprobaci&oacute;n';
 $LANG['PENCIL_ALT'] = 'imagen de un lápiz sobre papel, que indica alternar el modo de edición';
 $LANG['QUESTION_ALT'] = 'imagen de un signo de interrogación para obtener más información sobre las listas de especies de investigación';
 $LANG['GLOBE_ALT'] = 'imagen de un globo terráqueo, que indica una versión de la lista de verificación superpuesta en un mapa';

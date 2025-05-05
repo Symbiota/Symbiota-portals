@@ -8,24 +8,7 @@
  e.g. new menu item: $LANG['H_NEW_ZEALAND'] = 'New Zealand Lichens';
  e.g. override: $LANG['H_COLLECTIONS'] = 'Search Lichen Collections';
 */
-$LANG['H_COLLECTIONS'] = 'Colecciones';
-$LANG['H_MAP'] = 'Mapa';
-$LANG['H_IMAGES'] = 'Imágenes';
-$LANG['H_IMAGE_BROWSER'] = 'Buscador de Imágenes';
-$LANG['H_IMAGE_SEARCH'] = 'Búsqueda de Imágenes';
-$LANG['H_MESOAMERICA'] = 'Mesoamérica';
-$LANG['H_COSTA_RICA'] = 'Costa Rica';
-$LANG['H_PANAMA'] = 'Panamá';
-$LANG['H_SOUTH_AMERICA'] = 'Sudamérica';
-$LANG['H_COLOMBIA'] = 'Colombia';
-$LANG['H_ECUADOR'] = 'Ecuador';
-$LANG['H_PERU'] = 'Perú';
-$LANG['H_GALAPAGOS'] = 'Islas Galápagos';
-$LANG['H_TAXONOMIC_LISTS'] = 'Listas Taxonómicas';
-$LANG['H_NEW_WORLD_MYRTACEAE'] = 'Mirtáceas del Nuevo Mundo';
-$LANG['H_PODOSTEMACEAE'] = 'Podostemaceae';
-$LANG['H_DYNAMIC_TOOLS'] = 'Herramientas Dinámicas';
-$LANG['H_DYNAMIC_CHECKLIST'] = 'Lista Dinámica';
-$LANG['H_DYNAMIC_KEY'] = 'Clave Dinámica';
+
+
 
 ?>
