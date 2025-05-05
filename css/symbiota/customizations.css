@@ -3,30 +3,3 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
-.button-secondary > a {
-  color: white;
-}
-
-.welcome-text {
-  display: flex;
-  align-items: center;
-  margin-left: 1rem;
-  color: black;
-  font-weight: bold;
-}
-
-.button-tertiary > a {
-  color: black;
-}
-
-.button-tertiary {
-  border: 3px solid var(--bright-color);
-}
-
-.brand-name h1 {
-  color: black;
-}
-
-.brand-name h2 {
-  color: black;
-}
