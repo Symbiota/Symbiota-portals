@@ -1,5 +1,4 @@
 <?php
-include_once("config/symbini.php");
 include_once('config/symbini.php');
 if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/templates/index.en.php');
 else include_once($SERVER_ROOT.'/content/lang/templates/index.'.$LANG_TAG.'.php');
@@ -35,8 +34,9 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 		$ootdGameTitle = $LANG['PLANT_OF_THE_DAY'];
 		$ootdGameType = $LANG['PLANT'];
 		include_once($SERVER_ROOT.'/classes/GamesManager.php');
-		$gameManager = new GamesManager();
-		$gameInfo = $gameManager->setOOTD($oodID,$ootdGameChecklist);
+		//$gameManager = new GamesManager();
+		//$gameInfo = $gameManager->setOOTD($oodID,$ootdGameChecklist);
+		/** 
 		?>
 		<div style="float:right;margin:10px;width:290px;text-align:center;">
 			<div style="font-size:130%;font-weight:bold;">
@@ -51,6 +51,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 			</a>
 		</div>
 		<?php
+		*/
                 	if($LANG_TAG == 'es'){
                 ?>
 		<div style="margin:20px;">
