@@ -97,17 +97,6 @@ class ChecklistVoucherAdmin extends Manager {
 		return $resp;
 	}
 
-	public function getAssociatedExternalService(){
-		$resp = false;
- 		if($this->clMetadata['dynamicProperties']){
-			$dynpropArr = json_decode($this->clMetadata['dynamicProperties'], true);
-			if(array_key_exists('externalservice', $dynpropArr)) {
-				$resp = $dynpropArr['externalservice'];
-			}
-		}
-		return $resp;
-	}
-
 	//Dynamic query variable functions
 	public function setCollectionVariables(){
 		if($this->clid){
