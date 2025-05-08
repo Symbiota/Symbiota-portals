@@ -13,10 +13,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	include_once($SERVER_ROOT.'/includes/head.php');
 	include_once($SERVER_ROOT.'/includes/googleanalytics.php');
 	?>
-	<link href="<?= $CLIENT_ROOT ?>/css/quicksearch.css" type="text/css" rel="Stylesheet" />
-	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.2.1.min.js" type="text/javascript"></script>
-	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui-1.12.1/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="<?= $CLIENT_ROOT ?>/js/symb/api.taxonomy.taxasuggest.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery.slides.js?ver=1"></script>
 </head>
 <body>
 	<?php
