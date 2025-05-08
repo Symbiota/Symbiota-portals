@@ -21,7 +21,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<?php
 	include($SERVER_ROOT.'/includes/header.php');
 	?>
-	<main  id="innertext" style="font-size: 14px;">
+	<main  id="innertext" style="font-size: 1.2rem;">
 		<?php
 		$oodID = 1;
 		$ootdGameChecklist = 1024;
