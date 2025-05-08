@@ -14,8 +14,7 @@ else include_once($SERVER_ROOT . '/content/lang/templates/header.' . $LANG_TAG .
 					</div>-->
 				</a>
 				<div class="brand-name">
-					<h1>Neotropical Flora</h1>
-					<!--<h2>Redesigned by the Symbiota Support Hub</h2>-->
+					<h1>Flora Neotropica</h1>
 				</div>
 			</div>
 		</div>
