@@ -3,7 +3,7 @@
 ** Style sheets are determined by $CSS_BASE_PATH set within config/symbini.php
 ** Customization can be made by modifying css files, $CSS_BASE_PATH, adding new css files below
 */
-$CSS_VERSION = '2';
+$CSS_VERSION = '3';
 ?>
 <!-- Responsive viewport -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
