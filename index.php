@@ -31,13 +31,13 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 		$gameManager = new GamesManager();
 		$gameInfo = $gameManager->setOOTD($oodID,$ootdGameChecklist);
 		?>
-		<div style="float:right;margin:10px;width:390px;text-align:center;">
-			<div id="hero-slideshow">
-				<div style="background-color: #ffffff; float: right;">
+		<div style="float:right;margin:10px;width:450px;text-align:center;">
+			<div id="slideshow">
+				<div style="background-color: #ffffff;">
 					<?php
 					$ssId = 1;
 					$numSlides = 10;
-					$width = 350;
+					$width = 225;
 					$dayInterval = 7;
 					$interval = 7000;
 					$clid = '1072';
