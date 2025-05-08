@@ -13,7 +13,7 @@ footer {
   /* column-gap: 3rem; */
   align-items: center;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 0;
   max-width: var(--max-innertext-width);
 }
 
