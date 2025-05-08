@@ -18,6 +18,7 @@ header {
 .top-wrapper {
   background-color: var(--menu-top-bg-color);
   min-width: 0;
+  height: 110px;
 }
 
 .top-login {
@@ -39,11 +40,15 @@ nav.top-login > span > form{
 }
 
 #profile, #contactUs{
-  float: left;
+
 }
 
 #login, #logout {
-  float: right;
+
+}
+
+form{
+	display: inline-block;
 }
 
 .top-brand {
@@ -53,6 +58,7 @@ nav.top-login > span > form{
   grid-column: 1;
   display: flex;
   align-items: stretch;
+  margin-left: 10%;
 }
 
 .top-brand img {
@@ -283,7 +289,7 @@ ul.menu > ul li{
   }
   
   /* Change this in order to change the Dropdown symbol */
-  nav.top-menu li > a:after { content:  ' +'; }
+  nav.top-menu li > a:after { content:  ''; }
   nav.top-menu li > a:only-child:after { content: ''; }
 
   .header-wrapper > * {
@@ -300,7 +306,7 @@ ul.menu > ul li{
       "menu";
     grid-template-rows: auto fit-content(100%);
     background-image: var(--header-bg-image);
-    background-position: center;
+    background-position: right;
     background-size: cover;
     min-width: 0;
     min-height: 0;
@@ -344,8 +350,8 @@ ul.menu > ul li{
     max-height: none;
     position: relative;
     text-align: center;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
   }
 
   ul.menu * {

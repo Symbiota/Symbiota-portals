@@ -2,37 +2,11 @@
 if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/templates/header.' . $LANG_TAG . '.php'))
 	include_once($SERVER_ROOT . '/content/lang/templates/header.en.php');
 else include_once($SERVER_ROOT . '/content/lang/templates/header.' . $LANG_TAG . '.php');
-$collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.php' : '/collections/search/index.php';
 ?>
 <div class="header-wrapper">
 	<header>
 		<div class="top-wrapper">
 			<a class="screen-reader-only" href="#end-nav"><?= $LANG['H_SKIP_NAV'] ?></a>
-			<nav class="top-login" aria-label="horizontal-nav">
-				<?php
-				if ($USER_DISPLAY_NAME) {
-					?>
-					<div class="welcome-text bottom-breathing-room-rel">
-						<?= $LANG['H_WELCOME'] . ' ' . $USER_DISPLAY_NAME ?>!
-					</div>
-					<span style="white-space: nowrap;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" class="button button-tertiary bottom-breathing-room-rel">
-						<a href="<?= $CLIENT_ROOT ?>/profile/viewprofile.php"><?= $LANG['H_MY_PROFILE'] ?></a>
-					</span>
-					<span style="white-space: nowrap;box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;" class="button button-secondary bottom-breathing-room-rel">
-						<a href="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout"><?= $LANG['H_LOGOUT'] ?></a>
-					</span>
-					<?php
-				} else {
-					?>
-					<span class="button button-secondary" style="box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;">
-						<a href="<?= $CLIENT_ROOT . "/profile/index.php?refurl=" . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
-							<?= $LANG['H_LOGIN'] ?>
-						</a>
-					</span>
-					<?php
-				}
-				?>
-			</nav>
 			<div class="top-brand">
 				<a href="<?= $CLIENT_ROOT ?>">
 					<!--<div class="image-container">
@@ -80,24 +54,19 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</ul>
 					</li>
 					<li>
-						<a href="#"><?= $LANG['H_MESOAMERICA'] ?></a>
-						<ul>
-							<li>
-								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=10" rel="noopener noreferrer"><?= $LANG['H_COSTA_RICA'] ?></a>
-							</li>
-							<li>
-								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=15" rel="noopener noreferrer"><?= $LANG['H_PANAMA'] ?></a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#"><?= $LANG['H_SOUTH_AMERICA'] ?></a>
+						<a href="#"><?= $LANG['H_INVENTORIES'] ?></a>
 						<ul>
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=17" rel="noopener noreferrer"><?= $LANG['H_COLOMBIA'] ?></a>
 							</li>
 							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=10" rel="noopener noreferrer"><?= $LANG['H_COSTA_RICA'] ?></a>
+							</li>
+							<li>
 								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=1" rel="noopener noreferrer"><?= $LANG['H_ECUADOR'] ?></a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=15" rel="noopener noreferrer"><?= $LANG['H_PANAMA'] ?></a>
 							</li>
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=16" rel="noopener noreferrer"><?= $LANG['H_PERU'] ?></a>
@@ -105,11 +74,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=2" rel="noopener noreferrer"><?= $LANG['H_GALAPAGOS'] ?></a>
 							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="#"><?= $LANG['H_TAXONOMIC_LISTS'] ?></a>
-						<ul>
+							<li>-----------------------------------</li>
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/projects/index.php?pid=9" rel="noopener noreferrer"><?= $LANG['H_NEW_WORLD_MYRTACEAE'] ?></a>
 							</li>
@@ -140,13 +105,38 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</a>
 					</li>
 					<li id="lang-select-li">
-						<label for="language-selection"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
 						<select oninput="setLanguage(this)" id="language-selection" name="language-selection">
 							<option value="en">English</option>
 							<option value="es" <?= ($LANG_TAG=='es'?'SELECTED':'') ?>>Español</option>
 							<!--<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>-->
 						</select>
 					</li>
+					<div style="float: right">
+						<?php
+						if ($USER_DISPLAY_NAME) {
+							?>
+							<span id="profile">
+								<form name="profileForm" method="post" action="<?= $CLIENT_ROOT . '/profile/viewprofile.php' ?>">
+									<button name="profileButton" type="submit"><?= $LANG['H_MY_PROFILE'] ?></button>
+								</form>
+							</span>
+							<span id="logout">
+								<form name="logoutForm" method="post" action="<?= $CLIENT_ROOT ?>/profile/index.php?submit=logout">
+									<button name="logoutButton" type="submit"><?= $LANG['H_LOGOUT'] ?></button>
+								</form>
+							</span>
+							<?php
+						} else {
+							?>
+							<span id="signin">
+								<form name="siginForm" method="post" action="<?= $CLIENT_ROOT . '/profile/index.php?refurl=' . htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES); ?>">
+									<button name="logoutButton" type="submit"><?= $LANG['H_LOGIN'] ?></button>
+								</form>
+							</span>
+							<?php
+						}
+						?>
+					</div>
 				</ul>
 			</nav>
 		</div>

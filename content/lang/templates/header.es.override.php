@@ -28,5 +28,8 @@ $LANG['H_PODOSTEMACEAE'] = 'Podostemaceae';
 $LANG['H_DYNAMIC_TOOLS'] = 'Herramientas Dinámicas';
 $LANG['H_DYNAMIC_CHECKLIST'] = 'Lista Dinámica';
 $LANG['H_DYNAMIC_KEY'] = 'Clave Dinámica';
-
+$LANG['H_PLANT_OF_THE_DAY'] = 'Planta del Dia';
+$LANG['H_PLANT'] = 'planta';
+$LANG['H_WHAT_IS_THIS'] = '¿Qué es esta planta?';
+$LANG['CLICK_TEST_KNOWLEDGE'] = 'Haga clic aquí para poner a prueba sus conocimientos';
 ?>
