@@ -20,16 +20,16 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 
 	public function __construct($type='readonly'){
 		parent::__construct($type);
- 		if(array_key_exists('reset',$_REQUEST) && $_REQUEST['reset'])  $this->reset();
+		if(array_key_exists('reset',$_REQUEST) && $_REQUEST['reset'])  $this->reset();
 		$this->associationManager = new AssociationManager();
 		$this->readRequestVariables();
 		$langTag = '';
 		if(!empty($GLOBALS['LANG_TAG'])) $langTag = $GLOBALS['LANG_TAG'];
 		if($langTag != 'en' && file_exists($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/OccurrenceManager.' . $langTag . '.php'))
 			include_once($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/OccurrenceManager.' . $langTag . '.php');
-		else include_once($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/OccurrenceManager.en.php');
-		$this->LANG = $LANG;
- 	}
+			else include_once($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/OccurrenceManager.en.php');
+			$this->LANG = $LANG;
+	}
 
 	public function __destruct(){
 		parent::__destruct();
@@ -40,7 +40,7 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 	}
 
 	public function reset(){
- 		$this->reset = 1;
+		$this->reset = 1;
 		if(isset($this->searchTermArr['db']) || isset($this->searchTermArr['oic'])){
 			//reset all other search terms except maintain the db terms
 			$dbsTemp = '';
@@ -101,7 +101,7 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 						$clOccidArr[] = $r->occid;
 					}
 					$rs->free();
-			}
+				}
 				if($clOccidArr) $sqlWhere .= 'AND (o.occid NOT IN('.implode(',',$clOccidArr).')) ';
 			}
 			//$this->displaySearchArr[] = $this->voucherManager->getQueryVariableStr();
@@ -220,7 +220,7 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 			if(array_key_exists("elevlow",$this->searchTermArr)) $elevlow = $this->searchTermArr["elevlow"];
 			if(array_key_exists("elevhigh",$this->searchTermArr)) $elevhigh = $this->searchTermArr["elevhigh"];
 			$sqlWhere .= 'AND (( minimumElevationInMeters >= '.$elevlow.' AND maximumElevationInMeters <= '.$elevhigh.' ) OR ' .
-				'( maximumElevationInMeters is null AND minimumElevationInMeters >= '.$elevlow.' AND minimumElevationInMeters <= '.$elevhigh.' )) ';
+					'( maximumElevationInMeters is null AND minimumElevationInMeters >= '.$elevlow.' AND minimumElevationInMeters <= '.$elevhigh.' )) ';
 			$this->displaySearchArr[] = $this->LANG['ELEV'] . ': ' . $elevlow . ($elevhigh ? ' - ' . $elevhigh : '');
 		}
 		if(array_key_exists("llbound",$this->searchTermArr)){
@@ -555,23 +555,6 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 			if(array_key_exists('footprintGeoJson',$this->searchTermArr) || strpos($sqlWhere,'p.lngLatPoint')){
 				$sqlJoin .= 'INNER JOIN omoccurpoints p ON o.occid = p.occid ';
 			}
-			if(strpos($sqlWhere,'e.taxauthid')){
-				$sqlJoin .= 'INNER JOIN taxaenumtree e ON o.tidinterpreted = e.tid ';
-			}
-			if(strpos($sqlWhere,'ts.')){
-				$sqlJoin .= 'LEFT JOIN taxstatus ts ON o.tidinterpreted = ts.tid ';
-			}
-			if(strpos($sqlWhere,'ds.datasetid')){
-				$sqlJoin .= 'INNER JOIN omoccurdatasetlink ds ON o.occid = ds.occid ';
-			}
-			if(array_key_exists('polycoords',$this->searchTermArr) || strpos($sqlWhere,'p.point')){
-				$sqlJoin .= 'INNER JOIN omoccurpoints p ON o.occid = p.occid ';
-			}
-			/*
-			if(array_key_exists('includeothercatnum',$this->searchTermArr)){
-				$sqlJoin .= 'LEFT JOIN omoccuridentifiers oi ON o.occid = oi.occid ';
-			}
-			*/
 		}
 		return $sqlJoin;
 	}
@@ -591,10 +574,10 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 		$retArr = Array();
 		$titleArr = Array();
 		$sql = 'SELECT p2.pid AS parentpid, p2.projname as catname, p1.pid, p1.projname, c.clid, c.name as clname '.
-			'FROM fmprojects p1 INNER JOIN fmprojects p2 ON p1.parentpid = p2.pid '.
-			'INNER JOIN fmchklstprojlink cl ON p1.pid = cl.pid '.
-			'INNER JOIN fmchecklists c ON cl.clid = c.clid '.
-			'WHERE p2.occurrencesearch = 1 AND p1.ispublic = 1 ';
+				'FROM fmprojects p1 INNER JOIN fmprojects p2 ON p1.parentpid = p2.pid '.
+				'INNER JOIN fmchklstprojlink cl ON p1.pid = cl.pid '.
+				'INNER JOIN fmchecklists c ON cl.clid = c.clid '.
+				'WHERE p2.occurrencesearch = 1 AND p1.ispublic = 1 ';
 		//echo "<div>$sql</div>";
 		$rs = $this->conn->query($sql);
 		while($r = $rs->fetch_object()){
@@ -622,7 +605,7 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 			$cArr = explode(';',$this->cleanInStr($this->searchTermArr['db']));
 			if($cArr[0]){
 				$sql = 'SELECT collid, CONCAT_WS("-",institutioncode,collectioncode) as instcode '.
-					'FROM omcollections WHERE collid IN('.$cArr[0].') ORDER BY institutioncode,collectioncode';
+						'FROM omcollections WHERE collid IN('.$cArr[0].') ORDER BY institutioncode,collectioncode';
 				$rs = $this->conn->query($sql);
 				while($r = $rs->fetch_object()){
 					$retStr .= '; '.$r->instcode;
@@ -630,15 +613,15 @@ class OccurrenceManager extends OccurrenceTaxaManager {
 				$rs->free();
 			}
 			/*
-			if(isset($cArr[1]) && $cArr[1]){
-				$sql = 'SELECT ccpk, category FROM omcollcategories WHERE ccpk IN('.$cArr[1].') ORDER BY category';
-				$rs = $this->conn->query($sql);
-				while($r = $rs->fetch_object()){
-					$retStr .= '; '.$r->category;
-				}
-				$rs->free();
-			}
-			*/
+			 if(isset($cArr[1]) && $cArr[1]){
+			 $sql = 'SELECT ccpk, category FROM omcollcategories WHERE ccpk IN('.$cArr[1].') ORDER BY category';
+			 $rs = $this->conn->query($sql);
+			 while($r = $rs->fetch_object()){
+			 $retStr .= '; '.$r->category;
+			 }
+			 $rs->free();
+			 }
+			 */
 			$retStr = substr($retStr,2);
 		}
 		return $retStr;
