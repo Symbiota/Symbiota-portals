@@ -19,6 +19,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<script type="text/javascript">
 					var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
+	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery.slides.js"></script>
 </head>
 <body>
 	<?php
