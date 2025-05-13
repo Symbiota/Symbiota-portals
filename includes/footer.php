@@ -1,5 +1,5 @@
 <footer>
-	<<div class="logo-gallery">
+	<div class="logo-gallery">
 		<?php
 		//include($SERVER_ROOT . '/accessibility/module.php');
 		?>
