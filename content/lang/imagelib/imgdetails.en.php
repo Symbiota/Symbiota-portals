@@ -14,13 +14,13 @@ $LANG['EDIT_IMAGE'] = 'Edit Media Resource';
 $LANG['TWEET'] = 'Tweet';
 $LANG['EDIT_IMAGE_DETAILS'] = 'Edit Media Details';
 $LANG['CAPTION'] = 'Caption';
-$LANG['PHOTOGRAPHER_USER_ID'] = 'Creator User ID';
-$LANG['SELECT_PHOTOGRAPHER'] = 'Select Creator';
+$LANG['CREATOR_USER_ID'] = 'Creator User ID';
+$LANG['SELECT_CREATOR'] = 'Select Creator';
 $LANG['USER_REGISTERED_SYSTEM'] = 'Users registered within system';
-$LANG['DISPLAY_PHOTOGRAPHER_FIELD'] = 'Display creator override field';
+$LANG['DISPLAY_CREATOR_FIELD'] = 'Display creator override field';
 $LANG['DISPLAY_SPECIMEN_DETAILS'] = 'Display Specimen Details';
-$LANG['PHOTOGRAPHER_OVERRIDE'] = 'Creator (override)';
-$LANG['PHOTOGRAPHER'] = 'Creator';
+$LANG['CREATOR_OVERRIDE'] = 'Creator (override)';
+$LANG['CREATOR'] = 'Creator';
 $LANG['OVERRIDE_SELECTION'] = 'Will override above selection';
 $LANG['MANAGER'] = 'Manager';
 $LANG['SOURCE_URL'] = 'Source URL';
@@ -59,5 +59,6 @@ $LANG['IMAGE_SOURCE'] = 'Media Source';
 $LANG['OPEN_MEDIUM_SIZED_IMAGE'] = 'Open Medium Sized Image';
 $LANG['OPEN_LARGE_IMAGE'] = 'Open Large Image';
 $LANG['UNABLE_TO_LOCATE'] = 'Unable to locate media resource';
+$LANG['MEDIA_TRANSFER_REQUIRES_TAXON_ID'] = 'Media transfer requires a taxonomic id';
 
 ?>

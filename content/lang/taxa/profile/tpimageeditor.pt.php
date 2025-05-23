@@ -6,7 +6,6 @@ Translated by: Google Translate (2024-09-16)
 ------------------
 */
 
-$LANG['LINKED_FROM'] = 'Vinculado de';
 $LANG['SORT_SEQUENCE'] = 'Classificar sequência';
 $LANG['NEW_VALUE'] = 'Novo Valor';
 $LANG['SUBMIT_SORT_EDITS'] = 'Enviar edições de classificação de mídia';
@@ -20,11 +19,11 @@ $LANG['ENTER_URL_IMG'] = 'Insira um URL para um arquivo de mídia já localizado
 $LANG['IMPORT_IMG_LOCAL'] = 'Importar mídia para servidor local';
 $LANG['UPLOAD_LOCAL'] = 'Carregar mídia local';
 $LANG['CAPTION'] = 'Legenda';
-$LANG['PHOTOGRAPHER'] = 'Fotógrafo';
-$LANG['SEL_PHOTOGRAPHER'] = 'Selecionar Fotógrafo';
-$LANG['DISP_PHOTOGRAPHER_OVERRIDE'] = 'Exibir campo de substituição do fotógrafo';
-$LANG['PHOTOGRAPHER_OVERRIDE'] = 'Substituição do Fotógrafo';
-$LANG['PHOTOGRAPHER_OVERRIDE_EXPLAIN'] = 'Usar somente quando o fotógrafo não for encontrado no menu suspenso acima';
+$LANG['CREATOR'] = 'Criador';
+$LANG['SEL_CREATOR'] = 'Selecionar Criador';
+$LANG['DISP_CREATOR_OVERRIDE'] = 'Apresentar campo de substituição do criador';
+$LANG['CREATOR_OVERRIDE'] = 'Substituição do criador';
+$LANG['CREATOR_OVERRIDE_EXPLAIN'] = 'Utilizar apenas quando o criador não for encontrado no menu suspenso acima';
 $LANG['MANAGER'] = 'Gerente';
 $LANG['URL_TO_SOURCE'] = 'URL para o projeto de origem. Use ao vincular a uma mídia externa.';
 $LANG['SOURCE_URL'] = 'URL de Origem';
@@ -36,8 +35,9 @@ $LANG['NOTES'] = 'Notas';
 $LANG['UPLOAD_IMAGE'] = 'Carregar mídia';
 $LANG['OPEN_LARGE_IMAGE'] = 'Abrir arquivo grande';
 $LANG['MUST_HAVE_EDIT_PERM'] = 'Deve ter privilégios de edição para a coleção que gerencia este arquivo de mídia';
-$LANG['IMAGE_LINKED_FROM'] = 'Mídia vinculada de';
+$LANG['IMAGE_LINKED_TO'] = 'Mídia vinculada a';
 $LANG['TP_IMAGE_EDITOR'] = 'Editor de mídia de perfil de táxon';
 $LANG['CREATOR'] = 'criador';
-
+$LANG['NOT_SPECIFIED'] = 'Não especificado';
+$LANG['NOT_SET'] = 'Não definido';
 ?>

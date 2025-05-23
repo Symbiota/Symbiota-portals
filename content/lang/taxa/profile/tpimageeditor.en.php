@@ -6,7 +6,6 @@ Translated by: Google Translate (2024-09-16)
 ------------------
 */
 
-$LANG['LINKED_FROM'] = 'Linked from';
 $LANG['SORT_SEQUENCE'] = 'Sort sequence';
 $LANG['NEW_VALUE'] = 'New Value';
 $LANG['SUBMIT_SORT_EDITS'] = 'Submit Media Sort Edits';
@@ -20,11 +19,11 @@ $LANG['ENTER_URL_IMG'] = 'Enter a URL to a media file already located on a web s
 $LANG['IMPORT_IMG_LOCAL'] = 'Import Media to local server';
 $LANG['UPLOAD_LOCAL'] = 'Upload Local Media';
 $LANG['CAPTION'] = 'Caption';
-$LANG['PHOTOGRAPHER'] = 'Photographer';
-$LANG['SEL_PHOTOGRAPHER'] = 'Select Photographer';
-$LANG['DISP_PHOTOGRAPHER_OVERRIDE'] = 'Display creator override field';
-$LANG['PHOTOGRAPHER_OVERRIDE'] = 'Creator Override';
-$LANG['PHOTOGRAPHER_OVERRIDE_EXPLAIN'] = 'Use only when creator is not found in above pulldown';
+$LANG['CREATOR'] = 'Creator';
+$LANG['SEL_CREATOR'] = 'Select Creator';
+$LANG['DISP_CREATOR_OVERRIDE'] = 'Display creator override field';
+$LANG['CREATOR_OVERRIDE'] = 'Creator Override';
+$LANG['CREATOR_OVERRIDE_EXPLAIN'] = 'Use only when creator is not found in above pulldown';
 $LANG['MANAGER'] = 'Manager';
 $LANG['URL_TO_SOURCE'] = 'URL to source project. Use when linking to an external media resource.';
 $LANG['SOURCE_URL'] = 'Source URL';
@@ -36,8 +35,10 @@ $LANG['NOTES'] = 'Notes';
 $LANG['UPLOAD_IMAGE'] = 'Upload Media Resource';
 $LANG['OPEN_LARGE_IMAGE'] = 'Open Large File';
 $LANG['MUST_HAVE_EDIT_PERM'] = 'Must have editing privileges for the collection managing this media file';
-$LANG['IMAGE_LINKED_FROM'] = 'Media linked from';
+$LANG['IMAGE_LINKED_TO'] = 'Media linked to';
 $LANG['TP_IMAGE_EDITOR'] = 'Taxon Profile Media Editor';
 $LANG['CREATOR'] = 'Creator';
+$LANG['NOT_SPECIFIED'] = 'Not Specified';
+$LANG['NOT_SET'] = 'Not Set';
 
 ?>
