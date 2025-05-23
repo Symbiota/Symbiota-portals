@@ -1,5 +1,8 @@
 <?php
 include_once('../config/symbini.php');
+include_once($SERVER_ROOT . '/config/auth_config.php');
+require_once($SERVER_ROOT . '/vendor/autoload.php');
+use Jumbojett\OpenIDConnectClient;
 
 if($SYMB_UID){
 	if($_SESSION['refurl']){
@@ -76,8 +79,17 @@ if($action && !preg_match('/^[a-zA-Z0-9\s_]+$/',$action)) $action = '';
 
 if($remMe) $pHandler->setRememberMe(true);
 if($action == 'logout'){
-	$pHandler->reset();
-	header('Location: ../index.php');
+	//check if using third party auth
+	if(array_key_exists('AUTH_PROVIDER', $_SESSION)){
+		$oidc = new OpenIDConnectClient($PROVIDER_URLS[$_SESSION['AUTH_PROVIDER']], $CLIENT_IDS[$_SESSION['AUTH_PROVIDER']], $CLIENT_SECRETS[$_SESSION['AUTH_PROVIDER']], $PROVIDER_URLS[$_SESSION['AUTH_PROVIDER']]);
+		$pHandler->reset();
+		$oidc->signOut($_SESSION['AUTH_CLIENT_ID'], $redirect);
+
+	}
+	else{
+		$pHandler->reset();
+		header('Location: ../index.php');
+	}
 }
 elseif($action == 'login'){
 	if($pHandler->authenticate($_POST['password'])){
@@ -148,7 +160,7 @@ if (array_key_exists('last_message', $_SESSION)){
 		}
 
 		function resetPassword(){
-			if(document.getElementById("login").value == ""){
+			if(document.getElementById("portal-login").value == ""){
 				<?php
 				$alertStr = 'Enter your login name in the Login field and leave the password blank';
 				if(isset($LANG['ENTER_LOGIN_NO_PWD'])) $alertStr = $LANG['ENTER_LOGIN_NO_PWD'];
@@ -282,7 +294,7 @@ include($SERVER_ROOT.'/includes/header.php');
 				<div style="font-weight:bold;margin-top:5px">
 					<?php echo (isset($LANG['REMEMBER_PWD'])?$LANG['REMEMBER_PWD']:"Can't Remember your password?"); ?>
 				</div>
-				<a href="#" style="color:blue;cursor:pointer;" onclick="resetPassword();"><?php echo (isset($LANG['REST_PWD'])?$LANG['REST_PWD']:'Reset Password'); ?></a>
+				<a href="#" onclick="resetPassword();"><?php echo (isset($LANG['REST_PWD'])?$LANG['REST_PWD']:'Reset Password'); ?></a>
 				<div style="font-weight:bold;margin-top:5px">
 					<?php echo (isset($LANG['REMEMBER_LOGIN'])?$LANG['REMEMBER_LOGIN']:"Can't Remember Login Name?"); ?>
 				</div>

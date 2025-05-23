@@ -1,4 +1,8 @@
 <?php
+
+$PRIVATE_VIEWING_ONLY = true;
+$PRIVATE_VIEWING_OVERRIDES = ['/index.php', '/misc/contacts.php','/misc/aboutproject.php', '/profile/newprofile.php', '/profile/index.php'];  //These pages will always be accessible to public viewing.  Add to as needed. 
+
 $DEFAULT_LANG = 'en';			//Default language
 $DEFAULT_PROJ_ID = 0;
 $DEFAULTCATID = 0;
@@ -75,7 +79,7 @@ $ACTIVATE_EXSICCATI = 0;			//Activates exsiccati fields within data entry pages;
 $ACTIVATE_GEOLOCATE_TOOLKIT = 0;	//Activates GeoLocate Toolkit located within the Processing Toolkit menu items
 $SEARCH_BY_TRAITS = 0;			//Activates search fields for searching by traits (if trait data have been encoded): 0 = trait search off; any number of non-zeros separated by commas (e.g., '1,6') = trait search on for the traits with these id numbers in table tmtraits.
 $CALENDAR_TRAIT_PLOTS = 0;			//Activates polar plots, in taxon profile, of the trait states listed: 0 = no plot; any number of non-zeros separated by commas (e.g., '1,6') = plots appear for the trait states with these id numbers (in table tmstates).
-
+//$AUTH_PROVIDER = 'oid';           //Activate Third Party Authentication using openID Connect (Addiotnal paramters defined in auth_config.php).  Leave this commented out if not in use;
 $IGSN_ACTIVATION = 0;
 
 //$SMTP_ARR = array('host'=>'','port'=>587,'username'=>'','password'=>'','timeout'=>60);  //Host is requiered, others are optional and can be removed
@@ -106,6 +110,15 @@ if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERV
 	header('strict-transport-security: max-age=600');
 	$COOKIE_SECURE = true;
 }
+
+// Creates Togglable Overlay for GeoJSON file
+// Only Support with Leaflet Map
+// Supports of an area with the following properties:
+// filename : String - should be the name of the geoJSON located in the `content/geoJSON` directory.
+// label : String - Short text label to describe the overlay toggle
+// popup_template: String - Html string for what label should be generated on a GeoJSON feature. Will replace text like `[Property_name]` with a features property value if present
+// template_properties: Array[String] - List of property names to used in popup generation
+$GEO_JSON_LAYERS = [];
 
 //Base code shared by all pages; leave as is
 include_once('symbbase.php');
