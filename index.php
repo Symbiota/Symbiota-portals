@@ -29,7 +29,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
         <!-- This is inner text! -->
         <main id="innertext">
 		<h2>Welcome to CoTRAM</h2>
-		<div style="float:right"><img src="images/layout/Psidium_cattleyanum.jpg" style="width:350px;margin:0px 30px;"></div>
+		<div style="float:right"><img src="images/layout/Fig_CoTRAM.jpg" style="width:350px;margin:0px 30px 10px;"></div>
 		<div style="margin:20px;">The Cooperative Taxonomic Resource for American Myrtaceae was created for researchers of American Myrtaceae 
 			and others who might want to identify unknowns.  The Myrtaceae, a family with perhaps over 5000 species may be the ninth largest family of flowering 
 			plants, but its taxonomy is yet poorly understood, so these can only be tentative estimates.  It has two great centers of diversity: 

@@ -43,7 +43,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 				</a>
 				<div class="brand-name">
 					<h1>CoTRAM</h1>
-					<h2>Cooperative Taxonomic Resources for American Myrtaceae</h2>
+					<h2>Cooperative Taxonomic Resource for American Myrtaceae</h2>
 				</div>
 			</div>
 		</div>
