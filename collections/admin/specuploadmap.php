@@ -314,9 +314,9 @@ include($SERVER_ROOT.'/includes/header.php');
 										<fieldset>
 											<legend><?php echo (isset($LANG['CUSTOM_FILT']) ? $LANG['CUSTOM_FILT'] : 'Custom Occurrence Record Import Filters'); ?></legend>
 											<?php
-											$qArr = json_decode($duManager->getQueryStr(),true);
 											$queryArr = array();
-											if($qArr){
+											if($queryJson = $duManager->getQueryStr()){
+												$qArr = json_decode($queryJson, true);
 												foreach($qArr as $column => $aArr){
 													foreach($aArr as $cond => $bArr){
 														foreach($bArr as $v){
@@ -587,9 +587,9 @@ include($SERVER_ROOT.'/includes/header.php');
 								<?php
 							}
 							?>
-							<button type="submit" name="action" value="Automap Fields" ><?php echo (isset($LANG['AUTOMAP']) ? $LANG['AUTOMAP'] : 'Automap Fields'); ?></button>
-							<button type="submit" name="action" value="Verify Mapping" ><?php echo (isset($LANG['VER_MAPPING']) ? $LANG['VER_MAPPING'] : 'Verify Mapping'); ?></button>
-							<button type="submit" name="action" value="saveMapping" onclick="return verifySaveMapping(this.form)" ><?php echo (isset($LANG['SAVE_MAP']) ? $LANG['SAVE_MAP'] : 'Save Mapping'); ?></button>
+							<button class="bottom-breathing-room-rel-sm" type="submit" name="action" value="Automap Fields" ><?php echo (isset($LANG['AUTOMAP']) ? $LANG['AUTOMAP'] : 'Automap Fields'); ?></button>
+							<button class="bottom-breathing-room-rel-sm" type="submit" name="action" value="Verify Mapping" ><?php echo (isset($LANG['VER_MAPPING']) ? $LANG['VER_MAPPING'] : 'Verify Mapping'); ?></button>
+							<button class="bottom-breathing-room-rel-sm" type="submit" name="action" value="saveMapping" onclick="return verifySaveMapping(this.form)" ><?php echo (isset($LANG['SAVE_MAP']) ? $LANG['SAVE_MAP'] : 'Save Mapping'); ?></button>
 							<span id="newProfileNameDiv" style="margin-left:15px;color:red;display:none">
 								<?php echo (isset($LANG['NEW_PROF_TITLE']) ? $LANG['NEW_PROF_TITLE'] : 'New profile title'); ?>:
 								<input type="text" name="profiletitle" style="width:300px" value="<?php echo $duManager->getTitle().'-'.date('Y-m-d'); ?>" />

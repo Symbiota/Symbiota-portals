@@ -3,6 +3,7 @@
 .header-wrapper {
   padding: 20px;
   background-color: var(--menu-top-bg-color);
+  z-index: 10;
 }
 
 header {
@@ -21,14 +22,34 @@ header {
 
 .top-login {
   padding-bottom: 20px;
+  padding-right: 1rem;
 }
 
 .top-login > .button {
-  margin-left: 0.8rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+}
+
+
+nav.top-login > span > form{
+  display: inline;
+  margin: 0;
+  padding: 0;
+
+}
+
+#profile, #contactUs{
+  float: left;
+}
+
+#login, #logout {
+  float: right;
 }
 
 .top-brand {
   /* align a and brand-name */
+  clear: both;
+  padding-top: 0.5rem;
   grid-column: 1;
   display: flex;
   align-items: stretch;
@@ -76,48 +97,66 @@ header a:hover {
   text-decoration: none;
 }
 
+.image-container {
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
 /* MENU */
 .menu-wrapper {
   position: sticky;
   z-index: 1;
   background-color: var(--menu-top-bg-color);
   min-width: 0;
+  text-align: center;
+  width: 100%;
 }
 
 .top-menu {
   width: 100%;
   height: 100%;
   max-height: 0;
-  transition: max-height 0.5s ease-out;
-  position: fixed;
+  /*transition: max-height 0.5s ease-out; */
+  /* position: fixed; */
   left: 0;
   background-color: var(--menu-top-bg-color);
-  overflow: hidden;
+  text-align: left;
+  display: block;
 }
 
 /* Hamburger icon */
 .hamb {
   cursor: pointer;
   /* float: right; */
-  padding: 40px 20px;
+  padding: 10px;
 }
 
 .hamb-line {
-  background: white;
   display: block;
   height: 2px;
   position: relative;
   width: 24px;
 }
 
+.hamb-label {
+  display: inline;
+  height: 2px;
+  position: relative;
+  width: 24px;
+  font-size: 4rem;
+}
+
 .hamb-line::before,
 .hamb-line::after {
-  background: white;
-  content: '';
+  content: "";
   display: block;
   height: 100%;
   position: absolute;
-  transition: all 0.2s ease-out;
+  /* transition: all 0.2s ease-out; */
   width: 100%;
 }
 
@@ -134,25 +173,54 @@ header a:hover {
   display: none;
 }
 
-ul.menu {
+.menu {
+  font-size: var(--menu-font-size);
+}
+
+ul.menu,
+ul.menu ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0.25em 1em;
+  margin: 0;
 }
 
 .menu a {
   display: block;
   color: var(--header-font-color);
-  font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: 1px;
-  text-align: center;
+  text-align: left;
+}
+
+.menu label {
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .menu li {
   padding: 10px 20px;
 }
 
+ul.menu > li > a {
+  text-align: left;
+}
+
+ul.menu > li {
+  display: block;
+  padding: 0.25em;
+}
+
+ul.menu > ul li{
+  display: block;
+}
+
+
 /* Toggles menu icon */
+.side-menu:not(:checked) ~ nav.top-menu .menu{
+  display:none;
+}
+
+
 .side-menu:checked ~ nav.top-menu {
   max-height: 100%;
 }
@@ -171,12 +239,56 @@ ul.menu {
   top: 0;
 }
 
+#lang-select-li {
+  margin-top: 1em;
+  text-align: center;
+}
+
 /* Media queries
 ========================================================================== */
 /* Medium screens and up */
 @media (min-width: 768px) {
+
+  .side-menu:not(:checked) ~ nav.top-menu .menu,
+  .side-menu:checked ~ nav.top-menu .menu {
+    display:block;
+  }
+
+  nav.top-menu > ul > li ul {
+    display: none;
+  }
+  
+  /* First level drop-down menu */
+  nav.top-menu > ul > li > a:hover > ul,
+  nav.top-menu > ul > li > a:focus > ul,
+  nav.top-menu > ul > li:hover > ul,
+  nav.top-menu > ul > li:focus-within > ul {
+    display: block;
+    position: absolute;
+    background-color: var(--menu-top-bg-color);
+    box-shadow: 3px 3px 3px #000;
+    width: max-content;
+  }
+
+  /* second+ level drop-down menu */
+  nav.top-menu > ul ul > li > a:hover > ul,
+  nav.top-menu > ul ul > li > a:focus > ul,
+  nav.top-menu > ul ul > li:hover > ul,
+  nav.top-menu > ul ul > li:focus-within > ul {
+    display: block;
+    position:absolute;
+    background-color: var(--menu-top-bg-color);
+    box-shadow: 3px 3px 3px #000;
+    width: max-content;
+  }
+  
+  /* Change this in order to change the Dropdown symbol */
+  nav.top-menu li > a:after { content:  ' +'; }
+  nav.top-menu li > a:only-child:after { content: ''; }
+
   .header-wrapper > * {
     min-width: 0;
+    z-index: 10;
   }
   .header-wrapper {
     padding: 0;
@@ -184,8 +296,8 @@ ul.menu {
   header {
     gap: 0;
     grid-template-areas:
-      'top'
-      'menu';
+      "top"
+      "menu";
     grid-template-rows: auto fit-content(100%);
     background-image: var(--header-bg-image);
     background-position: center;
@@ -197,7 +309,7 @@ ul.menu {
   .top-wrapper {
     background-color: var(--header-bg-color);
     display: grid;
-    grid-template-areas: 'brand login';
+    grid-template-areas: "brand login";
     grid-template-columns: 3fr 1fr;
     align-items: center;
     min-width: 0;
@@ -207,7 +319,7 @@ ul.menu {
 
   .top-login {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
   }
 
   .top-brand {
@@ -220,8 +332,8 @@ ul.menu {
     grid-area: menu;
     min-width: 0;
     width: 100%;
-    margin: 0 auto;
-    text-align: center;
+    margin: 0;
+    padding: 0;
   }
 
   .hamb {
@@ -231,16 +343,28 @@ ul.menu {
   nav.top-menu {
     max-height: none;
     position: relative;
+    text-align: center;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
   }
 
-  .menu li {
+  ul.menu * {
+    vertical-align: middle;
+  }
+
+  ul.menu > li {
     display: inline-block;
     padding: 0 10px;
   }
 
-  .menu a {
+  ul.menu a {
     padding: 0;
   }
+
+  #lang-select-li {
+    margin: 0;
+  }
+
 }
 
 /* Medium-large desktop screens and up */
