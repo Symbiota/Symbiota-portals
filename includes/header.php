@@ -191,7 +191,7 @@ $collectionSearchPage = $SHOULD_USE_HARVESTPARAMS ? '/collections/index.php' : '
 						<a href="#">Resources</a>
 						<ul>
 							<li>
-								<a href="https://biokic.github.io/symbiota-docs/">Symbiota Docs</a>
+								<a href="https://docs.symbiota.org/docs/about/">Symbiota Docs</a>
 							</li>
 							<li>
 								<a href="https://www.youtube.com/channel/UC7glMVLRnTA6ES3VTsci7iQ">Video Tutorials</a>
