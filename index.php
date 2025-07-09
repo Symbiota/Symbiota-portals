@@ -98,7 +98,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				This site is brought to you in collaboration with the <a href="http://symbiota.org/seinet/" target="_blank">SEINet Network</a>, which contains 24 million records from over 450 collections. 
 				Collections are organized into regional consortia that are accessed through different websites but share a central database. To learn more 
 				about the features and capabilities of the Symbiota software used by this portal, visit the 
-				<a style="text-decoration: underline;" href="http://symbiota.org/docs/" target="_blank">Symbiota Help Pages</a>.
+				<a style="text-decoration: underline;" href="https://docs.symbiota.org/docs/about/" target="_blank">Symbiota Help Pages</a>.
 			</p>
 		</p>
 	</main>
