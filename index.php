@@ -18,7 +18,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui.min.js" type="text/javascript"></script>
 	<link href="css/quicksearch.css" type="text/css" rel="Stylesheet" />
-=	<script type="text/javascript">
+	<script type="text/javascript">
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 	</script>
 	<script src="js/symb/api.taxonomy.taxasuggest.js" type="text/javascript"></script>
