@@ -1,10 +1,10 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/helianthus.jpeg");
+  --header-bg-image: url("../../images/layout/ksbiodiversity.gif");
   --header-bg-color: #0a295e30; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 2rem;
   --logo-width: 120px;
   --menu-top-bg-color: #0a295e60;
   --menu-font-size: 1rem;
@@ -14,9 +14,9 @@
   --body-font-family: "Open Sans", sans-serif;
   --footer-bg-color: #0a295e15;
   --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #0a295e;
+  --link-color: #0051ba;
   --darkest-color: #0a295e;
-  --medium-color: #8594af;
+  --medium-color: #a2871b;
   --light-color: #f2f0e9;
   --bright-color: #e6c235;
   --danger-color: #bd2323;
