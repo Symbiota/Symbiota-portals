@@ -46,7 +46,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					This data portal is dedicated to preserved specimens and observations related to the state of Kansas.
 				</p>
 				<p>
-					<span style="font-size: 0.75rem;">Images in the portal's banner include the following observations: <a href="https://www.gbif.org/occurrence/3067918692"><em>Helianthus annuus</em> L. (Ali Campbell, CC-BY)</a>, <a href="https://www.gbif.org/occurrence/3415718450"><em>Sturnella neglecta</em> Audubon, 1844 (Ves, CC-BY)</a>, and <a href="https://www.gbif.org/occurrence/5168185582"><em>Bombus pensylvanicus</em> (De Geer, 1773) (Ryan Philbrick, CC-BY-NC)</a>.
+					<span style="font-size: 0.75rem;">Images in the portal's banner include the following observations: <a href="https://www.gbif.org/occurrence/3067918692"><em>Helianthus annuus</em> L. (Ali Campbell, CC-BY)</a>, <a href="https://www.gbif.org/occurrence/3415718450"><em>Sturnella neglecta</em> Audubon, 1844 (Ves, CC-BY-NC)</a>, and <a href="https://www.gbif.org/occurrence/5168185582"><em>Bombus pensylvanicus</em> (De Geer, 1773) (Ryan Philbrick, CC-BY-NC)</a>.
 				</p>
 			</div>
 			<?php
