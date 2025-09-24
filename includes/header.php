@@ -49,7 +49,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 				</a>
 				<div class="brand-name">
 					<h1>Kansas Biodiversity</h1>
-					<h2>A Symbiota Portal Dedicated to the Biodiversity of Kansas</h2>
+					<h2></h2>
 				</div>
 			</div>
 		</div>
