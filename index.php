@@ -47,6 +47,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					with introductory text in English. If the portal is not meant to be
 					multilingual, remove the unneeded language sections
 				</p>
+				<p>
+					The banner image for this portal was photographed by Ali Campbell: <a href="https://www.gbif.org/occurrence/3067918692">iNaturalist Observation 37132277</a> (CC-BY).
+				</p>
 			</div>
 			<?php
 		}

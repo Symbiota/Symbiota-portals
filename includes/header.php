@@ -48,8 +48,8 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 					</div>
 				</a>
 				<div class="brand-name">
-					<h1>Symbiota Brand New Portal</h1>
-					<h2>Redesigned by the Symbiota Support Hub</h2>
+					<h1>Kansas Biodiversity</h1>
+					<h2>A Symbiota Portal Dedicated to the Biodiversity of Kansas</h2>
 				</div>
 			</div>
 		</div>
@@ -99,25 +99,6 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
 							<?= $LANG['H_SITEMAP'] ?>
 						</a>
-					</li>
-					<li>
-						<a href="#">Example Dropdown</a>
-						<ul>
-							<li>
-								<a href="#">Link 1</a>
-							</li>
-							<li>
-								<a href="#">Link 2</a>
-							</li>
-							<li>
-								<a href="#">Sub Menu</a>
-								<ul>
-									<li>
-										<a href="#">Link 3</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
 					<li id="lang-select-li">
 						<label for="language-selection"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
