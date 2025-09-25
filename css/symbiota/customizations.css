@@ -30,3 +30,9 @@ a {
 .logo-gallery {
   padding: .5rem 0;
 }
+
+.button-tertiary {
+  background-color: transparent;
+  border: 3px solid var(--bright-color);
+  padding: 0.5rem 0.9rem;
+}
