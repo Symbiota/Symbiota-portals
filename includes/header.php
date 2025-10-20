@@ -16,7 +16,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 					</div>
 				</a>-->
 				<div class="brand-name">
-					<h1>Flora Neotropica</h1>
+					<h1><?= $LANG['H_PORTAL_NAME'] ?></h1>
 				</div>
 			</div>
 		</div>
