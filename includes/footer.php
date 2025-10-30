@@ -18,13 +18,13 @@
 	</div>
 	<p>
 		This project made possible by U.S. National Science Foundation Awards
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1601697" target="_blank">1601697</a>, 
-				<a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1600981" target="_blank">1600981</a>, 
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1601393" target="_blank">1601393</a>, 
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1600976" target="_blank">1600976</a>, 
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1601429" target="_blank">1601429</a>, 
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1601101" target="_blank">1601101</a>, 
-                <a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=1601503" target="_blank">1601503</a>
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1601697" target="_blank">1601697</a>, 
+				<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1600981" target="_blank">1600981</a>, 
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1601393" target="_blank">1601393</a>, 
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1600976" target="_blank">1600976</a>, 
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1601429" target="_blank">1601429</a>, 
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1601101" target="_blank">1601101</a>, 
+                <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1601503" target="_blank">1601503</a>
 	</p>
 	<p>
 		<?= (empty($DEFAULT_TITLE) ? 'This portal' : $DEFAULT_TITLE) . ' ' . 'is part of the SEINet Portal Network. <a href="https://symbiota.org/seinet/" target="_blank">Learn more here</a>.'; ?>
