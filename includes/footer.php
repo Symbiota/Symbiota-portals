@@ -11,7 +11,7 @@
 		</a>
 	</div>
 	<p>
-		<?= $LANG['F_NSF_AWARDS'] ?> <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=9983132" target="_blank">#9983132</a>, 
+		<?= $LANG['F_NSF_AWARDS'] ?> <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=9983132" target="_blank">#9983132</a>, 
 		<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0237418" target="_blank">#0237418</a>, 
 		<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0743827" target="_blank">#0743827</a>, and  
 		<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0847966" target="_blank">#0847966</a>.
