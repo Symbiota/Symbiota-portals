@@ -29,7 +29,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					comunidad cient&iacute;fica ha sido r&aacute;pida en aprovechar este nuevo recurso (ver "Enlaces útiles" más arriba). 
 					Aunque ningun financiamento exista para este sitio, <b>Herbario Americano Austral Virtual</b>, nosotros hemos podido 
 					utilizar recursos creados para otros sitios, estos a veces apoyados por subsidios a Arizona State University  por la 
-					National Science Foundation de EEUU (<a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0847966" target="_blank">
+					National Science Foundation de EEUU (<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0847966" target="_blank">
 					DBI0847966</a>). El prop&oacute;sito de este sitio web es de apoyar la distribuci&oacute;n de los datos de espec&iacute;menes 
 					de herbario de plantas que crecen en el sur de Sudam&eacute;rica (Argentina y Chile), pero la base de datos con la que trabaja 
 					incluye ejemplares de toda América Latina y el Caribe, por lo que son posibles búsquedas más amplias. Para empezar distribuir&aacute; 
@@ -52,7 +52,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					The internet has provided many new opportunities to inexpensively share information and the scientific community has been quick to take advantage of this
 					 new resource (see "Useful Links" above). Although no funding exists for this site, <b>Herbario Virtual Austral Americano</b>, we have been able to use 
 					resources created for other sites, these sometimes supported by grants to Arizona State University from the U.S. National Science Foundation 
-					(<a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0847966" target="_blank">DBI0847966</a>). The purpose of this website is primarily 
+					(<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0847966" target="_blank">DBI0847966</a>). The purpose of this website is primarily 
 					to support the distribution herbarium specimen data for plants that grow in southern South America (Argentina and Chile), but the database with which 
 					it works includes specimens from throughout Latin America and the Caribbean, so wider searches are possible. 
 					As a beginning, it will distribute data from specimens held at some North American herbaria, and will provide a structure for the distribution of 
