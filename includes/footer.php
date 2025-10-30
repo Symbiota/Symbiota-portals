@@ -18,10 +18,10 @@
 	</div>
 	<p>
 	Development supported by U.S. National Science Foundation Grants 
-					(<a href="http://nsf.gov/awardsearch/showAward.do?AwardNumber=9983132" target="_blank">DBI 9983132</a>, 
-					<a href="http://nsf.gov/awardsearch/showAward.do?AwardNumber=0237418" target="_blank">BRC 0237418</a>, 
-					<a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0743827" target="_blank">DBI 0743827</a>,
-					<a href="http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0847966" target="_blank">DBI 0847966</a>)
+					(<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=9983132" target="_blank">DBI 9983132</a>, 
+					<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0237418" target="_blank">BRC 0237418</a>, 
+					<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0743827" target="_blank">DBI 0743827</a>,
+					<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=0847966" target="_blank">DBI 0847966</a>)
 	</p>
 	<p>
 		<?= (empty($DEFAULT_TITLE) ? 'This portal' : $DEFAULT_TITLE) . ' ' . 'is part of the SEINet Portal Network. <a href="https://symbiota.org/seinet/" target="_blank">Learn more here</a>.'; ?>
