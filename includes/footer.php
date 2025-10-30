@@ -17,7 +17,7 @@
 		</a>
 	</div>
 	<p>
-		This project made possible by U.S. National Science Foundation Award <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1410069" target="_blank">#1410069</a>.
+		This project made possible by U.S. National Science Foundation Award <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1410069" target="_blank">#1410069</a>.
 	</p>
 	<p>
 		<?= (empty($DEFAULT_TITLE) ? 'This portal' : $DEFAULT_TITLE) . ' ' . 'is part of the SEINet Portal Network. <a href="https://symbiota.org/seinet/" target="_blank">Learn more here</a>.'; ?>
