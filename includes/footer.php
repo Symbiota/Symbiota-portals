@@ -11,7 +11,7 @@
 		</a>
 	</div>
 	<p>
-		<?= "This project made possible by U.S. National Science Foundation Award" ?> <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2027654" target="_blank">#2027654</a>.
+		<?= "This project made possible by U.S. National Science Foundation Award" ?> <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2027654" target="_blank">#2027654</a>.
 	</p>
 	<p>
 		<?= $LANG['F_POWERED_BY'] ?> <a href="https://symbiota.org/" target="_blank">Symbiota</a>.
