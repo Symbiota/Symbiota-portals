@@ -10,8 +10,8 @@
                         </div>
 			<div style="padding:20px;text-align:center;margin-left:auto;margin-right:auto">
 				This project made possible by National Science Foundation Awards: 
-				<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1349397" target="_blank">#1349397</a>, 
-				<a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=1349404" target="_blank">#1349404</a> 
+				<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1349397" target="_blank">#1349397</a>, 
+				<a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=1349404" target="_blank">#1349404</a> 
 			</div>
 		</td>
 	</tr>
