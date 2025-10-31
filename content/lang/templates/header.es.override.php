@@ -9,6 +9,8 @@
  e.g. override: $LANG['H_COLLECTIONS'] = 'Search Lichen Collections';
 */
 
-
+$LANG['H_HEADER'] = 'WIOH';
+$LANG['H_HEADER2'] = 'Red de Herbarios del Océano Índico Occidental';
+$LANG['HEADER_IMG_CREDIT'] = 'Imagen de cabecera de <i>Hibiscus fragilis</i> por C T Johansson (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA</a>)';
 
 ?>
