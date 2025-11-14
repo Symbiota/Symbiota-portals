@@ -41,7 +41,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 			<div class="top-brand">
 				<a href="<?= $CLIENT_ROOT ?>">
 					<div class="image-container">
-						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
+						<img src="<?= $CLIENT_ROOT ?>/images/layout/kbp_nobackground.png" alt="Kansas Biodiversity Portal logo">
 					</div>
 				</a>
 				<div class="brand-name">
