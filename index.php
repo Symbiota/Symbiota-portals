@@ -85,6 +85,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			Please send questions or comments to <a href="mailto:help@symbiota.org?subject=Midwest Portal Feedback">Support Hub Help Desk (help@symbiota.org)</a>.
             	</div>
 		</p>
+	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
+	<?php endif ?>
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
 	?> 
