@@ -1,24 +1,24 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/SD_prairie.jpg");
+  --header-bg-color: #ffffff3b; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 2rem;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #4d150f;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
   --body-font-size: 1rem;
-  --body-font-family: "Open Sans", sans-serif;
-  --footer-bg-color: #f2f0e9;
-  --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --body-font-family: "Arial", sans-serif;
+  --footer-bg-color: #ECECBC;
+  --heading-font-family: "Roboto", sans-serif;
+  --link-color: #7b9033;
+  --darkest-color: #37430b;
+  --medium-color: #7b9033;
+  --light-color: #d3ce75;
+  --bright-color: #4d150f;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
