@@ -21,6 +21,11 @@ This stylesheet is defined last and will override all previously loaded sheets. 
   color: white;
 }
 
+.button-secondary {
+  background-color: var(--bright-color);
+  color: white;
+}
+
 #slideshowcontainer {
     margin-bottom: 10px;
   }
