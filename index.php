@@ -74,6 +74,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			Please send questions or comments to <a href="mailto:Kristian.Valles@usu.edu">Kristian.Valles@usu.edu</a>. 
 			</p>
 		</main>
+	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
+	<?php endif ?>
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");
 	?> 
