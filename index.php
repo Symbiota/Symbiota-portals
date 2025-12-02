@@ -80,6 +80,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			The SEINet portal network contains 24 million records from over 450 collections.
 		</p>
 </main>
+	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
+	<?php endif ?>
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");
 	?> 
