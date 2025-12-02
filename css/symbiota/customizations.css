@@ -3,3 +3,42 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
+ .brand-name h2 {
+    font-size: calc(var(--brand-font-size) * 0.4);
+    text-shadow: 0 0 3px black;
+  }
+
+  .brand-name h1 {
+    text-shadow: 0 0 3px black;
+  }
+
+  .button-secondary > a {
+    color: white;
+  }
+
+  .button-tertiary {
+    background-color: none;
+    border: 3px solid var(--bright-color);
+    padding: 0.5rem 0.9rem;
+  }
+
+  .button-tertiary > a {
+    color: black;
+  }
+
+  .welcome-text {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    font-weight: bold;
+    color: black;
+  }
+
+  header a:hover {
+    color: var(--light-color);
+    text-decoration: none;
+  }
+
+  #innertext li {
+    line-height: 1.5;
+  }
