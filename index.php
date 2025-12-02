@@ -103,6 +103,9 @@ echo $pluginManager->createSlideShow($ssId,$numSlides,$width,$numDays,$imageType
 		</p>
 		</div>
 </main>
+	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
+	<?php endif ?>
 	<?php
 	include($SERVER_ROOT.'/includes/footer.php');
 	?> 
