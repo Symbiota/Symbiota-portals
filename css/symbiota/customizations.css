@@ -9,6 +9,11 @@ This stylesheet is defined last and will override all previously loaded sheets. 
     color: white;
   }
 
+  .button-secondary {
+  background-color: var(--bright-color);
+  color: white;
+}
+
   .button-tertiary {
     background-color: #ffffff75;
     border: 3px solid var(--bright-color);

@@ -82,6 +82,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			or to the Symbiota Support Hub at <a class="bodylink" href="mailto:help@symbiota.org?subject=NGPH Feedback">help@symbiota.org</a>.
 			</p>
 		</main>
+	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
+	<?php endif ?>
 	<?php
 	include($SERVER_ROOT."/includes/footer.php");
 	?> 
