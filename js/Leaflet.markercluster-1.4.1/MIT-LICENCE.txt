@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:vendor/phpseclib/phpseclib/LICENSE
+Copyright (c) 2011-2019 TerraFrost and other contributors
+========
 Copyright 2012 David Leaver
+>>>>>>>> master:js/Leaflet.markercluster-1.4.1/MIT-LICENCE.txt
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -17,4 +21,8 @@ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
 NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+<<<<<<<< HEAD:vendor/phpseclib/phpseclib/LICENSE
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+========
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+>>>>>>>> master:js/Leaflet.markercluster-1.4.1/MIT-LICENCE.txt
