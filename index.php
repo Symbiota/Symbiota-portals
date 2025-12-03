@@ -18,7 +18,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	include($SERVER_ROOT . '/includes/header.php');
 	?>
 	<div class="navpath"></div>
-	<main id="innertext">
+	<main id="innertext" style="margin-bottom:5rem">
 		<h1 class="page-heading screen-reader-only"><?php echo $DEFAULT_TITLE; ?> Home</h1>
 			<div>
 				<h1>Welcome!</h1>
