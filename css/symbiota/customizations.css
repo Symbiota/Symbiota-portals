@@ -42,3 +42,14 @@ This stylesheet is defined last and will override all previously loaded sheets. 
   #innertext li {
     line-height: 1.5;
   }
+
+  .logo-gallery {
+  display: grid;
+  gap: 0.1rem 0;
+  /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
+  /* column-gap: 3rem; */
+  align-items: center;
+  margin: 0 auto;
+  padding: 2rem 0;
+  max-width: var(--max-innertext-width);
+}
