@@ -40,6 +40,12 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					claves interactivas y datos de esp&eacute;cimenes de herbario. Otros artículos sobre el uso de los sitios web de Symbiota en general incluyen <a href="https://canotia.org/volumes/vol17/2-Nearby.pdf" target="_blank">Lafferty & Landrum 2021</a> y
 					<a href="https://canotia.org/volumes/vol17/1-Checklists.pdf" target="_blank">Bell & Landrum 2021</a>.
 				</p>
+				<p>
+					Para obtener más información sobre las funciones y capacidades disponibles en este sitio, visite la página de 
+					<a href="https://docs.symbiota.org/es/" target="_blank">Documentación de Symbiota</a>. Regístrese como visitante habitual y 
+					envíenos sus comentarios a <a class="bodylink" href="mailto:help@symbiota.org?subject=HVAA Feedback">ayuda@symbiota.org</a>. 
+					Visite la página de <a href="includes/usagepolicy.php">Política de Uso de Datos</a> para obtener información sobre cómo citar los datos obtenidos de este recurso web.
+				</p>
 			</div>
 			<?php
 		}
