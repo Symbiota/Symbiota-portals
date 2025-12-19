@@ -64,19 +64,19 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				<p>
 					To learn more about the features and capabilities available through this site, read
 					<a href="misc/HerbarioVirtualAustralAmericano.pdf"><b><i>"Introduction to Herbario Virtual Austral Americano"</i></b></a> 
-					or visit the <a href="https://biokic.github.io/symbiota-docs/" target="_blank">Symbiota Docs</a>. Join as a regular visitor and please send your feedback to 
-					<a class="bodylink" href="mailto:help@symbiota.org?subject=HVAA Feedback">help@symbiota.org</a>. Visit the <a href="misc/usagepolicy.php">Data Usage Policy</a> page for information on how to cite data obtained from this web resource.
+					or visit the <a href="https://docs.symbiota.org/" target="_blank">Symbiota Docs</a>. Join as a regular visitor and please send your feedback to 
+					<a class="bodylink" href="mailto:help@symbiota.org?subject=HVAA Feedback">help@symbiota.org</a>. Visit the <a href="includes/usagepolicy.php">Data Usage Policy</a> page for information on how to cite data obtained from this web resource.
 				</p>
 			</div>
 			<?php
 		}
 		?>
 	</main>
-	<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
+	<!--<?php if($GLOBALS['DONATE_LINK'] && file_exists($SERVER_ROOT . '/includes/donationButton.php')): ?>
 		<?php include($SERVER_ROOT . '/includes/donationButton.php') ?>
 	<?php endif ?>
 	<?php
 	include($SERVER_ROOT . '/includes/footer.php');
-	?>
+	?>-->
 </body>
 </html>
