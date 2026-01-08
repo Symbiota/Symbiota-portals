@@ -278,6 +278,7 @@ if($clid && $isEditor){
 								<input type="hidden" name="submitaction" value="SaveSearch" />
 								<input type='hidden' name='clid' value='<?php echo $clid; ?>' />
 								<input type='hidden' name='pid' value='<?php echo $pid; ?>' />
+								<input type='hidden' id="footprintwkt" name='footprint' value='<?php echo htmlspecialchars($clManager->getClFootprint()); ?>' />
 							</div>
 						</td>
 					</tr>
