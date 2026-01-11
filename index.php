@@ -41,9 +41,18 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			//Default Language
 			?>
 			<div>
-				<h1>Welcome</h1>
+				<h1>Welcome to the Kansas Biodiversity Data Portal</h1>
 				<p>
-					This data portal is dedicated to preserved specimens and observations related to the state of Kansas.
+					Kansas is home to more 20,000 species of plants, fungi, animals, and other groups. The biodiversity of the state is documented in collections housed at universities, museums, field stations, gardens, and other institutions whose members preserve and curate the specimens. The data are then leveraged by researchers to answer fundamental and applied questions about the biodiversity of Kansas.
+				</p>
+				<br>
+				<p>				
+					This <a href="https://symbiota.org/>Symbiota</a> portal, initiated in 2025, is designed to promote a broad community of Kansas-focused biodiversity collections of specimens and observations to manage and share their data. The Kansas Biodiversity Data Portal community is open to and welcomes all collections and individuals who wish to publish, manage, and analyze Kansas-based biodiversity occurrence data - especially in the form of digitized specimens.
+				</p>
+				<br>
+				<p>
+					The portal is managed by the Biodiversity Institute & Natural History Museum, University of Kansas. For questions, including requests to join the portal as a new collection or member, please email <a href= "mailto:help@symbiota.org">help@symbiota.org</a>. 
+					
 				</p>
 				<p>
 					<span style="font-size: 0.75rem;">Images in the portal's banner include the following observations: <a href="https://www.gbif.org/occurrence/3067918692"><em>Helianthus annuus</em> L. (Ali Campbell, CC-BY)</a>, <a href="https://www.gbif.org/occurrence/3415718450"><em>Sturnella neglecta</em> Audubon, 1844 (Ves, CC-BY-NC)</a>, and <a href="https://www.gbif.org/occurrence/5168185582"><em>Bombus pensylvanicus</em> (De Geer, 1773) (Ryan Philbrick, CC-BY-NC)</a>.
