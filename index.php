@@ -45,11 +45,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				<p>
 					Kansas is home to more 20,000 species of plants, fungi, animals, and other groups. The biodiversity of the state is documented in collections housed at universities, museums, field stations, gardens, and other institutions whose members preserve and curate the specimens. The data are then leveraged by researchers to answer fundamental and applied questions about the biodiversity of Kansas.
 				</p>
-				<br>
 				<p>				
 					This <a href="https://symbiota.org/" target="_blank">Symbiota</a> portal, initiated in 2025, is designed to promote a broad community of Kansas-focused biodiversity collections of specimens and observations to manage and share their data. The Kansas Biodiversity Data Portal community is open to and welcomes all collections and individuals who wish to publish, manage, and analyze Kansas-based biodiversity occurrence data - especially in the form of digitized specimens.
 				</p>
-				<br>
 				<p>
 					The portal is managed by the Biodiversity Institute & Natural History Museum, University of Kansas. For questions, including requests to join the portal as a new collection or member, please email <a href= "mailto:help@symbiota.org">help@symbiota.org</a>. 
 					
