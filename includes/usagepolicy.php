@@ -1,12 +1,11 @@
 <?php
 include_once('../config/symbini.php');
-if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/templates/usagepolicy.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/templates/usagepolicy.' . $LANG_TAG . '.php');
-else include_once($SERVER_ROOT . '/content/lang/templates/usagepolicy.en.php');
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/includes/useagepolicy_template.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/includes/useagepolicy_template.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/includes/useagepolicy_template.en.php');
 include_once ($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
 
 header("Content-Type: text/html; charset=" . $CHARSET);
 $serverHost = GeneralUtil::getDomain();
-?>verHost = UtilityFunctions::getDomain();
 ?>
 <!DOCTYPE html>
 <html lang="en">
