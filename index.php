@@ -47,7 +47,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				</p>
 				<br>
 				<p>				
-					This <a href="https://symbiota.org/>Symbiota</a> portal, initiated in 2025, is designed to promote a broad community of Kansas-focused biodiversity collections of specimens and observations to manage and share their data. The Kansas Biodiversity Data Portal community is open to and welcomes all collections and individuals who wish to publish, manage, and analyze Kansas-based biodiversity occurrence data - especially in the form of digitized specimens.
+					This <a href="https://symbiota.org/" target="_blank">Symbiota</a> portal, initiated in 2025, is designed to promote a broad community of Kansas-focused biodiversity collections of specimens and observations to manage and share their data. The Kansas Biodiversity Data Portal community is open to and welcomes all collections and individuals who wish to publish, manage, and analyze Kansas-based biodiversity occurrence data - especially in the form of digitized specimens.
 				</p>
 				<br>
 				<p>
