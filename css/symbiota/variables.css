@@ -1,24 +1,24 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url("../../images/layout/ksbiodiversity.gif");
+  --header-bg-color: #0a295e30; /** Transparent color if adding header bg-image **/
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --brand-font-size: 2.25rem;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #0a295e60;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
   --body-font-size: 1rem;
   --body-font-family: "Open Sans", sans-serif;
-  --footer-bg-color: #f2f0e9;
+  --footer-bg-color: #0a295e15;
   --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
+  --link-color: #0051ba;
+  --darkest-color: #0a295e;
+  --medium-color: #a2871b;
   --light-color: #f2f0e9;
-  --bright-color: #b9d432;
-  --danger-color: #b31b1b;
+  --bright-color: #e6c235;
+  --danger-color: #bd2323;
   --max-innertext-width: 1024px;
 }
