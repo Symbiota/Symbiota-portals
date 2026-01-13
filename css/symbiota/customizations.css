@@ -3,36 +3,3 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
-
-/* Global */
-
-a {
-    text-decoration: none;
-}
-
-@media (min-width: 768px) {
-    .brand-name{
-        padding-left: 4rem;
-        padding-top: 3rem;
-        padding-bottom: 3rem;
-    }
- 
-    /* First level drop-down menu */
-    nav.top-menu > ul > li > a:hover > ul,
-    nav.top-menu > ul > li > a:focus > ul,
-    nav.top-menu > ul > li:hover > ul,
-    nav.top-menu > ul > li:focus-within > ul {
-      background-color: #0a295e;
-    }
-}
-
-/* Footer */
-.logo-gallery {
-  padding: .5rem 0;
-}
-
-.button-tertiary {
-  background-color: transparent;
-  border: 3px solid var(--bright-color);
-  padding: 0.5rem 0.9rem;
-}
