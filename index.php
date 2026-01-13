@@ -44,7 +44,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 					</p>
 					<p>
 						HVAA utiliza el software de código abierto <a href="http://symbiota.org/" target="_blank">Symbiota</a>, diseñado para distribuir información de historia natural
-						de múltiples fuentes, incluyendo imágenes, texto descriptivo, listas de verificación, claves interactivas y datos de especímenes de museos. 
+						de múltiples fuentes, incluyendo imágenes, texto descriptivo, listas florísticas, claves interactivas y datos de especímenes de museos. 
 						Para obtener más información sobre las características y capacidades disponibles a través de este sitio, visite la sección <a href="https://docs.symbiota.org/" target="_blank">Documentación de Symbiota</a>
 						o lea <a href="https://canotia.org/volumes/vol17/1-Checklists.pdf" target="_blank">Bell y Landrum 2021</a>. 
 						Únase como visitante habitual y envíenos sus comentarios. Envíe sus comentarios a <a href="mailto:help@symbiota.org">help@symbiota.org</a>.
