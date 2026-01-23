@@ -200,6 +200,10 @@ ALTER TABLE `omexportoccurrences`
 ALTER TABLE omoccurdeterminations 
   MODIFY COLUMN dateLastModified timestamp DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP;
 
+#Convert locus and notes fields within genetic table to TEXT
+ALTER TABLE `omoccurgenetic` 
+  CHANGE COLUMN `locus` `locus` TEXT NULL DEFAULT NULL ,
+  CHANGE COLUMN `notes` `notes` TEXT NULL DEFAULT NULL ;
 
 #Reset empty values to null
 UPDATE omoccurgenetic 
@@ -475,9 +479,14 @@ ALTER TABLE `specprocessorrawlabels`
   CHANGE COLUMN `sortsequence` `sortSequence` INT(11) NULL DEFAULT NULL ,
   CHANGE COLUMN `initialtimestamp` `initialTimestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
 
+UPDATE IGNORE taxa
+  SET kingdomName = ""
+  WHERE kingdomName IS NULL;
 
 ALTER TABLE `taxa` 
-  ADD COLUMN `sourceIdentifier` VARCHAR(150) NULL AFTER `source`;
+  ADD COLUMN `sourceIdentifier` VARCHAR(150) NULL AFTER `source`,
+  CHANGE COLUMN `kingdomName` `kingdomName` VARCHAR(45) NOT NULL DEFAULT '',
+  CHANGE COLUMN `unitName2` `unitName2` VARCHAR(50) NULL DEFAULT NULL;
 
 
 ALTER TABLE `taxaresourcelinks` 
@@ -564,6 +573,11 @@ ALTER TABLE `uploadtaxa`
   ADD INDEX `IX_uploadtaxa_acceptance` (`acceptance` ASC);
 
 
+#Add scientificName to determination upload table in order to include author parsing option for input
+ALTER TABLE `uploaddetermtemp` 
+  ADD COLUMN `scientificName` VARCHAR(255) NULL AFTER `higherClassification`;
+
+
 #Reset uploadspectemp indexes to be compound indexes including collid
 ALTER TABLE `uploadspectemp` 
   DROP INDEX `IX_uploadspectemp_dbpk`,
@@ -581,6 +595,7 @@ ALTER TABLE `uploadspectemp`
 
 #Add indexes to accommodate conversion of imported state codes
 ALTER TABLE `uploadspectemp` 
+  ADD INDEX `IX_uploadspectemp_basisOfRecord` (`collid`, `basisOfRecord`),
   ADD INDEX `IX_uploadspectemp_countryCode` (`collid`, `countryCode`),
   ADD INDEX `IX_uploadspectemp_country` (`collid`, `country`),
   ADD INDEX `IX_uploadspectemp_stateProvince` (`collid`, `stateProvince`);
@@ -590,7 +605,19 @@ ALTER TABLE `uploadspectemp`
 ALTER TABLE `users` 
   CHANGE COLUMN `password` `password` VARCHAR(255) NULL DEFAULT NULL ;
 
-  
+
 # Add index to improve performance on counts on verbatimCoordinates seen in OccurrenceCleaner
 ALTER TABLE `omoccurrences`
   ADD INDEX `IX_occurrences_verbatimCoordinates` (`collid`,`verbatimCoordinates`);
+
+# Add mediaMetadata table to track metadata for media
+CREATE TABLE mediametadata (
+	mediaID int UNSIGNED NOT NULL,
+	field enum ('originalUrl', 'thumbnailUrl', 'url') NOT NULL,
+	bytes BIGINT UNSIGNED NOT NULL,
+	md5sum varchar(32) NOT NULL,
+	created_at timestamp DEFAULT current_timestamp(),
+	updated_at timestamp DEFAULT NULL ON UPDATE current_timestamp(),
+	PRIMARY KEY (mediaID, field),
+	FOREIGN KEY (mediaID) REFERENCES media(mediaID) ON DELETE CASCADE
+) ENGINE=INNODB;
