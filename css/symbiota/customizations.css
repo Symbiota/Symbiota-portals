@@ -16,6 +16,11 @@ This stylesheet is defined last and will override all previously loaded sheets. 
     color: white;
   }
 
+  .button-secondary {
+  background-color: var(--bright-color);
+  color: white;
+}
+
   .button-tertiary {
     background-color: none;
     border: 3px solid var(--bright-color);
@@ -52,4 +57,8 @@ This stylesheet is defined last and will override all previously loaded sheets. 
   margin: 0 auto;
   padding: 2rem 0;
   max-width: var(--max-innertext-width);
+}
+
+button.icon-button svg {
+  fill: white;
 }
