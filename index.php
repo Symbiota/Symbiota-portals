@@ -20,6 +20,11 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	<div class="navpath"></div>
 	<main id="innertext">
 		<h1 class="page-heading"><?php echo $DEFAULT_TITLE; ?> <?php echo $LANG['HOME']; ?></h1>
+		<div style="float:right;width:500px;margin-left:20px">
+		<?php
+		include $SERVER_ROOT . '/includes/quicksearch.php';
+		?>
+		</div>
 		<?php
 		if($LANG_TAG == 'es'){
 			?>
