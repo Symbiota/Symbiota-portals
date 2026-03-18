@@ -864,7 +864,6 @@ class OccurrenceEditorManager {
 					$newCnt++;
 				}
 			}
-
 			foreach ($occurrenceArr as $occid => $occurArr) {
 				if (isset($occurArr['identifiers'])) {
 					$idStr = '';
