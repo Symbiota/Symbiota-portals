@@ -2,4 +2,8 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ .footer-text {
+    width: 800px;          /* Set a fixed width */
+    margin: 0 auto;        /* Center the p element horizontally */
+    text-align: center;  
+ }
