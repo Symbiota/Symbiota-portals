@@ -6,6 +6,7 @@ include_once($SERVER_ROOT . '/classes/utilities/RdfUtil.php');
 include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
 include_once($SERVER_ROOT . '/classes/Media.php');
 include_once($SERVER_ROOT . '/classes/TaxonomyEditorManager.php');
+<<<<<<< HEAD
 
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/individual/index.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/individual/index.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/individual/index.en.php');
@@ -16,6 +17,21 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 $submit = array_key_exists('formsubmit', $_REQUEST) ? $_REQUEST['formsubmit'] : '';
 $indManager = new OccurrenceIndividual($submit ? 'write' : 'readonly');
 
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+include_once($SERVER_ROOT . '/classes/OmMaterialSample.php');
+
+Language::load([
+	'collections/individual/index',
+	'collections/fieldterms/materialSampleVars'
+]);
+
+header('Content-Type: text/html; charset=' . $CHARSET);
+
+$submit = array_key_exists('formsubmit', $_REQUEST) ? $_REQUEST['formsubmit'] : '';
+$indManager = new OccurrenceIndividual($submit ? 'write' : 'readonly');
+
+>>>>>>> origin
 $occid = array_key_exists('occid', $_REQUEST) ? $indManager->sanitizeInt($_REQUEST['occid']) : 0;
 $collid = array_key_exists('collid', $_REQUEST) ? $indManager->sanitizeInt($_REQUEST['collid']) : 0;
 $pk = array_key_exists('pk', $_REQUEST) ? $_REQUEST['pk'] : '';
@@ -178,7 +194,11 @@ $traitArr = $indManager->getTraitArr();
 	<link href="<?= $CSS_BASE_PATH ?>/symbiota/collections/individual/popup.css" type="text/css" rel="stylesheet" >
 	<script src="<?= $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
 	<script src="<?php echo $CLIENT_ROOT . '/collections/individual/domManipulationUtils.js'; ?>" type="text/javascript"></script>
+=======
+	<script src="<?= $CLIENT_ROOT; ?>/js/symb/domManipulationUtils.js" type="text/javascript"></script>
+>>>>>>> origin
 	<script type="text/javascript">
 		var tabIndex = <?= $tabIndex; ?>;
 		var map;
@@ -295,7 +315,13 @@ $traitArr = $indManager->getTraitArr();
             map = new LeafletMap("map_canvas", {
                center: mLatLng,
                zoom: 8,
+<<<<<<< HEAD
             });
+=======
+			},
+				JSON.parse(`<?= json_encode($GEO_JSON_LAYERS ?? []) ?>`)
+			);
+>>>>>>> origin
 
 			if(coordError > 0) {
 			   map.enableDrawing({...map.DEFAULT_DRAW_OPTIONS, control: false})
@@ -644,7 +670,11 @@ $traitArr = $indManager->getTraitArr();
 						}
 						if($occArr['recordedby']){
 							$recByLabel = (isset($LANG['OBSERVER'])?$LANG['OBSERVER']:'Observer');
+<<<<<<< HEAD
 							if($collMetadata['colltype'] == 'Preserved Specimens') $recByLabel = (isset($LANG['COLLECTOR'])?$LANG['COLLECTOR']:'Collector');
+=======
+							if(strpos($collMetadata['colltype'], 'Specimens')) $recByLabel = (isset($LANG['COLLECTOR'])?$LANG['COLLECTOR']:'Collector');
+>>>>>>> origin
 							?>
 							<div id="recordedby-div" class="bottom-breathing-room-rel-sm">
 								<label><?php echo $recByLabel; ?>: </label>
@@ -674,6 +704,14 @@ $traitArr = $indManager->getTraitArr();
 							}
 							echo '</div>';
 						}
+<<<<<<< HEAD
+=======
+						if($occArr['eventtime']){
+							echo '<div id="eventtime-div" class="bottom-breathing-room-rel-sm">';
+							echo '<label>'.$LANG['EVENT_TIME'].':</label> '.$occArr['eventtime'];
+							echo '</div>';
+						}
+>>>>>>> origin
 						if($occArr['verbatimeventdate']){
 							echo '<div id="verbeventid-div" class="bottom-breathing-room-rel-sm"><label>'.$LANG['VERBATIM_DATE'].':</label> '.$occArr['verbatimeventdate'].'</div>';
 						}
@@ -932,6 +970,7 @@ $traitArr = $indManager->getTraitArr();
 						}
 						if(isset($occArr['paleoid'])){
 							?>
+<<<<<<< HEAD
 							<div id="paleo-div" class="bottom-breathing-room-rel-sm">
 								<label><?php echo $LANG['PALEO_TERMS']; ?>: </label>
 								<?php
@@ -967,6 +1006,56 @@ $traitArr = $indManager->getTraitArr();
 							</div>
 							<?php
 						}
+=======
+								<div>
+									<?php
+									if($occArr['slideProperties']) echo '<div class="bottom-breathing-room-rel-sm"><label>'.$LANG['SLIDE_PROPS'].':</label> '.$occArr['slideProperties'].'</div>';
+									if($occArr['element']) echo '<div class="bottom-breathing-room-rel-sm"><label>'.$LANG['ELEMENT'].':</label> '.$occArr['element'].'</div>';
+									?>
+								</div>
+								<div class=" bottom-breathing-room-rel-sm"><label><?php echo $LANG['GEO_CONTEXT']; ?>: </label></div>
+								<?php
+								$paleoStr1 = '';
+								if($occArr['earlyInterval']) $paleoStr1 .= '; '.$occArr['earlyInterval'];
+								if($occArr['lateInterval']) $paleoStr1 .= ' to '.$occArr['lateInterval'];
+								if($paleoStr1 || $occArr['localStage'] || $occArr['absoluteAge']) {
+									echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>' . $LANG['CHRONOSTRAT'] . ': </label>' . trim($paleoStr1,'; ');
+									if($occArr['lateInterval'] && $occArr['lateIntervalHieararchy'])
+										echo '<div class="paleofield-div top-breathing-room-rel-sm"><label>' . $LANG['LATE_INT'] . ': </label>' . trim($occArr["lateIntervalHieararchy"]) . '</div>';
+									if($occArr['earlyInterval'] && $occArr['earlyIntervalHieararchy'])
+										echo '<div class="paleofield-div top-breathing-room-rel-sm"><label>' . $LANG['EARLY_INT'] . ': </label>' . trim($occArr["earlyIntervalHieararchy"]) . '</div>';
+									if($occArr['localStage'])
+										echo '<div class="paleofield-div top-breathing-room-rel-sm"><label>' . $LANG['LOCAL_STAGE'] . ': </label>' . trim($occArr["localStage"]) . '</div>';
+									if($occArr['absoluteAge'])
+										echo '<div class="paleofield-div top-breathing-room-rel-sm"><label>' . $LANG['ABSOLUTE_AGE'] . ': </label>' . trim($occArr["absoluteAge"]) . '</div>';
+									echo '</div>';
+								}
+								?>
+								<?php
+								$paleoStr2 = '';
+								if($occArr['lithogroup']) $paleoStr2 .= ' <label>'.$LANG['GROUP'] . ': </label>' . $occArr['lithogroup'];
+								if($occArr['formation'])$paleoStr2 .= ' <label>'.$LANG['FORMATION'] . ': </label>' . $occArr['formation'];
+								if($occArr['member']) $paleoStr2 .= ' <label>'.$LANG['MEMBER'] . ': </label>' . $occArr['member'];
+								if($occArr['bed']) $paleoStr2 .= ' <label>'.$LANG['BED'] . ': </label>' . $occArr['bed'];
+								if($paleoStr2)
+									echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>' . $LANG['LITHOSTRAT'] . ': </label>' . trim($paleoStr2,'; ') . '</div>';
+								if($occArr['biostratigraphy']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['BIO_STRAT'].':</label> '.$occArr['biostratigraphy'].'</div>';
+								$paleoStr3 = '';
+								if($paleoStr3)
+									echo '<div class="paleofield-div bottom-breathing-room-rel-sm">' . trim($paleoStr3,'; ') . '</div>';
+								if($occArr['stratRemarks']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['STRAT_REMARKS'].':</label> '.$occArr['stratRemarks'].'</div>';
+								if($occArr['lithology']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['LITHOLOGY'].':</label> '.$occArr['lithology'].'</div>';
+								if($occArr['biota']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['BIOTA'].':</label> '.$occArr['biota'].'</div>';
+								if($occArr['taxonEnvironment']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['TAXON_ENVIR'].':</label> '.$occArr['taxonEnvironment'].'</div>';
+								if($occArr['geologicalContextID']) echo '<div class="paleofield-div bottom-breathing-room-rel-sm"><label>'.$LANG['CONTEXT_ID'].':</label> '.$occArr['geologicalContextID'].'</div>';
+								?>
+
+							<?php
+						}
+						if (isset ($collMetadata['colltype']) && $collMetadata['colltype'] == "Fossil Specimens")
+							if($occArr['basisofrecord']) echo '<div class="bottom-breathing-room-rel-sm"><label>'.$LANG['BASIS_OF_RECORD'].':</label> '.$occArr['basisofrecord'].'</div>';
+
+>>>>>>> origin
 						if(isset($occArr['exs'])){
 							?>
 							<div id="exsiccati-div" class="bottom-breathing-room-rel-sm">
@@ -983,6 +1072,10 @@ $traitArr = $indManager->getTraitArr();
 							$matSampleArr = $occArr['matSample'];
 							$msCnt = 0;
 							$msKey = 0;
+<<<<<<< HEAD
+=======
+							$MS_LABEL_ARR = OmMaterialSample::getMsLabels();
+>>>>>>> origin
 							echo '<fieldset><legend>'.$LANG['MATERIAL_SAMPLES'].'</legend>';
 							do{
 								if($msKey = key($matSampleArr)){

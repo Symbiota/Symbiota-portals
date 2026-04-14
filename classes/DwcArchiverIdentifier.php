@@ -13,7 +13,11 @@ class DwcArchiverIdentifier extends DwcArchiverBaseManager{
 
 	public function initiateProcess($filePath){
 		$this->setFieldArr();
+<<<<<<< HEAD
 		$this->setSqlBase();
+=======
+		$this->setSql();
+>>>>>>> origin
 
 		$this->setFileHandler($filePath);
 	}
@@ -21,6 +25,7 @@ class DwcArchiverIdentifier extends DwcArchiverBaseManager{
 	//Based on https://rs.gbif.org/extension/gbif/1.0/identifier.xml
 	private function setFieldArr(){
 		$columnArr = array();
+<<<<<<< HEAD
 		$columnArr['coreid'] = 'occid';
 		$termArr['identifier'] = 'http://purl.org/dc/terms/identifier';
 		$columnArr['identifier'] = 'identifierValue';
@@ -36,6 +41,24 @@ class DwcArchiverIdentifier extends DwcArchiverBaseManager{
  		$columnArr['recordID'] = 'recordID';
 		$termArr['initialTimestamp'] = 'https://symbiota.org/terms/identifier/initialTimestamp';
 		$columnArr['initialTimestamp'] = 'initialTimestamp';
+=======
+		$termArr = array();
+		$columnArr['coreid'] = 'i.occid';
+		$termArr['identifier'] = 'http://purl.org/dc/terms/identifier';
+		$columnArr['identifier'] = 'i.identifierValue';
+		$termArr['title'] = 'http://purl.org/dc/terms/title';
+		$columnArr['title'] = 'i.identifierName';
+		$termArr['format'] = 'http://purl.org/dc/terms/format';
+		$columnArr['format'] = 'i.format';
+		$termArr['notes'] = 'https://symbiota.org/terms/identifier/notes';
+		$columnArr['notes'] = 'i.notes';
+		$termArr['sortBy'] = 'https://symbiota.org/terms/identifier/sortBy';
+		$columnArr['sortBy'] = 'i.sortBy';
+ 		$termArr['recordID'] = 'https://symbiota.org/terms/identifier/recordID';
+ 		$columnArr['recordID'] = 'i.recordID';
+		$termArr['initialTimestamp'] = 'https://symbiota.org/terms/identifier/initialTimestamp';
+		$columnArr['initialTimestamp'] = 'i.initialTimestamp';
+>>>>>>> origin
 
 		$this->fieldArr['terms'] = $this->trimBySchemaType($termArr);
 		$this->fieldArr['fields'] = $this->trimBySchemaType($columnArr);
@@ -52,13 +75,21 @@ class DwcArchiverIdentifier extends DwcArchiverBaseManager{
 		return array_diff_key($dataArr, array_flip($trimArr));
 	}
 
+<<<<<<< HEAD
 	private function setSqlBase(){
+=======
+	private function setSql(){
+>>>>>>> origin
 		if($this->fieldArr){
 			$sqlFrag = '';
 			foreach($this->fieldArr['fields'] as $colName){
 				if($colName) $sqlFrag .= ', ' . $colName;
 			}
+<<<<<<< HEAD
 			$this->sqlBase = 'SELECT ' . trim($sqlFrag, ', ') . ' FROM omoccuridentifiers ';
+=======
+			$this->sqlArr[] = 'SELECT ' . trim($sqlFrag, ', ') . ' FROM omoccuridentifiers i INNER JOIN omexportoccurrences e ON i.occid = e.occid WHERE (e.omExportID = ?) ';
+>>>>>>> origin
 		}
 	}
 }

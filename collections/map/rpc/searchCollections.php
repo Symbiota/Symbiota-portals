@@ -6,6 +6,7 @@ header('Content-Type: application/json;charset=' . $CHARSET);
 include_once($SERVER_ROOT . '/rpc/crossPortalHeaders.php');
 include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
 
+<<<<<<< HEAD
 /*
 $distFromMe = array_key_exists('distFromMe', $_REQUEST)?$_REQUEST['distFromMe']:'';
 $gridSize = array_key_exists('gridSizeSetting', $_REQUEST) && $_REQUEST['gridSizeSetting']?$_REQUEST['gridSizeSetting']:60;
@@ -99,3 +100,28 @@ foreach ($coordArr as $collName => $coll) {
 ob_get_clean();
 
 echo json_encode(['taxaArr' => $taxaArr, 'collArr' => $collArr, 'recordArr' => $recordArr, 'origin' => $host, 'query' => $searchVar]);
+=======
+ob_start();
+
+$mapManager = new OccurrenceMapManager();
+$searchArray = $mapManager->getQueryTermArr();
+
+//Gets Coordinates
+$coordArr = [
+	'taxaArr' => [],
+	'collArr' => [],
+	'recordArr' => []
+];
+
+try {
+	$coordArr = $mapManager->getCoordinateMap();
+} catch(Throwable $th) {
+	$coordArr['error'] = $th->getMessage();
+}
+
+$coordArr['origin'] = GeneralUtil::getDomain() . $GLOBALS['CLIENT_ROOT'];
+$coordArr['query'] = http_build_query($searchArray);
+$coordArr['searchArray'] = $searchArray;
+
+echo json_encode($coordArr);
+>>>>>>> origin

@@ -218,7 +218,7 @@ class OccurrenceEditReview extends Manager{
 				$sqlBase .= 'AND (r.initialtimestamp >= "'.$this->startDateFilter.'") ';
 			}
 			if($this->endDateFilter){
-				$sqlBase .= 'AND (r.initialtimestamp <= "'.$this->endDateFilter.'") ';
+				$sqlBase .= 'AND (r.initialtimestamp < "'.$this->endDateFilter.'") ';
 			}
 			if($this->queryOccidFilter){
 				$sqlBase .= 'AND (r.occid = '.$this->queryOccidFilter.') ';
@@ -350,9 +350,15 @@ class OccurrenceEditReview extends Manager{
 
 	private function applyPaleoEdits($occid, $fieldName, $value, $applyTask){
 		$status = true;
+<<<<<<< HEAD
 		$sql = 'DELETE FROM omoccurpaleo WHERE (occid = '.$occid.')';
 		if($value) $sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = '.($value !== ''?'"'.$this->cleanInStr($value).'"':'NULL').' WHERE (occid = '.$occid.')';
 		echo '<div>'.$sql.'</div>';
+=======
+		$sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = NULL WHERE (occid = '.$occid.')';
+		if($value) $sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = '.($value !== ''?'"'.$this->cleanInStr($value).'"':'NULL').' WHERE (occid = '.$occid.')';
+		//echo '<div>'.$sql.'</div>';
+>>>>>>> origin
 		if(!$this->conn->query($sql)){
 			$warningKey = 'ERROR_REVERTING_PALEO';
 			if($applyTask == 'apply') $warningKey = 'ERROR_APPLYING_PALEO';
@@ -590,7 +596,7 @@ class OccurrenceEditReview extends Manager{
 
 	public function setEndDateFilter($d){
 		if(preg_match('/^[\d-]+$/', $d)){
-			$this->endDateFilter = $d;
+			$this->endDateFilter = date('Y-m-d', strtotime($d . ' +1 day'));
 		}
 	}
 

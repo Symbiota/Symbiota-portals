@@ -14,7 +14,11 @@ class DwcArchiverMaterialSample extends DwcArchiverBaseManager{
 	public function initiateProcess($filePath){
 		$this->setFieldArr();
 		$this->setDynamicFields();
+<<<<<<< HEAD
 		$this->setSqlBase();
+=======
+		$this->setSql();
+>>>>>>> origin
 
 		$this->setFileHandler($filePath);
 	}
@@ -72,16 +76,29 @@ class DwcArchiverMaterialSample extends DwcArchiverBaseManager{
 		$rs->free();
 	}
 
+<<<<<<< HEAD
 	private function setSqlBase(){
+=======
+	private function setSql(){
+>>>>>>> origin
 		if($this->fieldArr){
 			$sqlFrag = '';
 			foreach($this->fieldArr['fields'] as $colName){
 				if($colName && $colName != 'msDynamicField') $sqlFrag .= ', '.$colName;
 			}
+<<<<<<< HEAD
 			$this->sqlBase = 'SELECT '.trim($sqlFrag,', ').' FROM ommaterialsample m LEFT JOIN users u ON m.preparedByUid = u.uid ';
 		}
 	}
 
 	//Setters and getters
+=======
+			$this->sqlArr[] = 'SELECT '.trim($sqlFrag,', ').' FROM ommaterialsample m
+				INNER JOIN omexportoccurrences e ON m.occid = e.occid
+				LEFT JOIN users u ON m.preparedByUid = u.uid
+				WHERE (e.omExportID = ?) ';
+		}
+	}
+>>>>>>> origin
 }
 ?>

@@ -92,7 +92,11 @@ class Drawing extends BaseDrawing
      *
      * @return $this
      */
+<<<<<<< HEAD
     public function setPath(string $path, bool $verifyFile = true, ?ZipArchive $zip = null): static
+=======
+    public function setPath(string $path, bool $verifyFile = true, ?ZipArchive $zip = null, bool $allowExternal = true): static
+>>>>>>> origin
     {
         $this->isUrl = false;
         if (preg_match('~^data:image/[a-z]+;base64,~', $path) === 1) {
@@ -103,10 +107,20 @@ class Drawing extends BaseDrawing
 
         $this->path = '';
         // Check if a URL has been passed. https://stackoverflow.com/a/2058596/1252979
+<<<<<<< HEAD
         if (filter_var($path, FILTER_VALIDATE_URL) || (preg_match('/^([\\w\\s\\x00-\\x1f]+):/u', $path) && !preg_match('/^([\\w]+):/u', $path))) {
             if (!preg_match('/^(http|https|file|ftp|s3):/', $path)) {
                 throw new PhpSpreadsheetException('Invalid protocol for linked drawing');
             }
+=======
+        if (filter_var($path, FILTER_VALIDATE_URL) || (preg_match('/^([\w\s\x00-\x1f]+):/u', $path) && !preg_match('/^([\w]+):/u', $path))) {
+            if (!preg_match('/^(http|https|file|ftp|s3):/', $path)) {
+                throw new PhpSpreadsheetException('Invalid protocol for linked drawing');
+            }
+            if (!$allowExternal) {
+                return $this;
+            }
+>>>>>>> origin
             // Implicit that it is a URL, rather store info than running check above on value in other places.
             $this->isUrl = true;
             $ctx = null;

@@ -1,8 +1,15 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/reports/barcodes.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/reports/barcodes.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/reports/barcodes.en.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/reports/barcodes');
+
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 
 $collid = filter_var($_POST['collid'], FILTER_SANITIZE_NUMBER_INT);
@@ -54,4 +61,8 @@ if($SYMB_UID){
 			?>
 		</div>
 	</body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> origin

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -54,22 +55,28 @@ class Numbering extends AbstractStyle
 
     /**
      * Get Id.
+<<<<<<< HEAD
      *
      * @return int
+=======
+>>>>>>> origin
      */
-    public function getNumId()
+    public function getNumId(): ?int
     {
         return $this->numId;
     }
 
     /**
      * Set Id.
+<<<<<<< HEAD
      *
      * @param int $value
      *
      * @return self
+=======
+>>>>>>> origin
      */
-    public function setNumId($value)
+    public function setNumId(int $value): self
     {
         $this->numId = $this->setIntVal($value, $this->numId);
 
@@ -78,22 +85,28 @@ class Numbering extends AbstractStyle
 
     /**
      * Get multilevel type.
+<<<<<<< HEAD
      *
      * @return string
+=======
+>>>>>>> origin
      */
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
      * Set multilevel type.
+<<<<<<< HEAD
      *
      * @param string $value
      *
      * @return self
+=======
+>>>>>>> origin
      */
-    public function setType($value)
+    public function setType(string $value): self
     {
         $enum = ['singleLevel', 'multilevel', 'hybridMultilevel'];
         $this->type = $this->setEnumVal($value, $enum, $this->type);
@@ -106,19 +119,22 @@ class Numbering extends AbstractStyle
      *
      * @return NumberingLevel[]
      */
-    public function getLevels()
+    public function getLevels(): array
     {
         return $this->levels;
     }
 
     /**
      * Set multilevel type.
+<<<<<<< HEAD
      *
      * @param array $values
      *
      * @return self
+=======
+>>>>>>> origin
      */
-    public function setLevels($values)
+    public function setLevels(array $values): self
     {
         if (is_array($values)) {
             foreach ($values as $key => $value) {

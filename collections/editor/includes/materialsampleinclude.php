@@ -1,11 +1,22 @@
 <?php
 include_once('../../../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/OmMaterialSample.php');
+<<<<<<< HEAD
 include_once($SERVER_ROOT . '/content/lang/collections/fieldterms/materialSampleVars.' . $LANG_TAG . '.php');
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/includes/materialsampleinclude.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT . '/content/lang/collections/editor/includes/materialsampleinclude.' . $LANG_TAG . '.php');
 else include_once($SERVER_ROOT . '/content/lang/collections/editor/includes/materialsampleinclude.en.php');
 header('Content-Type: text/html; charset='.$CHARSET);
 
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/editor/includes/materialsampleinclude');
+
+header('Content-Type: text/html; charset='.$CHARSET);
+
+$MS_LABEL_ARR = OmMaterialSample::getMsLabels();
+
+>>>>>>> origin
 $occid = $_REQUEST['occid'];
 $collid = isset($_REQUEST['collid'])?$_REQUEST['collid']:'';
 $occIndex = $_REQUEST['occindex'];
@@ -293,4 +304,8 @@ $controlTermArr = $materialSampleManager->getMSTypeControlValues();
 		}while($msArr = array_pop($materialSampleArr));
 	}
 	?>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> origin

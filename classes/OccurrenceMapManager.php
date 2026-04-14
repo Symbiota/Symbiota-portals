@@ -1,17 +1,22 @@
 <?php
 include_once('OccurrenceManager.php');
 include_once('OccurrenceAccessStats.php');
+include_once($SERVER_ROOT . '/classes/utilities/QueryUtil.php');
 
 class OccurrenceMapManager extends OccurrenceManager {
 
 	private $recordCount = 0;
 	private $collArrIndex = 0;
 
+	public const DEFAULT_GRID_SIZE=60;
+	public const MIN_CLUSTER_SETTING=10;
+	public const MAP_RECORD_LIMIT=30000;
+	public const DEFAULT_CLUSTER_SWITCH='y';
+
 	public function __construct(){
 		parent::__construct();
 		$this->readGeoRequestVariables();
 		$this->setGeoSqlWhere();
-		$this->setRecordCnt();
 	}
 
 	public function __destruct(){
@@ -21,6 +26,7 @@ class OccurrenceMapManager extends OccurrenceManager {
 	private function readGeoRequestVariables() {
 		if(array_key_exists('gridSizeSetting',$_REQUEST)){
 			$this->searchTermArr['gridSizeSetting'] = $this->cleanInStr($_REQUEST['gridSizeSetting']);
+<<<<<<< HEAD
 		}
 		if(array_key_exists('minClusterSetting',$_REQUEST)){
 			$this->searchTermArr['minClusterSetting'] = $this->cleanInStr($_REQUEST['minClusterSetting']);
@@ -28,12 +34,42 @@ class OccurrenceMapManager extends OccurrenceManager {
 		if(array_key_exists('clusterSwitch',$_REQUEST)){
 			$this->searchTermArr['clusterSwitch'] = $this->cleanInStr($_REQUEST['clusterSwitch']);
 		}
+=======
+		} else {
+			$this->searchTermArr['gridSizeSetting'] = self::DEFAULT_GRID_SIZE;
+		}
+
+		if(array_key_exists('minClusterSetting',$_REQUEST)){
+			$this->searchTermArr['minClusterSetting'] = $this->cleanInStr($_REQUEST['minClusterSetting']);
+		} else {
+			$this->searchTermArr['minClusterSetting'] = self::MIN_CLUSTER_SETTING;
+		}
+
+		if(array_key_exists('clusterSwitch',$_REQUEST)){
+			$this->searchTermArr['clusterSwitch'] = in_array($_REQUEST['clusterSwitch'], ['n', 'y'])?
+				$this->cleanInStr($_REQUEST['clusterSwitch']):
+				self::DEFAULT_CLUSTER_SWITCH;
+		} else {
+			$this->searchTermArr['clusterSwitch'] = self::DEFAULT_CLUSTER_SWITCH;
+		}
+
+		if(array_key_exists('reclimit',$_REQUEST) && is_numeric($_REQUEST['reclimit'])){
+			$recLimit = intval($_REQUEST['reclimit']);
+			$this->searchTermArr['reclimit'] = $recLimit > self::MAP_RECORD_LIMIT? 
+				self::MAP_RECORD_LIMIT: 
+				$recLimit;
+		} else {
+			$this->searchTermArr['reclimit'] = self::MAP_RECORD_LIMIT;
+		}
+
+>>>>>>> origin
 		if(array_key_exists('cltype',$_REQUEST) && $_REQUEST['cltype']){
 			if($_REQUEST['cltype'] == 'all') $this->searchTermArr['cltype'] = 'all';
 			else $this->searchTermArr['cltype'] = 'vouchers';
 		}
 	}
 
+<<<<<<< HEAD
 	//Coordinate retrival functions
 	public function getCoordinateMap($start, $limit){
 		//Used within dynamic map
@@ -80,10 +116,33 @@ class OccurrenceMapManager extends OccurrenceManager {
 				$coordArr['undefined']['c'] = $color;
 			}
 			$result->free();
+=======
+	public function buildMapSqlQuery($start = null, $limit = null, $select = null) {
+		if(!$select) {
+			$select = 'o.occid, CONCAT_WS(" ",o.recordedby,IFNULL(o.recordnumber,o.eventdate)) AS identifier, o.eventdate, '.
+				'o.sciname, IF(ts.family IS NULL, o.family, ts.family) as family, o.tidinterpreted, o.DecimalLatitude, o.DecimalLongitude, o.collid, o.catalogNumber, '.
+				'o.othercatalognumbers';
+>>>>>>> origin
 		}
-		return $coordArr;
+
+		$sql = 'SELECT ' . $select . ' FROM omoccurrences o ';
+
+		if (!empty($GLOBALS['ACTIVATE_PALEO'])) {
+			$sql = $this->getPaleoSqlWith() . $sql;
+		}
+
+		$this->sqlWhere .= 'AND (ts.taxauthid = 1 OR ts.taxauthid IS NULL) ';
+		$sql .= $this->getTableJoins($this->sqlWhere);
+		$sql .= $this->sqlWhere;
+
+		if(is_numeric($start) && $limit){
+			$sql .= "LIMIT " . $start . "," . $limit;
+		}
+
+		return $sql;
 	}
 
+<<<<<<< HEAD
 	public function getMappingData($recLimit, $extraFieldArr = null){
 		//Used for simple maps occurrence and taxon maps, and also KML download functions
 		$start = 0;
@@ -170,11 +229,21 @@ class OccurrenceMapManager extends OccurrenceManager {
 			if($retArr){
 				$statsManager = new OccurrenceAccessStats();
 				$statsManager->recordAccessEventByArr(array_keys($retArr),'list');
+=======
+	public function getCollections() {
+		$collections = [];
+		$colResult= QueryUtil::tryExecuteQuery($this->conn,'SELECT collid, institutionCode, collectionCode, collectionName, CollType IN("Observations","General Observations") as isObservation FROM omcollections');
+		while($record = $colResult->fetch_object()) {
+			if (!array_key_exists($record->collid, $collections)) {
+				$collections[$record->collid] = $record;
+>>>>>>> origin
 			}
 		}
-		return $retArr;
+
+		return $collections;
 	}
 
+<<<<<<< HEAD
 	private function setRecordCnt(){
 		if($this->sqlWhere){
 			$sql = "SELECT COUNT(DISTINCT o.occid) AS cnt FROM omoccurrences o ".$this->getTableJoins($this->sqlWhere).$this->sqlWhere;
@@ -185,11 +254,84 @@ class OccurrenceMapManager extends OccurrenceManager {
 				}
 				$result->free();
 			}
+=======
+	//Coordinate retrival functions
+	public function getCoordinateMap($start = 0) {
+		if(!$this->sqlWhere) {
+			return [
+				'taxaArr' => [],
+				'collArr' => [],
+				'recordArr' => []
+			];
+>>>>>>> origin
 		}
-	}
+		
+		$statsManager = new OccurrenceAccessStats();
 
-	public function getRecordCnt(){
-		return $this->recordCount;
+		$result = QueryUtil::tryExecuteQuery($this->conn, $this->buildMapSqlQuery($start, $this->searchTermArr['reclimit']));
+		if(!$result) {
+			$this->errorMessage = 'ERROR executing coordinate query: ' . $this->conn->error;
+			echo json_encode([$this->errorMessage]);
+			return array();
+		}
+
+		$color = 'e69e67';
+		$host = GeneralUtil::getDomain() . $GLOBALS['CLIENT_ROOT'];
+		$occidArr = [];
+		$recordArr = [];
+		$taxaArr = [];
+		$collArr = [];
+		$collections = $this->getCollections();
+
+		while($record = $result->fetch_object()) {
+			$collName = $collections[$record->collid]->collectionName;
+			if (!array_key_exists($record->tidinterpreted, $taxaArr)) {
+				$taxaArr[$record->tidinterpreted] = [
+					'sn' => $record->sciname,
+					'tid' => $record->tidinterpreted,
+					'family' => $record->family,
+					'color' => $color,
+				];
+			}
+
+			//Collect all Collections
+			if (!array_key_exists($record->collid, $collArr)) {
+				$collArr[$record->collid] = [
+					'name' => $collName,
+					'collid' => $record->collid,
+					'color' => $color,
+				];
+			}
+
+			//Collect all records
+			array_push($recordArr, [
+				'id' => $record->identifier, 
+				'tid' => $this->htmlEntities($record->tidinterpreted), 
+				'catalogNumber' => $record->catalogNumber, 
+				'eventdate' => $record->eventdate, 
+				'sciname' => $record->sciname, 
+				'collid' => $record->collid, 
+				'family' => $record->family,
+				'occid' => $record->occid,
+				'host' => $host,
+				'collname' => $collName,
+				'type' => $collections[$record->collid]->isObservation? 'observation' : 'specimen',
+				'lat' => $record->DecimalLatitude,
+				'lng' => $record->DecimalLongitude,
+			]);
+
+			$occidArr[] = $record->occid;
+		}
+
+		$result->free();
+
+		$statsManager->recordAccessEventByArr($occidArr, 'map');
+
+		return [
+			'taxaArr' => $taxaArr, 
+			'collArr' => $collArr, 
+			'recordArr' => $recordArr
+		];
 	}
 
 	//SQL where functions
@@ -246,9 +388,10 @@ class OccurrenceMapManager extends OccurrenceManager {
 			$fileName = "symbiota";
 		}
 		$fileName .= time().".kml";
-		header ('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header ('Content-type: application/vnd.google-earth.kml+xml');
+		
+		header ('Content-type: text/xml');
 		header ('Content-Disposition: attachment; filename="'.$fileName.'"');
+<<<<<<< HEAD
 		echo "<?xml version='1.0' encoding='".$GLOBALS['CHARSET']."'?>\n";
 		echo "<kml xmlns='http://www.opengis.net/kml/2.2'>\n";
 		echo "<Document>\n";
@@ -335,57 +478,108 @@ class OccurrenceMapManager extends OccurrenceManager {
 				$retArr[$r->occid]['occid'] = $r->occid;
 				$retArr[$r->occid]['lat'] = $r->DecimalLatitude;
 				$retArr[$r->occid]['long'] = $r->DecimalLongitude;
+=======
+
+		$kml = tmpfile();
+		
+		fwrite($kml, "<?xml version='1.0' encoding='".$GLOBALS['CHARSET']."'?>\n");
+		fwrite($kml, "<kml xmlns='http://www.opengis.net/kml/2.2'>\n");
+		fwrite($kml, "<Folder>\n<name>".$GLOBALS['DEFAULT_TITLE']." Specimens - ".date('j F Y g:ia')."</name>\n");
+		fwrite($kml, "<Document>\n");
+
+		$googleIconArr = array('pushpin/ylw-pushpin','pushpin/blue-pushpin','pushpin/grn-pushpin','pushpin/ltblu-pushpin',
+			'pushpin/pink-pushpin','pushpin/purple-pushpin', 'pushpin/red-pushpin','pushpin/wht-pushpin','paddle/blu-blank',
+			'paddle/grn-blank','paddle/ltblu-blank','paddle/pink-blank','paddle/wht-blank','paddle/blu-diamond','paddle/grn-diamond',
+			'paddle/ltblu-diamond','paddle/pink-diamond','paddle/ylw-diamond','paddle/wht-diamond','paddle/red-diamond','paddle/purple-diamond',
+			'paddle/blu-circle','paddle/grn-circle','paddle/ltblu-circle','paddle/pink-circle','paddle/ylw-circle','paddle/wht-circle',
+			'paddle/red-circle','paddle/purple-circle','paddle/blu-square','paddle/grn-square','paddle/ltblu-square','paddle/pink-square',
+			'paddle/ylw-square','paddle/wht-square','paddle/red-square','paddle/purple-square','paddle/blu-stars','paddle/grn-stars',
+			'paddle/ltblu-stars','paddle/pink-stars','paddle/ylw-stars','paddle/wht-stars','paddle/red-stars','paddle/purple-stars');
+
+		$KML_CHUNK_SIZE = 40000;
+		$KML_RECORD_CAP = 3000000;
+
+		$collections = $this->getCollections();
+		$previousSciname = false;
+		// Depending on how the kml goes this could get removed
+		$openFolder = false;
+		$keepProcessing = true;
+		$lastOccid = false;
+		$currentCount = 0;
+
+		while($keepProcessing) {
+			$queryTime= microtime(true);
+			$sql = $this->buildMapSqlQuery() . ($lastOccid? ' AND occid > ' . $lastOccid: '') . ' LIMIT ' . $KML_CHUNK_SIZE;
+			$result = QueryUtil::executeQuery($this->conn, $sql);
+
+			$currentCount += $result->num_rows;
+
+			if($currentCount >= $KML_RECORD_CAP) {
+				$keepProcessing = false;
+			} else if($result->num_rows === $KML_CHUNK_SIZE) {
+				$keepProcessing = true;
+			} else {
+				$keepProcessing = false;
 			}
-			$rs->free();
+
+			while($record = $result->fetch_object()) {
+				$lastOccid = $record->occid;
+				$sciname = $record->sciname ?? 'undefined';
+
+				fwrite($kml, '<Placemark>');
+				fwrite($kml, '<name>' . htmlspecialchars($record->identifier, ENT_QUOTES) . '</name>');
+				fwrite($kml, '<ExtendedData>');
+				if($record->collid) {
+					$collectionCode	= $collections[$record->collid]->collectionCode;
+					$institutionCode = $collections[$record->collid]->collectionCode;
+					if($collectionCode) {
+						fwrite($kml, '<Data name="collectioncode">' . htmlspecialchars($collectionCode, ENT_QUOTES) . '</Data>');
+					}
+
+					if($institutionCode) {
+						fwrite($kml, '<Data name="institutioncode">' . htmlspecialchars($institutionCode, ENT_QUOTES) . '</Data>');
+					}
+				}
+				fwrite($kml, '<Data name="catalognumber">' . ($record->catalogNumber? htmlspecialchars($record->catalogNumber, ENT_QUOTES): '') . '</Data>');
+				fwrite($kml, '<Data name="DataSource">Data retrieved from ' . $GLOBALS['DEFAULT_TITLE'] . ' Data Portal</Data>');
+				$recUrl = 'http://';
+				if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443) $recUrl = 'https://';
+				$recUrl .= $_SERVER['SERVER_NAME'] . $GLOBALS['CLIENT_ROOT'] . '/collections/individual/index.php?occid=' .$record->occid;
+				fwrite($kml, '<Data name="RecordURL">' . htmlspecialchars($recUrl, ENT_QUOTES) . '</Data>');
+
+				if(isset($extraFieldArr) && is_array($extraFieldArr)) {
+					reset($extraFieldArr);
+					foreach($extraFieldArr as $fieldName){
+						if(isset($record->$fieldName)) fwrite($kml, '<Data name="'.$fieldName.'">' . htmlspecialchars($record->$fieldName, ENT_QUOTES).'</Data>');
+					}
+				}
+
+				fwrite($kml, '</ExtendedData>');
+				fwrite($kml, '<styleUrl>#' . htmlspecialchars(str_replace(' ','_',$sciname), ENT_QUOTES) . '</styleUrl>');
+				fwrite($kml, '<Point><coordinates>' . $record->DecimalLongitude . ',' . $record->DecimalLatitude . '</coordinates></Point>');
+				fwrite($kml, "</Placemark>\n");
+				$currentCount++;
+				$previousSciname = $sciname;
+>>>>>>> origin
+			}
+
+			$result->free();
 		}
-		if(count($retArr)>1){
-			return $retArr;
+
+		if($openFolder) {
+			fwrite($kml, "</Folder>\n");
+			$openFolder = false;
 		}
-		else{
-			return;
-		}
+
+<<<<<<< HEAD
+=======
+		fwrite($kml, "</Document>\n</Folder>\n</kml>\n");
+
+		readfile(stream_get_meta_data($kml)['uri']);
+		fclose($kml);
 	}
 
-	public function getPersonalRecordsets($uid){
-		$retArr = Array();
-		$sql = "";
-		//Get datasets owned by user
-		$sql = 'SELECT datasetid, name '.
-			'FROM omoccurdatasets '.
-			'WHERE (uid = '.$uid.') '.
-			'ORDER BY name';
-		$rs = $this->conn->query($sql);
-		while($r = $rs->fetch_object()){
-			$retArr[$r->datasetid]['datasetid'] = $r->datasetid;
-			$retArr[$r->datasetid]['name'] = $r->name;
-			$retArr[$r->datasetid]['role'] = "DatasetAdmin";
-		}
-		$sql2 = 'SELECT d.datasetid, d.name, r.role '.
-			'FROM omoccurdatasets d LEFT JOIN userroles r ON d.datasetid = r.tablepk '.
-			'WHERE (r.uid = '.$uid.') AND (r.role IN("DatasetAdmin","DatasetEditor","DatasetReader")) '.
-			'ORDER BY sortsequence,name';
-		$rs = $this->conn->query($sql2);
-		while($r = $rs->fetch_object()){
-			$retArr[$r->datasetid]['datasetid'] = $r->datasetid;
-			$retArr[$r->datasetid]['name'] = $r->name;
-			$retArr[$r->datasetid]['role'] = $r->role;
-		}
-		$rs->free();
-		return $retArr;
-	}
-
-	//Misc functions
-	public function getObservationIds(){
-		$retVar = array();
-		$sql = 'SELECT collid FROM omcollections WHERE CollType IN("Observations","General Observations") ';
-		$rs = $this->conn->query($sql);
-		while($r = $rs->fetch_object()){
-			$retVar[] = $r->collid;
-		}
-		$rs->free();
-		return $retVar;
-	}
-
+>>>>>>> origin
 	//Misc support functions
 	private function htmlEntities($string){
 		return htmlspecialchars($string ?? '', ENT_XML1 | ENT_QUOTES, 'UTF-8');

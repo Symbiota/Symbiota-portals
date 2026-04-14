@@ -1,4 +1,8 @@
 <?php
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -46,6 +50,12 @@ class Table extends AbstractStyle
                 $css['direction'] = 'rtl';
             }
         }
+<<<<<<< HEAD
+=======
+        if (is_object($style) && method_exists($style, 'getVAlign')) {
+            $css['vertical-align'] = $style->getVAlign();
+        }
+>>>>>>> origin
 
         foreach (['Top', 'Left', 'Bottom', 'Right'] as $direction) {
             $method = 'getBorder' . $direction . 'Style';

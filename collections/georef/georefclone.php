@@ -1,9 +1,17 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceGeorefTools.php');
+<<<<<<< HEAD
 header('Content-Type: text/html; charset=' . $CHARSET);
 if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT.'/content/lang/collections/georef/georefclone.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT . '/content/lang/collections/georef/georefclone.en.php');
 else include_once($SERVER_ROOT . '/content/lang/collections/georef/georefclone.' . $LANG_TAG . '.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/georef/georefclone');
+
+header('Content-Type: text/html; charset=' . $CHARSET);
+>>>>>>> origin
 
 $country = array_key_exists('country',$_REQUEST)?$_REQUEST['country']:'';
 $state = array_key_exists('state',$_REQUEST)?$_REQUEST['state']:'';
@@ -68,7 +76,14 @@ if($coorArr && count($coorArr) == 4){
 				zoom: 3,
 				center: [lat, lng],
 			};
+<<<<<<< HEAD
 			map = new LeafletMap('map_canvas', dmOptions);
+=======
+			map = new LeafletMap('map_canvas',
+				dmOptions,
+				JSON.parse(`<?= json_encode($GEO_JSON_LAYERS ?? []) ?>`)
+			);
+>>>>>>> origin
 
 			const markers = [];
 

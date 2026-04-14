@@ -89,7 +89,11 @@ class DefaultValueBinder implements IValueBinder
 
             return DataType::TYPE_FORMULA;
         }
+<<<<<<< HEAD
         if (preg_match('/^[\+\-]?(\d+\\.?\d*|\d*\\.?\d+)([Ee][\-\+]?[0-2]?\d{1,3})?$/', $value)) {
+=======
+        if (preg_match('/^[\+\-]?(\d+\.?\d*|\d*\.?\d+)([Ee][\-\+]?[0-2]?\d{1,3})?$/', $value)) {
+>>>>>>> origin
             $tValue = ltrim($value, '+-');
             if (strlen($tValue) > 1 && $tValue[0] === '0' && $tValue[1] !== '.') {
                 return DataType::TYPE_STRING;

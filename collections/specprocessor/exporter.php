@@ -1,6 +1,7 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceDownload.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/specprocessor/exporter.' . $LANG_TAG . '.php')){
 	include_once($SERVER_ROOT . '/content/lang/collections/specprocessor/exporter.' . $LANG_TAG . '.php');
 }else{
@@ -12,14 +13,19 @@ if($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/collections/cu
 else{
 	include_once($SERVER_ROOT . '/content/lang/collections/customsearchtype.en.php');
 }
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load([
+	'collections/specprocessor/exporter',
+	'collections/customsearchtype'
+]);
+
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 
-$collid = array_key_exists('collid',$_REQUEST)?$_REQUEST['collid']:0;
-$displayMode = array_key_exists('displaymode',$_REQUEST)?$_REQUEST['displaymode']:0;
-
-//Sanitation
-if(!is_numeric($collid)) $collid = 0;
-if(!is_numeric($displayMode)) $displayMode = 0;
+$collid = array_key_exists('collid', $_REQUEST) ? filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$displayMode = empty($_REQUEST['displaymode']) ? 0 : 1;
 
 $customField = array(); $customType = array(); $customValue = array();
 for($h=1;$h<4;$h++){
@@ -100,6 +106,10 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 					var f = cbObj.form;
 					f.identifications.checked = false;
 					f.images.checked = false;
+<<<<<<< HEAD
+=======
+					f.associations.checked = false;
+>>>>>>> origin
 					if(f.attributes) f.attributes.checked = false;
 				}
 			}
@@ -146,7 +156,11 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 								<legend><b><?php echo $LANG['EXPORT_BATCH_GEO']; ?></b></legend>
 								<div style="margin:15px;">
 									<?php echo $LANG['EXPORT_BATCH_GEO_EXPLAIN_1'].' '.'
+<<<<<<< HEAD
 									<a href="../georef/batchgeoreftool.php?collid=<?php echo htmlspecialchars($collid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>" target="_blank">' . htmlspecialchars($LANG['BATCH_GEO_TOOLS'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a> '.
+=======
+									<a href="../georef/batchgeoreftool.php?collid=<?= $collid ?>" target="_blank">' . $LANG['BATCH_GEO_TOOLS'] . '</a> '.
+>>>>>>> origin
 									$LANG['EXPORT_BATCH_GEO_EXPLAIN_2']; ?>
 								</div>
 								<table>
@@ -216,6 +230,7 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 										<td colspan="2">
 											<div style="margin:10px;">
 												<input name="customfield1" type="hidden" value="georeferenceSources" />
+<<<<<<< HEAD
 												<input name="customtype1" type="hidden" value="STARTS_WITH" />
 												<input name="customvalue1" type="hidden" value="georef batch tool" />
 												<input name="targetcollid" type="hidden" value="<?php echo $collid; ?>" />
@@ -223,6 +238,15 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 												<input name="extended" type="hidden" value="1" />
 												<input name="overrideconditionlimit" type="hidden" value="1" />
 												<input name="submitaction" type="submit" value="Download Records" />
+=======
+												<input name="customtype1" type="hidden" value="LIKE" />
+												<input name="customvalue1" type="hidden" value="batch" />
+												<input name="targetcollid" type="hidden" value="<?php echo $collid; ?>" />
+												<input name="schema" type="hidden" value="georef" />
+												<input name="extended" type="hidden" value="1" />
+												<input name="source" type="hidden" value="collection_exporter">
+												<button name="submitaction" type="submit" value="Download Records"><?php echo $LANG['DOWNLOAD_RECORDS']; ?></button>
+>>>>>>> origin
 											</div>
 										</td>
 									</tr>
@@ -315,7 +339,11 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 											<input name="targetcollid" type="hidden" value="<?php echo $collid; ?>" />
 											<input name="schema" type="hidden" value="dwc" />
 											<input name="extended" type="hidden" value="1" />
+<<<<<<< HEAD
 											<input name="overrideconditionlimit" type="hidden" value="1" />
+=======
+											<input name="source" type="hidden" value="collection_exporter">
+>>>>>>> origin
 											<button name="submitaction" type="submit" value="Download Records"><?php echo $LANG['DOWNLOAD_RECORDS']; ?></button>
 										</div>
 									</td>
@@ -490,6 +518,10 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 										<div style="margin:10px 0px;">
 											<input type="checkbox" name="identifications" value="1" onchange="extensionSelected(this)" checked /> <?php echo $LANG['INCLUDE_DET']; ?><br/>
 											<input type="checkbox" name="images" value="1" onchange="extensionSelected(this)" checked /> <?php echo $LANG['INCLUDE_IMAGES']; ?><br/>
+<<<<<<< HEAD
+=======
+											<input type="checkbox" name="associations" value="1" onchange="extensionSelected(this)" checked /> <?php echo $LANG['INCLUDE_ASSOCIATIONS']; ?><br/>
+>>>>>>> origin
 											<?php
 											if($traitArr) echo '<input type="checkbox" name="attributes" value="1" onchange="extensionSelected(this)" checked /> '.$LANG['INCLUDE_ATTRIBUTES'].'<br/>';
 											?>
@@ -544,7 +576,11 @@ $advFieldArr = array('family'=>'Family','sciname'=>'Scientific Name','identified
 										<div style="margin:10px;">
 											<input name="targetcollid" type="hidden" value="<?php echo $collid; ?>" />
 											<input name="extended" type="hidden" value="1" />
+<<<<<<< HEAD
 											<input name="overrideconditionlimit" type="hidden" value="1" />
+=======
+											<input name="source" type="hidden" value="collection_exporter">
+>>>>>>> origin
 											<button name="submitaction" type="submit" value="Download Records"><?php echo $LANG['DOWNLOAD_RECORDS']; ?></button>
 										</div>
 									</td>

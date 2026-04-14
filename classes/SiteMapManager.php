@@ -16,7 +16,11 @@ class SiteMapManager extends Manager{
 		$retArr = array();
 		$adminArr = array();
 		$editorArr = array();
+<<<<<<< HEAD
 		$sql = 'SELECT collid, CONCAT_WS(":", institutioncode, collectioncode) AS ccode, collectionname, colltype FROM omcollections ';
+=======
+		$sql = 'SELECT collid, institutioncode, collectioncode, collectionname, colltype FROM omcollections ';
+>>>>>>> origin
 		if(!$IS_ADMIN){
 			if(array_key_exists('CollAdmin', $USER_RIGHTS)){
 				$adminArr = $USER_RIGHTS['CollAdmin'];
@@ -37,6 +41,7 @@ class SiteMapManager extends Manager{
 			if($rs){
 				while($row = $rs->fetch_object()){
 					$name = $row->collectionname;
+<<<<<<< HEAD
 					if($row->ccode) $name .= ' (' . $row->ccode . ')';
 					$isCollAdmin = 0;
 					if($IS_ADMIN || in_array($row->collid, $adminArr)) $isCollAdmin = 0;
@@ -45,6 +50,21 @@ class SiteMapManager extends Manager{
 						$retArr['o'][$row->collid]['isadmin'] = $isCollAdmin;
 					}
 					else{
+=======
+					if ($row->collectioncode){ // If there's a collection code add it after institution code
+						$name .= ' (' . $row->institutioncode . ':' . $row->collectioncode . ')';
+					}
+					else{
+						$name .= ' (' . $row->institutioncode . ')';
+					}
+					$isCollAdmin = 0;
+					if($IS_ADMIN || in_array($row->collid, $adminArr)) $isCollAdmin = 0;
+					if($row->colltype == 'Observations'){
+						$retArr['o'][$row->collid]['name'] = $name;
+						$retArr['o'][$row->collid]['isadmin'] = $isCollAdmin;
+					}
+					else{
+>>>>>>> origin
 						$retArr['s'][$row->collid]['name'] = $name;
 						$retArr['s'][$row->collid]['isadmin'] = $isCollAdmin;
 					}

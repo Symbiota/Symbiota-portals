@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -49,6 +50,10 @@ use ReflectionClass;
  * @method FormField addFormField(string $type, mixed $fStyle = null, mixed $pStyle = null)
  * @method SDT addSDT(string $type)
  * @method Formula addFormula(Math $math)
+<<<<<<< HEAD
+=======
+ * @method Ruby addRuby(TextRun $baseText, TextRun $rubyText, \PhpOffice\PhpWord\ComplexType\RubyProperties $properties)
+>>>>>>> origin
  * @method \PhpOffice\PhpWord\Element\OLEObject addObject(string $source, mixed $style = null) deprecated, use addOLEObject instead
  *
  * @since 0.10.0
@@ -58,7 +63,11 @@ abstract class AbstractContainer extends AbstractElement
     /**
      * Elements collection.
      *
+<<<<<<< HEAD
      * @var \PhpOffice\PhpWord\Element\AbstractElement[]
+=======
+     * @var AbstractElement[]
+>>>>>>> origin
      */
     protected $elements = [];
 
@@ -80,7 +89,11 @@ abstract class AbstractContainer extends AbstractElement
      * @param mixed $function
      * @param mixed $args
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Element\AbstractElement
+=======
+     * @return AbstractElement
+>>>>>>> origin
      */
     public function __call($function, $args)
     {
@@ -90,7 +103,11 @@ abstract class AbstractContainer extends AbstractElement
             'Footnote', 'Endnote', 'CheckBox', 'TextBox', 'Field',
             'Line', 'Shape', 'Title', 'TOC', 'PageBreak',
             'Chart', 'FormField', 'SDT', 'Comment',
+<<<<<<< HEAD
             'Formula',
+=======
+            'Formula', 'Ruby',
+>>>>>>> origin
         ];
         $functions = [];
         foreach ($elements as $element) {
@@ -130,7 +147,11 @@ abstract class AbstractContainer extends AbstractElement
      *
      * @param string $elementName
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Element\AbstractElement
+=======
+     * @return AbstractElement
+>>>>>>> origin
      */
     protected function addElement($elementName)
     {
@@ -149,7 +170,7 @@ abstract class AbstractContainer extends AbstractElement
         $elementArgs = $args;
         array_shift($elementArgs); // Shift the $elementName off the beginning of array
 
-        /** @var \PhpOffice\PhpWord\Element\AbstractElement $element Type hint */
+        /** @var AbstractElement $element Type hint */
         $element = $reflection->newInstanceArgs($elementArgs);
 
         // Set parent container
@@ -165,7 +186,11 @@ abstract class AbstractContainer extends AbstractElement
     /**
      * Get all elements.
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Element\AbstractElement[]
+=======
+     * @return AbstractElement[]
+>>>>>>> origin
      */
     public function getElements()
     {
@@ -177,7 +202,11 @@ abstract class AbstractContainer extends AbstractElement
      *
      * @param int $index
      *
+<<<<<<< HEAD
      * @return null|\PhpOffice\PhpWord\Element\AbstractElement
+=======
+     * @return null|AbstractElement
+>>>>>>> origin
      */
     public function getElement($index)
     {
@@ -191,13 +220,21 @@ abstract class AbstractContainer extends AbstractElement
     /**
      * Removes the element at requested index.
      *
+<<<<<<< HEAD
      * @param int|\PhpOffice\PhpWord\Element\AbstractElement $toRemove
+=======
+     * @param AbstractElement|int $toRemove
+>>>>>>> origin
      */
     public function removeElement($toRemove): void
     {
         if (is_int($toRemove) && array_key_exists($toRemove, $this->elements)) {
             unset($this->elements[$toRemove]);
+<<<<<<< HEAD
         } elseif ($toRemove instanceof \PhpOffice\PhpWord\Element\AbstractElement) {
+=======
+        } elseif ($toRemove instanceof AbstractElement) {
+>>>>>>> origin
             foreach ($this->elements as $key => $element) {
                 if ($element->getElementId() === $toRemove->getElementId()) {
                     unset($this->elements[$key]);
@@ -253,7 +290,11 @@ abstract class AbstractContainer extends AbstractElement
             'Footnote' => ['Section', 'TextRun', 'Cell', 'ListItemRun'],
             'Endnote' => ['Section', 'TextRun', 'Cell'],
             'PreserveText' => ['Section', 'Header', 'Footer', 'Cell'],
+<<<<<<< HEAD
             'Title' => ['Section', 'Cell'],
+=======
+            'Title' => ['Section', 'Cell', 'Header'],
+>>>>>>> origin
             'TOC' => ['Section'],
             'PageBreak' => ['Section'],
             'Chart' => ['Section', 'Cell'],

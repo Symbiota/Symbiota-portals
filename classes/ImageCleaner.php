@@ -57,7 +57,11 @@ class ImageCleaner extends Manager{
 		$this->imgManager->setTestOrientation($this->testOrientation);
 		//Get image recordset to be processed
 		$sql = 'SELECT DISTINCT m.mediaID, m.url, m.originalurl, m.thumbnailurl, m.format ';
+<<<<<<< HEAD
 		if($this->collid) $sql .= ', o.catalognumber FROM media m INNER JOIN omoccurrences o ON m.occid = o.occid ';
+=======
+		if($this->collid) $sql .= ', o.catalognumber, o.occid FROM media m INNER JOIN omoccurrences o ON m.occid = o.occid ';
+>>>>>>> origin
 		else $sql .= 'FROM media m ';
 		if($this->tidArr) $sql .= 'INNER JOIN taxaenumtree e ON m.tid = e.tid ';
 		$sql .= $this->getSqlWhere() . 'ORDER BY RAND()';
@@ -65,11 +69,18 @@ class ImageCleaner extends Manager{
 		$result = $this->conn->query($sql);
 		$cnt = 0;
 		if($this->verboseMode > 1) echo '<ul style="margin-left:15px;">';
-		while($row = $result->fetch_object()){
+		while($r = $result->fetch_object()){
 			$status = true;
 			$cnt++;
+<<<<<<< HEAD
 			$mediaID = $row->mediaID;
 			$this->logOrEcho($cnt.': Building thumbnail: <a href="../imgdetails.php?mediaid=' . $mediaID . '" target="_blank">' . $mediaID . '</a>...');
+=======
+			$mediaID = $r->mediaID;
+			$url = '../imgdetails.php?mediaid=' . $mediaID;
+			if($this->collid) $url = '../../collections/editor/occurrenceeditor.php?tabtarget=2&occid=' . $r->occid;
+			$this->logOrEcho($cnt.': Building thumbnail: <a href="' . $url . '" target="_blank">' . $mediaID . '</a>...');
+>>>>>>> origin
 			$this->conn->autocommit(false);
 			//Tag for updating; needed to ensure two parallel processes are not processing the same image
 			$testSql = 'SELECT thumbnailurl, url FROM media WHERE (mediaID = '. $mediaID . ') FOR UPDATE ';
@@ -92,10 +103,17 @@ class ImageCleaner extends Manager{
 			$this->conn->commit();
 			$this->conn->autocommit(true);
 
+<<<<<<< HEAD
 			$setFormat = ($row->format?false:true);
 			$catNum = '';
 			if(isset($row->catalognumber)) $catNum = $row->catalognumber;
 			if(!$this->buildImageDerivatives($mediaID, $catNum, $row->url, $row->thumbnailurl, $row->originalurl, $setFormat)){
+=======
+			$setFormat = ($r->format?false:true);
+			$catNum = '';
+			if(isset($r->catalognumber)) $catNum = $r->catalognumber;
+			if(!$this->buildImageDerivatives($mediaID, $catNum, $r->url, $r->thumbnailurl, $r->originalurl, $setFormat)){
+>>>>>>> origin
 				$this->logOrEcho($this->errorMessage, 1);
 			}
 			if(!$status) $this->logOrEcho($this->errorMessage,1);
@@ -163,7 +181,7 @@ class ImageCleaner extends Manager{
 			}
 		}
 		else{
-			$imgUrl = trim($recUrlWeb);
+			if($recUrlWeb) $imgUrl = trim($recUrlWeb);
 			if((!$imgUrl || $imgUrl == 'empty') && $recUrlOrig){
 				$imgUrl = trim($recUrlOrig);
 				$webIsEmpty = true;
@@ -264,6 +282,7 @@ class ImageCleaner extends Manager{
 		$this->conn->query($sqlWeb);
 	}
 
+<<<<<<< HEAD
 	private function getTropicosWebUrl($url){
 		$imgUrl = '';
 		if(preg_match('/imageid=(\d+)$/', $url, $m)){
@@ -330,6 +349,8 @@ class ImageCleaner extends Manager{
 		return $imgUrl;
 	}
 
+=======
+>>>>>>> origin
 	//Test and refresh image thumbnails for remote images
 	public function getProcessingCnt($postArr){
 		$retCnt = 0;
@@ -373,7 +394,13 @@ class ImageCleaner extends Manager{
 			$url = $r->url;
 			$urlTn = $r->thumbnailurl;
 			$urlOrig = $r->originalurl;
+<<<<<<< HEAD
 			$this->logOrEcho($cnt.'. Rebuilding thumbnail: <a href="../imgdetails.php?mediaid=' . $r->mediaID . '" target="_blank">' . $r->mediaID . '</a> [cat#: ' . htmlspecialchars($r->catalognumber, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ']...',0,'div');
+=======
+			$url = '../imgdetails.php?mediaid=' . $r->mediaID;
+			if($this->collid) $url = '../../collections/editor/occurrenceeditor.php?tabtarget=2&occid=' . $r->occid;
+			$this->logOrEcho($cnt.'. Rebuilding thumbnail: <a href="' . $url . '" target="_blank">' . $r->mediaID . '</a> [cat#: ' . htmlspecialchars($r->catalognumber, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ']...',0,'div');
+>>>>>>> origin
 			//echo 'evaluate_ts: '.$postArr['evaluate_ts'].'<br/>';
 			$tsSource = 0;
 			if($postArr['evaluate_ts']){

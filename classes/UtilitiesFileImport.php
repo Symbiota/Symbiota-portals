@@ -130,6 +130,7 @@ class UtilitiesFileImport extends Manager {
 		$sourceFieldArr = $this->getHeaderArr();
 		foreach($sourceFieldArr as $i => $sourceField){
 			$tableHtml .= '<tr><td>';
+<<<<<<< HEAD
 			$tableHtml .= $sourceField;
 			$sourceField = strtolower($sourceField);
 			$tableHtml .= '<input type="hidden" name="sf['.$i.']" value="'.$sourceField.'" />';
@@ -140,6 +141,18 @@ class UtilitiesFileImport extends Manager {
 			$tableHtml .= '<option value="">-------------------------</option>';
 			foreach($this->targetFieldMap as $k => $v){
 				$tableHtml .= '<option value="' . $k . '" ' . ($k == $translatedSourceField ? 'SELECTED' : '') . '>' . $v . '</option>';
+=======
+			$tableHtml .= $this->cleanOutStr($sourceField);
+			$sourceField = strtolower($sourceField);
+			$tableHtml .= '<input type="hidden" name="sf[' . $this->cleanOutStr($i) . ']" value="' . $this->cleanOutStr($sourceField) . '" />';
+			$translatedSourceField = strtolower($this->getTranslation($sourceField));
+			$tableHtml .= '</td><td>';
+			$tableHtml .= '<select name="tf[' . $this->cleanOutStr($i) . ']" style="background:'.(array_key_exists($translatedSourceField, $this->targetFieldMap)?'':'yellow').'">';
+			$tableHtml .= '<option value="">Select Target Field</option>';
+			$tableHtml .= '<option value="">-------------------------</option>';
+			foreach($this->targetFieldMap as $k => $v){
+				$tableHtml .= '<option value="' . $this->cleanOutStr($k) . '" ' . ($k == $translatedSourceField ? 'SELECTED' : '') . '>' . $this->cleanOutStr($v) . '</option>';
+>>>>>>> origin
 			}
 			$tableHtml .= '</select>';
 			$tableHtml .= '</td></tr>';
@@ -151,6 +164,7 @@ class UtilitiesFileImport extends Manager {
 	protected function getHeaderArr(){
 		$sourceArr = array();
 		if($this->fileName){
+<<<<<<< HEAD
 			$this->fileHandler = fopen($this->targetPath . $this->fileName, 'rb') or die('unable to open file');
 			$headerData = fgets($this->fileHandler);
 			//Check to see if we can figure out the delimiter, comma delimited it assumed to be the default
@@ -175,6 +189,35 @@ class UtilitiesFileImport extends Manager {
 				$fieldStr = $this->encodeString(trim($field));
 				if($fieldStr){
 					$sourceArr[$k] = $fieldStr;
+=======
+			$fullPath = realpath($this->targetPath . $this->fileName);
+			if($fullPath){
+				$this->fileHandler = fopen($fullPath, 'rb') or die('unable to open file');
+				$headerData = fgets($this->fileHandler);
+				//Check to see if we can figure out the delimiter, comma delimited it assumed to be the default
+				if(strpos($headerData, ',') === false){
+					if(strpos($headerData, "\t") !== false){
+						$this->delimiter = "\t";
+					}
+					elseif(strpos($headerData, '|') !== false){
+						$this->delimiter = '|';
+					}
+				}
+				//Grab header terms
+				$headerArr = Array();
+				if($this->delimiter == ','){
+					rewind($this->fileHandler);
+					$headerArr = fgetcsv($this->fileHandler, 0, $this->delimiter);
+				}
+				else{
+					$headerArr = explode($this->delimiter, $headerData);
+				}
+				foreach($headerArr as $k => $field){
+					$fieldStr = $this->encodeString(trim($field));
+					if($fieldStr){
+						$sourceArr[$k] = $fieldStr;
+					}
+>>>>>>> origin
 				}
 			}
 		}
@@ -192,6 +235,12 @@ class UtilitiesFileImport extends Manager {
 				$recordArr = explode($this->delimiter, $record);
 				foreach($recordArr as $k => $v) $recordArr[$k] = trim($v);
 			}
+<<<<<<< HEAD
+=======
+			else{
+				$recordArr = false;
+			}
+>>>>>>> origin
 		}
 		return $recordArr;
 	}

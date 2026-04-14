@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -69,11 +70,34 @@ class Cell extends Border
     /**
      * Vertical align (top, center, both, bottom).
      *
-     * @var string
+     * @var null|string
      */
     private $vAlign;
 
     /**
+<<<<<<< HEAD
+=======
+     * @var null|int
+     */
+    private $paddingTop;
+
+    /**
+     * @var null|int
+     */
+    private $paddingBottom;
+
+    /**
+     * @var null|int
+     */
+    private $paddingLeft;
+
+    /**
+     * @var null|int
+     */
+    private $paddingRight;
+
+    /**
+>>>>>>> origin
      * Text Direction.
      *
      * @var string
@@ -93,14 +117,14 @@ class Cell extends Border
      * - restart: Start/restart merged region
      * - continue: Continue merged region
      *
-     * @var string
+     * @var null|string
      */
     private $vMerge;
 
     /**
      * Shading.
      *
-     * @var \PhpOffice\PhpWord\Style\Shading
+     * @var Shading
      */
     private $shading;
 
@@ -128,7 +152,7 @@ class Cell extends Border
     /**
      * Get vertical align.
      *
-     * @return string
+     * @return null|string
      */
     public function getVAlign()
     {
@@ -137,13 +161,28 @@ class Cell extends Border
 
     /**
      * Set vertical align.
+<<<<<<< HEAD
      *
      * @param string $value
      *
+=======
+     *
+     * @param null|string $value
+     *
+>>>>>>> origin
      * @return self
      */
     public function setVAlign($value = null)
     {
+<<<<<<< HEAD
+=======
+        if ($value === null) {
+            $this->vAlign = null;
+
+            return $this;
+        }
+
+>>>>>>> origin
         VerticalJc::validate($value);
         $this->vAlign = $this->setEnumVal($value, VerticalJc::values(), $this->vAlign);
 
@@ -235,7 +274,7 @@ class Cell extends Border
     /**
      * Get vertical merge (rowspan).
      *
-     * @return string
+     * @return null|string
      */
     public function getVMerge()
     {
@@ -244,13 +283,28 @@ class Cell extends Border
 
     /**
      * Set vertical merge (rowspan).
+<<<<<<< HEAD
      *
      * @param string $value
      *
+=======
+     *
+     * @param null|string $value
+     *
+>>>>>>> origin
      * @return self
      */
     public function setVMerge($value = null)
     {
+<<<<<<< HEAD
+=======
+        if ($value === null) {
+            $this->vMerge = null;
+
+            return $this;
+        }
+
+>>>>>>> origin
         $enum = [self::VMERGE_RESTART, self::VMERGE_CONTINUE];
         $this->vMerge = $this->setEnumVal($value, $enum, $this->vMerge);
 
@@ -260,7 +314,7 @@ class Cell extends Border
     /**
      * Get shading.
      *
-     * @return \PhpOffice\PhpWord\Style\Shading
+     * @return Shading
      */
     public function getShading()
     {
@@ -343,5 +397,88 @@ class Cell extends Border
     public function getNoWrap(): bool
     {
         return $this->noWrap;
+<<<<<<< HEAD
+=======
+    }
+
+    /**
+     * Get style padding-top.
+     */
+    public function getPaddingTop(): ?int
+    {
+        return $this->paddingTop;
+    }
+
+    /**
+     * Set style padding-top.
+     *
+     * @return $this
+     */
+    public function setPaddingTop(int $value): self
+    {
+        $this->paddingTop = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get style padding-bottom.
+     */
+    public function getPaddingBottom(): ?int
+    {
+        return $this->paddingBottom;
+    }
+
+    /**
+     * Set style padding-bottom.
+     *
+     * @return $this
+     */
+    public function setPaddingBottom(int $value): self
+    {
+        $this->paddingBottom = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get style padding-left.
+     */
+    public function getPaddingLeft(): ?int
+    {
+        return $this->paddingLeft;
+    }
+
+    /**
+     * Set style padding-left.
+     *
+     * @return $this
+     */
+    public function setPaddingLeft(int $value): self
+    {
+        $this->paddingLeft = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get style padding-right.
+     */
+    public function getPaddingRight(): ?int
+    {
+        return $this->paddingRight;
+    }
+
+    /**
+     * Set style padding-right.
+     *
+     * @return $this
+     */
+    public function setPaddingRight(int $value): self
+    {
+        $this->paddingRight = $value;
+
+        return $this;
+>>>>>>> origin
     }
 }

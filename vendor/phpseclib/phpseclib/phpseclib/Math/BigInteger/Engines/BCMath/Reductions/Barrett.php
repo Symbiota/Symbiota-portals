@@ -67,7 +67,11 @@ abstract class Barrett extends Base
         $m_length = strlen($m);
 
         if (strlen($n) > 2 * $m_length) {
+<<<<<<< HEAD
             return bcmod($n, $m);
+=======
+            return self::BCMOD_THREE_PARAMS ? bcmod($n, $m, 0) : bcmod($n, $m);
+>>>>>>> origin
         }
 
         // if (m.length >> 1) + 2 <= m.length then m is too small and n can't be reduced
@@ -89,14 +93,24 @@ abstract class Barrett extends Base
 
             $lhs = '1' . str_repeat('0', $m_length + ($m_length >> 1));
             $u = bcdiv($lhs, $m, 0);
+<<<<<<< HEAD
             $m1 = bcsub($lhs, bcmul($u, $m));
+=======
+            $m1 = bcsub($lhs, bcmul($u, $m, 0), 0);
+>>>>>>> origin
 
             $cache[self::DATA][] = [
                 'u' => $u, // m.length >> 1 (technically (m.length >> 1) + 1)
                 'm1' => $m1 // m.length
             ];
         } else {
+<<<<<<< HEAD
             extract($cache[self::DATA][$key]);
+=======
+            $cacheValues = $cache[self::DATA][$key];
+            $u = $cacheValues['u'];
+            $m1 = $cacheValues['m1'];
+>>>>>>> origin
         }
 
         $cutoff = $m_length + ($m_length >> 1);
@@ -104,8 +118,13 @@ abstract class Barrett extends Base
         $lsd = substr($n, -$cutoff);
         $msd = substr($n, 0, -$cutoff);
 
+<<<<<<< HEAD
         $temp = bcmul($msd, $m1); // m.length + (m.length >> 1)
         $n = bcadd($lsd, $temp); // m.length + (m.length >> 1) + 1 (so basically we're adding two same length numbers)
+=======
+        $temp = bcmul($msd, $m1, 0); // m.length + (m.length >> 1)
+        $n = bcadd($lsd, $temp, 0); // m.length + (m.length >> 1) + 1 (so basically we're adding two same length numbers)
+>>>>>>> origin
         //if ($m_length & 1) {
         //    return self::regularBarrett($n, $m);
         //}
@@ -114,23 +133,36 @@ abstract class Barrett extends Base
         $temp = substr($n, 0, -$m_length + 1);
         // if even: ((m.length >> 1) + 2) + (m.length >> 1) == m.length + 2
         // if odd:  ((m.length >> 1) + 2) + (m.length >> 1) == (m.length - 1) + 2 == m.length + 1
+<<<<<<< HEAD
         $temp = bcmul($temp, $u);
+=======
+        $temp = bcmul($temp, $u, 0);
+>>>>>>> origin
         // if even: (m.length + 2) - ((m.length >> 1) + 1) = m.length - (m.length >> 1) + 1
         // if odd:  (m.length + 1) - ((m.length >> 1) + 1) = m.length - (m.length >> 1)
         $temp = substr($temp, 0, -($m_length >> 1) - 1);
         // if even: (m.length - (m.length >> 1) + 1) + m.length = 2 * m.length - (m.length >> 1) + 1
         // if odd:  (m.length - (m.length >> 1)) + m.length     = 2 * m.length - (m.length >> 1)
+<<<<<<< HEAD
         $temp = bcmul($temp, $m);
+=======
+        $temp = bcmul($temp, $m, 0);
+>>>>>>> origin
 
         // at this point, if m had an odd number of digits, we'd be subtracting a 2 * m.length - (m.length >> 1) digit
         // number from a m.length + (m.length >> 1) + 1 digit number.  ie. there'd be an extra digit and the while loop
         // following this comment would loop a lot (hence our calling _regularBarrett() in that situation).
 
+<<<<<<< HEAD
         $result = bcsub($n, $temp);
+=======
+        $result = bcsub($n, $temp, 0);
+>>>>>>> origin
 
         //if (bccomp($result, '0') < 0) {
         if ($result[0] == '-') {
             $temp = '1' . str_repeat('0', $m_length + 1);
+<<<<<<< HEAD
             $result = bcadd($result, $temp);
         }
 
@@ -139,6 +171,16 @@ abstract class Barrett extends Base
         }
 
         return $correctionNeeded ? substr($result, 0, -1) : $result;
+=======
+            $result = bcadd($result, $temp, 0);
+        }
+
+        while (bccomp($result, $m, 0) >= 0) {
+            $result = bcsub($result, $m, 0);
+        }
+
+        return $correctionNeeded && $result != '0' ? substr($result, 0, -1) : $result;
+>>>>>>> origin
     }
 
     /**
@@ -161,7 +203,11 @@ abstract class Barrett extends Base
         $n_length = strlen($n);
 
         if (strlen($x) > 2 * $n_length) {
+<<<<<<< HEAD
             return bcmod($x, $n);
+=======
+            return self::BCMOD_THREE_PARAMS ? bcmod($x, $n, 0) : bcmod($x, $n);
+>>>>>>> origin
         }
 
         if (($key = array_search($n, $cache[self::VARIABLE])) === false) {
@@ -172,21 +218,37 @@ abstract class Barrett extends Base
         }
 
         $temp = substr($x, 0, -$n_length + 1);
+<<<<<<< HEAD
         $temp = bcmul($temp, $cache[self::DATA][$key]);
         $temp = substr($temp, 0, -$n_length - 1);
 
         $r1 = substr($x, -$n_length - 1);
         $r2 = substr(bcmul($temp, $n), -$n_length - 1);
+=======
+        $temp = bcmul($temp, $cache[self::DATA][$key], 0);
+        $temp = substr($temp, 0, -$n_length - 1);
+
+        $r1 = substr($x, -$n_length - 1);
+        $r2 = substr(bcmul($temp, $n, 0), -$n_length - 1);
+>>>>>>> origin
         $result = bcsub($r1, $r2);
 
         //if (bccomp($result, '0') < 0) {
         if ($result[0] == '-') {
             $q = '1' . str_repeat('0', $n_length + 1);
+<<<<<<< HEAD
             $result = bcadd($result, $q);
         }
 
         while (bccomp($result, $n) >= 0) {
             $result = bcsub($result, $n);
+=======
+            $result = bcadd($result, $q, 0);
+        }
+
+        while (bccomp($result, $n, 0) >= 0) {
+            $result = bcsub($result, $n, 0);
+>>>>>>> origin
         }
 
         return $result;

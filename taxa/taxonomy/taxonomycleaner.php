@@ -2,6 +2,10 @@
 //error_reporting(E_ALL);
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/TaxonomyCleaner.php');
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('taxa/taxonomy/taxonomycleaner');
+
 header("Content-Type: text/html; charset=".$CHARSET);
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/taxa/taxonomy/taxonomycleaner.' . $LANG_TAG . '.php'))
 	include_once($SERVER_ROOT.'/content/lang/taxa/taxonomy/taxonomycleaner.' . $LANG_TAG . '.php');

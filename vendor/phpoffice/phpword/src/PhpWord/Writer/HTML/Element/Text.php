@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -72,7 +73,11 @@ class Text extends AbstractElement
         /** @var \PhpOffice\PhpWord\Element\Text $element Type hint */
         $element = $this->element;
 
+<<<<<<< HEAD
         $text = $this->parentWriter->escapeHTML($element->getText());
+=======
+        $text = $this->parentWriter->escapeHTML($element->getText() ?? '');
+>>>>>>> origin
         if (!$this->withoutP && !trim($text)) {
             $text = '&nbsp;';
         }

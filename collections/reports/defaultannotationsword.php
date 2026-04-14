@@ -1,7 +1,11 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
+<<<<<<< HEAD
 require_once $SERVER_ROOT.'/vendor/phpoffice/phpword/bootstrap.php';
+=======
+require_once $SERVER_ROOT.'/vendor/autoload.php';
+>>>>>>> origin
 
 header("Content-Type: text/html; charset=".$CHARSET);
 ini_set('max_execution_time', 180); //180 seconds = 3 minutes
@@ -15,6 +19,7 @@ $detIdArr = $_POST['detid'];
 $action = array_key_exists('submitaction',$_POST)?$_POST['submitaction']:'';
 $columnsPerPage = array_key_exists('columncount',$_POST)?$_POST['columncount']:3;
 
+<<<<<<< HEAD
 $sectionStyle = array();
 if($columnsPerPage==1){
 	$lineWidth = 740;
@@ -29,6 +34,8 @@ if($columnsPerPage==3){
 	$sectionStyle = array('pageSizeW'=>12240,'pageSizeH'=>15840,'marginLeft'=>360,'marginRight'=>360,'marginTop'=>360,'marginBottom'=>360,'headerHeight'=>0,'footerHeight'=>0,'colsNum'=>3,'colsSpace'=>180,'breakType'=>'continuous');
 }
 
+=======
+>>>>>>> origin
 $labelManager->setCollid($collid);
 
 $isEditor = 0;
@@ -41,7 +48,12 @@ if($SYMB_UID){
 $labelArr = array();
 if($isEditor && $action){
 	$speciesAuthors = ((array_key_exists('speciesauthors',$_POST) && $_POST['speciesauthors'])?1:0);
+<<<<<<< HEAD
 	$labelArr = $labelManager->getAnnoArray($_POST['detid'], $speciesAuthors);
+=======
+	$familyName = ((array_key_exists('print-family',$_POST) && $_POST['print-family'])?1:0);
+	$labelArr = $labelManager->getAnnoArray($_POST['detid'], $speciesAuthors, $familyName);
+>>>>>>> origin
 	if(array_key_exists('clearqueue',$_POST) && $_POST['clearqueue']){
 		$labelManager->clearAnnoQueue($_POST['detid']);
 	}
@@ -56,6 +68,7 @@ $phpWord->addParagraphStyle('footer', array('align'=>'center','lineHeight'=>1.0,
 $phpWord->addFontStyle('headerfooterFont', array('bold'=>true,'size'=>9,'name'=>'Arial'));
 $phpWord->addParagraphStyle('other', array('align'=>'left','lineHeight'=>1.0,'spaceBefore'=>30,'spaceAfter'=>0,'keepNext'=>true,'keepLines'=>true));
 $phpWord->addParagraphStyle('scientificname', array('align'=>'left','lineHeight'=>1.0,'spaceAfter'=>0,'keepNext'=>true,'keepLines'=>true));
+<<<<<<< HEAD
 $phpWord->addFontStyle('scientificnameFont', array('bold'=>true,'italic'=>true,'size'=>10,'name'=>'Arial'));
 $phpWord->addFontStyle('scientificnameinterFont', array('bold'=>true,'size'=>10,'name'=>'Arial'));
 $phpWord->addFontStyle('scientificnameauthFont', array('size'=>10,'name'=>'Arial'));
@@ -76,12 +89,71 @@ $cellStyle = array('valign'=>'top');
 
 $section = $phpWord->addSection($sectionStyle);
 
+=======
+$phpWord->addParagraphStyle('noSpacing', [
+    'spaceBefore' => 0,
+    'spaceAfter'  => 0,
+    'lineHeight'  => 1.0,
+    'keepNext'    => true,
+    'keepLines'   => true,
+	'alignment' => 'right'
+]);
+$phpWord->addFontStyle('scientificnameFont', array('bold'=>true,'italic'=>true,'size'=>10,'name'=>'Arial'));
+$phpWord->addFontStyle('scientificnameinterFont', array('bold'=>true,'size'=>10,'name'=>'Arial'));
+$phpWord->addFontStyle('scientificnameauthFont', array('size'=>10,'name'=>'Arial'));
+$phpWord->addFontStyle('familyFont', array('size'=>8,'name'=>'Arial'));
+$phpWord->addFontStyle('identifiedFont', array('size'=>8,'name'=>'Arial'));
+$marginSize = 80;
+if(array_key_exists('marginsize',$_POST) && $_POST['marginsize']) $marginSize = 16 * $_POST['marginsize'];
+$cellLength = 20000;
+
+$sectionStyle = array();
+if($columnsPerPage==1){
+	$lineWidth = 740;
+	$sectionStyle = array('pageSizeW'=>12240,'pageSizeH'=>15840,'marginLeft'=>360,'marginRight'=>360,'marginTop'=>360,'marginBottom'=>360,'headerHeight'=>0,'footerHeight'=>0);
+}
+if($columnsPerPage==2){
+	$lineWidth = 350;
+	$sectionStyle = array('pageSizeW'=>12240,'pageSizeH'=>15840,'marginLeft'=>360,'marginRight'=>360,'marginTop'=>360,'marginBottom'=>360,'headerHeight'=>0,'footerHeight'=>0,'colsNum'=>2,'colsSpace'=>180,'breakType'=>'continuous');
+}
+if($columnsPerPage==3){
+	$lineWidth = 220;
+	$sectionStyle = array('pageSizeW'=>12240,'pageSizeH'=>15840,'marginLeft'=>360,'marginRight'=>360,'marginTop'=>360,'marginBottom'=>360,'headerHeight'=>0,'footerHeight'=>0,'colsNum'=>3,'colsSpace'=>180,'breakType'=>'continuous');
+}
+$section = $phpWord->addSection($sectionStyle);
+
+$borderWidth = isset($_POST['borderwidth']) ? (int)$_POST['borderwidth'] : 2;
+$outerStyle = [
+  'borderColor' => '000000',
+  'borderInsideHSize' => 0,
+  'borderInsideVSize' => 0,
+];
+if ($borderWidth > 0) {
+  $outerStyle['borderSize']  = $borderWidth;
+}
+
+$phpWord->addTableStyle('labelBox', $outerStyle);
+	
+$innerStyle = [
+	'cellMargin'=>$marginSize,
+	'borderSize' => 0,
+	'borderColor' => 'ffffff',
+	'borderInsideHSize' => 0,
+	'borderInsideVSize' => 0,
+];
+$phpWord->addTableStyle('labelInner', $innerStyle);
+
+$colRowStyle = array('cantSplit'=>true);
+$cellStyle = array('valign'=>'top','halign' => 'left');
+
+>>>>>>> origin
 foreach($labelArr as $occid => $occArr){
 	$headerStr = trim($lHeader);
 	$footerStr = trim($lFooter);
 
 	$dupCnt = $_POST['q-'.$occid];
 	for($i = 0;$i < $dupCnt;$i++){
+<<<<<<< HEAD
 		$section->addText(htmlspecialchars(' '),'dividerFont','firstLine');
 		$table = $section->addTable('defaultTable');
 		$table->addRow();
@@ -194,6 +266,123 @@ foreach($labelArr as $occid => $occArr){
 			$textrun->addText(htmlspecialchars($footerStr),'headerfooterFont');
 		}
 		$section->addText(htmlspecialchars(' '),'dividerFont','lastLine');
+=======
+		$currentTxt = htmlspecialchars(' ');
+		$section->addText($currentTxt, 'firstLine');
+
+		$outer = $section->addTable('labelBox');
+    	$outer->addRow();
+
+    	$boxCell = $outer->addCell($cellLength);
+		$table = $boxCell->addTable('labelInner');
+		$table->addRow();
+		if($occArr['family']){
+			if($headerStr){
+				$headerCell = $table->addCell($cellLength, ['gridSpan' => 2]);
+				$table->addRow();
+			}
+			$leftCell = $table->addCell(0.55 * $cellLength, $cellStyle);
+			$rightCell = $table->addCell(0.45 * $cellLength, $cellStyle);
+		}else{
+			$leftCell = $table->addCell($cellLength, $cellStyle);
+			$rightCell = null;
+		}
+
+		if($headerStr){
+			if($occArr['family']){
+				$textrun = $headerCell->addTextRun('header');
+			}else {
+				$textrun = $leftCell->addTextRun('header');
+			}
+			$currentTxt = htmlspecialchars($headerStr);
+			$textrun->addText($currentTxt, 'headerfooterFont');
+		}
+
+		$textrun = $leftCell->addTextRun('scientificname');
+		if($occArr['identificationqualifier']){
+			$currentTxt = htmlspecialchars($occArr['identificationqualifier']) . ' ';
+			$textrun->addText($currentTxt, 'scientificnameauthFont');
+		} 
+		$scinameStr = $occArr['sciname'];
+		$parentAuthor = (array_key_exists('parentauthor',$occArr)?' '.$occArr['parentauthor']:'');
+		$queryArr = ['subsp.'=>'subsp.', 'sp.'=>'sp.' , 'ssp.'=>'ssp.', 'var.'=>'var.', 'variety'=>'var.', 'Variety'=>'var.', 'v.'=>'var.','f.'=>'f.', 'cf.'=>'cf.', 'aff.'=>'aff.'];
+		$shouldStop = false;
+		$shouldAddNextElList = ['subsp.', 'ssp.', 'var.', 'variety', 'Variety', 'v.', 'f.', 'cf.', 'aff.'];
+		foreach($queryArr as $queryKey => $queryVal){
+			OccurrenceLabel::processSciNameLabelForWord($scinameStr, $queryKey, $queryVal, $textrun, $parentAuthor, in_array($queryKey, $shouldAddNextElList), $shouldStop);
+		}
+		if(!$shouldStop){
+			$currentTxt = htmlspecialchars($scinameStr) . ' ';
+			$textrun->addText($currentTxt, 'scientificnameFont');
+		}
+		$scientificnameauthorshipStr = $occArr['scientificnameauthorship'] . ' ';
+		// $familyRun = $rightCell->addTextRun('noSpacing');
+		if($occArr['family']){
+			$familyRun = $rightCell->addTextRun('noSpacing');
+			$currentTxt = strtoupper(htmlspecialchars($occArr['family']));
+			$familyRun->addText($currentTxt, 'scientificnameauthFont');
+		}else{
+			// $familyRun->addText('', 'scientificnameauthFont');
+		}
+		$currentTxt = htmlspecialchars($scientificnameauthorshipStr);
+		$textrun->addText($currentTxt, 'scientificnameauthFont');
+		if($occArr['identifiedby'] || $occArr['dateidentified']){
+			if($occArr['identifiedby']){
+				$identByStr = $occArr['identifiedby'];
+				$currentTxt = 'Det: ' . htmlspecialchars($identByStr);
+				$textrun = $leftCell->addTextRun('scientificname');
+				$textrun->addText($currentTxt, 'identifiedFont');
+				// if($occArr['dateidentified']){
+				// 	if($occArr['family']){
+				// 		$textrun2 = $rightCell->addTextRun(['alignment' => 'right']);
+				// 		$textrun2->addText($occArr['dateidentified'], 'identifiedFont');
+				// 	}else{
+				// 		$textrun->addText(' ' . $occArr['dateidentified'], 'identifiedFont');
+				// 	}
+				// }
+				// $currentTxt = 'Det: ' . htmlspecialchars($identByStr);
+				// $textrun = $leftCell->addTextRun('scientificname');
+				// $textrun->addText($currentTxt, 'identifiedFont');
+			}
+			if($occArr['family']){
+				$textrun2 = $rightCell->addTextRun(['alignment' => 'right']);
+				$textrun2->addText($occArr['dateidentified'], 'identifiedFont');
+			}else{
+				$textrun->addText(' ' . $occArr['dateidentified'], 'identifiedFont');
+			}
+		}
+		if(array_key_exists('printcatnum',$_POST) && $_POST['printcatnum'] && $occArr['catalognumber']){
+			$textrun = $leftCell->addTextRun('other');
+            // $textrunRt = $rightCell->addTextRun('other');
+			$currentTxt = 'Catalog #: ' . htmlspecialchars($occArr['catalognumber']).' ';
+			$textrun->addText($currentTxt, 'identifiedFont');
+		}
+		if($occArr['identificationremarks']){
+			$textrun = $leftCell->addTextRun('other');
+            // $textrunRt = $rightCell->addTextRun('other');
+			$currentTxt = htmlspecialchars($occArr['identificationremarks']).' ';
+			$textrun->addText($currentTxt, 'identifiedFont');
+		}
+		if($occArr['identificationreferences']){
+			$textrun = $leftCell->addTextRun('other');
+            // $textrunRt = $rightCell->addTextRun('other');
+			$currentTxt = htmlspecialchars($occArr['identificationreferences']).' ';
+			$textrun->addText($currentTxt, 'identifiedFont');
+		}
+		if($footerStr){
+			if($occArr['family']){
+				$table->addRow();
+				$footerCell = $table->addCell($cellLength, ['gridSpan' => 2]);
+				$textrun = $footerCell->addTextRun('footer');
+			}else {
+				$textrun = $leftCell->addTextRun('footer');
+			}
+			$currentTxt = htmlspecialchars($footerStr);
+			$textrun->addText($currentTxt, 'headerfooterFont');
+		}
+		$currentTxt = htmlspecialchars(' ');
+		$section->addText($currentTxt,'dividerFont', 'lastLine');
+>>>>>>> origin
 	}
 }
 

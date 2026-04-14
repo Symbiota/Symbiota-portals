@@ -1,17 +1,25 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceGeoLocate.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/georef/geolocatetools.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/georef/geolocatetools.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/georef/geolocatetools.en.php');
 header("Content-Type: text/html; charset=".$CHARSET);
 
 if(!$SYMB_UID) header('Location: '.$CLIENT_ROOT.'/profile/index.php?refurl=../misc/generaltemplate.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
-$collid = $_REQUEST['collid'];
+Language::load('collections/georef/geolocatetools');
+>>>>>>> origin
+
+if(!$SYMB_UID) header('Location: '.$CLIENT_ROOT.'/profile/index.php?refurl=../misc/generaltemplate.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
+
+$collid = filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT);
 $action = array_key_exists('action',$_POST)?$_POST['action']:'';
 $formSubmit = array_key_exists('formsubmit',$_POST)?$_POST['formsubmit']:'';
 
-$geoLocateManager = new OccurrenceGeoLocate.php();
+$geoLocateManager = new OccurrenceGeoLocate();
 $geoLocateManager->setCollid($collid);
 
 $isEditor = 0;
@@ -71,8 +79,13 @@ if($isEditor){
 		include($SERVER_ROOT.'/includes/header.php');
 		?>
 		<div class="navpath">
+<<<<<<< HEAD
 			<a href="<?php echo htmlspecialchars($CLIENT_ROOT, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>/index.php"><?= $LANG['HOME'] ?></a> &gt;&gt;
 			<a href="../misc/collprofiles.php?emode=1&collid=<?php echo htmlspecialchars($collId, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>"><?= $LANG['COLL_MANAGE_MENU'] ?></a> &gt;&gt;
+=======
+			<a href="<?= $CLIENT_ROOT ?>/index.php"><?= $LANG['HOME'] ?></a> &gt;&gt;
+			<a href="../misc/collprofiles.php?emode=1&collid=<?= $collId ?>"><?= $LANG['COLL_MANAGE_MENU'] ?></a> &gt;&gt;
+>>>>>>> origin
 			<b>Batch GeoLocate Tools</b>
 		</div>
 		<!-- This is inner text! -->
@@ -134,7 +147,11 @@ if($isEditor){
 							<?php
 							foreach($occRecArr as $occid => $occArr){
 								echo '<tr>';
+<<<<<<< HEAD
 								echo '<td><a href="">' . htmlspecialchars($occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a></td>';
+=======
+								echo '<td><a href="">' . $occid . '</a></td>';
+>>>>>>> origin
 								echo '<td>'.$occArr['loc'].'</td>';
 								echo '<td></td>';
 								echo '<td><input name="lat-'.$occid.'" type="text" value="'.$occArr['declat'].'" /></td>';

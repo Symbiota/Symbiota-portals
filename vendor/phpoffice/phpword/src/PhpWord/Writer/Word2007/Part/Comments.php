@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -29,7 +30,7 @@ class Comments extends AbstractPart
     /**
      * Comments collection to be written.
      *
-     * @var \PhpOffice\PhpWord\Element\Comment[]
+     * @var Comment[]
      */
     protected $elements;
 
@@ -88,9 +89,15 @@ class Comments extends AbstractPart
 
     /**
      * Set element.
+<<<<<<< HEAD
      *
      * @param \PhpOffice\PhpWord\Element\Comment[] $elements
      *
+=======
+     *
+     * @param Comment[] $elements
+     *
+>>>>>>> origin
      * @return self
      */
     public function setElements($elements)

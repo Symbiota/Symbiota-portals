@@ -1,6 +1,13 @@
 <?php
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.en.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/editor/includes/imgprocessor');
+
+>>>>>>> origin
 ?>
 
 <script>
@@ -53,7 +60,11 @@ else include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgpro
 	}
 </script>
 <style>
+<<<<<<< HEAD
 	.ocr-box{ padding: 5px; float:left; }
+=======
+	.ocr-box{ padding: 10px; float:left; }
+>>>>>>> origin
 	.ocr-box button{ margin: 5px; }
 </style>
 <div id="labelProcDiv" style="width:100%;height:1050px;position:relative">
@@ -70,9 +81,15 @@ else include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgpro
 				<div id="anchorImgDiv" style="float:left;margin-left:10px;display:none" title="<?php echo $LANG['ANCHOR_IMG']; ?>"><a href="#" onclick="anchorImgPanel()"><img src="../../images/anchor.png" style="width:1.3em" /></a></div>
 			</div>
 			<div style="float:left;;padding-right:10px;margin:2px 20px 0px 0px;"><?php echo $LANG['ROTATE']; ?>: <a href="#" onclick="rotateImage(-90)">&nbsp;L&nbsp;</a> &lt;&gt; <a href="#" onclick="rotateImage(90)">&nbsp;R&nbsp;</a></div>
+<<<<<<< HEAD
 			<div style="float:right;margin:0px 3px;">
 				<div><input id="imgresmed" name="resradio"  type="radio" checked onchange="changeImgRes('med')" /><?php echo $LANG['MED_RES']; ?>.</div>
 				<div><input id="imgreslg" name="resradio" type="radio" onchange="changeImgRes('lg')" /><?php echo $LANG['HIGH_RES']; ?>.</div>
+=======
+			<div id="imgres" style="float:right;margin:0px 3px;">
+				<div><input id="imgresmed" name="resradio"  type="radio" value="med" checked onchange="changeImgRes('med')" /><?php echo $LANG['MED_RES']; ?>.</div>
+				<div><input id="imgreslg" name="resradio" type="radio" value="lg" onchange="changeImgRes('lg')" /><?php echo $LANG['HIGH_RES']; ?>.</div>
+>>>>>>> origin
 			</div>
 		</div>
 		<div id="labelprocessingdiv" style="clear:both;">
@@ -114,6 +131,37 @@ else include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgpro
 							</fieldset>
 							<?php
 						}
+<<<<<<< HEAD
+=======
+						if(!empty($VOUCHERVISION_API_KEY)){
+						?>
+						<fieldset class="ocr-box">
+							<legend>VoucherVision OCR</legend>
+
+							<input type="checkbox" id="ocrOnly" value="1" /> <?php echo $LANG['VV_OCR_ONLY']; ?><br/>
+							<div style="font-weight: bold; position: relative; left: -6px; margin: 5px 0px;"> <?php echo $LANG['VV_OCR_ENGINES']; ?></div>
+							<input type="checkbox" name="engines" id="gemini-1.5-pro" value="1" /> Gemini 1.5 Pro<br/>
+							<input type="checkbox" name="engines" id="gemini-2.0-flash" value="1" checked/> Gemini 2.0 Flash<br/>
+							<div style="font-weight: bold; position: relative; left: -6px; margin: 5px 0px;"> <?php echo $LANG['VV_TRANSCRIPTION_MODEL']; ?></div>
+							<select id="llm-model">
+								<option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+								<option value="gemini-2.0-pro">Gemini 1.5 Pro</option>
+								<option value="gemini-2.5-pro">Gemini 2.5 Flash</option>
+								<option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+							</select><br/>
+							<div style="font-weight: bold; position: relative; left: -6px; margin: 5px 0px;"> <?php echo $LANG['VV_TRANSCRIPTION_PROMPT']; ?></div>
+							<select id="prompt">
+								<option value="OSC_Symbiota">OSC_Symbiota</option>
+								<option value="SLTPvM_default">SLTPvM_default</option>
+							</select><br/>
+							<div>
+									<button value="OCR Image" onclick="ocrVV(this, '<?php echo $imgCnt; ?>');" ><?php echo $LANG['OCR_IMAGE']; ?></button>
+									<img id="workingcircle-vv-<?php echo $imgCnt; ?>" src="../../images/workingcircle.gif" style="display:none;" />
+								</div>
+						</fieldset>
+						<?php
+						}
+>>>>>>> origin
 						?>
 						<div style="float:right;margin-right:20px;font-weight:bold;">
 							<?php echo $LANG['IMAGE'].' '.$imgCnt.' '.$LANG['OF'].' ';

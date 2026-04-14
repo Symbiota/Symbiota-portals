@@ -3,7 +3,7 @@ include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
 @include_once("Image/Barcode.php");
 @include_once("Image/Barcode2.php");
-require_once $SERVER_ROOT.'/vendor/phpoffice/phpword/bootstrap.php';
+require_once $SERVER_ROOT.'/vendor/autoload.php';
 
 header("Content-Type: text/html; charset=".$CHARSET);
 ini_set('max_execution_time', 180); //180 seconds = 3 minutes
@@ -148,6 +148,7 @@ if($isEditor && $action){
 				$textrun = $section->addTextRun('scientificname');
 				if($occArr['identificationqualifier']) $textrun->addText(htmlspecialchars($occArr['identificationqualifier']).' ','scientificnameauthFont');
 				$scinameStr = htmlspecialchars($occArr['scientificname']);
+<<<<<<< HEAD
 				$parentAuthor = (array_key_exists('parentauthor',$occArr)?' ' . htmlspecialchars($occArr['parentauthor']) : '');
 				if(strpos($scinameStr,' sp.') !== false){
 					$scinameArr = explode(" sp. ",$scinameStr);
@@ -222,6 +223,27 @@ if($isEditor && $action){
 					$textrun->addText($scinameStr . ' ', 'scientificnameFont');
 				}
 				$textrun->addText(htmlspecialchars($occArr['scientificnameauthorship']),'scientificnameauthFont');
+=======
+				$parentAuthor = (array_key_exists('parentauthor',$occArr) ? htmlspecialchars($occArr['parentauthor']) : '');
+
+				$taxonRankArr = array('sp.','subsp.','ssp.','var.','variety','Variety','v.','f.','cf.','aff.');
+				$matchMade = false;
+				foreach($taxonRankArr as $taxonRank){
+					$taxonRankTest = ' ' . $taxonRank . ' ';
+					if(strpos($scinameStr, $taxonRankTest) !== false){
+						$scinameArr = explode($taxonRankTest, $scinameStr);
+						$textrun->addText(trim($scinameArr[0]), 'scientificnameFont');
+						if($parentAuthor) $textrun->addText(' ' . $parentAuthor, 'scientificnameauthFont');
+						$textrun->addText(' ' . $taxonRank, 'scientificnameinterFont');
+						if(!empty($scinameArr[1])) $textrun->addText(' ' . $scinameArr[1], 'scientificnameFont');
+						$matchMade = true;
+					}
+				}
+				if(!$matchMade){
+					$textrun->addText(' ' . $scinameStr, 'scientificnameFont');
+				}
+				$textrun->addText(htmlspecialchars(' ' . $occArr['scientificnameauthorship']), 'scientificnameauthFont');
+>>>>>>> origin
 				if($occArr['identifiedby']){
 					$textrun = $section->addTextRun('identified');
 					$textrun->addText('Det by: '.htmlspecialchars($occArr['identifiedby']).' ','identifiedFont');

@@ -770,6 +770,7 @@ class ZipStream
         if (is_resource($outputStream)) {
             return $outputStream;
         }
+<<<<<<< HEAD
         $resource = fopen('php://output', 'wb');
 
         if ($resource === false) {
@@ -777,6 +778,9 @@ class ZipStream
         }
 
         return $resource;
+=======
+        return fopen('php://output', 'wb');
+>>>>>>> origin
     }
 
     /**

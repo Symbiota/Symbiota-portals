@@ -63,7 +63,11 @@ class Cell implements Stringable
      *
      * @var null|array<string, string>
      */
+<<<<<<< HEAD
     private mixed $formulaAttributes = null;
+=======
+    private ?array $formulaAttributes = null;
+>>>>>>> origin
 
     private IgnoredErrors $ignoredErrors;
 
@@ -466,7 +470,11 @@ class Cell implements Stringable
                                         }
                                     }
                                 }
+<<<<<<< HEAD
                                 ++$newColumn;
+=======
+                                StringHelper::stringIncrement($newColumn);
+>>>>>>> origin
                             }
                             ++$newRow;
                         } else {
@@ -478,7 +486,11 @@ class Cell implements Stringable
                                     }
                                 }
                             }
+<<<<<<< HEAD
                             ++$newColumn;
+=======
+                            StringHelper::stringIncrement($newColumn);
+>>>>>>> origin
                         }
                         if ($spill) {
                             break;
@@ -501,10 +513,17 @@ class Cell implements Stringable
                                     $minRow = (int) $matches[2];
                                     // https://github.com/phpstan/phpstan/issues/11602
                                     $maxCol = $matches[4]; // @phpstan-ignore-line
+<<<<<<< HEAD
                                     ++$maxCol;
                                     $maxRow = (int) $matches[5]; // @phpstan-ignore-line
                                     for ($row = $minRow; $row <= $maxRow; ++$row) {
                                         for ($col = $minCol; $col !== $maxCol; ++$col) {
+=======
+                                    StringHelper::stringIncrement($maxCol);
+                                    $maxRow = (int) $matches[5]; // @phpstan-ignore-line
+                                    for ($row = $minRow; $row <= $maxRow; ++$row) {
+                                        for ($col = $minCol; $col !== $maxCol; StringHelper::stringIncrement($col)) {
+>>>>>>> origin
                                             if ("$col$row" !== $coordinate) {
                                                 $thisworksheet->getCell("$col$row")->setValue(null);
                                             }
@@ -529,14 +548,22 @@ class Cell implements Stringable
                                 if ($row !== $newRow || $column !== $newColumn) {
                                     $thisworksheet->getCell($newColumn . $newRow)->setValue($resultValue);
                                 }
+<<<<<<< HEAD
                                 ++$newColumn;
+=======
+                                StringHelper::stringIncrement($newColumn);
+>>>>>>> origin
                             }
                             ++$newRow;
                         } else {
                             if ($row !== $newRow || $column !== $newColumn) {
                                 $thisworksheet->getCell($newColumn . $newRow)->setValue($resultRow);
                             }
+<<<<<<< HEAD
                             ++$newColumn;
+=======
+                            StringHelper::stringIncrement($newColumn);
+>>>>>>> origin
                         }
                     }
                     $thisworksheet->getCell($column . $row);
@@ -951,7 +978,11 @@ class Cell implements Stringable
      *
      * @return null|array<string, string>
      */
+<<<<<<< HEAD
     public function getFormulaAttributes(): mixed
+=======
+    public function getFormulaAttributes(): ?array
+>>>>>>> origin
     {
         return $this->formulaAttributes;
     }

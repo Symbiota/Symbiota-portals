@@ -50,6 +50,17 @@ abstract class JWK
             return $key;
         }
 
+<<<<<<< HEAD
+=======
+        if (!is_object($key)) {
+            throw new \RuntimeException('invalid JWK: not an object');
+        }
+
+        if (!isset($key->keys)) {
+            throw new \RuntimeException('invalid JWK: object has no property "keys"');
+        }
+
+>>>>>>> origin
         if (count($key->keys) != 1) {
             throw new \RuntimeException('Although the JWK key format supports multiple keys phpseclib does not');
         }

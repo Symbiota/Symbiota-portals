@@ -100,6 +100,10 @@ class SpecUpload{
 
 	private function setCollInfo(){
 		if($this->collId){
+<<<<<<< HEAD
+=======
+			//Set collection metadata and configurations
+>>>>>>> origin
 			$sql = 'SELECT DISTINCT c.collid, c.collectionname, c.institutioncode, c.collectioncode, c.collectionguid, c.icon, c.colltype, c.managementtype, '.
 				'cs.uploaddate, c.securitykey, c.guidtarget, c.dynamicproperties '.
 				'FROM omcollections c LEFT JOIN omcollectionstats cs ON c.collid = cs.collid '.
@@ -115,6 +119,11 @@ class SpecUpload{
 				$dateStr = ($r->uploaddate?date("d F Y g:i:s", strtotime($r->uploaddate)):"");
 				$this->collMetadataArr["uploaddate"] = $dateStr;
 				$this->collMetadataArr["colltype"] = $r->colltype;
+<<<<<<< HEAD
+=======
+				if ($this->collMetadataArr["colltype"] == "Fossil Specimens")
+					$this->paleoSupport = true;
+>>>>>>> origin
 				$this->collMetadataArr["managementtype"] = $r->managementtype;
 				$this->collMetadataArr["securitykey"] = $r->securitykey;
 				$this->collMetadataArr["guidtarget"] = $r->guidtarget;
@@ -122,10 +131,14 @@ class SpecUpload{
 					$propArr = json_decode($r->dynamicproperties,true);
 					if(isset($propArr['editorProps']['modules-panel'])){
 						foreach($propArr['editorProps']['modules-panel'] as $modArr){
+<<<<<<< HEAD
 							if(isset($modArr['paleo'])){
 								if($modArr['paleo']['status'] == 1) $this->paleoSupport = true;
 							}
 							elseif(isset($modArr['matSample'])){
+=======
+							if(isset($modArr['matSample'])){
+>>>>>>> origin
 								if($modArr['matSample']['status'] == 1) $this->materialSampleSupport = true;
 							}
 						}
@@ -186,11 +199,19 @@ class SpecUpload{
 			$sql = $this->getPendingImportSql($searchVariables) ;
 			//echo "<div>".$sql."</div>";
 			$fieldMap = array();
+<<<<<<< HEAD
+=======
+			$excludeKeys = ['paleo_eon', 'paleo_era', 'paleo_period', 'paleo_epoch', 'paleo_stage'];
+>>>>>>> origin
 			$rs = $this->conn->query($sql, MYSQLI_USE_RESULT);
 			//Determine which fields have data
 			while($r = $rs->fetch_assoc()){
 				foreach($r as $k => $v){
+<<<<<<< HEAD
 					if($v && $v !== '0') $fieldMap[$k] = '';
+=======
+					if($v && $v !== '0' && !in_array($k, $excludeKeys)) $fieldMap[$k] = '';
+>>>>>>> origin
 				}
 			}
 			$rs->free();
@@ -199,7 +220,15 @@ class SpecUpload{
 				$rs = $this->conn->query($sql, MYSQLI_USE_RESULT);
 				while($r = $rs->fetch_assoc()){
 					if($outputHeader){
+<<<<<<< HEAD
 						fputcsv($outstream,array_keys(array_intersect_key($r, $fieldMap)));
+=======
+						$keys = array_keys(array_intersect_key($r, $fieldMap));
+						$keys = array_map(function($k) {
+							return (strpos($k, 'paleo_') === 0) ? substr($k, 6) : $k;
+						}, $keys);
+						fputcsv($outstream, $keys);
+>>>>>>> origin
 						$outputHeader = false;
 					}
 					fputcsv($outstream,array_intersect_key($r, $fieldMap));
@@ -311,7 +340,11 @@ class SpecUpload{
 	protected function setSkipOccurFieldArr(){
 		$this->skipOccurFieldArr = array('dbpk','initialtimestamp','occid','collid','tidinterpreted','fieldnotes','coordinateprecision',
 			'verbatimcoordinatesystem','institutionid','collectionid','associatedoccurrences','datasetid','associatedreferences',
+<<<<<<< HEAD
 			'previousidentifications','storagelocation','genericcolumn1','genericcolumn2','materialsamplejson');
+=======
+			'previousidentifications','genericcolumn1','genericcolumn2','materialsamplejson');
+>>>>>>> origin
 		if($this->collMetadataArr['managementtype'] == 'Live Data' && $this->collMetadataArr['guidtarget'] != 'occurrenceId'){
 			//Do not import occurrenceID if dataset is a live dataset, unless occurrenceID is explicitly defined as the guidSource.
 			//This avoids the situtation where folks are exporting data from one collection and importing into their collection along with the other collection's occurrenceID GUID, which is very bad

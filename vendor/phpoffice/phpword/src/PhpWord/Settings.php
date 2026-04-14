@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -29,7 +30,11 @@ class Settings
      */
     public const ZIPARCHIVE = 'ZipArchive';
     public const PCLZIP = 'PclZip';
+<<<<<<< HEAD
     public const OLD_LIB = \PhpOffice\PhpWord\Shared\ZipArchive::class; // @deprecated 0.11
+=======
+    public const OLD_LIB = Shared\ZipArchive::class; // @deprecated 0.11
+>>>>>>> origin
 
     /**
      * PDF rendering libraries.
@@ -118,6 +123,23 @@ class Settings
     private static $defaultFontName = self::DEFAULT_FONT_NAME;
 
     /**
+<<<<<<< HEAD
+=======
+     * Default asian font name.
+     *
+     * @var string
+     */
+    private static $defaultAsianFontName = self::DEFAULT_FONT_NAME;
+
+    /**
+     * Default font color.
+     *
+     * @var string
+     */
+    private static $defaultFontColor = self::DEFAULT_FONT_COLOR;
+
+    /**
+>>>>>>> origin
      * Default font size.
      *
      * @var float|int
@@ -355,12 +377,96 @@ class Settings
     }
 
     /**
+<<<<<<< HEAD
      * Set default font name.
      */
     public static function setDefaultFontName(string $value): bool
     {
+=======
+     * Get default font name.
+     */
+    public static function getDefaultAsianFontName(): string
+    {
+        return self::$defaultAsianFontName;
+    }
+
+    /**
+     * Set default font name.
+     */
+    public static function setDefaultFontName(string $value): bool
+    {
+>>>>>>> origin
         if (trim($value) !== '') {
             self::$defaultFontName = $value;
+
+            return true;
+        }
+
+        return false;
+    }
+
+<<<<<<< HEAD
+    /**
+     * Get default font size.
+     *
+     * @return float|int
+     */
+    public static function getDefaultFontSize()
+    {
+        return self::$defaultFontSize;
+    }
+
+    /**
+     * Set default font size.
+     *
+     * @param null|float|int $value
+     */
+    public static function setDefaultFontSize($value): bool
+    {
+        if ((is_int($value) || is_float($value)) && (int) $value > 0) {
+            self::$defaultFontSize = $value;
+=======
+    public static function setDefaultAsianFontName(string $value): bool
+    {
+        if (trim($value) !== '') {
+            self::$defaultAsianFontName = $value;
+>>>>>>> origin
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function setDefaultRtl(?bool $defaultRtl): void
+    {
+        self::$defaultRtl = $defaultRtl;
+    }
+
+    public static function isDefaultRtl(): ?bool
+    {
+        return self::$defaultRtl;
+    }
+
+    /**
+<<<<<<< HEAD
+     * Load setting from phpword.yml or phpword.yml.dist.
+     */
+=======
+     * Get default font color.
+     */
+    public static function getDefaultFontColor(): string
+    {
+        return self::$defaultFontColor;
+    }
+
+    /**
+     * Set default font color.
+     */
+    public static function setDefaultFontColor(string $value): bool
+    {
+        if (trim($value) !== '') {
+            self::$defaultFontColor = $value;
 
             return true;
         }
@@ -407,6 +513,7 @@ class Settings
     /**
      * Load setting from phpword.yml or phpword.yml.dist.
      */
+>>>>>>> origin
     public static function loadConfig(?string $filename = null): array
     {
         // Get config file

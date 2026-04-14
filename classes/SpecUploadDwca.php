@@ -182,6 +182,7 @@ class SpecUploadDwca extends SpecUploadBase{
 			$this->errorStr = 'OccurrencesMissing';
 			return false;
 		}
+<<<<<<< HEAD
 		if(!file_exists($this->uploadTargetPath.'multimedia.csv') && !file_exists($this->uploadTargetPath.'images.csv')){
 			$this->errorStr = 'ImagesMissing';
 			return false;
@@ -189,6 +190,19 @@ class SpecUploadDwca extends SpecUploadBase{
 		if(!file_exists($this->uploadTargetPath.'identifications.csv')){
 			$this->errorStr = 'IdentificationsMissing';
 			return false;
+=======
+		if($this->includeImages){
+			if(!file_exists($this->uploadTargetPath . 'multimedia.csv') && !file_exists($this->uploadTargetPath . 'images.csv')){
+				$this->errorStr = 'MediaMissing';
+				return false;
+			}
+		}
+		if($this->includeIdentificationHistory){
+			if(!file_exists($this->uploadTargetPath . 'identifications.csv')){
+				$this->errorStr = 'IdentificationsMissing';
+				return false;
+			}
+>>>>>>> origin
 		}
 		if(!file_exists($this->uploadTargetPath.'meta.xml')){
 			$this->errorStr = 'MetaMissing';
@@ -271,6 +285,7 @@ class SpecUploadDwca extends SpecUploadBase{
 								foreach($fieldElements as $fieldElement){
 									$term = $fieldElement->getAttribute('term');
 									if(strpos($term,'/')) $term = substr($term,strrpos($term,'/')+1);
+									if (strpos($term, 'paleo-') === 0) $term = substr($term, 6); // remove "paleo-"
 									$this->metaArr['occur']['fields'][$fieldElement->getAttribute('index')] = $term;
 								}
 							}
@@ -513,6 +528,10 @@ class SpecUploadDwca extends SpecUploadBase{
 					//Set source array
 					$this->occurSourceArr = array();
 					foreach($this->metaArr['occur']['fields'] as $k => $v){
+<<<<<<< HEAD
+=======
+						if (strpos($v, 'paleo-') === 0) $v = str_replace('paleo-', 'paleo_', $v);
+>>>>>>> origin
 						$this->occurSourceArr[$k] = strtolower($v);
 					}
 					//Set custom filters if they haven't yet been set
@@ -629,18 +648,42 @@ class SpecUploadDwca extends SpecUploadBase{
 								$this->coreIdArr[$recordArr[0]] = '';
 							}
 							$recMap = Array();
+<<<<<<< HEAD
 							foreach($this->occurFieldMap as $symbField => $sMap){
 								if(substr($symbField,0,8) != 'unmapped'){
 									//Apply source filter if they exist
 									$indexArr = array_keys($this->occurSourceArr, $sMap['field']);
+=======
+							$recMapPaleo = [];
+							foreach($this->occurFieldMap as $symbField => $sMap){
+								if(substr($symbField,0,8) != 'unmapped'){
+									//Apply source filter if they exist
+									$lookupField = $sMap['field'];
+									if ($this->paleoSupport && strpos($lookupField, 'paleo_') === 0){
+										$lookupField = substr($lookupField, 6);
+										if ($lookupField =="lithogroup") $lookupField = "group";
+									}
+									$indexArr = array_keys($this->occurSourceArr, $lookupField);
+>>>>>>> origin
 									$index = array_shift($indexArr);
 									if(array_key_exists($index,$recordArr)){
 										$valueStr = trim($recordArr[$index]);
 										if($cset != $this->encoding) $valueStr = $this->encodeString($valueStr);
+<<<<<<< HEAD
+=======
+										//add paleo fields separately
+										if ($this->paleoSupport && strpos($symbField, 'paleo') === 0) {
+											$cleanKey = substr($symbField, 6);
+											$recMapPaleo[$cleanKey] = $valueStr;
+											continue;
+										}
+>>>>>>> origin
 										$recMap[$symbField] = $valueStr;
 									}
 								}
 							}
+							if (!empty($recMapPaleo))
+								$recMap['paleo'] = $recMapPaleo;
 							$this->loadRecord($recMap);
 							unset($recMap);
 						}
@@ -659,7 +702,10 @@ class SpecUploadDwca extends SpecUploadBase{
 								$this->identFieldMap['occid']['field'] = 'coreid';
 								$this->identFieldMap['initialtimestamp']['field'] = 'modified';
 							}
+<<<<<<< HEAD
 							$this->identFieldMap['sciname']['field'] = 'sciname,scientificname';
+=======
+>>>>>>> origin
 							foreach($this->metaArr['ident']['fields'] as $k => $v){
 								$this->identSourceArr[$k] = strtolower($v);
 							}
@@ -965,12 +1011,21 @@ class SpecUploadDwca extends SpecUploadBase{
 			$this->errorStr = '<li style="margin-left:10px">Unable to remove bad taxonomic index links</li>';
 		}
 
+<<<<<<< HEAD
 		//Remove occurrenceID GUIDs that already match the values in recordID field
 		$this->outputMsg('<li style="margin-left:10px">Syncronizing occurrenceID GUIDs...</li>',1);
 		$sql = 'UPDATE uploadspectemp SET occurrenceID = NULL WHERE (collid = '.$this->collId.') AND (occurrenceID = recordID)';
 		if(!$this->conn->query($sql)){
 			$this->errorStr = '<li style="margin-left:10px">Unable to remove duclicate GUID references</li>';
 		}
+=======
+		// //Remove occurrenceID GUIDs that already match the values in recordID field
+		// $this->outputMsg('<li style="margin-left:10px">Syncronizing occurrenceID GUIDs...</li>',1);
+		// $sql = 'UPDATE uploadspectemp SET occurrenceID = NULL WHERE (collid = '.$this->collId.') AND (occurrenceID = recordID)';
+		// if(!$this->conn->query($sql)){
+		// 	$this->errorStr = '<li style="margin-left:10px">Unable to remove duclicate GUID references</li>';
+		// }
+>>>>>>> origin
 	}
 
 	//Setters and getters

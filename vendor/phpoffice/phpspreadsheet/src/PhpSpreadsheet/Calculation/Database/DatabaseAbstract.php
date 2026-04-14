@@ -86,9 +86,15 @@ abstract class DatabaseAbstract
         $columnData = [];
         foreach ($database as $rowKey => $row) {
             $keys = array_keys($row);
+<<<<<<< HEAD
             $key = $keys[$field] ?? null;
             $columnKey = $key ?? 'A';
             $columnData[$rowKey][$columnKey] = $row[$key] ?? $defaultReturnColumnValue;
+=======
+            $key = ($field === null) ? null : ($keys[$field] ?? null);
+            $columnKey = $key ?? 'A';
+            $columnData[$rowKey][$columnKey] = ($key === null) ? $defaultReturnColumnValue : ($row[$key] ?? $defaultReturnColumnValue);
+>>>>>>> origin
         }
 
         return $columnData;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -57,6 +58,7 @@ class Text extends AbstractElement
             $xmlWriter->writeAttribute('text:change-id', $element->getTrackChange()->getElementId());
             $xmlWriter->endElement();
         } else {
+<<<<<<< HEAD
             if (empty($fontStyle)) {
                 if (empty($paragraphStyle)) {
                     if (!$this->withoutP) {
@@ -80,14 +82,37 @@ class Text extends AbstractElement
                         $xmlWriter->writeAttribute('text:style-name', $paragraphStyle);
                     }
                 }
+=======
+            if (empty($paragraphStyle)) {
+                if (!$this->withoutP) {
+                    $xmlWriter->writeAttribute('text:style-name', 'Normal');
+                }
+            } elseif (is_string($paragraphStyle)) {
+                if (!$this->withoutP) {
+                    $xmlWriter->writeAttribute('text:style-name', $paragraphStyle);
+                }
+            }
+
+            if (!empty($fontStyle)) {
+>>>>>>> origin
                 // text:span
                 $xmlWriter->startElement('text:span');
                 if (is_string($fontStyle)) {
                     $xmlWriter->writeAttribute('text:style-name', $fontStyle);
                 }
+<<<<<<< HEAD
                 $this->writeChangeInsertion(true, $element->getTrackChange());
                 $this->replaceTabs($element->getText(), $xmlWriter);
                 $this->writeChangeInsertion(false, $element->getTrackChange());
+=======
+            }
+
+            $this->writeChangeInsertion(true, $element->getTrackChange());
+            $this->replaceTabs($element->getText(), $xmlWriter);
+            $this->writeChangeInsertion(false, $element->getTrackChange());
+
+            if (!empty($fontStyle)) {
+>>>>>>> origin
                 $xmlWriter->endElement();
             }
         }
@@ -96,6 +121,7 @@ class Text extends AbstractElement
         }
     }
 
+<<<<<<< HEAD
     private function replacetabs($text, $xmlWriter): void
     {
         if (preg_match('/^ +/', $text, $matches)) {
@@ -125,6 +151,8 @@ class Text extends AbstractElement
         }
     }
 
+=======
+>>>>>>> origin
     private function writeChangeInsertion($start = true, ?TrackChange $trackChange = null): void
     {
         if ($trackChange == null || $trackChange->getChangeType() != TrackChange::INSERTED) {

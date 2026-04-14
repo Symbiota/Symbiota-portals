@@ -1058,6 +1058,35 @@ class TaxonomyUpload{
 			if($rs = $this->conn->query('SELECT taxauthid, name FROM taxauthority WHERE (taxauthid = '.$this->taxAuthId.')')){
 				while($r = $rs->fetch_object()){
 					$retStr = $r->name;
+<<<<<<< HEAD
+=======
+				}
+				$rs->free();
+			}
+		}
+		return $retStr;
+	}
+
+	public function getKingdomArr(){
+		$retArr = array();
+		$rs = $this->conn->query('SELECT tid, sciname FROM taxa WHERE rankid = 10 ORDER BY sciname');
+		while($r = $rs->fetch_object()){
+			$retArr[$r->tid] = $r->sciname;
+		}
+		$rs->free();
+		return $retArr;
+	}
+
+	private function setLangArr(){
+		if($this->langArr === false){
+			$this->langArr = array();
+			$sql = 'SELECT langid, langname, iso639_1 FROM adminlanguages';
+			$rs = $this->conn->query($sql);
+			while($r = $rs->fetch_object()){
+				$this->langArr[$r->langname] = $r->langid;
+				if (!empty($r->iso639_1)) {
+					$this->langArr[$r->iso639_1] = $r->langid;
+>>>>>>> origin
 				}
 				$rs->free();
 			}

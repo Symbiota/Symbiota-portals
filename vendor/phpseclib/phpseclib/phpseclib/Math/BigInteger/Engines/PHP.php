@@ -533,6 +533,12 @@ abstract class PHP extends Engine
             $quotient = new static();
             $remainder = new static();
             $quotient->value = $q;
+<<<<<<< HEAD
+=======
+            if ($this->is_negative) {
+                $r = $y->value[0] - $r;
+            }
+>>>>>>> origin
             $remainder->value = [$r];
             $quotient->is_negative = $this->is_negative != $y->is_negative;
             return [$this->normalize($quotient), $this->normalize($remainder)];

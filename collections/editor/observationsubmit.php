@@ -3,12 +3,22 @@
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceEditorManager.php');
 include_once($SERVER_ROOT.'/classes/Media.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/observationsubmit.'.$LANG_TAG.'.php'))
 	include_once($SERVER_ROOT.'/content/lang/collections/editor/observationsubmit.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/editor/observationsubmit.en.php');
 header("Content-Type: text/html; charset=".$CHARSET);
 if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/editor/observationsubmit.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
 
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/editor/observationsubmit');
+
+header("Content-Type: text/html; charset=".$CHARSET);
+if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/editor/observationsubmit.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
+
+>>>>>>> origin
 $collId  = array_key_exists('collid', $_REQUEST) ? filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $clid  = array_key_exists('clid', $_REQUEST) ? filter_var($_REQUEST['clid'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $recordedBy = array_key_exists('recordedby', $_POST) ? $_POST['recordedby'] : 0;
@@ -40,6 +50,10 @@ if($collMap){
 		$isEditor = 1;
 	}
 	if($isEditor && $action == "Submit"){
+<<<<<<< HEAD
+=======
+		$_POST['observeruid'] = $GLOBALS['SYMB_UID'];
+>>>>>>> origin
 		$occurManager->addOccurrence($_POST);
 		$occid = $occurManager->getOccId();
 
@@ -60,7 +74,11 @@ if($collMap){
 					$file, 
 					new LocalStorage($path)
 				);
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> origin
 				if($errors = Media::getErrors()) {
 					$mediaErrors[$i] = $errors;
 				} else {

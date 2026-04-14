@@ -315,7 +315,13 @@ class GamesManager extends Manager{
 	//Misc functions
 	private function setClidStr(){
 		$clidArr = array($this->clid);
+<<<<<<< HEAD
 		$sqlBase = 'SELECT clidchild FROM fmchklstchildren WHERE clid != clidchild AND clid IN(';
+=======
+		$sqlBase = 'SELECT ch.clidchild
+			FROM fmchklstchildren ch INNER JOIN fmchecklists cl ON ch.clidchild = cl.clid
+			WHERE (cl.type != "excludespp") AND (ch.clid != ch.clidchild) AND ch.clid IN(';
+>>>>>>> origin
 		$sql = $sqlBase.$this->clid.')';
 		do{
 			$childStr = "";

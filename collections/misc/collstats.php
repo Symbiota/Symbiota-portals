@@ -1,7 +1,15 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceCollectionProfile.php');
+<<<<<<< HEAD
 include_once($SERVER_ROOT.'/content/lang/collections/misc/collstats.' . $LANG_TAG . '.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+include_once($SERVER_ROOT . '/classes/CollectionFormManager.php');
+
+Language::load(['collections/misc/collstats','collections/search/index']);
+
+>>>>>>> origin
 header("Content-Type: text/html; charset=" . $CHARSET);
 ini_set('max_execution_time', 1200); //1200 seconds = 20 minutes
 
@@ -9,7 +17,11 @@ $catID = array_key_exists('catid', $_REQUEST) ? filter_var($_REQUEST['catid'], F
 if(!$catID && isset($DEFAULTCATID) && $DEFAULTCATID) $catID = $DEFAULTCATID;
 $collId = array_key_exists('collid', $_REQUEST) ? $_REQUEST['collid'] : 0; // can't sanitize here as int because this could be a comma-delimited set of collIds
 
+<<<<<<< HEAD
 $cPartentTaxon = isset($_REQUEST['taxon']) ? htmlspecialchars($_REQUEST['taxon'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '';
+=======
+$cParentTaxon = isset($_REQUEST['taxon']) ? htmlspecialchars($_REQUEST['taxon'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '';
+>>>>>>> origin
 $cCountry = isset($_REQUEST['country']) ? htmlspecialchars($_REQUEST['country'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '';
 $days = array_key_exists('days', $_REQUEST) ? filter_var($_REQUEST['days'], FILTER_SANITIZE_NUMBER_INT) : 365;
 $months = array_key_exists('months', $_REQUEST)? filter_var($_REQUEST['months'], FILTER_SANITIZE_NUMBER_INT) : 12;
@@ -17,6 +29,14 @@ $action = array_key_exists('submitaction', $_REQUEST) ? htmlspecialchars($_REQUE
 
 $collManager = new OccurrenceCollectionProfile();
 
+<<<<<<< HEAD
+=======
+$collectionFormManager = new CollectionFormManager();
+$requestSuppliedCatOrd = (array_key_exists('catOrd', $_REQUEST) && $collectionFormManager->areCollectionIdsValid($_REQUEST['catOrd'])) ? explode(',', $_REQUEST['catOrd']) : null;
+$requestSuppliedCatExpnd = (array_key_exists('catExpnd', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catExpnd'])) ? explode(',', $_REQUEST['catExpnd']) : null;
+$requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catChk'])) ? explode(',', $_REQUEST['catChk']) : null;
+
+>>>>>>> origin
 //Variable sanitation
 if(!preg_match('/^[0-9,]+$/',$catID)) $catID = 0;
 if(!preg_match('/^[0-9,]+$/',$collId)) $collId = 0;
@@ -35,7 +55,11 @@ $collStr = '';
 if($collId){
 	$collIdArr = explode(",",$collId);
 
+<<<<<<< HEAD
 	if($action == "Run Statistics" && (!$cPartentTaxon && !$cCountry)){
+=======
+	if($action == "Run Statistics" && (!$cParentTaxon && !$cCountry)){
+>>>>>>> origin
 		$resultsTemp = $collManager->runStatistics($collId);
 		$results['FamilyCount'] = $resultsTemp['familycnt'];
 		$results['GeneraCount'] = $resultsTemp['genuscnt'];
@@ -135,10 +159,17 @@ if($collId){
 			}
 			$c++;
 		}
-		$results['SpecimensNullLatitude'] = $results['SpecimenCount'] - $results['GeorefCount'];
+		$specimenCount = array_key_exists('SpecimenCount', $results) ? $results['SpecimenCount'] : 0;
+		$georefCount = array_key_exists(	'GeorefCount', $results) ? $results['GeorefCount'] : 0;
+		$results['SpecimensNullLatitude'] = $specimenCount && $georefCount ? $specimenCount - $georefCount : 0;
 	}
+<<<<<<< HEAD
     elseif($action == "Run Statistics" && ($cPartentTaxon || $cCountry)){
         $resultsTemp = $collManager->runStatisticsQuery($collId,$cPartentTaxon,$cCountry);
+=======
+    elseif($action == "Run Statistics" && ($cParentTaxon || $cCountry)){
+        $resultsTemp = $collManager->runStatisticsQuery($collId,$cParentTaxon,$cCountry);
+>>>>>>> origin
 		if ($resultsTemp){
 			if (array_key_exists('families', $resultsTemp)){
 				$familyArr = $resultsTemp['families'];
@@ -237,6 +268,11 @@ if($action != "Update Statistics"){
 			<meta name="keywords" content="Natural history collections statistics" />
 			<title><?php echo $DEFAULT_TITLE . ' ' . $LANG['COL_STATS']; ?></title>
 			<link href="<?php echo $CSS_BASE_PATH ?>/jquery-ui.css" type="text/css" rel="stylesheet">
+<<<<<<< HEAD
+=======
+			<link href="<?= $CSS_BASE_PATH ?>/searchStyles.css?ver=1" type="text/css" rel="stylesheet">
+			<link href="<?= $CSS_BASE_PATH ?>/searchStylesInner.css" type="text/css" rel="stylesheet">
+>>>>>>> origin
 			<?php
 			include_once($SERVER_ROOT.'/includes/head.php');
 			?>
@@ -358,6 +394,7 @@ if($action != "Update Statistics"){
 					return false;
 				}
 
+<<<<<<< HEAD
 				function changeCollForm(f){
 					var dbElements = document.getElementsByName("db[]");
 					var c = false;
@@ -380,6 +417,8 @@ if($action != "Update Statistics"){
 						return false;
 					}
 				}
+=======
+>>>>>>> origin
 			</script>
 			<style>
 				.icon-mrgn-rel {
@@ -419,8 +458,14 @@ if($action != "Update Statistics"){
 			}
 			?>
 			<!-- This is inner text! -->
+<<<<<<< HEAD
 			<div role="main" id="innertext">
 				<h1 class="page-heading"><?= $LANG['SELECT_COLS']; ?></h1>
+=======
+			<div role="main" id="innertext" class="inntertext-tab pin-things-here inner-search">
+				<h1 class="page-heading"><?= $LANG['SELECT_COLS']; ?></h1>
+				<div id="error-msgs" class="errors"></div>
+>>>>>>> origin
 				<div id="tabs" class="tabby">
 					<ul class="full-tab">
 						<li><a href="#specobsdiv"><?php echo htmlspecialchars($LANG['COLLECTIONS'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?></a></li>
@@ -432,6 +477,7 @@ if($action != "Update Statistics"){
 					</ul>
 
 					<div id="specobsdiv" class="pin-things-here">
+<<<<<<< HEAD
 						<?php
 						if($specArr || $obsArr){
 							?>
@@ -743,6 +789,115 @@ if($action != "Update Statistics"){
 									<input type="hidden" name="days" value="<?php echo $days; ?>" />
 									<input type="hidden" name="months" value="<?php echo $months; ?>" />
 								</div>
+=======
+							<form class="content" name="params-form" id="params-form" action="collstats.php" method="post" style="grid-template-columns: none;">
+								<div style="display: flex; justify-content: flex-end; position: sticky; top: 1rem; z-index: 100;">
+									<button style="width: 150px; margin-right: 0.5rem;" id="view-stats" type="submit" name="submitaction" value="Run Statistics"><?php echo $LANG['VIEW_STATS']; ?></button>
+									<button style="width: 75px; margin-right: 0.5rem; background-color: var(--medium-color);" id="reset-btn" type="button"><?php echo $LANG['RESET'] ?></button>
+									<?php
+										if($SYMB_UID && $IS_ADMIN){
+											?>
+											<button style="width: 180px;" id="update-stats" type="submit" name="submitaction" value="Update Statistics"><?php echo $LANG['UPDATE_STATS']; ?></button>
+											<?php
+										}
+									?>
+								</div>
+								<input type="hidden" name="submitaction" id="submitaction-hidden">
+								<div>
+									<?php
+									if($SYMB_UID && ($IS_ADMIN || array_key_exists("CollAdmin",$USER_RIGHTS))){
+										?>
+										<fieldset class="fieldset-padding flex-form">
+											<legend><b><?php echo $LANG['REC_CRITERIA']; ?></b></legend>
+											<div class="record-criteria-inputs">
+												<label for="taxon"><?php echo $LANG['PARENT_CRITERIA']; ?>: </label>
+												<input type="text" id="taxon" name="taxon" size="43" value="<?php echo $cParentTaxon; ?>" />
+											</div>
+											<div class="record-criteria-inputs">
+												<label for="country"><?php echo $LANG['COUNTRY']; ?>: </label>
+												<input type="text" id="country" name="country" size="43" value="<?php echo $cCountry; ?>" />
+											</div>
+										</fieldset>
+										<fieldset style="margin-top:1rem;" class="fieldset-padding flex-form">
+											<div class="content">
+												<div id="search-form-colls">
+													<!-- Open Collections modal -->
+													<div id="specobsdiv">
+														<?php
+														include($SERVER_ROOT . '/collections/collectionForm.php');
+														?>
+													</div>
+												</div>
+											</div>
+										</fieldset>
+									<?php
+									$collArrIndex = 0;
+									if($specArr){
+										$collCnt = 0;
+										if(isset($specArr['cat'])){
+											$categoryArr = $specArr['cat'];
+											?>
+											<!--  -->
+											<?php
+										}
+										if(isset($specArr['coll'])){
+											$collArr = $specArr['coll'];
+											?>
+											<section class="gridlike-form">
+											<?php
+											if(!isset($specArr['cat'])){
+												echo '</section>';
+											}
+										}
+										$collArrIndex++;
+									}
+									if($obsArr){
+										$collCnt = 0;
+										if(isset($obsArr['coll'])){
+											$collArr = $obsArr['coll'];
+											?>
+											<section>
+												<fieldset class="fieldset-padding">
+													<h2 class="section-heading"><?php echo $LANG['PERSONAL_OBSERVATION_COLLECTIONS']; ?></h2>
+													<fieldset class="observation-fieldset">
+													<?php
+													foreach($collArr as $collid => $cArr){
+														?>
+															<div>
+																<input id="db-<?php echo $collid ?>" name="db[]" value="<?php echo $collid; ?>" type="checkbox" onclick="uncheckAll();" <?php echo ($collIdArr&&in_array($collid,$collIdArr)?'checked':''); ?> />
+																<label for="db-<?php echo $collid ?>"><?php echo $LANG['SELECT_DESELECT'] ?></label>
+															</div>
+															<div class="gridlike-form-row bottom-breathing-room-rel">
+																<div class="collectiontitle">
+																	<a href = 'collprofiles.php?collid=<?php echo htmlspecialchars($collid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>'>
+																		<?php
+																		$codeStr = ' ('.$cArr['instcode'];
+																		if($cArr['collcode']) $codeStr .= '-'.$cArr['collcode'];
+																		$codeStr .= ')';
+																		echo $cArr["collname"].$codeStr;
+																		?>
+																		- <?php echo $LANG['MORE_INFO']; ?>
+																	</a>
+																</div>
+															</div>
+														<?php
+														$collCnt++;
+													}
+													?>
+													</fieldset>
+												</fieldset>
+											</section>
+											<?php
+										}
+										$collArrIndex++;
+									}
+									?>
+									<div class="clr">&nbsp;</div>
+									<input type="hidden" name="collid" id="colltxt" value="" />
+									<input type="hidden" name="days" value="<?php echo $days; ?>" />
+									<input type="hidden" name="months" value="<?php echo $months; ?>" />
+								</div>
+>>>>>>> origin
                             </form>
                             <?php
                         }
@@ -771,28 +926,48 @@ if($action != "Update Statistics"){
 											<?php
 												if ($results){
 													echo "<li>";
+<<<<<<< HEAD
 													echo ($results['SpecimenCount'] ? number_format($results['SpecimenCount']) : 0) . " " . $LANG['OCC_RECORDS'];
 													echo "</li>";
 													echo "<li>";
 													$percGeo = '';
 													if($results['SpecimenCount'] && $results['GeorefCount'] && $results['SpecimenCount'] !== 0){
+=======
+													$specimenCount = array_key_exists('SpecimenCount', $results) ? $results['SpecimenCount'] : 0;
+													$georefCount = array_key_exists('GeorefCount', $results) ? $results['GeorefCount'] : 0;
+													echo $specimenCount . " " . $LANG['OCC_RECORDS'];
+													echo "</li>";
+													echo "<li>";
+													$percGeo = '';
+													if($specimenCount && $georefCount && $specimenCount !== 0){
+>>>>>>> origin
 														try {
 															$percGeo = (100* ($results['GeorefCount'] / $results['SpecimenCount']));
 														} catch (Exception $e) {
 															error_log('Exception: ' . $e->getMessage());
 														}
 													}
+<<<<<<< HEAD
 													echo ($results['GeorefCount'] ? number_format($results['GeorefCount']) : 0) . ($percGeo ? " (" . ($percGeo>1 ? round($percGeo) : round($percGeo,2)) . "%)" : '') . " " . $LANG['GEOREFERENCED'];
 													echo "</li>";
 													echo "<li>";
 													$percImg = '';
 													if($results['SpecimenCount'] && $results['TotalImageCount'] && $results['SpecimenCount'] !== 0){
+=======
+													echo (array_key_exists('GeorefCount', $results) ? number_format($results['GeorefCount']) : 0) . ($percGeo ? " (" . ($percGeo>1 ? round($percGeo) : round($percGeo,2)) . "%)" : '') . " " . $LANG['GEOREFERENCED'];
+													echo "</li>";
+													echo "<li>";
+													$percImg = '';
+													$totalImageCount = array_key_exists('TotalImageCount', $results) ? $results['TotalImageCount'] : 0;
+													if($specimenCount && $totalImageCount && $specimenCount !== 0){
+>>>>>>> origin
 														try {
 															$percImg = (100* ($results['TotalImageCount'] / $results['SpecimenCount']));
 														} catch (Exception $e) {
 															error_log('Exception: ' . $e->getMessage());
 														}
 													}
+<<<<<<< HEAD
 													echo ($results['TotalImageCount'] ? number_format($results['TotalImageCount']) : 0) . ($percImg ? " (" . ($percImg>1 ? round($percImg) : round($percImg,2)) . "%)" : '') . " " . $LANG['OCCS_IMAGED'];
 													echo "</li>";
 													echo "<li>";
@@ -800,10 +975,21 @@ if($action != "Update Statistics"){
 													if($results['SpecimenCount'] && $results['SpecimensCountID'] && $results['SpecimenCount'] !== 0){
 														try {
 															$percId = (100* ($results['SpecimensCountID'] / $results['SpecimenCount']));
+=======
+													echo (array_key_exists('TotalImageCount', $results) ? number_format($results['TotalImageCount']) : 0) . ($percImg ? " (" . ($percImg>1 ? round($percImg) : round($percImg,2)) . "%)" : '') . " " . $LANG['OCCS_IMAGED'];
+													echo "</li>";
+													echo "<li>";
+													$percId = '';
+													$specimensCountID = array_key_exists('SpecimensCountID', $results) ? $results['SpecimensCountID'] : 0;
+													if($specimenCount && $specimensCountID && $specimenCount !== 0){
+														try {
+															$percId = (100* ($specimensCountID / $specimenCount));
+>>>>>>> origin
 														} catch (Exception $e) {
 															error_log('Exception: ' . $e->getMessage());
 														}
 													}
+<<<<<<< HEAD
 													echo ($results['SpecimensCountID'] ? number_format($results['SpecimensCountID']) : 0) . ($percId?" (" . ($percId>1 ? round($percId) : round($percId,2)) . "%)" : '') . " " . $LANG['IDED_TO_SP'];
 													echo "</li>";
 													echo "<li>";
@@ -820,6 +1006,24 @@ if($action != "Update Statistics"){
 													echo "</li>";
 													/*echo "<li>";
 													echo ($results['TypeCount'] ? number_format($results['TypeCount']) : 0)." type specimens";
+=======
+													echo (array_key_exists('SpecimensCountID', $results) ? number_format($results['SpecimensCountID']) : 0) . ($percId?" (" . ($percId>1 ? round($percId) : round($percId,2)) . "%)" : '') . " " . $LANG['IDED_TO_SP'];
+													echo "</li>";
+													echo "<li>";
+													echo (array_key_exists('FamilyCount', $results) ? number_format($results['FamilyCount']) : 0) . " " . $LANG['FAMILIES'];
+													echo "</li>";
+													echo "<li>";
+													echo (array_key_exists('GeneraCount', $results) ? number_format($results['GeneraCount']) : 0) . " " . $LANG['GENERA'];
+													echo "</li>";
+													echo "<li>";
+													echo (array_key_exists('SpeciesCount', $results) ? number_format($results['SpeciesCount']) : 0) . " " . $LANG['SPECIES'];
+													echo "</li>";
+													echo "<li>";
+													echo (array_key_exists('TotalTaxaCount', $results) ? number_format($results['TotalTaxaCount']) : 0) . " " . $LANG['TOTAL_TAXA'];
+													echo "</li>";
+													/*echo "<li>";
+													echo (array_key_exists('TypeCount', $results) ? number_format($results['TypeCount']) : 0)." type specimens";
+>>>>>>> origin
 													echo "</li>";*/
 												}
 											?>
@@ -835,7 +1039,11 @@ if($action != "Update Statistics"){
 													</div>
 													<div class="stat-csv-float-margins icon-mrgn-rel" title="<?php echo $LANG['SAVE_CSV']; ?>">
 														<input type="hidden" name="collids" id="collids" value='<?php echo $collId; ?>' />
+<<<<<<< HEAD
 														<input type="hidden" name="taxon" value='<?php echo $cPartentTaxon; ?>' />
+=======
+														<input type="hidden" name="taxon" value='<?php echo $cParentTaxon; ?>' />
+>>>>>>> origin
 														<input type="hidden" name="country" value='<?php echo $cCountry; ?>' />
 														<input type="hidden" name="action" id="action" value='<?php echo $LANG['DOWNLOAD_STATS']; ?>' />
 														<input type="image" name="action" src="../../images/dl.png" style="width:1.3em" onclick="" />
@@ -882,12 +1090,17 @@ if($action != "Update Statistics"){
 												</div>
 											</form>
                                             <?php
-                                            if(!$cPartentTaxon && !$cCountry){
+                                            if(!$cParentTaxon && !$cCountry){
+												$specimenCount = array_key_exists('SpecimenCount', $results) ? $results['SpecimenCount'] : 0;
                                                 ?>
                                                 <div class="top-breathing-room-rel">
                                                     <form name="orderstats" class="no-btm-mrgn" action="collorderstats.php" method="post" target="_blank">
                                                         <input type="hidden" name="collid" id="collid" value='<?php echo $collId; ?>'/>
+<<<<<<< HEAD
                                                         <input type="hidden" name="totalcnt" id="totalcnt" value='<?php echo $results['SpecimenCount']; ?>'/>
+=======
+                                                        <input type="hidden" name="totalcnt" id="totalcnt" value='<?php echo $specimenCount; ?>'/>
+>>>>>>> origin
                                                         <button type="submit" name="action" value="Load Order Distribution"><?php echo $LANG['LOAD_ORDER']; ?></button>
                                                     </form>
                                                 </div>
@@ -896,7 +1109,7 @@ if($action != "Update Statistics"){
                                             ?>
 										</fieldset>
 										<?php
-										if(!$cPartentTaxon && !$cCountry){
+										if(!$cParentTaxon && !$cCountry){
                                             if ($SYMB_UID && ($IS_ADMIN || array_key_exists("CollAdmin", $USER_RIGHTS))) {
                                                 ?>
                                                 <fieldset id="yearstatsbox" class="yearstatbox-width">
@@ -1082,7 +1295,54 @@ if($action != "Update Statistics"){
 				include($SERVER_ROOT.'/includes/footer.php');
 			?>
 		</body>
+		<script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=2" type="text/javascript"></script>
+		<script src="<?= $CLIENT_ROOT ?>/js/alerts.js?v=202107" type="text/javascript"></script>
+		<script src="<?= $CLIENT_ROOT ?>/js/symb/collections.list.js?ver=20171215>" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				// setSessionQueryStr();
+				setSearchForm(document.getElementById("params-form"));
+				toggleAccordionsFromSessionStorage(sessionStorage.getItem("querystr" + getCurrentPage() + "/" + "accordionIds") ?.split(",") || []);
+				document.getElementById("params-form").addEventListener("submit", function(event) {
+					const submitter = event.submitter;
+					const submitActionValue = submitter.value;
+					document.getElementById("submitaction-hidden").value = submitActionValue;
+					if (!submitter) return;
+					event.preventDefault();
+					const dbElements = document.getElementsByName("db[]");
+					let hasCollSelected = false;
+					let collIds = "";
+					for(i = 0; i < dbElements.length; i++){
+						const dbElement = dbElements[i];
+						if(dbElement.checked && !isNaN(dbElement.value)){
+							if(hasCollSelected == true) collIds = collIds+",";
+							collIds = collIds + dbElement.value;
+							hasCollSelected = true;
+						}
+					}
+					if(hasCollSelected == true){
+						const collElem = document.getElementById("colltxt");
+						collElem.value = collIds;
+						const submitForm = document.getElementById("params-form");
+						storeFormDataInSessionStorage(submitForm);
+						submitForm.submit();
+					}
+					else{
+						alert("<?php echo $LANG['CHOOSE_ONE']; ?>");
+						return false;
+					}
+				});
+				document.getElementById("reset-btn").addEventListener("click", function (event) {
+					document.getElementById("params-form").reset();
+					clearPageSpecificSessionStorageItems();
+					checkTheCollectionsThatShouldBeCheckedBasedOnConfig();
+					closeAllCategories();
+					expandCategoriesBasedOnConfig();
+					updateChip(event, isInitialConfig=true);
+				});
+			});
+		</script>
 	</html>
-	<?php
+<?php
 }
 ?>

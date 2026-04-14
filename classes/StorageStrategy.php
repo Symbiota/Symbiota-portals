@@ -80,6 +80,11 @@ class LocalStorage extends StorageStrategy {
 	public function file_exists($file): bool {
 		$filename = is_array($file)? $file['name']: $file;
 
+<<<<<<< HEAD
+=======
+		if($filename === null) return false;
+
+>>>>>>> origin
 		if(str_contains($filename, $this->getUrlPath())) {
 			$filename = str_replace($this->getUrlPath(), '', $filename);
 		}

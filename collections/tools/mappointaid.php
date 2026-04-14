@@ -1,8 +1,16 @@
 <?php
 include_once('../../config/symbini.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/tools/mapaids.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/tools/mapaids.' . $LANG_TAG . '.php');
 else include_once($SERVER_ROOT . '/content/lang/collections/tools/mapaids.en.php');
 include_once($SERVER_ROOT . '/classes/utilities/MappingUtil.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/MappingUtil.php');
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/tools/mapaids');
+
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 
 $bounds = MappingUtil::getMappingBoundary();
@@ -96,7 +104,14 @@ $shouldUseMinimalMapHeader = $SHOULD_USE_MINIMAL_MAP_HEADER ?? false;
 				map_options.defaultBounds = mapBounds;
 			}
 
+<<<<<<< HEAD
 			map = new LeafletMap('map_canvas', map_options);
+=======
+			map = new LeafletMap('map_canvas',
+				map_options,
+				JSON.parse(`<?= json_encode($GEO_JSON_LAYERS ?? []) ?>`)
+			);
+>>>>>>> origin
 
 			var drawnItems = new L.FeatureGroup();
 			map.mapLayer.addLayer(drawnItems);

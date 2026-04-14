@@ -58,7 +58,11 @@ abstract class EvalBarrett extends Base
         $m_length = strlen($m);
 
         if ($m_length < 5) {
+<<<<<<< HEAD
             $code = 'return bcmod($x, $n);';
+=======
+            $code = 'return self::BCMOD_THREE_PARAMS ? bcmod($x, $n, 0) : bcmod($x, $n);';
+>>>>>>> origin
             eval('$func = function ($n) { ' . $code . '};');
             self::$custom_reduction = $func;
             return;
@@ -66,7 +70,11 @@ abstract class EvalBarrett extends Base
 
         $lhs = '1' . str_repeat('0', $m_length + ($m_length >> 1));
         $u = bcdiv($lhs, $m, 0);
+<<<<<<< HEAD
         $m1 = bcsub($lhs, bcmul($u, $m));
+=======
+        $m1 = bcsub($lhs, bcmul($u, $m, 0), 0);
+>>>>>>> origin
 
         $cutoff = $m_length + ($m_length >> 1);
 
@@ -78,6 +86,7 @@ abstract class EvalBarrett extends Base
             $lsd = substr($n, -' . $cutoff . ');
             $msd = substr($n, 0, -' . $cutoff . ');
 
+<<<<<<< HEAD
             $temp = bcmul($msd, ' . $m1 . ');
             $n = bcadd($lsd, $temp);
 
@@ -95,6 +104,25 @@ abstract class EvalBarrett extends Base
 
             while (bccomp($result, ' . $m . ') >= 0) {
                 $result = bcsub($result, ' . $m . ');
+=======
+            $temp = bcmul($msd, ' . $m1 . ', 0);
+            $n = bcadd($lsd, $temp, 0);
+
+            $temp = substr($n, 0, ' . (-$m_length + 1) . ');
+            $temp = bcmul($temp, ' . $u . ', 0);
+            $temp = substr($temp, 0, ' . (-($m_length >> 1) - 1) . ');
+            $temp = bcmul($temp, ' . $m . ', 0);
+
+            $result = bcsub($n, $temp, 0);
+
+            if ($result[0] == \'-\') {
+                $temp = \'1' . str_repeat('0', $m_length + 1) . '\';
+                $result = bcadd($result, $temp, 0);
+            }
+
+            while (bccomp($result, ' . $m . ') >= 0) {
+                $result = bcsub($result, ' . $m . ', 0);
+>>>>>>> origin
             }
 
             return $result;';

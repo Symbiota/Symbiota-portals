@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -230,7 +231,11 @@ class Content extends AbstractPart
             }
         }
         foreach ($this->imageParagraphStyles as $style) {
+<<<<<<< HEAD
             $styleWriter = new \PhpOffice\PhpWord\Writer\ODText\Style\Paragraph($xmlWriter, $style);
+=======
+            $styleWriter = new ParagraphStyleWriter($xmlWriter, $style);
+>>>>>>> origin
             $styleWriter->write();
         }
     }
@@ -256,7 +261,11 @@ class Content extends AbstractPart
      *
      * Table style can be null or string of the style name
      *
+<<<<<<< HEAD
      * @param \PhpOffice\PhpWord\Element\AbstractContainer $container
+=======
+     * @param AbstractContainer $container
+>>>>>>> origin
      * @param int $paragraphStyleCount
      * @param int $fontStyleCount
      *
@@ -277,7 +286,11 @@ class Content extends AbstractPart
                 $style = $element->getStyle();
                 $style->setStyleName('fr' . $element->getMediaIndex());
                 $this->autoStyles['Image'][] = $style;
+<<<<<<< HEAD
                 $sty = new \PhpOffice\PhpWord\Style\Paragraph();
+=======
+                $sty = new Paragraph();
+>>>>>>> origin
                 $sty->setStyleName('IM' . $element->getMediaIndex());
                 $sty->setAuto();
                 $sty->setAlignment($style->getAlignment());
@@ -300,7 +313,11 @@ class Content extends AbstractPart
     /**
      * Get style of individual element.
      *
+<<<<<<< HEAD
      * @param \PhpOffice\PhpWord\Element\Text $element
+=======
+     * @param Text $element
+>>>>>>> origin
      * @param int $paragraphStyleCount
      * @param int $fontStyleCount
      */
@@ -346,7 +363,11 @@ class Content extends AbstractPart
     /**
      * Get font style of individual field element.
      *
+<<<<<<< HEAD
      * @param \PhpOffice\PhpWord\Element\Field $element
+=======
+     * @param Field $element
+>>>>>>> origin
      * @param int $fontStyleCount
      */
     private function getElementStyleField($element, &$fontStyleCount): void
@@ -371,7 +392,11 @@ class Content extends AbstractPart
     /**
      * Get style of individual element.
      *
+<<<<<<< HEAD
      * @param \PhpOffice\PhpWord\Element\TextRun $element
+=======
+     * @param TextRun $element
+>>>>>>> origin
      * @param int $paragraphStyleCount
      */
     private function getElementStyleTextRun($element, &$paragraphStyleCount): void

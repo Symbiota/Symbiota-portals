@@ -25,7 +25,11 @@ class Trim
 
         $stringValue = Helpers::extractString($stringValue);
 
+<<<<<<< HEAD
         return (string) preg_replace('/[\\x00-\\x1f]/', '', "$stringValue");
+=======
+        return (string) preg_replace('/[\x00-\x1f]/', '', "$stringValue");
+>>>>>>> origin
     }
 
     /**

@@ -39,6 +39,14 @@ class OccurrenceChecklistManager extends OccurrenceManager{
 					$this->getTableJoins($sqlWhere).
 					$sqlWhere.' AND ((t.rankid > 140 AND ts1.taxauthid = 1) OR t.tid IS NULL) ';
 			}
+<<<<<<< HEAD
+=======
+			if (strpos($this->sqlWhere,"early.myaStart")){
+				$sqlWith = $this->getPaleoSqlWith();
+				$sql = $sqlWith . $sql;
+			}
+
+>>>>>>> origin
 			$result = $this->conn->query($sql);
 			while($r = $result->fetch_object()){
 				$family = $r->family;

@@ -2,9 +2,15 @@
 
 include_once($SERVER_ROOT.'/traits/TaxonomyTrait.php');
 include_once($SERVER_ROOT.'/classes/Manager.php');
+<<<<<<< HEAD
 if($LANG_TAG == 'en' || !file_exists($SERVER_ROOT . '/content/lang/classes/TaxonomyEditorManager.' . $LANG_TAG . '.php'))
 	include_once($SERVER_ROOT . '/content/lang/classes/TaxonomyEditorManager.en.php');
 else include_once($SERVER_ROOT . '/content/lang/classes/TaxonomyEditorManager.' . $LANG_TAG . '.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('classes/TaxonomyEditorManager');
+>>>>>>> origin
 
 class TaxonomyEditorManager extends Manager{
 
@@ -501,7 +507,6 @@ class TaxonomyEditorManager extends Manager{
 		}while($targetTid && $parCnt < 16);
 
 		//Add hierarchy to taxaenumtree table
-		$trueHierarchyStr = implode(",",array_reverse($parentArr));
 		if($parentArr != $this->hierarchyArr){
 			//Reset hierarchy for all children
 			$branchTidArr = array($tid);
@@ -594,11 +599,19 @@ class TaxonomyEditorManager extends Manager{
 				$stmnt->fetch();
 			}
 		}
+<<<<<<< HEAD
 		
 
 		$sqlTaxa = 'INSERT INTO taxa(kingdomName, sciname, author, rankid, unitind1, unitname1, unitind2, unitname2, unitind3, unitname3, cultivarEpithet, tradeName, '.
 			'source, notes, securitystatus, modifiedUid, modifiedTimeStamp) '.
 			'VALUES (' . ($kingdomName ? ('"' . $this->cleanInStr($kingdomName) . '"') : '""') . ', 
+=======
+
+
+		$sqlTaxa = 'INSERT INTO taxa(kingdomName, sciname, author, rankid, unitind1, unitname1, unitind2, unitname2, unitind3, unitname3, cultivarEpithet, tradeName, '.
+			'source, notes, securitystatus, modifiedUid, modifiedTimeStamp) '.
+			'VALUES (' . ($kingdomName ? ('"' . $this->cleanInStr($kingdomName) . '"') : '""') . ',
+>>>>>>> origin
 			"'.$this->cleanInStr($processedSciname).'","'.
 			($dataArr['author']? ($this->cleanInStr($dataArr['author'])) : '').'",'.
 			(isset($dataArr['rankid'])?$dataArr['rankid']:0).','.
@@ -612,7 +625,11 @@ class TaxonomyEditorManager extends Manager{
 			((array_key_exists('tradeName', $dataArr) && $dataArr['tradeName']) ? ('"' . $this->cleanInStr($processedTradeName) . '"') : '""') . ',' .
 			($dataArr['source']? '"'.$this->cleanInStr($dataArr['source']).'"':'NULL').','.
 			($dataArr['notes']?'"'.$this->cleanInStr($dataArr['notes']).'"':'NULL').','.
+<<<<<<< HEAD
 			$this->cleanInStr($dataArr['securitystatus']).','.
+=======
+			($dataArr['securitystatus']? '"' . $this->cleanInStr($dataArr['securitystatus']) . '",' : '0,').
+>>>>>>> origin
 			$GLOBALS['SYMB_UID'].',"'.
 			date('Y-m-d H:i:s').'")';
 		$insertStatus = false;
@@ -767,8 +784,13 @@ class TaxonomyEditorManager extends Manager{
 		}
 		$rs->free();
 
+<<<<<<< HEAD
 		//Field images
 		$sql ='SELECT COUNT(mediaID) AS cnt FROM media WHERE tid = '.$this->tid;
+=======
+		//Field images that are not linked to an occurrence
+		$sql ='SELECT COUNT(mediaID) AS cnt FROM media WHERE occid IS NULL AND tid = '.$this->tid;
+>>>>>>> origin
 		$rs = $this->conn->query($sql);
 		while($r = $rs->fetch_object()){
 			$retArr['img'] = $r->cnt;
@@ -849,7 +871,11 @@ class TaxonomyEditorManager extends Manager{
 		if(is_numeric($targetTid)){
 			//Set occurrence and determination tids to NULL within delete function function below
 
+<<<<<<< HEAD
 			//Field images; specimen images set to null within delete function
+=======
+			//Field images only; specimen images tid set to null within delete function, which will be reset appropriately by collection
+>>>>>>> origin
 			$sql ='UPDATE IGNORE media SET tid = '.$targetTid.' WHERE occid IS NULL AND tid = '.$this->tid;
 			if(!$this->conn->query($sql)) $this->warningArr[] = (isset($this->langArr['ERROR_TRANSFER_IMGS'])?$this->langArr['ERROR_TRANSFER_IMGS']:'ERROR transferring image links').' ('.$this->conn->error.')';
 
@@ -902,11 +928,14 @@ class TaxonomyEditorManager extends Manager{
 		$sql ='UPDATE media SET tid = NULL WHERE occid IS NOT NULL AND tid = '.$this->tid;
 		if(!$this->conn->query($sql)) $this->warningArr[] = (isset($this->langArr['ERROR_SETTING_NULL'])?$this->langArr['ERROR_SETTING_NULL']:'ERROR setting tid to NULL for occurrence images in deleteTaxon method').' ('.$this->conn->error.')';
 
+<<<<<<< HEAD
 		/*
 		$sql ='DELETE FROM media WHERE tid = '.$this->tid;
 		if(!$this->conn->query($sql)) $this->warningArr[] = 'ERROR deleting remaining links in deleteTaxon method ('.$this->conn->error.')';
 		*/
 
+=======
+>>>>>>> origin
 		//Taxon maps
 		$sql ='DELETE FROM taxamaps WHERE tid = '.$this->tid;
 		if(!$this->conn->query($sql)) $this->warningArr[] = $this->langArr['ERROR_DEL_MAPS'] . ' (' . $this->conn->error . ')';

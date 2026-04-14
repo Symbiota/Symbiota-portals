@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -41,7 +42,11 @@ class Style
      * @param string $styleName
      * @param AbstractStyle|array $styles
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Style\Paragraph
+=======
+     * @return Paragraph
+>>>>>>> origin
      */
     public static function addParagraphStyle($styleName, $styles)
     {
@@ -55,7 +60,11 @@ class Style
      * @param AbstractStyle|array $fontStyle
      * @param AbstractStyle|array $paragraphStyle
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Style\Font
+=======
+     * @return Font
+>>>>>>> origin
      */
     public static function addFontStyle($styleName, $fontStyle, $paragraphStyle = null)
     {
@@ -68,7 +77,11 @@ class Style
      * @param string $styleName
      * @param AbstractStyle|array $styles
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Style\Font
+=======
+     * @return Font
+>>>>>>> origin
      */
     public static function addLinkStyle($styleName, $styles)
     {
@@ -81,7 +94,11 @@ class Style
      * @param string $styleName
      * @param AbstractStyle|array $styleValues
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Style\Numbering
+=======
+     * @return Numbering
+>>>>>>> origin
      *
      * @since 0.10.0
      */
@@ -92,12 +109,21 @@ class Style
 
     /**
      * Add title style.
+<<<<<<< HEAD
      *
      * @param null|int $depth Provide null to set title font
      * @param AbstractStyle|array $fontStyle
      * @param AbstractStyle|array $paragraphStyle
      *
      * @return \PhpOffice\PhpWord\Style\Font
+=======
+     *
+     * @param null|int $depth Provide null to set title font
+     * @param AbstractStyle|array $fontStyle
+     * @param AbstractStyle|array $paragraphStyle
+     *
+     * @return Font
+>>>>>>> origin
      */
     public static function addTitleStyle($depth, $fontStyle, $paragraphStyle = null)
     {
@@ -117,7 +143,11 @@ class Style
      * @param array $styleTable
      * @param null|array $styleFirstRow
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\Style\Table
+=======
+     * @return Table
+>>>>>>> origin
      */
     public static function addTableStyle($styleName, $styleTable, $styleFirstRow = null)
     {
@@ -148,10 +178,17 @@ class Style
 
     /**
      * Set default paragraph style.
+<<<<<<< HEAD
      *
      * @param AbstractStyle|array $styles Paragraph style definition
      *
      * @return \PhpOffice\PhpWord\Style\Paragraph
+=======
+     *
+     * @param AbstractStyle|array $styles Paragraph style definition
+     *
+     * @return Paragraph
+>>>>>>> origin
      */
     public static function setDefaultParagraphStyle($styles)
     {

@@ -68,7 +68,11 @@ class DES extends BlockCipher
     /**
      * Block Length of the cipher
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::block_size
+=======
+     * @see Common\SymmetricKey::block_size
+>>>>>>> origin
      * @var int
      */
     protected $block_size = 8;
@@ -76,7 +80,11 @@ class DES extends BlockCipher
     /**
      * Key Length (in bytes)
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::setKeyLength()
+=======
+     * @see Common\SymmetricKey::setKeyLength()
+>>>>>>> origin
      * @var int
      */
     protected $key_length = 8;
@@ -84,7 +92,11 @@ class DES extends BlockCipher
     /**
      * The mcrypt specific name of the cipher
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::cipher_name_mcrypt
+=======
+     * @see Common\SymmetricKey::cipher_name_mcrypt
+>>>>>>> origin
      * @var string
      */
     protected $cipher_name_mcrypt = 'des';
@@ -92,7 +104,11 @@ class DES extends BlockCipher
     /**
      * The OpenSSL names of the cipher / modes
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::openssl_mode_names
+=======
+     * @see Common\SymmetricKey::openssl_mode_names
+>>>>>>> origin
      * @var array
      */
     protected $openssl_mode_names = [
@@ -106,7 +122,11 @@ class DES extends BlockCipher
     /**
      * Optimizing value while CFB-encrypting
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::cfb_init_len
+=======
+     * @see Common\SymmetricKey::cfb_init_len
+>>>>>>> origin
      * @var int
      */
     protected $cfb_init_len = 500;
@@ -586,7 +606,11 @@ class DES extends BlockCipher
      *
      * This is mainly just a wrapper to set things up for \phpseclib3\Crypt\Common\SymmetricKey::isValidEngine()
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::isValidEngine()
+=======
+     * @see Common\SymmetricKey::isValidEngine()
+>>>>>>> origin
      * @param int $engine
      * @return bool
      */
@@ -615,7 +639,11 @@ class DES extends BlockCipher
      *
      * DES also requires that every eighth bit be a parity bit, however, we'll ignore that.
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::setKey()
+=======
+     * @see Common\SymmetricKey::setKey()
+>>>>>>> origin
      * @param string $key
      */
     public function setKey($key)
@@ -631,8 +659,13 @@ class DES extends BlockCipher
     /**
      * Encrypts a block
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::encryptBlock()
      * @see \phpseclib3\Crypt\Common\SymmetricKey::encrypt()
+=======
+     * @see Common\SymmetricKey::encryptBlock()
+     * @see Common\SymmetricKey::encrypt()
+>>>>>>> origin
      * @see self::encrypt()
      * @param string $in
      * @return string
@@ -645,8 +678,13 @@ class DES extends BlockCipher
     /**
      * Decrypts a block
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::decryptBlock()
      * @see \phpseclib3\Crypt\Common\SymmetricKey::decrypt()
+=======
+     * @see Common\SymmetricKey::decryptBlock()
+     * @see Common\SymmetricKey::decrypt()
+>>>>>>> origin
      * @see self::decrypt()
      * @param string $in
      * @return string
@@ -747,7 +785,11 @@ class DES extends BlockCipher
     /**
      * Creates the key schedule
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::setupKey()
+=======
+     * @see Common\SymmetricKey::setupKey()
+>>>>>>> origin
      */
     protected function setupKey()
     {
@@ -1281,7 +1323,11 @@ class DES extends BlockCipher
     /**
      * Setup the performance-optimized function for de/encrypt()
      *
+<<<<<<< HEAD
      * @see \phpseclib3\Crypt\Common\SymmetricKey::setupInlineCrypt()
+=======
+     * @see Common\SymmetricKey::setupInlineCrypt()
+>>>>>>> origin
      */
     protected function setupInlineCrypt()
     {

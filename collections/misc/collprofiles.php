@@ -1,11 +1,21 @@
 <?php
 include_once('../../config/symbini.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/misc/collprofiles.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/misc/collprofiles.' . $LANG_TAG . '.php');
 else include_once($SERVER_ROOT . '/content/lang/collections/misc/collprofiles.en.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceCollectionProfile.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceEditorManager.php');
 include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
 
+=======
+include_once($SERVER_ROOT . '/classes/OccurrenceCollectionProfile.php');
+include_once($SERVER_ROOT . '/classes/OccurrenceEditorManager.php');
+include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/misc/collprofiles');
+
+>>>>>>> origin
 header('Content-Type: text/html; charset=' . $CHARSET);
 unset($_SESSION['editorquery']);
 
@@ -45,6 +55,11 @@ if ($SYMB_UID) {
 	?>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+=======
+	<script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=3" type="text/javascript"></script>
+	<script src="<?php echo $CLIENT_ROOT; ?>/js/symb/collections.list.js?ver=2" type="text/javascript"></script>
+>>>>>>> origin
 	<script>
 
 		function toggleById(target) {
@@ -102,6 +117,31 @@ if ($SYMB_UID) {
 			e.preventDefault();
 			return false;
 		}
+<<<<<<< HEAD
+=======
+
+		function showItemsList(className) {
+  			const elements = document.getElementsByClassName(className);
+  			for (let i = 0; i < elements.length; i++) {
+				elements[i].style.display = 'list-item';
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {			
+			document.querySelectorAll('.accordion-header').forEach(accordionHeader => {
+				accordionHeader.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						if (e.key === ' ') {
+							e.preventDefault();
+						}
+						const selector = accordionHeader.previousElementSibling;
+						selector.checked = !selector.checked;
+					}
+				});
+			});
+		});
+
+>>>>>>> origin
 	</script>
 	<style>
 		.importItem { margin-left:10px; display:none; }
@@ -132,6 +172,17 @@ if ($SYMB_UID) {
 			margin-left: 3rem;
 		}
 
+<<<<<<< HEAD
+=======
+		.seemore-icon {
+			width: 13px;
+			height: 13px;
+		}
+		.link-icon {
+			text-decoration: none;
+		}
+
+>>>>>>> origin
 		#quicksearch-box input {
 			width: 100%;
 		}
@@ -221,8 +272,13 @@ if ($SYMB_UID) {
 			}
 		}
 	</style>
+<<<<<<< HEAD
 	<link href="<?php echo $CLIENT_ROOT ?>/collections/search/css/searchStyles.css?ver=1" type="text/css" rel="stylesheet" />
 	<link href="<?php echo $CLIENT_ROOT ?>/collections/search/css/searchStylesInner.css" type="text/css" rel="stylesheet" />
+=======
+	<link href="<?php echo $CLIENT_ROOT ?>/css/searchStyles.css?ver=1" type="text/css" rel="stylesheet" />
+	<link href="<?php echo $CLIENT_ROOT ?>/css/searchStylesInner.css" type="text/css" rel="stylesheet" />
+>>>>>>> origin
 </head>
 <body>
 	<?php
@@ -234,6 +290,12 @@ if ($SYMB_UID) {
 		<b><?= $LANG['COLL_PROFILE'] ?></b>
 	</div>
 	<div role="main" id="innertext" style="padding-top:0">
+<<<<<<< HEAD
+=======
+		<div id="all_collections_parent_container" data-config='<?= json_encode([
+		'CURRENT_URL' => $_SERVER['REQUEST_URI'],
+		]) ?>'></div>
+>>>>>>> origin
 		<?php
 		if ($collid && !$collid == 0){
 			?>
@@ -297,7 +359,11 @@ if ($SYMB_UID) {
 			if ($collData['collectioncode']) $codeStr .= '-' . $collData['collectioncode'];
 			$codeStr .= ')';
 			$_SESSION['colldata'] = $collData;
+<<<<<<< HEAD
 			echo '<h1 class="page-heading">' . $LANG['COLL_PROF_FOR'] . ':<br>' . $collData['collectionname'] . $codeStr . '</h1>';
+=======
+			echo '<h2 class="page-heading"><span class="screen-reader-only">' . $LANG['COLL_PROF_FOR'] . ':<br></span>' . $collData['collectionname'] . $codeStr . '</h2>';
+>>>>>>> origin
 			// GBIF citations widget
 			if ($datasetKey) {
 				echo '<div style="margin-left: 10px; margin-bottom: 20px;">';
@@ -340,7 +406,11 @@ if ($SYMB_UID) {
 								</a><?= $deactivateTag ?>
 							</li>
 							<?php
+<<<<<<< HEAD
 							if ($collData['colltype'] == 'Preserved Specimens') {
+=======
+							if (strpos($collData['colltype'], 'Specimens')) {
+>>>>>>> origin
 								?>
 								<li style="margin-left:10px">
 									<a href="../editor/imageoccursubmit.php?collid=<?= $collid ?>" <?= $deactivateStyle ?>>
@@ -386,9 +456,18 @@ if ($SYMB_UID) {
 								if ($collManager->traitCodingActivated()) {
 									?>
 									<li>
+<<<<<<< HEAD
 										<a href="#" onclick="$('li.traitItem').show(); return false;">
 											<?= $LANG['TRAIT_CODING_TOOLS'] ?>
 										</a>
+=======
+										<a href="javascript:void(0)" onclick="showItemsList('traitItem')">
+											<?= $LANG['TRAIT_CODING_TOOLS'] ?>
+										</a>
+										<a onclick="showItemsList('traitItem')">
+											<img class = seemore-icon src="../../images/tochild.png">
+										</a>
+>>>>>>> origin
 									</li>
 									<li class="traitItem" style="margin-left:10px;display:none;">
 										<a href="../traitattr/occurattributes.php?collid=<?= $collid ?>">
@@ -438,6 +517,7 @@ if ($SYMB_UID) {
 								<li>
 									<a href="collmetadata.php?collid=<?= $collid ?>">
 										<?= $LANG['EDIT_META'] ?>
+<<<<<<< HEAD
 									</a>
 								</li>
 								<!--
@@ -480,6 +560,31 @@ if ($SYMB_UID) {
 										<?= $LANG['SKELETAL_FILE_IMPORT'] ?>
 									</a>
 								</li>
+=======
+									</a>
+								</li>
+								<li>
+									<a href="collpermissions.php?collid=<?= $collid ?>">
+										<?= $LANG['MANAGE_PERMISSIONS'] ?>
+									</a>
+								</li>
+								<li>
+									<a href="javascript:void(0)" onclick="showItemsList('importItem')">
+										<?= $LANG['IMPORT_SPECIMEN'] ?>
+									</a>
+									<a id="importinfo" class="link-icon" href="https://docs.symbiota.org/Collection_Manager_Guide/Importing_Uploading/" target="_blank" title="<?php echo $LANG['MORE_INFO']; ?>" aria-label="<?php echo $LANG['MORE_INFO']; ?>">
+											<img src="../../images/info.png" style="width:13px;" alt="<?= $LANG['INFO_ALT'] ?>" />
+									</a>
+									<a onclick="showItemsList('importItem')">
+										<img class="seemore-icon" src="../../images/tochild.png"">
+									</a>
+								</li>
+								<li class="importItem">
+									<a href="../admin/specupload.php?uploadtype=7&collid=<?php echo $collid; ?>">
+										<?= $LANG['SKELETAL_FILE_IMPORT'] ?>
+									</a>
+								</li>
+>>>>>>> origin
 								<li class="importItem">
 									<a href="../admin/specupload.php?uploadtype=3&collid=<?php echo $collid; ?>">
 										<?= $LANG['TEXT_FILE_IMPORT'] ?>
@@ -617,9 +722,16 @@ if ($SYMB_UID) {
 				</div>
 				<?php
 			}
+			if(isset($collData['fulldescription'])){
 			?>
+<<<<<<< HEAD
 			<div class="coll-description bottom-breathing-room-rel"><?= $collData['fulldescription'] ?></div>
 			<?php
+=======
+				<div class="coll-description bottom-breathing-room-rel"><?= $collData['fulldescription'] ?></div>
+			<?php
+			}
+>>>>>>> origin
 			if(isset($collData['resourcejson'])){
 				if($resourceArr = json_decode($collData['resourcejson'], true)){
 					$title = $LANG['HOMEPAGE'];
@@ -803,7 +915,11 @@ if ($SYMB_UID) {
 			<div class="accordions" style="margin-bottom: 1.5rem;">
 				<section>
 					<input type="checkbox" id="more-details" class="accordion-selector" />
+<<<<<<< HEAD
 					<label for="more-details" class="accordion-header"><?= $LANG['MORE_INFO'] ?></label>
+=======
+					<label for="more-details" class="accordion-header" tabindex="0" role="button"><?= $LANG['MORE_INFO'] ?></label>
+>>>>>>> origin
 					<div id="collection-type" class="content">
 						<div class="bottom-breathing-room-rel">
 							<span class="label"><?= $LANG['COLLECTION_TYPE'] ?>:</span> <?= $collData['colltype'] ?>
@@ -824,11 +940,25 @@ if ($SYMB_UID) {
 							}
 							?>
 						</div>
+<<<<<<< HEAD
 						<?php if($collData['managementtype'] != 'Live Data'): ?>
 						<div class="bottom-breathing-room-rel">
 							<span class="label"><?= $LANG['LAST_UPDATE'] ?>:</span>
 							<?= $collData['uploaddate'] ?>
 						</div>
+=======
+						<?php if($collData['managementtype'] == 'Live Data'): ?>
+							<div class="bottom-breathing-room-rel">
+								<span class="label"><?= $LANG['LAST_MODIFIED'] ?>:</span>
+								<?= $statsArr['datelastmodified'] ?>
+							</div>
+						<?php endif ?>
+						<?php if($collData['managementtype'] != 'Live Data'): ?>
+							<div class="bottom-breathing-room-rel">
+								<span class="label"><?= $LANG['LAST_UPDATE'] ?>:</span>
+								<?= $collData['uploaddate'] ?>
+							</div>
+>>>>>>> origin
 						<?php endif ?>
 						<?php
 						if($collData['managementtype'] == 'Live Data'){
@@ -852,6 +982,10 @@ if ($SYMB_UID) {
 						</div>
 						<?php
 						if($collData['managementtype'] == 'Live Data'){
+<<<<<<< HEAD
+=======
+							/*  In abundance of cautions, temporarily removing access of this option, with potential full removal in future
+>>>>>>> origin
 							if($GLOBALS['SYMB_UID']){
 								?>
 								<div class="bottom-breathing-room-rel">
@@ -860,6 +994,10 @@ if ($SYMB_UID) {
 								</div>
 								<?php
 							}
+<<<<<<< HEAD
+=======
+							*/
+>>>>>>> origin
 						}
 						elseif($collData['managementtype'] == 'Snapshot'){
 							if($pathArr = $collManager->getDwcaPath($collid)){
@@ -881,7 +1019,11 @@ if ($SYMB_UID) {
 							$rightsHtml = GeneralUtil::getRightsHtml($collData['rights']);
 							?>
 							<div class="bottom-breathing-room-rel">
+<<<<<<< HEAD
 								<span class="label"><?= $LANG['USAGE_RIGHTS'] ?>:</span>
+=======
+								<span class="label"><?= $LANG['LICENSE'] ?>:</span>
+>>>>>>> origin
 								<?= $rightsHtml ?>
 							</div>
 							<?php
@@ -923,7 +1065,11 @@ if ($SYMB_UID) {
 			}
 			?>
 			<div style="margin-bottom: 2rem;">
+<<<<<<< HEAD
 				<form name="coll-search-form" action="<?= $actionPage ?>" method="get">
+=======
+				<form id="coll-search-form" name="coll-search-form" action="<?= $actionPage ?>" method="get" onsubmit="submitAdvancedSearchForm(event, '<?= $actionPage ?>')">
+>>>>>>> origin
 					<input name="db" value="<?= $collid ?>" type="hidden">
 					<button type="submit" class="button button-primary">
 						<?= $LANG['ADVANCED_SEARCH_THIS_COLLECTION'] ?>

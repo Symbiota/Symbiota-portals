@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -136,7 +137,11 @@ class Footnotes extends AbstractPart
     /**
      * Write note item.
      *
+<<<<<<< HEAD
      * @param \PhpOffice\PhpWord\Element\Endnote|\PhpOffice\PhpWord\Element\Footnote $element
+=======
+     * @param Footnote|\PhpOffice\PhpWord\Element\Endnote $element
+>>>>>>> origin
      */
     protected function writeNote(XMLWriter $xmlWriter, $element): void
     {

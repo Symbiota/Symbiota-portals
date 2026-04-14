@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -37,6 +38,7 @@ abstract class AbstractElement
 {
     /**
      * Parent writer.
+<<<<<<< HEAD
      *
      * @var WriterRTF
      */
@@ -65,19 +67,62 @@ abstract class AbstractElement
 
     /**
      * Font style.
+=======
+>>>>>>> origin
      *
-     * @var \PhpOffice\PhpWord\Style\Font
+     * @var WriterRTF
+     */
+<<<<<<< HEAD
+    protected $fontStyle;
+
+    /**
+     * Paragraph style.
+=======
+    protected $parentWriter;
+
+    /**
+     * Element.
+>>>>>>> origin
+     *
+     * @var Element
+     */
+<<<<<<< HEAD
+    protected $paragraphStyle;
+
+    /**
+=======
+    protected $element;
+
+    /**
+     * Without paragraph.
+     *
+     * @var bool
+     */
+    protected $withoutP = false;
+
+    /**
+     * Write element.
+     *
+     * @return string
+     */
+    abstract public function write();
+
+    /**
+     * Font style.
+     *
+     * @var FontStyle
      */
     protected $fontStyle;
 
     /**
      * Paragraph style.
      *
-     * @var \PhpOffice\PhpWord\Style\Paragraph
+     * @var ParagraphStyle
      */
     protected $paragraphStyle;
 
     /**
+>>>>>>> origin
      * @var \PhpOffice\PhpWord\Escaper\EscaperInterface
      */
     protected $escaper;
@@ -95,7 +140,7 @@ abstract class AbstractElement
      */
     protected function getStyles(): void
     {
-        /** @var \PhpOffice\PhpWord\Writer\RTF $parentWriter Type hint */
+        /** @var WriterRTF $parentWriter Type hint */
         $parentWriter = $this->parentWriter;
 
         /** @var \PhpOffice\PhpWord\Element\Text $element Type hint */
@@ -188,7 +233,7 @@ abstract class AbstractElement
             return '';
         }
 
-        /** @var \PhpOffice\PhpWord\Writer\RTF $parentWriter Type hint */
+        /** @var WriterRTF $parentWriter Type hint */
         $parentWriter = $this->parentWriter;
 
         // Create style writer and set color/name index

@@ -316,11 +316,17 @@ abstract class Engine implements \JsonSerializable
             return $this->normalize($n->subtract($temp));
         }
 
+<<<<<<< HEAD
         extract($this->extendedGCD($n));
         /**
          * @var Engine $gcd
          * @var Engine $x
          */
+=======
+        $extended = $this->extendedGCD($n);
+        $gcd = $extended['gcd'];
+        $x = $extended['x'];
+>>>>>>> origin
 
         if (!$gcd->equals(static::$one[static::class])) {
             return false;
@@ -367,6 +373,47 @@ abstract class Engine implements \JsonSerializable
     }
 
     /**
+<<<<<<< HEAD
+=======
+     *  __serialize() magic method
+     *
+     * __sleep / __wakeup were depreciated in PHP 8.5
+     * Will be called, automatically, when serialize() is called on a Math_BigInteger object.
+     *
+     * @see self::__unserialize()
+     * @access public
+     */
+    public function __serialize()
+    {
+        $result = ['hex' => $this->toHex(true)];
+        if ($this->precision > 0) {
+            $result['precision'] = $this->precision;
+        }
+        return $result;
+    }
+
+    /**
+     *  __unserialize() magic method
+     *
+     * __sleep / __wakeup were depreciated in PHP 8.5
+     * Will be called, automatically, when unserialize() is called on a Math_BigInteger object.
+     *
+     * @see self::__serialize()
+     * @access public
+     */
+    public function __unserialize(array $data)
+    {
+        $temp = new static($data['hex'], -16);
+        $this->value = $temp->value;
+        $this->is_negative = $temp->is_negative;
+        if (isset($data['precision']) && $data['precision'] > 0) {
+            // recalculate $this->bitmask
+            $this->setPrecision($data['precision']);
+        }
+    }
+
+    /**
+>>>>>>> origin
      * JSON Serialize
      *
      * Will be called, automatically, when json_encode() is called on a BigInteger object.
@@ -644,7 +691,11 @@ abstract class Engine implements \JsonSerializable
             return $this->normalize($temp->powModInner($e, $n));
         }
 
+<<<<<<< HEAD
         if ($this->compare($n) > 0) {
+=======
+        if ($this->compare($n) > 0 || $this->isNegative()) {
+>>>>>>> origin
             list(, $temp) = $this->divide($n);
             return $temp->powModInner($e, $n);
         }
@@ -740,11 +791,17 @@ abstract class Engine implements \JsonSerializable
      */
     public static function random($size)
     {
+<<<<<<< HEAD
         extract(static::minMaxBits($size));
         /**
          * @var BigInteger $min
          * @var BigInteger $max
          */
+=======
+        $minMax = static::minMaxBits($size);
+        $min = $minMax['min'];
+        $max = $minMax['max'];
+>>>>>>> origin
         return static::randomRange($min, $max);
     }
 
@@ -758,11 +815,17 @@ abstract class Engine implements \JsonSerializable
      */
     public static function randomPrime($size)
     {
+<<<<<<< HEAD
         extract(static::minMaxBits($size));
         /**
          * @var static $min
          * @var static $max
          */
+=======
+        $minMax = static::minMaxBits($size);
+        $min = $minMax['min'];
+        $max = $minMax['max'];
+>>>>>>> origin
         return static::randomRangePrime($min, $max);
     }
 

@@ -3,6 +3,10 @@
 namespace PhpOffice\PhpSpreadsheet\Worksheet;
 
 use ArrayObject;
+<<<<<<< HEAD
+=======
+use Composer\Pcre\Preg;
+>>>>>>> origin
 use Generator;
 use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
 use PhpOffice\PhpSpreadsheet\Calculation\Functions;
@@ -23,6 +27,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\ReferenceHelper;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
 use PhpOffice\PhpSpreadsheet\Shared;
+use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Color;
@@ -49,7 +54,11 @@ class Worksheet
     public const MERGE_CELL_CONTENT_HIDE = 'hide';
     public const MERGE_CELL_CONTENT_MERGE = 'merge';
 
+<<<<<<< HEAD
     public const FUNCTION_LIKE_GROUPBY = '/\\b(groupby|_xleta)\\b/i'; // weird new syntax
+=======
+    public const FUNCTION_LIKE_GROUPBY = '/\b(groupby|_xleta)\b/i'; // weird new syntax
+>>>>>>> origin
 
     protected const SHEET_NAME_REQUIRES_NO_QUOTES = '/^[_\p{L}][_\p{L}\p{N}]*$/mui';
 
@@ -378,12 +387,15 @@ class Worksheet
 
         $this->disconnectCells();
         unset($this->rowDimensions, $this->columnDimensions, $this->tableCollection, $this->drawingCollection, $this->chartCollection, $this->autoFilter);
+<<<<<<< HEAD
     }
 
     public function __wakeup(): void
     {
         $this->hash = spl_object_id($this);
         $this->parent = null;
+=======
+>>>>>>> origin
     }
 
     /**
@@ -411,15 +423,24 @@ class Worksheet
      */
     private static function checkSheetCodeName(string $sheetCodeName): string
     {
+<<<<<<< HEAD
         $charCount = Shared\StringHelper::countCharacters($sheetCodeName);
+=======
+        $charCount = StringHelper::countCharacters($sheetCodeName);
+>>>>>>> origin
         if ($charCount == 0) {
             throw new Exception('Sheet code name cannot be empty.');
         }
         // Some of the printable ASCII characters are invalid:  * : / \ ? [ ] and  first and last characters cannot be a "'"
         if (
             (str_replace(self::$invalidCharacters, '', $sheetCodeName) !== $sheetCodeName)
+<<<<<<< HEAD
             || (Shared\StringHelper::substring($sheetCodeName, -1, 1) == '\'')
             || (Shared\StringHelper::substring($sheetCodeName, 0, 1) == '\'')
+=======
+            || (StringHelper::substring($sheetCodeName, -1, 1) == '\'')
+            || (StringHelper::substring($sheetCodeName, 0, 1) == '\'')
+>>>>>>> origin
         ) {
             throw new Exception('Invalid character found in sheet code name');
         }
@@ -447,7 +468,11 @@ class Worksheet
         }
 
         // Enforce maximum characters allowed for sheet title
+<<<<<<< HEAD
         if (Shared\StringHelper::countCharacters($sheetTitle) > self::SHEET_TITLE_MAXIMUM_LENGTH) {
+=======
+        if (StringHelper::countCharacters($sheetTitle) > self::SHEET_TITLE_MAXIMUM_LENGTH) {
+>>>>>>> origin
             throw new Exception('Maximum ' . self::SHEET_TITLE_MAXIMUM_LENGTH . ' characters allowed in sheet title.');
         }
 
@@ -876,19 +901,33 @@ class Worksheet
                 if ($this->parent->sheetNameExists($title)) {
                     // Use name, but append with lowest possible integer
 
+<<<<<<< HEAD
                     if (Shared\StringHelper::countCharacters($title) > 29) {
                         $title = Shared\StringHelper::substring($title, 0, 29);
+=======
+                    if (StringHelper::countCharacters($title) > 29) {
+                        $title = StringHelper::substring($title, 0, 29);
+>>>>>>> origin
                     }
                     $i = 1;
                     while ($this->parent->sheetNameExists($title . ' ' . $i)) {
                         ++$i;
                         if ($i == 10) {
+<<<<<<< HEAD
                             if (Shared\StringHelper::countCharacters($title) > 28) {
                                 $title = Shared\StringHelper::substring($title, 0, 28);
                             }
                         } elseif ($i == 100) {
                             if (Shared\StringHelper::countCharacters($title) > 27) {
                                 $title = Shared\StringHelper::substring($title, 0, 27);
+=======
+                            if (StringHelper::countCharacters($title) > 28) {
+                                $title = StringHelper::substring($title, 0, 28);
+                            }
+                        } elseif ($i == 100) {
+                            if (StringHelper::countCharacters($title) > 27) {
+                                $title = StringHelper::substring($title, 0, 27);
+>>>>>>> origin
                             }
                         }
                     }
@@ -1205,8 +1244,13 @@ class Worksheet
                 throw new Exception('Sheet not found for name: ' . $worksheetReference[0]);
             }
         } elseif (
+<<<<<<< HEAD
             !preg_match('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/i', $coordinate)
             && preg_match('/^' . Calculation::CALCULATION_REGEXP_DEFINEDNAME . '$/iu', $coordinate)
+=======
+            !Preg::isMatch('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/i', $coordinate)
+            && Preg::isMatch('/^' . Calculation::CALCULATION_REGEXP_DEFINEDNAME . '$/iu', $coordinate)
+>>>>>>> origin
         ) {
             // Named range?
             $namedRange = $this->validateNamedRange($coordinate, true);
@@ -1728,7 +1772,11 @@ class Worksheet
             $range .= ":{$range}";
         }
 
+<<<<<<< HEAD
         if (preg_match('/^([A-Z]+)(\\d+):([A-Z]+)(\\d+)$/', $range, $matches) !== 1) {
+=======
+        if (!Preg::isMatch('/^([A-Z]+)(\d+):([A-Z]+)(\d+)$/', $range, $matches)) {
+>>>>>>> origin
             throw new Exception('Merge must be on a valid range of cells.');
         }
 
@@ -2053,10 +2101,17 @@ class Worksheet
      */
     protected function getTableIndexByName(string $name): ?int
     {
+<<<<<<< HEAD
         $name = Shared\StringHelper::strToUpper($name);
         foreach ($this->tableCollection as $index => $table) {
             /** @var Table $table */
             if (Shared\StringHelper::strToUpper($table->getName()) === $name) {
+=======
+        $name = StringHelper::strToUpper($name);
+        foreach ($this->tableCollection as $index => $table) {
+            /** @var Table $table */
+            if (StringHelper::strToUpper($table->getName()) === $name) {
+>>>>>>> origin
                 return $index;
             }
         }
@@ -2364,6 +2419,7 @@ class Worksheet
         if ($row < 1) {
             throw new Exception('Rows to be deleted should at least start from row 1.');
         }
+<<<<<<< HEAD
 
         $holdRowDimensions = $this->removeRowDimensions($row, $numberOfRows);
         $highestRow = $this->getHighestDataRow();
@@ -2445,6 +2501,185 @@ class Worksheet
         }
 
         $this->garbageCollect();
+=======
+        $startRow = $row;
+        $endRow = $startRow + $numberOfRows - 1;
+        $removeKeys = [];
+        $addKeys = [];
+        foreach ($this->mergeCells as $key => $value) {
+            if (
+                Preg::isMatch(
+                    '/^([a-z]{1,3})(\d+):([a-z]{1,3})(\d+)/i',
+                    $key,
+                    $matches
+                )
+            ) {
+                $startMergeInt = (int) $matches[2];
+                $endMergeInt = (int) $matches[4];
+                if ($startMergeInt >= $startRow) {
+                    if ($startMergeInt <= $endRow) {
+                        $removeKeys[] = $key;
+                    }
+                } elseif ($endMergeInt >= $startRow) {
+                    if ($endMergeInt <= $endRow) {
+                        $temp = $endMergeInt - 1;
+                        $removeKeys[] = $key;
+                        if ($temp !== $startMergeInt) {
+                            $temp3 = $matches[1] . $matches[2] . ':' . $matches[3] . $temp;
+                            $addKeys[] = $temp3;
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($removeKeys as $key) {
+            unset($this->mergeCells[$key]);
+        }
+        foreach ($addKeys as $key) {
+            $this->mergeCells[$key] = $key;
+        }
+
+        $holdRowDimensions = $this->removeRowDimensions($row, $numberOfRows);
+        $highestRow = $this->getHighestDataRow();
+        $removedRowsCounter = 0;
+
+        for ($r = 0; $r < $numberOfRows; ++$r) {
+            if ($row + $r <= $highestRow) {
+                $this->cellCollection->removeRow($row + $r);
+                ++$removedRowsCounter;
+            }
+        }
+
+        $objReferenceHelper = ReferenceHelper::getInstance();
+        $objReferenceHelper->insertNewBefore('A' . ($row + $numberOfRows), 0, -$numberOfRows, $this);
+        for ($r = 0; $r < $removedRowsCounter; ++$r) {
+            $this->cellCollection->removeRow($highestRow);
+            --$highestRow;
+        }
+
+        $this->rowDimensions = $holdRowDimensions;
+>>>>>>> origin
+
+        return $this;
+    }
+
+<<<<<<< HEAD
+    private function removeColumnDimensions(int $pColumnIndex, int $numberOfColumns): array
+    {
+        $highCol = $pColumnIndex + $numberOfColumns - 1;
+        $holdColumnDimensions = [];
+        foreach ($this->columnDimensions as $columnDimension) {
+            $num = $columnDimension->getColumnNumeric();
+            if ($num < $pColumnIndex) {
+                $str = $columnDimension->getColumnIndex();
+                $holdColumnDimensions[$str] = $columnDimension;
+            } elseif ($num > $highCol) {
+                $cloneDimension = clone $columnDimension;
+                $cloneDimension->setColumnNumeric($num - $numberOfColumns);
+                $str = $cloneDimension->getColumnIndex();
+                $holdColumnDimensions[$str] = $cloneDimension;
+            }
+        }
+
+        return $holdColumnDimensions;
+=======
+    private function removeRowDimensions(int $row, int $numberOfRows): array
+    {
+        $highRow = $row + $numberOfRows - 1;
+        $holdRowDimensions = [];
+        foreach ($this->rowDimensions as $rowDimension) {
+            $num = $rowDimension->getRowIndex();
+            if ($num < $row) {
+                $holdRowDimensions[$num] = $rowDimension;
+            } elseif ($num > $highRow) {
+                $num -= $numberOfRows;
+                $cloneDimension = clone $rowDimension;
+                $cloneDimension->setRowIndex($num);
+                $holdRowDimensions[$num] = $cloneDimension;
+            }
+        }
+
+        return $holdRowDimensions;
+>>>>>>> origin
+    }
+
+    /**
+     * Remove a column, updating all possible related data.
+     *
+<<<<<<< HEAD
+=======
+     * @param string $column Remove columns starting with this column name, eg: 'A'
+     * @param int $numberOfColumns Number of columns to remove
+     *
+     * @return $this
+     */
+    public function removeColumn(string $column, int $numberOfColumns = 1): static
+    {
+        if (is_numeric($column)) {
+            throw new Exception('Column references should not be numeric.');
+        }
+        $startColumnInt = Coordinate::columnIndexFromString($column);
+        $endColumnInt = $startColumnInt + $numberOfColumns - 1;
+        $removeKeys = [];
+        $addKeys = [];
+        foreach ($this->mergeCells as $key => $value) {
+            if (
+                Preg::isMatch(
+                    '/^([a-z]{1,3})(\d+):([a-z]{1,3})(\d+)/i',
+                    $key,
+                    $matches
+                )
+            ) {
+                $startMergeInt = Coordinate::columnIndexFromString($matches[1]);
+                $endMergeInt = Coordinate::columnIndexFromString($matches[3]);
+                if ($startMergeInt >= $startColumnInt) {
+                    if ($startMergeInt <= $endColumnInt) {
+                        $removeKeys[] = $key;
+                    }
+                } elseif ($endMergeInt >= $startColumnInt) {
+                    if ($endMergeInt <= $endColumnInt) {
+                        $temp = Coordinate::columnIndexFromString($matches[3]) - 1;
+                        $temp2 = Coordinate::stringFromColumnIndex($temp);
+                        $removeKeys[] = $key;
+                        if ($temp2 !== $matches[1]) {
+                            $temp3 = $matches[1] . $matches[2] . ':' . $temp2 . $matches[4];
+                            $addKeys[] = $temp3;
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($removeKeys as $key) {
+            unset($this->mergeCells[$key]);
+        }
+        foreach ($addKeys as $key) {
+            $this->mergeCells[$key] = $key;
+        }
+
+        $highestColumn = $this->getHighestDataColumn();
+        $highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+        $pColumnIndex = Coordinate::columnIndexFromString($column);
+
+        $holdColumnDimensions = $this->removeColumnDimensions($pColumnIndex, $numberOfColumns);
+
+        $column = Coordinate::stringFromColumnIndex($pColumnIndex + $numberOfColumns);
+        $objReferenceHelper = ReferenceHelper::getInstance();
+        $objReferenceHelper->insertNewBefore($column . '1', -$numberOfColumns, 0, $this);
+
+        $this->columnDimensions = $holdColumnDimensions;
+
+        if ($pColumnIndex > $highestColumnIndex) {
+            return $this;
+        }
+
+        $maxPossibleColumnsToBeRemoved = $highestColumnIndex - $pColumnIndex + 1;
+
+        for ($c = 0, $n = min($maxPossibleColumnsToBeRemoved, $numberOfColumns); $c < $n; ++$c) {
+            $this->cellCollection->removeColumn($highestColumn);
+            $highestColumn = Coordinate::stringFromColumnIndex(Coordinate::columnIndexFromString($highestColumn) - 1);
+        }
+
+        $this->garbageCollect();
 
         return $this;
     }
@@ -2472,6 +2707,7 @@ class Worksheet
     /**
      * Remove a column, updating all possible related data.
      *
+>>>>>>> origin
      * @param int $columnIndex Remove starting with this column Index (numeric column coordinate)
      * @param int $numColumns Number of columns to remove
      *
@@ -2807,7 +3043,11 @@ class Worksheet
                         // Set cell value
                         $this->getCell($currentColumn . $startRow)->setValue($cellValue);
                     }
+<<<<<<< HEAD
                     ++$currentColumn;
+=======
+                    StringHelper::stringIncrement($currentColumn);
+>>>>>>> origin
                 }
                 ++$startRow;
             }
@@ -2819,7 +3059,11 @@ class Worksheet
                         // Set cell value
                         $this->getCell($currentColumn . $startRow)->setValue($cellValue);
                     }
+<<<<<<< HEAD
                     ++$currentColumn;
+=======
+                    StringHelper::stringIncrement($currentColumn);
+>>>>>>> origin
                 }
                 ++$startRow;
             }
@@ -2923,7 +3167,11 @@ class Worksheet
         $minColInt = $rangeStart[0];
         $maxColInt = $rangeEnd[0];
 
+<<<<<<< HEAD
         ++$maxCol;
+=======
+        StringHelper::stringIncrement($maxCol);
+>>>>>>> origin
         /** @var array<string, bool> */
         $hiddenColumns = [];
         $nullRow = $this->buildNullRow($nullValue, $minCol, $maxCol, $returnCellRef, $ignoreHidden, $hiddenColumns);
@@ -2996,7 +3244,11 @@ class Worksheet
     ): array {
         $nullRow = [];
         $c = -1;
+<<<<<<< HEAD
         for ($col = $minCol; $col !== $maxCol; ++$col) {
+=======
+        for ($col = $minCol; $col !== $maxCol; StringHelper::stringIncrement($col)) {
+>>>>>>> origin
             if ($ignoreHidden === true && $this->columnDimensionExists($col) && $this->getColumnDimension($col)->getVisible() === false) {
                 $hiddenColumns[$col] = true;
             } else {
@@ -3029,7 +3281,11 @@ class Worksheet
 
         if ($namedRange->getLocalOnly()) {
             $worksheet = $namedRange->getWorksheet();
+<<<<<<< HEAD
             if ($worksheet === null || $this->hash !== $worksheet->getHashInt()) {
+=======
+            if ($worksheet === null || $this !== $worksheet) {
+>>>>>>> origin
                 if ($returnNullIfInvalid) {
                     return null;
                 }
@@ -3540,19 +3796,33 @@ class Worksheet
                 if ($this->parent->sheetCodeNameExists($codeName)) {
                     // Use name, but append with lowest possible integer
 
+<<<<<<< HEAD
                     if (Shared\StringHelper::countCharacters($codeName) > 29) {
                         $codeName = Shared\StringHelper::substring($codeName, 0, 29);
+=======
+                    if (StringHelper::countCharacters($codeName) > 29) {
+                        $codeName = StringHelper::substring($codeName, 0, 29);
+>>>>>>> origin
                     }
                     $i = 1;
                     while ($this->getParentOrThrow()->sheetCodeNameExists($codeName . '_' . $i)) {
                         ++$i;
                         if ($i == 10) {
+<<<<<<< HEAD
                             if (Shared\StringHelper::countCharacters($codeName) > 28) {
                                 $codeName = Shared\StringHelper::substring($codeName, 0, 28);
                             }
                         } elseif ($i == 100) {
                             if (Shared\StringHelper::countCharacters($codeName) > 27) {
                                 $codeName = Shared\StringHelper::substring($codeName, 0, 27);
+=======
+                            if (StringHelper::countCharacters($codeName) > 28) {
+                                $codeName = StringHelper::substring($codeName, 0, 28);
+                            }
+                        } elseif ($i == 100) {
+                            if (StringHelper::countCharacters($codeName) > 27) {
+                                $codeName = StringHelper::substring($codeName, 0, 27);
+>>>>>>> origin
                             }
                         }
                     }
@@ -3585,7 +3855,11 @@ class Worksheet
 
     public static function nameRequiresQuotes(string $sheetName): bool
     {
+<<<<<<< HEAD
         return preg_match(self::SHEET_NAME_REQUIRES_NO_QUOTES, $sheetName) !== 1;
+=======
+        return !Preg::isMatch(self::SHEET_NAME_REQUIRES_NO_QUOTES, $sheetName);
+>>>>>>> origin
     }
 
     public function isRowVisible(int $row): bool
@@ -3717,7 +3991,11 @@ class Worksheet
             $keys = $this->cellCollection->getCoordinates();
             foreach ($keys as $key) {
                 if ($this->getCell($key)->getDataType() === DataType::TYPE_FORMULA) {
+<<<<<<< HEAD
                     if (preg_match(self::FUNCTION_LIKE_GROUPBY, $this->getCell($key)->getValue()) !== 1) {
+=======
+                    if (!Preg::isMatch(self::FUNCTION_LIKE_GROUPBY, $this->getCell($key)->getValue())) {
+>>>>>>> origin
                         $this->getCell($key)->getCalculatedValue();
                     }
                 }

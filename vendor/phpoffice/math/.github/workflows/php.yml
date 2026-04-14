@@ -45,6 +45,10 @@ jobs:
             - '8.1'
             - '8.2'
             - '8.3'
+<<<<<<< HEAD
+=======
+            - '8.4'
+>>>>>>> origin
     steps:
         -   name: Setup PHP
             uses: shivammathur/setup-php@v2
@@ -75,6 +79,10 @@ jobs:
             - '8.1'
             - '8.2'
             - '8.3'
+<<<<<<< HEAD
+=======
+            - '8.4'
+>>>>>>> origin
     steps:
       -   name: Setup PHP
           uses: shivammathur/setup-php@v2

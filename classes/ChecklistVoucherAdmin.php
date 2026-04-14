@@ -118,6 +118,7 @@ class ChecklistVoucherAdmin extends Manager {
 				$this->clName = 'Unknown';
 			}
 			$result->free();
+<<<<<<< HEAD
 			//Get children checklists
 			$sqlChildBase = 'SELECT clidchild FROM fmchklstchildren WHERE clid != clidchild AND clid IN(';
 			$sqlChild = $sqlChildBase.$this->clid.')';
@@ -130,6 +131,8 @@ class ChecklistVoucherAdmin extends Manager {
 				}
 				$sqlChild = $sqlChildBase.substr($childStr,1).')';
 			}while($childStr);
+=======
+>>>>>>> origin
 		}
 	}
 
@@ -201,6 +204,10 @@ class ChecklistVoucherAdmin extends Manager {
 	}
 
 	public function getQueryVariableArr(){
+<<<<<<< HEAD
+=======
+		if(!$this->queryVariablesArr) $this->setCollectionVariables();
+>>>>>>> origin
 		return $this->queryVariablesArr;
 	}
 
@@ -434,6 +441,7 @@ class ChecklistVoucherAdmin extends Manager {
 		}
 	}
 
+<<<<<<< HEAD
 	//Checklist Coordinate functions
 	public function addExternalVouchers($tid, $dataAsJson){
 		// EG suggested storing external (e.g., iNaturalist) voucher records in the `fmchklstcoordinates` table as this table
@@ -454,6 +462,74 @@ class ChecklistVoucherAdmin extends Manager {
 			unset($inputData[0]['taxon']);
 			$inputArr = array('tid' => $tid, 'decimalLatitude' => $lat, 'decimalLongitude' => $lng, 'sourceName' => 'EXTERNAL_VOUCHER',
 				'sourceIdentifier' => $sourceIdentifier, 'referenceUrl' => $referenceUrl, 'dynamicProperties' => json_encode($inputData));
+=======
+	/* Checklist Coordinate functions
+	*  @param Int $tid Internal taxonomic id
+	*  @param Array $vouchers Json structure expected [ { lat, lng, id, user, date, repository }... ]
+	*  @return Bool
+	*/
+	public function addExternalVouchers($tid, $vouchers): Bool {
+		// EG suggested storing external (e.g., iNaturalist) voucher records in the `fmchklstcoordinates` table as this table
+		//   was un- or under-used as of schema 3.0. The `notes` column serves as a flag for these vouchers. --CDT 2023-08-21
+		$status = false;
+		if(!is_numeric($tid)) {
+			return $status;
+		}
+
+		foreach($vouchers as $dataAsJson) {
+			// TODO (Logan) Resolve this issue BEFORE PR
+			// for single vouchers, add ll, for multiple use zero :(.
+			// we could try averaging ll for multiples, but then the software would be introducing non-real data, which is bad.
+			// not that zero/zero is real data either... CDT 8/2023
+
+			if(!is_numeric($dataAsJson['lat']) || !is_numeric($dataAsJson['lng'])) {
+				continue;
+			}
+
+			$inputArr = [
+				'tid' => $tid,
+				'decimalLatitude' => $dataAsJson['lng'],
+				'decimalLongitude' => $dataAsJson['lat'],
+				'sourceName' => 'EXTERNAL_VOUCHER',
+				'sourceIdentifier' => $dataAsJson['id'],
+				'referenceUrl' => null,
+			];
+
+			if($dataAsJson['repository'] === 'iNat') {
+				$referenceUrl = 'https://www.inaturalist.org/observations/' . $dataAsJson['id'];
+			}
+
+			unset($dataAsJson['lat']);
+			unset($dataAsJson['lng']);
+			unset($dataAsJson['taxon']);
+
+			$inputArr['dynamicProperties'] = json_encode($dataAsJson);
+
+			$inventoryManager = new ImInventories();
+			$inventoryManager->setClid($this->clid);
+			if($inventoryManager->insertChecklistCoordinates($inputArr)) {
+				$status = true;
+			} else{
+				// TODO (Logan) BEFORE PR aggregate errors
+				$errStr = $inventoryManager->getErrorMessage();
+				if(strpos($errStr, 'Duplicate') !== false) $errStr = 'Voucher already linked!';
+				$this->errorMessage = $errStr;
+			}
+		}
+
+		/*
+		// for single vouchers, add ll, for multiple use zero :(.
+		// we could try averaging ll for multiples, but then the software would be introducing non-real data, which is bad.
+		// not that zero/zero is real data either... CDT 8/2023
+		$lat = (count($dataAsJson) == 1 ? $dataAsJson[0]['lat'] : 0);
+		$lng = (count($dataAsJson) == 1 ? $dataAsJson[0]['lng'] : 0);
+		$sourceIdentifier = $dataAsJson[0]['id'];
+		$referenceUrl = null;
+		if($sourceIdentifier) $referenceUrl = 'https://www.inaturalist.org/observations/'.$sourceIdentifier;
+		if(is_numeric($tid) && $lat && $lng){
+			$inputArr = array('tid' => $tid, 'decimalLatitude' => $lat, 'decimalLongitude' => $lng, 'sourceName' => 'EXTERNAL_VOUCHER',
+				'sourceIdentifier' => $sourceIdentifier, 'referenceUrl' => $referenceUrl, 'dynamicProperties' => json_encode($dataAsJson));
+>>>>>>> origin
 			$inventoryManager = new ImInventories();
 			$inventoryManager->setClid($this->clid);
 			if($inventoryManager->insertChecklistCoordinates($inputArr)){
@@ -464,7 +540,11 @@ class ChecklistVoucherAdmin extends Manager {
 				if(strpos($errStr, 'Duplicate') !== false) $errStr = 'Voucher already linked!';
 				$this->errorMessage = $errStr;
 			}
+<<<<<<< HEAD
 		}
+=======
+		}*/
+>>>>>>> origin
 		return $status;
 	}
 

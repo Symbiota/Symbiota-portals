@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -23,6 +24,10 @@ use PhpOffice\PhpWord\Element\Comment;
  * Comments collection.
  *
  * @since 0.12.0
+<<<<<<< HEAD
+=======
+ *
+>>>>>>> origin
  * @extends AbstractCollection<Comment>
  */
 class Comments extends AbstractCollection

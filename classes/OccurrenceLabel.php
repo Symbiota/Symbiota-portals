@@ -147,6 +147,7 @@ class OccurrenceLabel {
 	public function getLabelArray($occidArr, $speciesAuthors = false) {
 		$retArr = array();
 		if ($occidArr) {
+<<<<<<< HEAD
 			$authorArr = array();
 			$occidStr = implode(',', $occidArr);
 			if (!preg_match('/^[,\d]+$/', $occidStr)) return null;
@@ -176,8 +177,402 @@ class OccurrenceLabel {
 					if (array_key_exists($occid, $authorArr)) {
 						$retArr[$occid]['parentauthor'] = $authorArr[$occid];
 					}
+=======
+			$occidStr = implode(',', $occidArr);
+			if (!preg_match('/^[,\d]+$/', $occidStr)) return null;
+			$tidArr = array();
+			$parentAuthorArr = array();
+
+			//Get occurrence records
+			$this->setLabelFieldArr();
+			$sql = 'SELECT ' . implode(',', $this->labelFieldArr) . ', t.rankid
+				FROM omoccurrences o LEFT JOIN taxa t ON o.tidinterpreted = t.tid
+				WHERE (o.occid IN(' . $occidStr . ')) ';
+			if($rs = $this->conn->query($sql)){
+				while($r = $rs->fetch_assoc()){
+					$occid = $r['occid'];
+					foreach ($r as $fieldName => $fieldValue) {
+						if($fieldName != 'rankid'){
+							$retArr[$occid][strtolower($fieldName)] = $fieldValue ?? '';
+						}
+					}
+					if($speciesAuthors){
+						if ($r['rankid'] && $r['rankid'] > 220) {
+							//Keep track of the taxa we want to include parent names
+							$parentAuthorArr[$r['tidInterpreted']][] = $occid;
+						}
+					}
+					if($r['tidInterpreted']) $tidArr[$r['tidInterpreted']] = $r['tidInterpreted'];
+>>>>>>> origin
 				}
-				$rs2->free();
+				$rs->free();
+			}
+			$this->appendParentAuthors($retArr, $parentAuthorArr);
+			$this->appendIdentifiers($retArr);
+			$this->appendTaxonomy($retArr, $tidArr);
+		}
+		return $retArr;
+	}
+
+	private function appendParentAuthors(&$labelArr, $parentAuthorArr){
+		//Append parent authors for infraspecific taxa only
+		if($parentAuthorArr){
+			$tidStr = implode(',', array_keys($parentAuthorArr));
+			$sql = 'SELECT ts.tid, p.author
+				FROM taxa p INNER JOIN taxstatus ts ON p.tid = ts.parentTid
+				WHERE (ts.tid IN(' . $tidStr . ')) AND (p.rankid = 220) AND (ts.taxauthid = 1) AND (p.author IS NOT NULL) ';
+			if ($rs = $this->conn->query($sql)) {
+				while ($r = $rs->fetch_object()) {
+					if(array_key_exists($r->tid, $parentAuthorArr)){
+						foreach($parentAuthorArr[$r->tid] as $occid){
+							$labelArr[$occid]['parentauthor'] = $r->author;
+							$labelArr[$occid]['scientificname_with_author'] = trim($labelArr[$occid]['speciesname'] . ' ' . trim($labelArr[$occid]['parentauthor'] . ' ' . $labelArr[$occid]['taxonrank']) . ' ' . $labelArr[$occid]['infraspecificepithet'] . ' ' . $labelArr[$occid]['scientificnameauthorship']);
+						}
+					}
+				}
+				$rs->free();
+			}
+		}
+	}
+
+	private function appendIdentifiers(&$labelArr){
+		//Append identifiers indexed within omoccurridentifier
+		if ($labelArr) {
+			$sql = 'SELECT occid, identifiername, identifiervalue FROM omoccuridentifiers WHERE occid IN(' . implode(',', array_keys($labelArr)) . ') ORDER BY sortBy';
+			if ($rs = $this->conn->query($sql)) {
+				$otherCatArr = array();
+				$cnt = 0;
+				while ($r = $rs->fetch_object()) {
+					$otherCatArr[$r->occid][$cnt]['v'] = $r->identifiervalue;
+					$otherCatArr[$r->occid][$cnt]['n'] = $r->identifiername ?? '';
+					$cnt++;
+				}
+				$rs->free();
+				foreach ($otherCatArr as $occid => $ocnArr) {
+					$verbIdStr = '';
+					if(!empty($labelArr[$occid]['othercatalognumbers'])) $verbIdStr = $labelArr[$occid]['othercatalognumbers'];
+					$ocnStr = '';
+					foreach ($ocnArr as $idArr) {
+						$ocnStr .= '; ' . ($idArr['n'] ? $idArr['n'] . ': ' : '') . $idArr['v'];
+						$verbIdStr = str_ireplace($idArr['n'], '', $verbIdStr);
+						$verbIdStr = str_ireplace($idArr['v'], '', $verbIdStr);
+					}
+					$ocnStr = trim($ocnStr, ';,: ');
+					$verbIdStr = trim($verbIdStr, ';,: ');
+					if ($verbIdStr) $ocnStr = $ocnStr . '; ' . $verbIdStr;
+					$labelArr[$occid]['othercatalognumbers'] = $ocnStr;
+				}
+			}
+		}
+	}
+
+	private function appendTaxonomy(&$labelArr, $tidArr){
+		if($tidArr){
+			$taxonArr = array();
+			$parentArr = array(30 => 'phylum', 60 => 'class', 70 => 'subclass', 100 => 'order', 150 => 'subfamily');
+			//Extract higher taxonomy from database
+			foreach($parentArr as $rankID => $rankName){
+				$sql = 'SELECT e.tid, p.sciname
+					FROM taxaenumtree e INNER JOIN taxa p ON e.parentTid = p.tid
+					WHERE e.tid IN(' . implode(',', $tidArr) . ') AND e.taxAuthID = 1 AND p.rankid = ' . $rankID;
+				if ($rs = $this->conn->query($sql)) {
+					while ($r = $rs->fetch_object()) {
+						$taxonArr[$r->tid][$rankName] = $r->sciname;
+					}
+					$rs->free();
+				}
+			}
+			if($taxonArr){
+				//Insert higher taxonomy into label output array
+				foreach($labelArr as $occid => $occurArr){
+					if($occurArr['tidinterpreted']){
+						$tid = $occurArr['tidinterpreted'];
+						if(!empty($taxonArr[$tid])){
+							foreach($taxonArr[$tid] as $rankName => $sciname){
+								$labelArr[$occid][$rankName] = $sciname;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public function exportLabelCsvFile($postArr) {
+		global $CHARSET;
+		$occidArr = $postArr['occid'];
+		if ($occidArr) {
+			$speciesAuthors = 0;
+			if (array_key_exists('speciesauthors', $postArr) && $postArr['speciesauthors']) $speciesAuthors = 1;
+			$labelArr = $this->getLabelArray($occidArr, $speciesAuthors);
+			if ($labelArr) {
+				$fileName = 'labeloutput_' . time() . ".csv";
+				ob_start();
+				ob_clean();
+				ob_end_flush();
+				header('Content-Description: Symbiota Label Output File');
+				header('Content-Type: text/csv');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Transfer-Encoding: ' . strtoupper($CHARSET));
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Pragma: public');
+
+				$fh = fopen('php://output', 'w');
+				$this->setLabelFieldArr();
+				$headerArr = array_diff(array_keys($this->labelFieldArr), array('collid', 'duplicateQuantity', 'dateLastModified'));
+				fputcsv($fh, $headerArr);
+				//change header value to lower case
+				$headerLcArr = array();
+				foreach ($headerArr as $k => $v) {
+					$headerLcArr[strtolower($v)] = $k;
+				}
+				//Output records
+				foreach ($labelArr as $occid => $occArr) {
+					$dupCnt = $postArr['q-' . $occid];
+					for ($i = 0; $i < $dupCnt; $i++) {
+						fputcsv($fh, array_intersect_key($occArr, $headerLcArr));
+					}
+				}
+				fclose($fh);
+			} else {
+				echo "Recordset is empty.\n";
+			}
+		}
+	}
+
+	private function setLabelFieldArr() {
+		if (!$this->labelFieldArr) {
+			$this->labelFieldArr = array(
+				'occid' => 'o.occid',
+				'collid' => 'o.collid',
+				'catalogNumber' => 'o.catalognumber',
+				'otherCatalogNumbers' => 'o.othercatalognumbers',
+				'scientificName' => 'o.sciname AS scientificname',
+				'scientificName_with_author' => 'CONCAT_WS(" ",o.sciname,o.scientificnameauthorship) AS scientificname_with_author',
+				'tidInterpreted' => 'o.tidInterpreted',
+				'genus'=>'t.unitName1 AS genus',
+				'speciesName' => 'TRIM(CONCAT_WS(" ",t.unitind1,t.unitname1,t.unitind2,t.unitname2)) AS speciesname',
+				'specificepithet'=>'t.unitname2 AS specificepithet',
+				'taxonRank' => 't.unitind3 AS taxonrank',
+				'infraSpecificEpithet'=>'t.unitname3 AS infraspecificepithet',
+				'scientificNameAuthorship'=>'o.scientificnameauthorship',
+				'parentAuthor'=>'"" AS parentauthor',
+				'kingdom' => 't.kingdomName as kingdom',
+				'phylum' => '"" as phylum',
+				'class' => '"" as `class`',
+				'subclass' => '"" as subclass',
+				'order' => '"" as `order`',
+				'family' => 'o.family',
+				'subfamily' => '"" as subfamily',
+				'identifiedBy'=>'o.identifiedby',
+				'dateIdentified' => 'o.dateidentified',
+				'identificationReferences' => 'o.identificationreferences',
+				'identificationRemarks' => 'o.identificationremarks',
+				'taxonRemarks' => 'o.taxonremarks',
+				'identificationQualifier' => 'o.identificationqualifier',
+				'typeStatus' => 'o.typestatus',
+				'recordedBy'=>'o.recordedby',
+				'recordNumber'=>'o.recordnumber',
+				'associatedCollectors' => 'o.associatedcollectors',
+				'eventDate' => 'DATE_FORMAT(o.eventdate,"%e %M %Y") AS eventdate',
+				'year' => 'o.year',
+				'month' => 'o.month',
+				'day' => 'o.day',
+				'monthName' => 'DATE_FORMAT(o.eventdate,"%M") AS monthname',
+				'verbatimEventDate' => 'o.verbatimeventdate',
+				'fieldnumber'=>'o.fieldnumber',
+				'habitat' => 'o.habitat',
+				'substrate' => 'o.substrate',
+				'occurrenceRemarks' => 'o.occurrenceremarks',
+				'associatedTaxa' => 'o.associatedtaxa',
+				'dynamicProperties' => 'o.dynamicproperties',
+				'verbatimAttributes'=>'o.verbatimattributes',
+				'behavior' => 'behavior',
+				'reproductiveCondition' => 'o.reproductivecondition',
+				'cultivationStatus' => 'o.cultivationstatus',
+				'establishmentMeans' => 'o.establishmentmeans',
+				'lifeStage' => 'lifestage',
+				'sex' => 'sex',
+				'individualCount' => 'individualcount',
+				'samplingProtocol' => 'samplingprotocol',
+				'preparations' => 'preparations',
+				'country' => 'o.country',
+				'stateProvince' => 'o.stateprovince',
+				'county' => 'o.county',
+				'municipality' => 'o.municipality',
+				'locality' => 'o.locality',
+				'decimalLatitude' => 'o.decimallatitude',
+				'decimalLongitude' => 'o.decimallongitude',
+				'geodeticDatum' => 'o.geodeticdatum',
+				'coordinateUncertaintyInMeters' => 'o.coordinateuncertaintyinmeters',
+				'verbatimCoordinates' => 'o.verbatimcoordinates',
+				'minimumElevationInMeters' => 'o.minimumelevationinmeters',
+				'maximumElevationInMeters' => 'o.maximumelevationinmeters',
+				'elevationInMeters' => 'CONCAT_WS(" - ",o.minimumElevationInMeters,o.maximumElevationInMeters) AS elevationinmeters',
+				'verbatimElevation' => 'o.verbatimelevation',
+				'minimumDepthInMeters' => 'minimumdepthinmeters',
+				'maximumDepthInMeters' => 'maximumdepthinmeters',
+				'verbatimDepth' => 'verbatimdepth',
+				'disposition' => 'o.disposition',
+				'storageLocation' => 'storagelocation',
+				'duplicateQuantity' => 'o.duplicatequantity',
+				'dateLastModified' => 'o.datelastmodified',
+				'labelProject' => 'o.labelproject'
+			);
+		}
+	}
+
+	public function getLabelBlock($blockArr, $occArr) {
+		$outStr = '';
+		foreach ($blockArr as $bArr) {
+			if (array_key_exists('divBlock', $bArr)) {
+				$outStr .= $this->getDivBlock($bArr['divBlock'], $occArr);
+			} elseif (array_key_exists('fieldBlock', $bArr)) {
+				$delimiter = (isset($bArr['delimiter']) ? $bArr['delimiter'] : '');
+				$cnt = 0;
+				$fieldDivStr = '';
+				foreach ($bArr['fieldBlock'] as $fieldArr) {
+					$fieldName = strtolower($fieldArr['field']);
+					$fieldValue = trim($occArr[$fieldName] ?? '');
+					if ($fieldValue) {
+						if ($delimiter && $cnt) $fieldDivStr .= $delimiter;
+						$fieldDivStr .= '<span class="' . $fieldName . (isset($fieldArr['className']) ? ' ' . $fieldArr['className'] : '') . '" ' . (isset($fieldArr['style']) ? 'style="' . $fieldArr['style'] . '"' : '') . '>';
+						if (isset($fieldArr['prefix']) && $fieldArr['prefix']) {
+							$fieldDivStr .= '<span class="' . $fieldName . 'Prefix"' . (isset($fieldArr['prefixStyle']) ? ' style="' . $fieldArr['prefixStyle'] . '"' : '') . '>' . $fieldArr['prefix'] . '</span>';
+						}
+						$fieldDivStr .= $fieldValue;
+						if (isset($fieldArr['suffix']) && $fieldArr['suffix']) {
+							$fieldDivStr .= '<span class="' . $fieldName . 'Suffix"' . (isset($fieldArr['suffixStyle']) ? ' style="' . $fieldArr['suffixStyle'] . '"' : '') . '>' . $fieldArr['suffix'] . '</span>';
+						}
+						$fieldDivStr .= '</span>';
+						$cnt++;
+					}
+				}
+				if ($fieldDivStr) $outStr .= '<div class="field-block' . (isset($bArr['className']) ? ' ' . $bArr['className'] : '') . '"' . (isset($bArr['style']) ? ' style="' . $bArr['style'] . '"' : '') . '>' . $fieldDivStr . '</div>';
+			}
+		}
+		return $outStr;
+	}
+
+	private function getDivBlock($divArr, $occArr) {
+		$contentStr = '';
+		if (array_key_exists('blocks', $divArr)) $contentStr = $this->getLabelBlock($divArr['blocks'], $occArr);
+		elseif (array_key_exists('content', $divArr)) $contentStr = $divArr['content'];
+		if ($contentStr) {
+			$attrStr = '';
+			if (isset($divArr['className'])) $attrStr .= 'class="' . $divArr['className'] . '"';
+			if (isset($divArr['style']) && $divArr['style']) $attrStr .= 'style="' . $divArr['style'] . '"';
+			return '<div ' . trim($attrStr) . '>' . $contentStr . '</div>' . "\n";
+		}
+		return '';
+	}
+
+	private function fetchGlobalLabelJson() {
+		$status = false;
+		$sql = 'SELECT dynamicProperties FROM adminproperties WHERE propName = ?';
+		if ($stmt = $this->conn->prepare($sql)) {
+			$propName = 'LabelFormatJson';
+			$stmt->bind_param('s', $propName);
+			$stmt->execute();
+			$stmt->bind_result($jsonResult);
+			$stmt->fetch();
+			$stmt->close();
+			if (empty($jsonResult)) $jsonResult = $this->setDefaultLabelFormat();
+			return $jsonResult;
+		}
+		return $status;
+	}
+
+	public function getLabelFormatByID($labelCat, $labelIndex) {
+		if (is_numeric($labelIndex)) {
+			if ($labelCat == 'global') {
+				if ($jsonData = $this->fetchGlobalLabelJson()) {
+					if ($labelFormatArr = json_decode($jsonData, true)) {
+						if (isset($labelFormatArr['labelFormats'][$labelIndex])) {
+							return $labelFormatArr['labelFormats'][$labelIndex];
+						} else $this->errorArr[] = 'ERROR returning global format: index does not exist';
+					} else $this->errorArr[] = 'ERROR returning global format: issue parsing JSON string';
+				} else $this->errorArr[] = 'ERROR returning global format: lable JSON does not exist.';
+				return false;
+			} elseif ($labelCat == 'coll') {
+				if ($this->collArr['dynprops']) {
+					if ($dymPropArr = json_decode($this->collArr['dynprops'], true)) {
+						if (isset($dymPropArr['labelFormats'][$labelIndex])) {
+							return $dymPropArr['labelFormats'][$labelIndex];
+						} else $this->errorArr[] = 'ERROR returning collection format: labelFormats or index does not exist';
+					} else $this->errorArr[] = 'ERROR returning collection format: issue parsing JSON string';
+				} else $this->errorArr[] = 'ERROR returning collection format: dynamicProperties not defined';
+			} elseif ($labelCat == 'user') {
+				$dynPropStr = '';
+				$sql = 'SELECT dynamicProperties FROM users WHERE uid = ' . $GLOBALS['SYMB_UID'];
+				$rs = $this->conn->query($sql);
+				if ($r = $rs->fetch_object()) {
+					$dynPropStr = $r->dynamicProperties;
+				}
+				$rs->free();
+				if ($dynPropStr) {
+					if ($dymPropArr = json_decode($dynPropStr, true)) {
+						if (isset($dymPropArr['labelFormats'][$labelIndex])) {
+							return $dymPropArr['labelFormats'][$labelIndex];
+						} else $this->errorArr[] = 'ERROR returning user format: labelFormats or index does not exist';
+					} else $this->errorArr[] = 'ERROR returning user format: issue parsing JSON string';
+				} else $this->errorArr[] = 'ERROR returning user format: dynamicProperties not defined';
+			}
+		}
+		return false;
+	}
+
+	public function getLabelFormatArr($annotated = false) {
+		$retArr = array();
+		if ($GLOBALS['SYMB_UID']) {
+			if (!$jsonData = $this->fetchGlobalLabelJson()) {
+				$jsonData = $this->setDefaultLabelFormat();
+			}
+			if (!empty($jsonData)) {
+				if ($globalFormatArr = json_decode($jsonData, true)) {
+					if ($annotated) {
+						if (isset($globalFormatArr['labelFormats'])) {
+							foreach ($globalFormatArr['labelFormats'] as $k => $labelObj) {
+								unset($labelObj['labelFormats']);
+								$retArr['g'][$k] = $labelObj;
+							}
+						}
+					} else $retArr['g'] = $globalFormatArr['labelFormats'];
+				}
+			} else $retArr['g'] = array('labelFormats' => array());
+			//Add collection defined label formats
+			if ($this->collid) {
+				$collFormatArr = json_decode($this->collArr['dynprops'] ?? '[]', true);
+				if ($annotated) {
+					if (isset($collFormatArr['labelFormats'])) {
+						foreach ($collFormatArr['labelFormats'] as $k => $labelObj) {
+							unset($labelObj['labelBlocks']);
+							$retArr['c'][$k] = $labelObj;
+						}
+					}
+				} elseif (isset($collFormatArr['labelFormats'])) $retArr['c'] = $collFormatArr['labelFormats'];
+				else $retArr['c'] = array();
+			}
+			//Add label formats associated with user profile
+			$sql = 'SELECT dynamicProperties FROM users WHERE uid = ' . $GLOBALS['SYMB_UID'];
+			$rs = $this->conn->query($sql);
+			if ($rs) {
+				$dynPropStr = '';
+				if ($r = $rs->fetch_object()) {
+					$dynPropStr = $r->dynamicProperties;
+				}
+				$rs->free();
+				$dynPropArr = json_decode($dynPropStr  ?? '', true);
+				if ($annotated) {
+					if (isset($dynPropArr['labelFormats'])) {
+						foreach ($dynPropArr['labelFormats'] as $k => $labelObj) {
+							unset($labelObj['labelBlocks']);
+							$retArr['u'][$k] = $labelObj;
+						}
+					}
+				} elseif (isset($dynPropArr['labelFormats'])) $retArr['u'] = $dynPropArr['labelFormats'];
+				else $retArr['u'] = array();
 			}
 			//Append identifiers indexed within omoccurridentifier
 			if ($retArr) {
@@ -210,6 +605,7 @@ class OccurrenceLabel {
 		return $retArr;
 	}
 
+<<<<<<< HEAD
 	public function exportLabelCsvFile($postArr) {
 		global $CHARSET;
 		$occidArr = $postArr['occid'];
@@ -387,10 +783,34 @@ class OccurrenceLabel {
 			$stmt->close();
 			if (empty($jsonResult)) $jsonResult = $this->setDefaultLabelFormat();
 			return $jsonResult;
+=======
+	private function setDefaultLabelFormat() {
+		$status = false;
+		$jsonFileContents = '';
+		$oldFile = $GLOBALS['SERVER_ROOT'] . '/content/collections/reports/label.json';
+		$defaultFile = $GLOBALS['SERVER_ROOT'] . '/content/collections/reports/labeldefault.json';
+		if (file_exists($oldFile)) {
+			//Sets default label format (global) to what was defined prior to v3.3.6 (e.g. portal manager coverted labeljson.php to label.json)
+			$jsonFileContents = file_get_contents($oldFile);
+		}
+		elseif(file_exists($defaultFile)){
+			$oldNotConvertedFile = $GLOBALS['SERVER_ROOT'] . '/content/collections/reports/labeljson.php';
+			if(!file_exists($oldNotConvertedFile)){
+				//Set default using labeldefault.json (portal is a new install or a v3.3.6 pre-defined format does not exist)
+				//A default format will not be defined if labeljson.php exists. In this case, portal managers needs to convert labeljson.php to label.json, or remove file.
+				$jsonFileContents = file_get_contents($defaultFile);
+			}
+		}
+		if($jsonFileContents){
+			$jsonFileContents = preg_replace('/\s\s+/', ' ',$jsonFileContents);
+			$this->saveGlobalJson($jsonFileContents, true);
+			return $this->fetchGlobalLabelJson();
+>>>>>>> origin
 		}
 		return $status;
 	}
 
+<<<<<<< HEAD
 	public function getLabelFormatByID($labelCat, $labelIndex) {
 		if (is_numeric($labelIndex)) {
 			if ($labelCat == 'global') {
@@ -729,6 +1149,226 @@ class OccurrenceLabel {
 	//Annotation functions
 	public function getAnnoArray($detidArr, $speciesAuthors) {
 		$retArr = array();
+=======
+	public function saveLabelJson($postArr) {
+		$status = true;
+		$group = $postArr['group'];
+		$labelIndex = '';
+		if (isset($postArr['index'])) $labelIndex = $postArr['index'];
+		if (is_numeric($labelIndex) || $labelIndex == '') {
+			if ($group == 'g') {
+				$globalFormatArr = array();
+				if ($jsonData = $this->fetchGlobalLabelJson()) {
+					$globalFormatArr = json_decode($jsonData, true);
+				}
+				$this->setLabelFormatAttributes($globalFormatArr, $labelIndex, $postArr);
+				$status = $this->saveGlobalJson($globalFormatArr);
+			} elseif ($group == 'c') {
+				if ($this->collid) {
+					$collFormatArr = array();
+					if ($this->collArr['dynprops']) $collFormatArr = json_decode($this->collArr['dynprops'], true);
+					$this->setLabelFormatAttributes($collFormatArr, $labelIndex, $postArr);
+					$status = $this->updateCollectionJson($collFormatArr);
+				} else {
+					$this->errorArr[] = 'ERROR saving label format to omcollections table: collid not set';
+					$status = false;
+				}
+			} elseif ($group == 'u') {
+				$sql = 'SELECT dynamicProperties FROM users WHERE uid = ' . $GLOBALS['SYMB_UID'];
+				$rs = $this->conn->query($sql);
+				if ($rs) {
+					$dynPropArr = array();
+					if ($r = $rs->fetch_object()) {
+						if ($r->dynamicProperties) $dynPropArr = json_decode($r->dynamicProperties, true);
+					}
+					$rs->free();
+					$this->setLabelFormatAttributes($dynPropArr, $labelIndex, $postArr);
+					$status = $this->updateUserJson($dynPropArr);
+				}
+			}
+		}
+		return $status;
+	}
+
+	private function setLabelFormatAttributes(&$labelFormatArr, $labelIndex, $postArr) {
+		$labelArr = array();
+		$labelArr['title'] = $postArr['title'];
+		$labelArr['labelHeader']['prefix'] = $postArr['hPrefix'];
+		if (isset($postArr['hMidText']) && is_numeric($postArr['hMidText'])) $labelArr['labelHeader']['midText'] = $postArr['hMidText'];
+		else $labelArr['labelHeader']['midText'] = "0";
+		$labelArr['labelHeader']['suffix'] = $postArr['hSuffix'];
+		$labelArr['labelHeader']['className'] = $postArr['hClassName'];
+		$labelArr['labelHeader']['style'] = $postArr['hStyle'];
+		$labelArr['labelFooter']['textValue'] = $postArr['fTextValue'];
+		$labelArr['labelFooter']['className'] = $postArr['fClassName'];
+		$labelArr['labelFooter']['style'] = $postArr['fStyle'];
+		$labelArr['customStyles'] = $postArr['customStyles'];
+		$labelArr['customCss'] = $postArr['customCss'];
+		$labelArr['customJS'] = $postArr['customJS'];
+		$labelArr['labelType'] = $postArr['labelType'];
+		$labelArr['pageSize'] = $postArr['pageSize'];
+		if (isset($postArr['displaySpeciesAuthor']) && $postArr['displaySpeciesAuthor']) $labelArr['displaySpeciesAuthor'] = 1;
+		else $labelArr['displaySpeciesAuthor'] = 0;
+		if (isset($postArr['displayBarcode']) && $postArr['displayBarcode']) $labelArr['displayBarcode'] = 1;
+		else $labelArr['displayBarcode'] = 0;
+		$labelArr['labelBlocks'] = json_decode($postArr['json'], true);
+		if (is_numeric($labelIndex)) $labelFormatArr['labelFormats'][$labelIndex] = $labelArr;
+		else $labelFormatArr['labelFormats'][] = $labelArr;
+	}
+
+	public function cloneLabelJson($postArr) {
+		$status = true;
+		$cloneTarget = $postArr['cloneTarget'];
+		$group = $postArr['group'];
+		$labelIndex = '';
+		if (isset($postArr['index'])) $labelIndex = $postArr['index'];
+		if (is_numeric($labelIndex) && $cloneTarget) {
+			//Grab source
+			$globalFormatArr = array();
+			$collFormatArr = array();
+			$dynPropArr = array();
+			$sourceLabelArr = array();
+			if ($group == 'g' || $cloneTarget == 'g') {
+				if ($jsonData = $this->fetchGlobalLabelJson()) {
+					$globalFormatArr = json_decode($jsonData, true);
+					if ($group == 'g') $sourceLabelArr = $globalFormatArr['labelFormats'][$labelIndex];
+				}
+			}
+			if ($group == 'c' || $cloneTarget == 'c') {
+				if ($this->collid) {
+					if ($this->collArr['dynprops']) $collFormatArr = json_decode($this->collArr['dynprops'], true);
+					if ($group == 'c') $sourceLabelArr = $collFormatArr['labelFormats'][$labelIndex];
+				} else {
+					$this->errorArr[] = 'ERROR cloning label format to omcollections table: collid not set';
+					$status = false;
+				}
+			}
+			if ($group == 'u' || $cloneTarget == 'u') {
+				$sql = 'SELECT dynamicProperties FROM users WHERE uid = ' . $GLOBALS['SYMB_UID'];
+				$rs = $this->conn->query($sql);
+				if ($rs) {
+					if ($r = $rs->fetch_object()) {
+						if ($r->dynamicProperties) $dynPropArr = json_decode($r->dynamicProperties, true);
+						if ($group == 'u') $sourceLabelArr = $dynPropArr['labelFormats'][$labelIndex];
+					}
+					$rs->free();
+				}
+			}
+			$sourceLabelArr['title'] = $sourceLabelArr['title'] . ' - CLONE';
+			//Save to target group
+			if ($cloneTarget == 'g') {
+				$globalFormatArr['labelFormats'][] = $sourceLabelArr;
+				$status = $this->saveGlobalJson($globalFormatArr);
+			} elseif ($cloneTarget == 'c') {
+				$collFormatArr['labelFormats'][] = $sourceLabelArr;
+				$status = $this->updateCollectionJson($collFormatArr);
+			} elseif ($cloneTarget == 'u') {
+				$dynPropArr['labelFormats'][] = $sourceLabelArr;
+				$status = $this->updateUserJson($dynPropArr);
+			}
+		}
+		return $status;
+	}
+
+	public function deleteLabelFormat($group, $labelIndex) {
+		$status = true;
+		if (is_numeric($labelIndex)) {
+			if ($group == 'g') {
+				$globalFormatArr = array();
+				if ($jsonData = $this->fetchGlobalLabelJson()) {
+					$globalFormatArr = json_decode($jsonData, true);
+					unset($globalFormatArr['labelFormats'][$labelIndex]);
+					$globalFormatArr['labelFormats'] = array_values($globalFormatArr['labelFormats']);
+					$status = $this->saveGlobalJson($globalFormatArr);
+				}
+			} elseif ($group == 'c') {
+				if ($this->collid) {
+					$collFormatArr = array();
+					if ($this->collArr['dynprops']) $collFormatArr = json_decode($this->collArr['dynprops'], true);
+					unset($collFormatArr['labelFormats'][$labelIndex]);
+					$collFormatArr['labelFormats'] = array_values($collFormatArr['labelFormats']);
+					$status = $this->updateCollectionJson($collFormatArr);
+				} else {
+					$this->errorArr[] = 'ERROR saving label format to omcollections table: collid not set';
+					$status = false;
+				}
+			} elseif ($group == 'u') {
+				$sql = 'SELECT dynamicProperties FROM users WHERE uid = ' . $GLOBALS['SYMB_UID'];
+				$rs = $this->conn->query($sql);
+				if ($rs) {
+					$dynPropArr = array();
+					if ($r = $rs->fetch_object()) {
+						if ($r->dynamicProperties) $dynPropArr = json_decode($r->dynamicProperties, true);
+					}
+					$rs->free();
+					unset($dynPropArr['labelFormats'][$labelIndex]);
+					$dynPropArr['labelFormats'] = array_values($dynPropArr['labelFormats']);
+					$status = $this->updateUserJson($dynPropArr);
+				}
+			}
+		}
+		return $status;
+	}
+
+	private function saveGlobalJson($dataObj, $isAlreadyDecoded = false) {
+		$status = false;
+
+		$jsonDynProps = $isAlreadyDecoded ? $dataObj : json_encode($dataObj, JSON_HEX_APOS);
+		$propName = 'LabelFormatJson';
+		$checkSql = "SELECT COUNT(*) FROM adminproperties WHERE propName = ?";
+		if ($checkStmt = $this->conn->prepare($checkSql)) {
+			$checkStmt->bind_param('s', $propName);
+			$checkStmt->execute();
+			$checkStmt->bind_result($count);
+			$checkStmt->fetch();
+			$checkStmt->close();
+
+			if ($count > 0) {
+				$updateSql = "UPDATE adminproperties SET dynamicProperties = ? WHERE propName = ?";
+				if ($updateStmt = $this->conn->prepare($updateSql)) {
+					$updateStmt->bind_param('ss', $jsonDynProps, $propName);
+					$updateStmt->execute();
+					$status = !$updateStmt->error;
+					$updateStmt->close();
+				}
+			} else {
+				$insertSql = "INSERT INTO adminproperties (propName, propValue, dynamicProperties) VALUES (?, ?, ?)";
+				if ($insertStmt = $this->conn->prepare($insertSql)) {
+					$insertStmt->bind_param('sss', $propName, $propName, $jsonDynProps);
+					$insertStmt->execute();
+					$status = !$insertStmt->error;
+					$insertStmt->close();
+				}
+			}
+			return $status;
+		}
+	}
+
+	private function updateCollectionJson($formatArr) {
+		$status = true;
+		$sql = 'UPDATE omcollections SET dynamicProperties = "' . $this->conn->real_escape_string(json_encode($formatArr)) . '" WHERE collid = ' . $this->collid;
+		if ($this->conn->query($sql)) $this->setCollMetadata();
+		else {
+			$this->errorArr[] = 'ERROR saving label format to omcollections table: ' . $this->conn->error;
+			$status = false;
+		}
+		return $status;
+	}
+
+	private function updateUserJson($formatArr) {
+		$status = true;
+		$sql = 'UPDATE users SET dynamicProperties = "' . $this->conn->real_escape_string(json_encode($formatArr)) . '" WHERE uid = ' . $GLOBALS['SYMB_UID'];
+		if (!$this->conn->query($sql)) {
+			$this->errorArr[] = 'ERROR saving label format to users table: ' . $this->conn->error;
+			$status = false;
+		}
+		return $status;
+	}
+
+	//Annotation functions
+	public function getAnnoArray($detidArr, $speciesAuthors, $familyName) {
+		$retArr = array();
+>>>>>>> origin
 		if ($detidArr) {
 			$authorArr = array();
 			$sqlWhere = 'WHERE (d.detid IN(' . implode(',', $detidArr) . ')) ';
@@ -751,7 +1391,15 @@ class OccurrenceLabel {
 			}
 
 			//Get determination records
+<<<<<<< HEAD
 			$sql2 = 'SELECT d.detid, d.identifiedBy, d.dateIdentified, d.sciname, d.scientificNameAuthorship, d.identificationQualifier, ' .
+=======
+			$familyAdditionStr = '';
+			if($familyName){
+				$familyAdditionStr .= 'd.family as family1, o.family as family2, ';
+			}
+			$sql2 = 'SELECT ' . $familyAdditionStr . 'd.detid, d.identifiedBy, d.dateIdentified, d.sciname, d.scientificNameAuthorship, d.identificationQualifier, ' .
+>>>>>>> origin
 				'd.identificationReferences, d.identificationRemarks, IFNULL(o.catalogNumber,o.otherCatalogNumbers) AS catalogNumber ' .
 				'FROM omoccurdeterminations d INNER JOIN omoccurrences o ON d.occid = o.occid ' . $sqlWhere;
 			//echo 'SQL: '.$sql2;
@@ -761,6 +1409,7 @@ class OccurrenceLabel {
 					if (array_key_exists($row2['detid'], $authorArr)) {
 						$row2['parentauthor'] = $authorArr[$row2['detid']];
 					}
+					$row2['family'] = $row2['family1'] ?? $row2['family2'] ?? '';
 					$retArr[$row2['detid']] = $row2;
 				}
 				$rs2->free();
@@ -826,7 +1475,11 @@ class OccurrenceLabel {
 	public function getDatasetProjects() {
 		$retArr = array();
 		if ($this->collid) {
+<<<<<<< HEAD
 			$sql = 'SELECT DISTINCT ds.datasetid, ds.name ' .
+=======
+			$sql = 'SELECT DISTINCT ds.datasetid, IFNULL(ds.datasetName, ds.name) as datasetName ' .
+>>>>>>> origin
 				'FROM omoccurdatasets ds INNER JOIN userroles r ON ds.datasetid = r.tablepk ' .
 				'INNER JOIN omoccurdatasetlink dl ON ds.datasetid = dl.datasetid ' .
 				'INNER JOIN omoccurrences o ON dl.occid = o.occid ' .
@@ -834,7 +1487,11 @@ class OccurrenceLabel {
 			if ($this->collArr['colltype'] == 'General Observations' && !array_key_exists('extendedsearch', $GLOBALS['_POST'])) $sql .= 'AND (o.observeruid = ' . $GLOBALS['SYMB_UID'] . ') ';
 			$rs = $this->conn->query($sql);
 			while ($r = $rs->fetch_object()) {
+<<<<<<< HEAD
 				$retArr[$r->datasetid] = $r->name;
+=======
+				$retArr[$r->datasetid] = $r->datasetName;
+>>>>>>> origin
 			}
 			$rs->free();
 		}
@@ -894,5 +1551,28 @@ class OccurrenceLabel {
 		$newStr = preg_replace('/\s\s+/', ' ', $newStr);
 		$newStr = $this->conn->real_escape_string($newStr);
 		return $newStr;
+	}
+
+	public static function processSciNameLabelForWord($scinameStr, $queryKey, $queryVal, &$textrun, $parentAuthor, $shouldAddNextElement, &$shouldStop){
+		if(!$shouldStop){
+			if(strpos($scinameStr,$queryKey) !== false){
+				$shouldStop = true;
+				$trimmedQueryKey = trim($queryKey);
+				$scinameArr = explode(' ' . $trimmedQueryKey . ' ', $scinameStr);
+				$currentTxt = htmlspecialchars($scinameArr[0]) . ' ';
+				$textrun->addText($currentTxt, 'scientificnameFont');
+				if($parentAuthor){
+					$currentTxt = htmlspecialchars($parentAuthor) . ' ';
+					$textrun->addText($currentTxt, 'scientificnameauthFont');
+				}
+				$currentTxt = $queryVal . ' ';
+				$textrun->addText($currentTxt, 'scientificnameinterFont');
+				if($shouldAddNextElement){
+					$currentTxt = htmlspecialchars($scinameArr[1]) . ' ';
+					$textrun->addText($currentTxt, 'scientificnameFont');
+				}
+			}
+
+		}
 	}
 }

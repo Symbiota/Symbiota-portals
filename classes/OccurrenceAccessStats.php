@@ -121,8 +121,31 @@ class OccurrenceAccessStats extends Manager{
 		return $status;
 	}
 
+<<<<<<< HEAD
 	//Create summary reports and cache statistics
 
+=======
+	public function insertDownloadOccurrences($occurAccessID, $omExportID){
+		$status = false;
+		if(is_numeric($occurAccessID)){
+			$sql = 'INSERT INTO omoccuraccesslink(occurAccessID, occid) SELECT ?, occid FROM omExportOccurrences WHERE omExportID = ?';
+			if($stmt = $this->conn->prepare($sql)){
+				$stmt->bind_param('ii', $occurAccessID, $omExportID);
+				if($stmt->execute()) $status = true;
+				else{
+					$this->errorMessage = 'ERROR batch linking occurrences from download: ' . $stmt->error;
+					$this->logOrEcho($this->errorMessage);
+				}
+				$stmt->close();
+			}
+			else $this->errorMessage = $this->conn->error;
+		}
+		return $status;
+	}
+
+	//Create summary reports and cache statistics
+
+>>>>>>> origin
 
 	//Reports
 	public function getSummaryReport(){

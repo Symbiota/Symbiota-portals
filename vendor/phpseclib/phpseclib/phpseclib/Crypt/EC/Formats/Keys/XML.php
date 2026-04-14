@@ -71,6 +71,13 @@ abstract class XML
 
         $use_errors = libxml_use_internal_errors(true);
 
+<<<<<<< HEAD
+=======
+        if (substr($key, 0, 5) != '<?xml') {
+            $key = '<xml>' . $key . '</xml>';
+        }
+
+>>>>>>> origin
         $temp = self::isolateNamespace($key, 'http://www.w3.org/2009/xmldsig11#');
         if ($temp) {
             $key = $temp;
@@ -82,9 +89,12 @@ abstract class XML
         }
 
         $dom = new \DOMDocument();
+<<<<<<< HEAD
         if (substr($key, 0, 5) != '<?xml') {
             $key = '<xml>' . $key . '</xml>';
         }
+=======
+>>>>>>> origin
 
         if (!$dom->loadXML($key)) {
             libxml_use_internal_errors($use_errors);

@@ -1,8 +1,16 @@
 <?php
 include_once('../../config/symbini.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/reports/annotationmanager.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/reports/annotationmanager.'.$LANG_TAG.'.php');
 else include_once($SERVER_ROOT.'/content/lang/collections/reports/annotationmanager.en.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
+=======
+include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/reports/annotationmanager');
+
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 
 if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/reports/annotationmanager.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
@@ -188,6 +196,13 @@ if($isEditor){
 									<input type="checkbox" name="clearqueue" value="1" onclick="" />
 									<b><?php echo $LANG['REM_ANNO']; ?></b>
 								</div>
+<<<<<<< HEAD
+=======
+								<div style="margin:4px;">
+									<input type="checkbox" name="print-family" value="1" onclick="" />
+									<b><?php echo $LANG['PRINT_FAMILY_NAME']; ?></b>
+								</div>
+>>>>>>> origin
 							</div>
 							<div style="float:left;margin-left:50px">
 								<div style="">
@@ -251,4 +266,8 @@ if($isEditor){
 	include($SERVER_ROOT.'/includes/footer.php');
 	?>
 	</body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> origin

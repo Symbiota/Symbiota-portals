@@ -36,7 +36,11 @@ if($collid){
 			elseif($_REQUEST['addaction'] == '2'){
 				$responseArr['action'] = 'update';
 				$responseArr['status'] = 'true';
+<<<<<<< HEAD
 				if(!$occurrenceEditor->editOccurrence($_REQUEST)){
+=======
+				if(!$occurrenceEditor->editOccurrence($_REQUEST, $isEditor)){
+>>>>>>> origin
 					$responseArr['status'] = 'false';
 					$responseArr['error'] = $occurrenceEditor->getErrorStr();
 				}

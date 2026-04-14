@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -33,7 +34,11 @@ class HTML extends AbstractReader implements ReaderInterface
      *
      * @param string $docFile
      *
+<<<<<<< HEAD
      * @return \PhpOffice\PhpWord\PhpWord
+=======
+     * @return PhpWord
+>>>>>>> origin
      */
     public function load($docFile)
     {

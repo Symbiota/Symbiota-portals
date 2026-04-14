@@ -96,6 +96,23 @@ abstract class PKCS1 extends Progenitor
             $components['isPublicKey'] = true;
         }
 
+<<<<<<< HEAD
+=======
+        $components = $components + $key;
+        foreach ($components as &$val) {
+            if ($val instanceof BigInteger) {
+                $val = self::makePositive($val);
+            }
+            if (is_array($val)) {
+                foreach ($val as &$subval) {
+                    if ($subval instanceof BigInteger) {
+                        $subval = self::makePositive($subval);
+                    }
+                }
+            }
+        }
+
+>>>>>>> origin
         return $components + $key;
     }
 
@@ -157,4 +174,20 @@ abstract class PKCS1 extends Progenitor
 
         return self::wrapPublicKey($key, 'RSA');
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Negative numbers make no sense in RSA so convert them to positive
+     *
+     * @param BigInteger $x
+     * @return string
+     */
+    private static function makePositive(BigInteger $x)
+    {
+        return $x->isNegative() ?
+            new BigInteger($x->toBytes(true), 256) :
+            $x;
+    }
+>>>>>>> origin
 }

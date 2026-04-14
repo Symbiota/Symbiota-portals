@@ -449,6 +449,7 @@ class ChecklistVoucherReport extends ChecklistVoucherAdmin {
 		}
 	}
 
+<<<<<<< HEAD
 	public function downloadAllOccurrenceCsv(){
 		if($this->clid){
 			$fileName = $this->getExportFileName().'.csv';
@@ -480,6 +481,8 @@ class ChecklistVoucherReport extends ChecklistVoucherAdmin {
 		}
 	}
 
+=======
+>>>>>>> origin
 	private function exportCsv($fileName, $sql){
 		header ('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header ('Content-Type: text/csv');

@@ -4,7 +4,6 @@ include_once($SERVER_ROOT.'/classes/ChecklistVoucherPensoft.php');
 
 $clid = $_REQUEST['clid'];
 $rType = $_REQUEST['rtype'];
-
 if($rType == 'pensoftxlsx'){
 	$vManager = new ChecklistVoucherPensoft();
 	$vManager->setClid($clid);

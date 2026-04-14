@@ -1,10 +1,16 @@
 <?php
+<<<<<<< HEAD
 include_once($SERVER_ROOT.'/content/lang/collections/misc/collstats.'.$LANG_TAG.'.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/misc/collstats');
+
+>>>>>>> origin
 class OccurrenceSearchSupport {
 
 	private $conn;
 	private $collidStr = '';
-	private $collArrIndex = 0;
 
 	public function __construct($conn){
 		$this->conn = $conn;
@@ -85,6 +91,7 @@ class OccurrenceSearchSupport {
 		return $retArr;
 	}
 
+<<<<<<< HEAD
 	public function outputFullCollArr($collGrpArr, $targetCatID = '', $displayIcons = true, $displaySearchButtons = true, $collTypeLabel = '', $uniqGrouping=''){
 		global $CLIENT_ROOT, $LANG;
 		$catSelArr = $this->getDbRequestArr('cat');
@@ -355,6 +362,26 @@ class OccurrenceSearchSupport {
 				if(strpos($dbStr,'allspec') !== false) $dbStr = 'allspec';
 				elseif(strpos($dbStr,'allobs') !== false) $dbStr = 'allobs';
 				elseif(strpos($dbStr,'all') !== false) $dbStr = 'all';
+=======
+	public static function getDbRequestVariable(){
+		$dbStr = '';
+		if(isset($_REQUEST['db'])){
+			$dbInput = $_REQUEST['db'];
+			if(is_array($dbInput)){
+				if(in_array('all', $dbInput)) $dbStr = 'all';
+				elseif(in_array('allspec', $dbInput)) $dbStr = 'allspec';
+				elseif(in_array('allobs', $dbInput)) $dbStr = 'allobs';
+				else{
+					$dbArr = array_unique($dbInput);
+					$dbStr = implode(',', $dbArr);
+				}
+			}
+			else{
+				//Input is a string
+				if(strpos($dbStr,'all') !== false) $dbStr = 'all';
+				elseif(strpos($dbStr,'allspec') !== false) $dbStr = 'allspec';
+				elseif(strpos($dbStr,'allobs') !== false) $dbStr = 'allobs';
+>>>>>>> origin
 				else $dbStr = $dbInput;
 			}
 		}
@@ -367,6 +394,7 @@ class OccurrenceSearchSupport {
 	}
 
 	public static function getDbWhereFrag($dbSearchTerm){
+<<<<<<< HEAD
 		$sqlRet = "";
 		//Do nothing if db = all
 		if($dbSearchTerm != 'all'){
@@ -381,6 +409,17 @@ class OccurrenceSearchSupport {
 				$dbStr = "o.collid IN(" . (is_array($dbArr)? implode(',', $dbArr): $dbArr) . ")";
 				$sqlRet .= 'AND ('.$dbStr.') ';
 			}
+=======
+		$sqlRet = '';
+		if ($dbSearchTerm == 'allspec'){
+			$sqlRet .= 'AND (o.collid IN(SELECT collid FROM omcollections WHERE colltype IN("Preserved Specimens","Fossil Specimens"))) ';
+		}
+		elseif($dbSearchTerm == 'allobs'){
+			$sqlRet .= 'AND (o.collid IN(SELECT collid FROM omcollections WHERE colltype IN("General Observations","Observations"))) ';
+		}
+		elseif(preg_match('/^[0-9;,]+$/', $dbSearchTerm)){
+			$sqlRet .= 'AND (o.collid IN(' . str_replace(';', ',', $dbSearchTerm) . ')) ';
+>>>>>>> origin
 		}
 		return $sqlRet;
 	}

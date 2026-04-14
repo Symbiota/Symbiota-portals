@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PHPWord - A pure PHP library for reading and writing
  * word processing documents.
@@ -28,32 +29,60 @@ class Indentation extends AbstractStyle
     /**
      * Left indentation (twip).
      *
+<<<<<<< HEAD
      * @var float|int
+=======
+     * @var null|float
+>>>>>>> origin
      */
     private $left = 0;
 
     /**
      * Right indentation (twip).
      *
+<<<<<<< HEAD
      * @var float|int
+=======
+     * @var null|float
+>>>>>>> origin
      */
     private $right = 0;
 
     /**
      * Additional first line indentation (twip).
      *
+<<<<<<< HEAD
      * @var float|int
+=======
+     * @var null|float
+>>>>>>> origin
      */
     private $firstLine = 0;
 
     /**
+<<<<<<< HEAD
      * Indentation removed from first line (twip).
      *
      * @var float|int
+=======
+     * Additional first line chars indentation (twip).
+     *
+     * @var int
+>>>>>>> origin
      */
-    private $hanging;
+    private $firstLineChars = 0;
 
     /**
+<<<<<<< HEAD
+=======
+     * Indentation removed from first line (twip).
+     *
+     * @var null|float
+     */
+    private $hanging = 0;
+
+    /**
+>>>>>>> origin
      * Create a new instance.
      *
      * @param array $style
@@ -65,96 +94,145 @@ class Indentation extends AbstractStyle
 
     /**
      * Get left.
+<<<<<<< HEAD
      *
      * @return float|int
+=======
+>>>>>>> origin
      */
-    public function getLeft()
+    public function getLeft(): ?float
     {
         return $this->left;
     }
 
     /**
      * Set left.
+<<<<<<< HEAD
      *
      * @param float|int $value
      *
      * @return self
      */
     public function setLeft($value)
+=======
+     */
+    public function setLeft(?float $value): self
+>>>>>>> origin
     {
-        $this->left = $this->setNumericVal($value, $this->left);
+        $this->left = $this->setNumericVal($value);
 
         return $this;
     }
 
     /**
      * Get right.
+<<<<<<< HEAD
      *
      * @return float|int
+=======
+>>>>>>> origin
      */
-    public function getRight()
+    public function getRight(): ?float
     {
         return $this->right;
     }
 
     /**
      * Set right.
+<<<<<<< HEAD
      *
      * @param float|int $value
      *
      * @return self
      */
     public function setRight($value)
+=======
+     */
+    public function setRight(?float $value): self
+>>>>>>> origin
     {
-        $this->right = $this->setNumericVal($value, $this->right);
+        $this->right = $this->setNumericVal($value);
 
         return $this;
     }
 
     /**
      * Get first line.
+<<<<<<< HEAD
      *
      * @return float|int
+=======
+>>>>>>> origin
      */
-    public function getFirstLine()
+    public function getFirstLine(): ?float
     {
         return $this->firstLine;
     }
 
     /**
      * Set first line.
+<<<<<<< HEAD
      *
      * @param float|int $value
      *
      * @return self
      */
     public function setFirstLine($value)
+=======
+     */
+    public function setFirstLine(?float $value): self
+>>>>>>> origin
     {
-        $this->firstLine = $this->setNumericVal($value, $this->firstLine);
+        $this->firstLine = $this->setNumericVal($value);
+
+        return $this;
+    }
+
+    /**
+<<<<<<< HEAD
+     * Get hanging.
+     *
+     * @return float|int
+=======
+     * Get first line chars.
+>>>>>>> origin
+     */
+    public function getFirstLineChars(): int
+    {
+        return $this->firstLineChars;
+    }
+
+    /**
+     * Set first line chars.
+     */
+    public function setFirstLineChars(int $value): self
+    {
+        $this->firstLineChars = $this->setIntVal($value, $this->firstLineChars);
 
         return $this;
     }
 
     /**
      * Get hanging.
-     *
-     * @return float|int
      */
-    public function getHanging()
+    public function getHanging(): ?float
     {
         return $this->hanging;
     }
 
     /**
      * Set hanging.
+<<<<<<< HEAD
      *
      * @param float|int $value
      *
      * @return self
+=======
+>>>>>>> origin
      */
-    public function setHanging($value = null)
+    public function setHanging(?float $value = null): self
     {
-        $this->hanging = $this->setNumericVal($value, $this->hanging);
+        $this->hanging = $this->setNumericVal($value);
 
         return $this;
     }

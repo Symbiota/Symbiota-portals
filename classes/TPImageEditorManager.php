@@ -14,6 +14,7 @@ class TPImageEditorManager extends TPEditorManager{
  		parent::__destruct();
  	}
 
+<<<<<<< HEAD
 	public function getImages(){
 		$imageArr = array();
 		$tidArr = array($this->tid);
@@ -78,6 +79,8 @@ class TPImageEditorManager extends TPEditorManager{
 		$rs->free();
 	}
 
+=======
+>>>>>>> origin
 	public function editImageSort($imgSortEdits){
 		$status = "";
 		foreach($imgSortEdits as $editKey => $editValue){
@@ -92,6 +95,7 @@ class TPImageEditorManager extends TPEditorManager{
 		if($status) $status = "with editImageSort method: ".$status;
 		return $status;
 	}
+<<<<<<< HEAD
 
 	// TODO (Logan) deprecate function 
 	// commenting out for now as instructed
@@ -137,5 +141,7 @@ class TPImageEditorManager extends TPEditorManager{
 	// 	}
 	// 	return $status;
 	// }
+=======
+>>>>>>> origin
 }
 ?>

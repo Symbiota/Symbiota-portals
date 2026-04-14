@@ -1,8 +1,14 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceLoans.php');
+<<<<<<< HEAD
 if($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/collections/loans/loan_langs.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT . '/content/lang/collections/loans/loan_langs.' . $LANG_TAG . '.php');
 else include_once($SERVER_ROOT . '/content/lang/collections/loans/loan_langs.en.php');
+=======
+include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+
+Language::load('collections/loans/loan_langs');
+>>>>>>> origin
 
 $collid = $_REQUEST['collid'];
 
@@ -24,7 +30,11 @@ if(!$transInstList) echo '<script type="text/javascript">displayNewExchange();</
 			<div style="padding-top:10px;float:left;">
 				<span>
 					<b><?php echo $LANG['TRANS_NO']; ?>:</b>
+<<<<<<< HEAD
 					<input type="text" autocomplete="off" name="identifier" maxlength="255" style="width:120px;border:2px solid black;text-align:center;font-weight:bold;color:black;" value="1" />
+=======
+					<input type="text" autocomplete="off" name="identifier" maxlength="255" style="width:120px;border:2px solid black;text-align:center;font-weight:bold;color:black;" placeholder="1" />
+>>>>>>> origin
 				</span>
 			</div>
 			<div style="clear:left;padding-top:6px;float:left;">
@@ -134,4 +144,8 @@ if(!$transInstList) echo '<script type="text/javascript">displayNewExchange();</
 		echo '<div style="font-weight:bold;font-size:120%;margin-top:10px;">' . $LANG['NO_TRANSACTIONS'] . '</div>';
 	}
 	?>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> origin
