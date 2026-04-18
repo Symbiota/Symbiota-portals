@@ -16,6 +16,10 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:vendor/phpoffice/phpword/src/PhpWord/SimpleType/TblWidth.php
+=======
+>>>>>>> origin
 namespace PhpOffice\PhpWord\SimpleType;
 
 use PhpOffice\PhpWord\Shared\AbstractEnum;
@@ -39,4 +43,29 @@ final class TblWidth extends AbstractEnum
 
     //Width in Twentieths of a Point
     const TWIP = 'dxa';
+<<<<<<< HEAD
+========
+namespace PhpOffice\PhpWord\Writer\EPub3\Style;
+
+/**
+ * Class for EPub3 font styles.
+ */
+class Font extends AbstractStyle
+{
+    /**
+     * Write style content.
+     */
+    public function write(): string
+    {
+        $content = 'body {';
+        $content .= 'font-family: "Times New Roman", Times, serif;';
+        $content .= 'font-size: 12pt;';
+        $content .= 'color: #000000;';
+        $content .= '}';
+
+        return $content;
+    }
+>>>>>>>> origin:vendor/phpoffice/phpword/src/PhpWord/Writer/EPub3/Style/Font.php
+=======
+>>>>>>> origin
 }

@@ -1,8 +1,13 @@
 <?php
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/editor/includes/imgprocessor.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/editor/includes/imgprocessor');
 
+>>>>>>> origin
 ?>
 
 <script>
@@ -55,7 +60,11 @@ Language::load('collections/editor/includes/imgprocessor');
 	}
 </script>
 <style>
+<<<<<<< HEAD
+	.ocr-box{ padding: 5px; float:left; }
+=======
 	.ocr-box{ padding: 10px; float:left; }
+>>>>>>> origin
 	.ocr-box button{ margin: 5px; }
 </style>
 <div id="labelProcDiv" style="width:100%;height:1050px;position:relative">
@@ -72,9 +81,15 @@ Language::load('collections/editor/includes/imgprocessor');
 				<div id="anchorImgDiv" style="float:left;margin-left:10px;display:none" title="<?php echo $LANG['ANCHOR_IMG']; ?>"><a href="#" onclick="anchorImgPanel()"><img src="../../images/anchor.png" style="width:1.3em" /></a></div>
 			</div>
 			<div style="float:left;;padding-right:10px;margin:2px 20px 0px 0px;"><?php echo $LANG['ROTATE']; ?>: <a href="#" onclick="rotateImage(-90)">&nbsp;L&nbsp;</a> &lt;&gt; <a href="#" onclick="rotateImage(90)">&nbsp;R&nbsp;</a></div>
+<<<<<<< HEAD
+			<div style="float:right;margin:0px 3px;">
+				<div><input id="imgresmed" name="resradio"  type="radio" checked onchange="changeImgRes('med')" /><?php echo $LANG['MED_RES']; ?>.</div>
+				<div><input id="imgreslg" name="resradio" type="radio" onchange="changeImgRes('lg')" /><?php echo $LANG['HIGH_RES']; ?>.</div>
+=======
 			<div id="imgres" style="float:right;margin:0px 3px;">
 				<div><input id="imgresmed" name="resradio"  type="radio" value="med" checked onchange="changeImgRes('med')" /><?php echo $LANG['MED_RES']; ?>.</div>
 				<div><input id="imgreslg" name="resradio" type="radio" value="lg" onchange="changeImgRes('lg')" /><?php echo $LANG['HIGH_RES']; ?>.</div>
+>>>>>>> origin
 			</div>
 		</div>
 		<div id="labelprocessingdiv" style="clear:both;">
@@ -116,6 +131,8 @@ Language::load('collections/editor/includes/imgprocessor');
 							</fieldset>
 							<?php
 						}
+<<<<<<< HEAD
+=======
 						if(!empty($VOUCHERVISION_API_KEY)){
 						?>
 						<fieldset class="ocr-box">
@@ -144,6 +161,7 @@ Language::load('collections/editor/includes/imgprocessor');
 						</fieldset>
 						<?php
 						}
+>>>>>>> origin
 						?>
 						<div style="float:right;margin-right:20px;font-weight:bold;">
 							<?php echo $LANG['IMAGE'].' '.$imgCnt.' '.$LANG['OF'].' ';

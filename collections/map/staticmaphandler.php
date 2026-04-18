@@ -1,10 +1,15 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/MapSupport.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/map/staticmaphandler.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/map/staticmaphandler.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/map/staticmaphandler.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/map/staticmaphandler');
 
+>>>>>>> origin
 header('Content-Type: text/html; charset=' . $CHARSET);
 
 $mapManager = new MapSupport();

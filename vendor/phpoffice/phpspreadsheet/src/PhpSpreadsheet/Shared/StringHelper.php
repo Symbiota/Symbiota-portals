@@ -642,6 +642,8 @@ class StringHelper
     public static function strlenAllowNull(?string $string): int
     {
         return strlen("$string");
+<<<<<<< HEAD
+=======
     }
 
     /**
@@ -659,5 +661,6 @@ class StringHelper
         }
 
         return $str;
+>>>>>>> origin
     }
 }

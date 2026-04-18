@@ -13,7 +13,11 @@ class DwcArchiverAttribute extends DwcArchiverBaseManager{
 
 	public function initiateProcess($filePath){
 		$this->setFieldArr();
+<<<<<<< HEAD
+		$this->setSqlBase();
+=======
 		$this->setSql();
+>>>>>>> origin
 
 		$this->setFileHandler($filePath);
 	}
@@ -52,23 +56,38 @@ class DwcArchiverAttribute extends DwcArchiverBaseManager{
 	private function trimBySchemaType($dataArr){
 		$trimArr = array();
 		if($this->schemaType == 'backup'){
+<<<<<<< HEAD
+			//$trimArr = array('Owner', 'UsageTerms', 'WebStatement');
+=======
 			//$trimArr = array('Enter-fieldName-to-Remove');
+>>>>>>> origin
 		}
 		return array_diff_key($dataArr,array_flip($trimArr));
 	}
 
+<<<<<<< HEAD
+	private function setSqlBase(){
+=======
 	private function setSql(){
+>>>>>>> origin
 		if($this->fieldArr){
 			$sqlFrag = '';
 			foreach($this->fieldArr['fields'] as $colName){
 				if($colName) $sqlFrag .= ', '.$colName;
 			}
+<<<<<<< HEAD
+			$this->sqlBase = 'SELECT '.trim($sqlFrag,', ').'
+				FROM tmtraits m INNER JOIN tmstates s ON m.traitid = s.traitid
+				INNER JOIN tmattributes a ON s.stateid = a.stateid
+				INNER JOIN users u ON a.createduid = u.uid ';
+=======
 			$this->sqlArr[] = 'SELECT '.trim($sqlFrag,', ').'
 				FROM tmtraits m INNER JOIN tmstates s ON m.traitid = s.traitid
 				INNER JOIN tmattributes a ON s.stateid = a.stateid
 				INNER JOIN omexportoccurrences e ON a.occid = e.occid
 				INNER JOIN users u ON a.createduid = u.uid
 				WHERE (e.omExportID = ?) ';
+>>>>>>> origin
 		}
 	}
 }

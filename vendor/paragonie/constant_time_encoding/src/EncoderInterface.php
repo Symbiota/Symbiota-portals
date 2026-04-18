@@ -2,8 +2,11 @@
 declare(strict_types=1);
 namespace ParagonIE\ConstantTime;
 
+<<<<<<< HEAD
+=======
 use SensitiveParameter;
 
+>>>>>>> origin
 /**
  *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
@@ -40,10 +43,14 @@ interface EncoderInterface
      * @param string $binString (raw binary)
      * @return string
      */
+<<<<<<< HEAD
+    public static function encode(string $binString): string;
+=======
     public static function encode(
         #[SensitiveParameter]
         string $binString
     ): string;
+>>>>>>> origin
 
     /**
      * Convert a binary string into a hexadecimal string without cache-timing
@@ -53,9 +60,13 @@ interface EncoderInterface
      * @param bool $strictPadding Error on invalid padding
      * @return string (raw binary)
      */
+<<<<<<< HEAD
+    public static function decode(string $encodedString, bool $strictPadding = false): string;
+=======
     public static function decode(
         #[SensitiveParameter]
         string $encodedString,
         bool $strictPadding = false
     ): string;
+>>>>>>> origin
 }

@@ -343,7 +343,10 @@ class Ods extends BaseReader
 
                 // Create sheet
                 $spreadsheet->createSheet();
+<<<<<<< HEAD
+=======
                 $sheetCreated = true;
+>>>>>>> origin
                 $spreadsheet->setActiveSheetIndex($worksheetID);
 
                 if ($worksheetName || is_numeric($worksheetName)) {
@@ -397,9 +400,13 @@ class Ods extends BaseReader
                                     $spreadsheet->getActiveSheet()
                                         ->getColumnDimension($tableColumnString)
                                         ->setWidth($columnWidth->toUnit('cm'), 'cm');
+<<<<<<< HEAD
+                                    ++$tableColumnString;
+=======
                                     StringHelper::stringIncrement(
                                         $tableColumnString
                                     );
+>>>>>>> origin
                                 }
                             }
                             $tableColumnIndex += $rowRepeats;
@@ -427,7 +434,11 @@ class Ods extends BaseReader
                                         }
 
                                         for ($i = 0; $i < $colRepeats; ++$i) {
+<<<<<<< HEAD
+                                            ++$columnID;
+=======
                                             StringHelper::stringIncrement($columnID);
+>>>>>>> origin
                                         }
 
                                         continue;
@@ -453,9 +464,13 @@ class Ods extends BaseReader
                                         $lastRow = $rowID + $arrayRow - 1;
                                         $lastCol = $columnID;
                                         while ($arrayCol > 1) {
+<<<<<<< HEAD
+                                            ++$lastCol;
+=======
                                             StringHelper::stringIncrement(
                                                 $lastCol
                                             );
+>>>>>>> origin
                                             --$arrayCol;
                                         }
                                         $cellDataRef = "$columnID$rowID:$lastCol$lastRow";
@@ -673,7 +688,11 @@ class Ods extends BaseReader
                                 // Merged cells
                                 $this->processMergedCells($cellData, $tableNs, $type, $columnID, $rowID, $spreadsheet);
 
+<<<<<<< HEAD
+                                ++$columnID;
+=======
                                 StringHelper::stringIncrement($columnID);
+>>>>>>> origin
                             }
                             $rowID += $rowRepeats;
 
@@ -684,9 +703,12 @@ class Ods extends BaseReader
                 $pageSettings->setPrintSettingsForWorksheet($spreadsheet->getActiveSheet(), $worksheetStyleName);
                 ++$worksheetID;
             }
+<<<<<<< HEAD
+=======
             if ($this->createBlankSheetIfNoneRead && !$sheetCreated) {
                 $spreadsheet->createSheet();
             }
+>>>>>>> origin
 
             $autoFilterReader->read($workbookData);
             $definedNameReader->read($workbookData);

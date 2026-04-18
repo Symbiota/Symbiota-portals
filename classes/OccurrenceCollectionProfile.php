@@ -111,7 +111,11 @@ class OccurrenceCollectionProfile extends OmCollections{
 					$logPath = $GLOBALS['SERVER_ROOT'].(substr($GLOBALS['SERVER_ROOT'],-1)=='/'?'':'/').'content/logs/gbif/GBIF_'.date('Y-m-d').'.log';
 					$this->setLogFH($logPath);
 				}
+<<<<<<< HEAD
+				$this->logOrEcho('Starting GBIF harvest for: '.$collectionName.' (#'.$collid.')');
+=======
 				$this->logOrEcho('Starting GBIF harvest for: '.$collectionName.' (#'.$collid.')', 1);
+>>>>>>> origin
 				if($this->datasetKey){
 					if($dwcUri){
 						//Get dataset details to enose that endpoint and publishingOrganizationKey is still valid
@@ -119,7 +123,11 @@ class OccurrenceCollectionProfile extends OmCollections{
 						if($curlRet = $this->gbifCurlCall($dsUrl)){
 							$datasetArr = json_decode($curlRet,true);
 							//Check endpoint
+<<<<<<< HEAD
+							$this->logOrEcho('Verifying Endpoints...', 1);
+=======
 							$this->logOrEcho('Verifying Endpoints...', 2);
+>>>>>>> origin
 							$endpointArr = $datasetArr['endpoints'];
 							$epUrl = $dsUrl.'/endpoint';
 							$addEndpoint = true;
@@ -127,31 +135,53 @@ class OccurrenceCollectionProfile extends OmCollections{
 								if($epArr['url'] == $dwcUri) $addEndpoint = false;
 								else{
 									if(isset($epArr['key'])){
+<<<<<<< HEAD
+										$this->logOrEcho('Deleting Endpoint (#'.$epArr['key'].': '.$epArr['url'].')...', 2);
+										if(!$this->gbifCurlCall($epUrl.'/'.$epArr['key'], 'DELETE')){
+											if($this->errorMessage) $this->logOrEcho('ERROR deleting Endpoint: '.$this->errorMessage, 3);
+=======
 										$this->logOrEcho('Deleting Endpoint (#'.$epArr['key'].': '.$epArr['url'].')...', 3);
 										if(!$this->gbifCurlCall($epUrl.'/'.$epArr['key'], 'DELETE')){
 											if($this->errorMessage) $this->logOrEcho('ERROR deleting Endpoint: '.$this->errorMessage, 4);
+>>>>>>> origin
 										}
 									}
 								}
 							}
 							if($addEndpoint){
 								//Add new endpoint
+<<<<<<< HEAD
+								$this->logOrEcho('Adding new Endpoint (url: '.$dwcUri.')...', 2);
+=======
 								$this->logOrEcho('Adding new Endpoint (url: '.$dwcUri.')...', 3);
+>>>>>>> origin
 								$dataStr = json_encode( array( 'type' => 'DWC_ARCHIVE','url' => $dwcUri ) );
 								if($endpointStr = $this->gbifCurlCall($epUrl, 'POST', $dataStr)){
 									if(!strpos($endpointStr,' ') && strlen($endpointStr) == 36) $this->endpointKey = $endpointStr;
 								}
+<<<<<<< HEAD
+								else $this->logOrEcho('ERROR adding Endpoint: '.$this->errorMessage, 2);
+=======
 								else $this->logOrEcho('ERROR adding Endpoint: '.$this->errorMessage, 3);
+>>>>>>> origin
 							}
 							//Check publishingOrganizationKey
 							if(isset($datasetArr['publishingOrganizationKey'])){
 								if($datasetArr['publishingOrganizationKey'] != $this->organizationKey){
 									//Update publishingOrganizationKey
+<<<<<<< HEAD
+									$this->logOrEcho('Updating publishingOrganizationKey from '.$datasetArr['publishingOrganizationKey'].' to '.$this->organizationKey, 1);
+									$datasetArr['publishingOrganizationKey'] = $this->organizationKey;
+									$dataStr = json_encode( $datasetArr );
+									if(!$this->gbifCurlCall($dsUrl, 'PUT', $dataStr)){
+										if($this->errorMessage) $this->logOrEcho('ERROR updating publishingOrganizationKey: '.$this->errorMessage, 2);
+=======
 									$this->logOrEcho('Updating publishingOrganizationKey from '.$datasetArr['publishingOrganizationKey'].' to '.$this->organizationKey, 2);
 									$datasetArr['publishingOrganizationKey'] = $this->organizationKey;
 									$dataStr = json_encode( $datasetArr );
 									if(!$this->gbifCurlCall($dsUrl, 'PUT', $dataStr)){
 										if($this->errorMessage) $this->logOrEcho('ERROR updating publishingOrganizationKey: '.$this->errorMessage, 3);
+>>>>>>> origin
 									}
 								}
 							}
@@ -159,6 +189,18 @@ class OccurrenceCollectionProfile extends OmCollections{
 						else echo 'ERROR grabbing data from GBIF API: '.$this->errorMessage;
 					}
 					//Trigger Crawl
+<<<<<<< HEAD
+					$this->logOrEcho('Triggering crawl...', 1);
+					$crawlUrl = 'https://api.gbif.org/v1/dataset/'.$this->datasetKey.'/crawl';
+					if(!$this->gbifCurlCall($crawlUrl, 'POST')){
+						if($this->errorMessage) $this->logOrEcho('ERROR triggering crawl: '.$this->errorMessage, 2);
+					}
+					$this->logOrEcho('Done!', 1);
+				}
+				else $this->logOrEcho('ABORT GBIF publishing: datasetKey IS NULL');
+			}
+			else $this->logOrEcho('ABORT GBIF publishing: organizationKey IS NULL');
+=======
 					$this->logOrEcho('Triggering crawl...', 2);
 					$crawlUrl = 'https://api.gbif.org/v1/dataset/'.$this->datasetKey.'/crawl';
 					if(!$this->gbifCurlCall($crawlUrl, 'POST')){
@@ -169,6 +211,7 @@ class OccurrenceCollectionProfile extends OmCollections{
 				else $this->logOrEcho('ABORT GBIF publishing: datasetKey IS NULL', 2);
 			}
 			else $this->logOrEcho('ABORT GBIF publishing: organizationKey IS NULL', 2);
+>>>>>>> origin
 		}
 	}
 
@@ -352,6 +395,17 @@ class OccurrenceCollectionProfile extends OmCollections{
 
 	public function getTaxonomyStats($famStr){
 		$retArr = Array();
+<<<<<<< HEAD
+		$sql = 'SELECT IFNULL(ts.family,o.family) as taxon, count(DISTINCT o.occid) as cnt '.
+			'FROM omoccurrences o LEFT JOIN taxstatus ts ON o.tidinterpreted = ts.tid '.
+			'WHERE (o.collid = '.$this->collid.') AND (ts.taxauthid = 1 OR ts.taxauthid IS NULL) '.
+			'GROUP BY IFNULL(ts.family,o.family)';
+		if($famStr){
+			$sql = 'SELECT t.unitname1 as taxon, count(o.occid) as cnt '.
+				'FROM omoccurrences o INNER JOIN taxa t ON o.tidinterpreted = t.tid '.
+				'WHERE (o.family = "'.$this->cleanInStr($famStr).'" OR o.sciname = "'.$this->cleanInStr($famStr).'") AND (o.collid = '.$this->collid.') AND (t.unitname1 IS NOT NULL) AND (t.rankid > 140) '.
+				'GROUP BY t.unitname1';
+=======
 		$isEditor = $this->isEditor();
 		$sql = 'SELECT IFNULL(ts.family, o.family) as taxon, o.tidInterpreted, COUNT(DISTINCT o.occid) as cnt
 			FROM omoccurrences o LEFT JOIN taxstatus ts ON o.tidinterpreted = ts.tid
@@ -364,6 +418,7 @@ class OccurrenceCollectionProfile extends OmCollections{
 				WHERE (o.family = "'.$this->cleanInStr($famStr).'") AND (o.collid = '.$this->collid.') AND (t.rankid > 140) ';
 			if(!$isEditor) $sql .= 'AND (o.recordSecurity != 5) ';
 			$sql .= 'GROUP BY taxon';
+>>>>>>> origin
 		}
 		$rs = $this->conn->query($sql);
 		while($r = $rs->fetch_object()){
@@ -746,7 +801,11 @@ class OccurrenceCollectionProfile extends OmCollections{
 				'c.collectionname, month(m.InitialTimeStamp) as monthEntered, year(m.InitialTimeStamp) as yearEntered, '.
 				'COUNT(m.mediaID) AS imgcnt '.
 				'FROM omoccurrences AS o INNER JOIN omcollections AS c ON o.collid = c.collid '.
+<<<<<<< HEAD
+				'LEFT JOIN media AS i ON o.occid = m.occid '.
+=======
 				'LEFT JOIN media AS m ON o.occid = m.occid '.
+>>>>>>> origin
 				'WHERE o.collid in('.$collId.') AND datediff(curdate(), m.InitialTimeStamp) < '.$days.' '.
 				'GROUP BY yearEntered,monthEntered,o.collid ORDER BY c.collectionname ';
 			//echo $sql2;

@@ -14,8 +14,12 @@ class UploadUtil {
 	];
 
 	const ALLOWED_IMAGE_MIMES = [
+<<<<<<< HEAD
+		'image/jpeg', 'image/png', 'image/gif'
+=======
 		'image/jpeg', 'image/png', 'image/gif', 'image/bmp'
 		// Following cannot be supported in gd currently 'image/tiff', 'image/jp2'
+>>>>>>> origin
 	];
 
 	const ALLOWED_AUDIO_MIMES = [
@@ -34,10 +38,13 @@ class UploadUtil {
 		'application/vnd.msexcel',
 	];
 
+<<<<<<< HEAD
+=======
 	const DEPRECATED_MIME_CONVERSION = [
 		'audio/mp3' => 'audio/mpeg'
 	];
 
+>>>>>>> origin
 	/**
 	 * Gets temporary file storage path for portal.
 	 *
@@ -77,8 +84,13 @@ class UploadUtil {
 		}
 
 		$type_guess = mime_content_type($uploaded_file['tmp_name']);
+<<<<<<< HEAD
+
+		if($type_guess != $uploaded_file['type']) {
+=======
 ;
 		if(!self::mimesEqual($type_guess, $uploaded_file['type'])) {
+>>>>>>> origin
 			throw new MediaException(MediaException::SuspiciousFile);
 		}
 
@@ -109,6 +121,15 @@ class UploadUtil {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * undocumented function summary
+	 *
+	 * Undocumented function long description
+	 *
+	 * @param Type $var Description
+	 * @return type
+	 * @throws conditon
+=======
 	  * This function returns the maximum post size in PHP
 	  *
 	  * Reads ini variables post_max_size as int
@@ -137,6 +158,7 @@ class UploadUtil {
 	 *
 	 * @param string $size Size string you wish to convert
 	 * @return int
+>>>>>>> origin
 	 **/
 	public static function size2Bytes(string $size):int {
 		// Remove the non-unit characters from the size.
@@ -153,6 +175,8 @@ class UploadUtil {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
 	 * Converts bytes to human readable sizes
 	 *
 	 * @param string $bytes Size int you wish to convert
@@ -202,6 +226,7 @@ class UploadUtil {
 		}
 	}
 	/**
+>>>>>>> origin
 	 * Utility function to parse out useful information when uploading and processing files.
 	 *
 	 * Wrapper to use parse_url, pathinfo, and parse_str in order to have a stable
@@ -275,8 +300,12 @@ class UploadUtil {
 
 		$availableMemory = self::getMaximumFileUploadSize() - memory_get_usage();
 		if($availableMemory < intval($info['size'])) {
+<<<<<<< HEAD
+			throw new Exception('Error: File is to large to upload');
+=======
 			$maxSize = self::formatBytes(self::getMaximumFileUploadSize());
 			throw new MediaException(MediaException::ExceedMaxSize, $maxSize);
+>>>>>>> origin
 		}
 
 		$tempPath = self::getTempDir() . $info['name'];
@@ -383,6 +412,8 @@ class UploadUtil {
 			Media::ext2Mime($extensionA) === Media::ext2Mime($extensionB);
 	}
 
+<<<<<<< HEAD
+=======
 	public static function mimesEqual(string $mimeA, string $mimeB): bool {
 		$mimeA = strtolower($mimeA);
 		$mimeB = strtolower($mimeB);
@@ -390,6 +421,7 @@ class UploadUtil {
 		return self::mime2ext($mimeA) === self::mime2ext($mimeB);
 	}
 
+>>>>>>> origin
 	/**
 	 * @param string $mime
 	 * @return string | bool

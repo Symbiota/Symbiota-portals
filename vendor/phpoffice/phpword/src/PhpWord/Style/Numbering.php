@@ -55,6 +55,11 @@ class Numbering extends AbstractStyle
 
     /**
      * Get Id.
+<<<<<<< HEAD
+     *
+     * @return int
+=======
+>>>>>>> origin
      */
     public function getNumId(): ?int
     {
@@ -63,6 +68,13 @@ class Numbering extends AbstractStyle
 
     /**
      * Set Id.
+<<<<<<< HEAD
+     *
+     * @param int $value
+     *
+     * @return self
+=======
+>>>>>>> origin
      */
     public function setNumId(int $value): self
     {
@@ -73,6 +85,11 @@ class Numbering extends AbstractStyle
 
     /**
      * Get multilevel type.
+<<<<<<< HEAD
+     *
+     * @return string
+=======
+>>>>>>> origin
      */
     public function getType(): ?string
     {
@@ -81,6 +98,13 @@ class Numbering extends AbstractStyle
 
     /**
      * Set multilevel type.
+<<<<<<< HEAD
+     *
+     * @param string $value
+     *
+     * @return self
+=======
+>>>>>>> origin
      */
     public function setType(string $value): self
     {
@@ -102,6 +126,13 @@ class Numbering extends AbstractStyle
 
     /**
      * Set multilevel type.
+<<<<<<< HEAD
+     *
+     * @param array $values
+     *
+     * @return self
+=======
+>>>>>>> origin
      */
     public function setLevels(array $values): self
     {

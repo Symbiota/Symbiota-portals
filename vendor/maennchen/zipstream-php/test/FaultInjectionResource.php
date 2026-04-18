@@ -25,7 +25,11 @@ class FaultInjectionResource
         return fopen(self::NAME . '://foobar', 'rw+', false, self::createStreamContext($injectFaults));
     }
 
+<<<<<<< HEAD
+    public function stream_open(string $path, string $mode, int $options, ?string &$opened_path = null): bool
+=======
     public function stream_open(string $path, string $mode, int $options, string &$opened_path = null): bool
+>>>>>>> origin
     {
         $options = stream_context_get_options($this->context);
 

@@ -46,9 +46,15 @@ class WordCloud{
 
 		$langTag = '';
 		if(!empty($GLOBALS['LANG_TAG'])) $langTag = $GLOBALS['LANG_TAG'];
+<<<<<<< HEAD
+		if($langTag != 'en' && file_exists($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/WordCloud.' . $langTag . '.php'))
+			include_once($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/WordCloud.' . $langTag . '.php');
+		else include_once($GLOBALS['SERVER_ROOT'] . '/content/lang/classes/WordCloud.en.php');
+=======
 
 		Language::load('classes/WordCloud');
 
+>>>>>>> origin
 		$this->LANG = $LANG;
 	}
 

@@ -205,8 +205,13 @@ class ChecklistManager extends Manager{
 	public function getTaxaList($pageNumber = 1,$retLimit = 500){
 		if(!$this->clid && !$this->dynClid) return array();
 		//Get species list
+<<<<<<< HEAD
+		$speciesPrev="";
+		$taxonPrev="";
+=======
 		$speciesPrev = '';
 		$taxonPrev = '';
+>>>>>>> origin
 		$genusCntArr = Array();
 		$familyCntArr = Array();
 		$speciesRankNeededArr = array();
@@ -232,10 +237,17 @@ class ChecklistManager extends Manager{
 				$taxonTokens = $newArr;
 			}
 			if(!$retLimit || ($this->taxaCount >= (($pageNumber-1)*$retLimit) && $this->taxaCount <= ($pageNumber)*$retLimit)){
+<<<<<<< HEAD
+			    if(isset($row->morphospecies) && $row->morphospecies) $sciName .= ' '.$row->morphospecies;
+				elseif($row->rankid == 180) $sciName .= " sp.";
+				if($row->rankid > 220 && $this->clMetadata['type'] != 'rarespp' && !array_key_exists($row->parenttid, $this->taxaList)){
+					$this->taxaList[$row->parenttid]['taxongroup'] = '<i>'.$taxonGroup.'</i>';
+=======
 			    if(isset($row->morphospecies) && $row->morphospecies) $sciName .= ' ' . $row->morphospecies;
 				elseif($row->rankid == 180) $sciName .= ' sp.';
 				if($row->rankid > 220 && $this->clMetadata['type'] != 'rarespp' && !array_key_exists($row->parenttid, $this->taxaList)){
 					$this->taxaList[$row->parenttid]['taxongroup'] = '<i>' . $taxonGroup . '</i>';
+>>>>>>> origin
 					$this->taxaList[$row->parenttid]['family'] = $family;
 					//$this->taxaList[$row->parenttid]['clid'] = $row->clid;
 					$speciesRankNeededArr[] = $row->parenttid;
@@ -254,6 +266,15 @@ class ChecklistManager extends Manager{
 				if(isset($this->taxaList[$tid]['clid'])){
 					if($this->taxaList[$tid]['clid'] != $row->clid) $this->taxaList[$tid]['clid'] = $this->taxaList[$tid]['clid'] . ',' . $row->clid;
 				}
+<<<<<<< HEAD
+				$this->taxaList[$tid]['sciname'] = $sciName;
+				$this->taxaList[$tid]['family'] = $family;
+				$this->taxaList[$tid]['taxongroup'] = '<i>'.$taxonGroup.'</i>';
+				if(isset($this->taxaList[$tid]['clid'])){
+					if($this->taxaList[$tid]['clid'] != $row->clid) $this->taxaList[$tid]['clid'] = $this->taxaList[$tid]['clid'].','.$row->clid;
+				}
+=======
+>>>>>>> origin
 				else $this->taxaList[$tid]['clid'] = $row->clid;
 				if($this->showAuthors) $this->taxaList[$tid]['author'] = $this->cleanOutStr($row->author);
 			}
@@ -263,6 +284,17 @@ class ChecklistManager extends Manager{
 			if(!in_array($taxonTokens[0],$genusCntArr)){
 				$genusCntArr[] = $taxonTokens[0];
 			}
+<<<<<<< HEAD
+			$this->filterArr[$taxonTokens[0]] = "";
+			if(count($taxonTokens) > 1 && $taxonTokens[0]." ".$taxonTokens[1] != $speciesPrev){
+				$this->speciesCount++;
+				$speciesPrev = $taxonTokens[0]." ".$taxonTokens[1];
+			}
+			if(!$taxonPrev || strpos($sciName,$taxonPrev) === false){
+				$this->taxaCount++;
+			}
+			$taxonPrev = implode(" ",$taxonTokens);
+=======
 			$this->filterArr[$taxonTokens[0]] = '';
 			if(count($taxonTokens) > 1 && $taxonTokens[0] . ' ' . $taxonTokens[1] != $speciesPrev){
 				$this->speciesCount++;
@@ -272,6 +304,7 @@ class ChecklistManager extends Manager{
 				$this->taxaCount++;
 			}
 			$taxonPrev = implode(' ', $taxonTokens);
+>>>>>>> origin
 		}
 		$this->familyCount = count($familyCntArr);
 		$this->genusCount = count($genusCntArr);
@@ -332,7 +365,11 @@ class ChecklistManager extends Manager{
 			if($this->showSynonyms) $this->setSynonyms();
 			if($speciesRankNeededArr && $this->clMetadata['type'] != 'rarespp'){
 				//Get species ranked taxa that are not explicited linked into checklist
+<<<<<<< HEAD
+				$sql = 'SELECT tid, sciname, author FROM taxa WHERE tid IN('.implode(',',$speciesRankNeededArr).')';
+=======
 				$sql = 'SELECT tid, sciname, author FROM taxa WHERE rankid = 220 AND tid IN('.implode(',', $speciesRankNeededArr).')';
+>>>>>>> origin
 				$rs = $this->conn->query($sql);
 				while($r = $rs->fetch_object()){
 					$this->taxaList[$r->tid]['sciname'] = $r->sciname;
@@ -362,7 +399,11 @@ class ChecklistManager extends Manager{
 					FROM media m INNER JOIN omoccurrences o ON m.occid = o.occid
 					INNER JOIN fmvouchers v ON o.occid = v.occid
 					INNER JOIN fmchklsttaxalink cl ON v.clTaxaID = cl.clTaxaID
+<<<<<<< HEAD
+					WHERE (cl.clid = '.$clidStr.') AND (m.tid IN('.implode(',',array_keys($this->taxaList)).'))
+=======
 					WHERE (cl.clid IN('.$clidStr.')) AND (m.tid IN('.implode(',',array_keys($this->taxaList)).'))
+>>>>>>> origin
 					ORDER BY m.sortOccurrence, m.sortSequence';
 				$matchedArr = $this->setImageSubset($sql);
 			}
@@ -454,6 +495,11 @@ class ChecklistManager extends Manager{
 		}
 	}
 
+<<<<<<< HEAD
+  public function getExternalVoucherArr(){
+		$externalVoucherArr = array();
+		if($this->taxaList){
+=======
   /**
    * Gets all external vouchers, currently only supports iNaturalist.
    * If given a $tid param then only get vouchers associated to that tid.
@@ -467,12 +513,39 @@ class ChecklistManager extends Manager{
 
 		if(is_numeric($tid) || $this->taxaList) {
 			$taxaList = is_numeric($tid)? [ $tid ]: array_keys($this->taxaList);
+>>>>>>> origin
 			$clidStr = $this->clid;
 			if($this->childClidArr){
 				$clidStr .= ','.implode(',',array_keys($this->childClidArr));
 			}
 			$sql = 'SELECT clCoordID, clid, tid, sourceIdentifier, referenceUrl, dynamicProperties
 				FROM fmchklstcoordinates
+<<<<<<< HEAD
+				WHERE (clid IN ('.$clidStr.')) AND (tid IN('.implode(',',array_keys($this->taxaList)).')) AND sourceName = "EXTERNAL_VOUCHER"';
+			$rs = $this->conn->query($sql);
+			while ($r = $rs->fetch_object()){
+				$dynPropArr = json_decode($r->dynamicProperties);
+				foreach($dynPropArr as $vouch) {
+					$displayStr = '';
+					if(!empty($vouch->user)) $displayStr = $vouch->user;
+					if(strlen($displayStr) > 25){
+						//Collector string is too big, thus reduce
+						$strPos = strpos($displayStr,';');
+						if(!$strPos) $strPos = strpos($displayStr,',');
+						if(!$strPos) $strPos = strpos($displayStr,' ',10);
+						if($strPos) $displayStr = substr($displayStr,0,$strPos).'...';
+					}
+					if($vouch->date) $displayStr .= ' '.$vouch->date;
+					if(!trim($displayStr)) $displayStr = 'undefined voucher';
+					$displayStr .= ' ['.$vouch->repository.($vouch->id?'-'.$vouch->id:'').']';
+					$externalVoucherArr[$r->tid][$r->clCoordID]['display'] = trim($displayStr);
+					$url = 'https://www.inaturalist.org/observations/'.$r->sourceIdentifier;
+					$externalVoucherArr[$r->tid][$r->clCoordID]['url'] = $url;
+				}
+			}
+			$rs->free();
+		}
+=======
 				WHERE (clid IN (' . $clidStr . ')) AND (tid IN(' . implode(',', $taxaList) . ')) AND sourceName = "EXTERNAL_VOUCHER"';
 
 			$rs = $this->conn->query($sql);
@@ -498,6 +571,7 @@ class ChecklistManager extends Manager{
 			$rs->free();
 		}
 
+>>>>>>> origin
 		return $externalVoucherArr;
 	}
 
@@ -594,6 +668,17 @@ class ChecklistManager extends Manager{
 			if($this->childClidArr){
 				$clidStr .= ','.implode(',',array_keys($this->childClidArr));
 			}
+<<<<<<< HEAD
+			$this->basicSql = 'SELECT t.tid, ctl.clid, t.sciname, t.author, ctl.morphospecies, t.unitname1, t.rankid, ctl.habitat, ctl.abundance, ctl.notes, ctl.source, ts.parenttid, ';
+			if($this->thesFilter){
+				$this->basicSql .= 'ts2.family FROM taxa t INNER JOIN taxstatus ts ON t.tid = ts.tidaccepted '.
+					'INNER JOIN fmchklsttaxalink ctl ON ts.tid = ctl.tid '.
+					'INNER JOIN taxstatus ts2 ON ts.tidaccepted = ts2.tid '.
+			  		'WHERE (ts.taxauthid = '.$this->thesFilter.') AND (ctl.clid IN ('.$clidStr.')) ';
+			}
+			else{
+				$this->basicSql .= 'IFNULL(ctl.familyoverride,ts.family) AS family FROM taxa t INNER JOIN fmchklsttaxalink ctl ON t.tid = ctl.tid '.
+=======
 			$this->basicSql = 'SELECT t.tid, ctl.clid, t.sciname, t.author, ctl.morphospecies, t.unitname1, t.rankid, ctl.habitat, ctl.abundance, ctl.notes, ctl.source, ';
 			if($this->thesFilter){
 				$this->basicSql .= 'ts2.parenttid, ts2.family FROM taxa t INNER JOIN taxstatus ts ON t.tid = ts.tidaccepted
@@ -603,6 +688,7 @@ class ChecklistManager extends Manager{
 			}
 			else{
 				$this->basicSql .= 'ts.parenttid, IFNULL(ctl.familyoverride,ts.family) AS family FROM taxa t INNER JOIN fmchklsttaxalink ctl ON t.tid = ctl.tid '.
+>>>>>>> origin
 					'INNER JOIN taxstatus ts ON t.tid = ts.tid '.
 			  		'WHERE (ts.taxauthid = 1) AND (ctl.clid IN ('.$clidStr.')) ';
 			}
@@ -779,6 +865,8 @@ class ChecklistManager extends Manager{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+=======
 	//Misc support functions
 	public function getVoucherCount(){
 		$voucherCnt = 0;
@@ -795,6 +883,7 @@ class ChecklistManager extends Manager{
 		return $voucherCnt;
 	}
 
+>>>>>>> origin
 	//Setters and getters
 	public function setThesFilter($filt){
 		if(is_numeric($filt)) $this->thesFilter = $filt;

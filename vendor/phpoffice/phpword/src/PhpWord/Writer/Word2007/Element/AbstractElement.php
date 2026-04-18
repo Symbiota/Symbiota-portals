@@ -34,7 +34,11 @@ abstract class AbstractElement
     /**
      * XML writer.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Shared\XMLWriter
+=======
      * @var XMLWriter
+>>>>>>> origin
      */
     private $xmlWriter;
 
@@ -64,6 +68,11 @@ abstract class AbstractElement
 
     /**
      * Create new instance.
+<<<<<<< HEAD
+     *
+     * @param bool $withoutP
+=======
+>>>>>>> origin
      */
     public function __construct(XMLWriter $xmlWriter, Element $element, bool $withoutP = false)
     {
@@ -75,7 +84,11 @@ abstract class AbstractElement
     /**
      * Get XML Writer.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Shared\XMLWriter
+=======
      * @return XMLWriter
+>>>>>>> origin
      */
     protected function getXmlWriter()
     {

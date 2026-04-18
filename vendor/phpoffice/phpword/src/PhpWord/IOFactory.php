@@ -36,7 +36,11 @@ abstract class IOFactory
      */
     public static function createWriter(PhpWord $phpWord, $name = 'Word2007')
     {
+<<<<<<< HEAD
+        if ($name !== 'WriterInterface' && !in_array($name, ['ODText', 'RTF', 'Word2007', 'HTML', 'PDF'], true)) {
+=======
         if ($name !== 'WriterInterface' && !in_array($name, ['ODText', 'RTF', 'Word2007', 'HTML', 'PDF', 'EPub3'], true)) {
+>>>>>>> origin
             throw new Exception("\"{$name}\" is not a valid writer.");
         }
 
@@ -64,7 +68,11 @@ abstract class IOFactory
      * @param string $name
      * @param PhpWord $phpWord
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Reader\ReaderInterface|\PhpOffice\PhpWord\Writer\WriterInterface
+=======
      * @return ReaderInterface|WriterInterface
+>>>>>>> origin
      */
     private static function createObject($type, $name, $phpWord = null)
     {
@@ -82,7 +90,11 @@ abstract class IOFactory
      * @param string $filename The name of the file
      * @param string $readerName
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\PhpWord $phpWord
+=======
      * @return PhpWord $phpWord
+>>>>>>> origin
      */
     public static function load($filename, $readerName = 'Word2007')
     {
@@ -101,7 +113,11 @@ abstract class IOFactory
      */
     public static function extractVariables(string $filename, string $readerName = 'Word2007'): array
     {
+<<<<<<< HEAD
+        /** @var \PhpOffice\PhpWord\Reader\ReaderInterface $reader */
+=======
         /** @var ReaderInterface $reader */
+>>>>>>> origin
         $reader = self::createReader($readerName);
         $document = $reader->load($filename);
         $extractedVariables = [];

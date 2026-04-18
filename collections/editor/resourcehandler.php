@@ -25,7 +25,11 @@ if($occid && $SYMB_UID){
 		elseif($action == 'editAssociation'){
 			$occManager->updateAssociation($_POST);
 		}
+<<<<<<< HEAD
+		elseif(array_key_exists('delassocid', $_POST)){
+=======
 		elseif($action == 'submitDeleteAssociation'){
+>>>>>>> origin
 			$occManager->deleteAssociation($_POST['delassocid']);
 		}
 	}

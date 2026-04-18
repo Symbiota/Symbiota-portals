@@ -38,6 +38,7 @@ abstract class AbstractElement
 {
     /**
      * Parent writer.
+<<<<<<< HEAD
      *
      * @var WriterRTF
      */
@@ -46,8 +47,50 @@ abstract class AbstractElement
     /**
      * Element.
      *
+     * @var \PhpOffice\PhpWord\Element\AbstractElement
+     */
+    protected $element;
+
+    /**
+     * Without paragraph.
+     *
+     * @var bool
+     */
+    protected $withoutP = false;
+
+    /**
+     * Write element.
+     *
+     * @return string
+     */
+    abstract public function write();
+
+    /**
+     * Font style.
+=======
+>>>>>>> origin
+     *
+     * @var WriterRTF
+     */
+<<<<<<< HEAD
+    protected $fontStyle;
+
+    /**
+     * Paragraph style.
+=======
+    protected $parentWriter;
+
+    /**
+     * Element.
+>>>>>>> origin
+     *
      * @var Element
      */
+<<<<<<< HEAD
+    protected $paragraphStyle;
+
+    /**
+=======
     protected $element;
 
     /**
@@ -79,6 +122,7 @@ abstract class AbstractElement
     protected $paragraphStyle;
 
     /**
+>>>>>>> origin
      * @var \PhpOffice\PhpWord\Escaper\EscaperInterface
      */
     protected $escaper;

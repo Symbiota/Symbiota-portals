@@ -29,7 +29,11 @@ class ListItem extends AbstractElement
     /**
      * Element style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\ListItem
+=======
      * @var ?ListItemStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -72,7 +76,11 @@ class ListItem extends AbstractElement
     /**
      * Get style.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\ListItem
+=======
      * @return ?ListItemStyle
+>>>>>>> origin
      */
     public function getStyle()
     {

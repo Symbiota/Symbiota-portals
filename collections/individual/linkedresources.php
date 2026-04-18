@@ -1,6 +1,14 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceIndividual.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/individual/linkedresources.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/individual/linkedresources.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/individual/linkedresources.en.php');
+header('Content-Type: text/html; charset=' . $CHARSET);
+
+$indManager = new OccurrenceIndividual();
+
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/individual/linkedresources');
@@ -9,6 +17,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 
 $indManager = new OccurrenceIndividual();
 
+>>>>>>> origin
 $occid = isset($_GET['occid']) ? $indManager->sanitizeInt($_GET['occid']) : 0;
 $tid = array_key_exists('tid', $_REQUEST) ? $indManager->sanitizeInt($_REQUEST['tid']) : 0;
 $clid = array_key_exists('clid', $_REQUEST) ? $indManager->sanitizeInt($_REQUEST['clid']) : 0;
@@ -153,4 +162,8 @@ $indManager->setOccid($occid);
 		echo '</fieldset>';
 	}
 	?>
+<<<<<<< HEAD
 </div>
+=======
+</div>
+>>>>>>> origin

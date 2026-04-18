@@ -37,14 +37,22 @@ class Text extends AbstractElement
     /**
      * Text style.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Style\Font|string
+=======
      * @var Font|string
+>>>>>>> origin
      */
     protected $fontStyle;
 
     /**
      * Paragraph style.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Style\Paragraph|string
+=======
      * @var Paragraph|string
+>>>>>>> origin
      */
     protected $paragraphStyle;
 
@@ -65,10 +73,17 @@ class Text extends AbstractElement
     /**
      * Set Text style.
      *
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Font|string $style
+     * @param array|\PhpOffice\PhpWord\Style\Paragraph|string $paragraphStyle
+     *
+     * @return \PhpOffice\PhpWord\Style\Font|string
+=======
      * @param array|Font|string $style
      * @param array|Paragraph|string $paragraphStyle
      *
      * @return Font|string
+>>>>>>> origin
      */
     public function setFontStyle($style = null, $paragraphStyle = null)
     {
@@ -91,7 +106,11 @@ class Text extends AbstractElement
     /**
      * Get Text style.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Font|string
+=======
      * @return Font|string
+>>>>>>> origin
      */
     public function getFontStyle()
     {
@@ -101,9 +120,15 @@ class Text extends AbstractElement
     /**
      * Set Paragraph style.
      *
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Paragraph|string $style
+     *
+     * @return \PhpOffice\PhpWord\Style\Paragraph|string
+=======
      * @param array|Paragraph|string $style
      *
      * @return Paragraph|string
+>>>>>>> origin
      */
     public function setParagraphStyle($style = null)
     {
@@ -124,7 +149,11 @@ class Text extends AbstractElement
     /**
      * Get Paragraph style.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Paragraph|string
+=======
      * @return Paragraph|string
+>>>>>>> origin
      */
     public function getParagraphStyle()
     {
@@ -147,6 +176,11 @@ class Text extends AbstractElement
 
     /**
      * Get Text content.
+<<<<<<< HEAD
+     *
+     * @return ?string
+=======
+>>>>>>> origin
      */
     public function getText(): ?string
     {

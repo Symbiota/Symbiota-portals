@@ -138,8 +138,11 @@ class TPEditorManager extends Manager {
 		return $synArr;
 	}
 
+<<<<<<< HEAD
+=======
 	/*
 	 * Deprecation of Taxon Profile Editors ability to adjust display order of synonyms pending user input
+>>>>>>> origin
 	public function editSynonymSort($synSort){
 		$status = "";
 		foreach($synSort as $editKey => $editValue){
@@ -318,9 +321,13 @@ class TPEditorManager extends Manager {
 		$rs = $this->conn->query($sql);
 		while($r = $rs->fetch_object()){
 			$retArr[$r->langname] = $r->langid;
+<<<<<<< HEAD
+			$retArr[$r->iso639_1] = $r->langid;
+=======
 			if (!empty($r->iso639_1)) {
 				$retArr[$r->iso639_1] = $r->langid;
 			}
+>>>>>>> origin
 		}
 		$rs->free();
 		return $retArr;

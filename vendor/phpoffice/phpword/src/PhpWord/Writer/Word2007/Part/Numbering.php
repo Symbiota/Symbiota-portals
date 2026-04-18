@@ -191,6 +191,10 @@ class Numbering extends AbstractPart
      */
     private function getRandomHexNumber($length = 8)
     {
+<<<<<<< HEAD
+        return strtoupper(substr(md5(mt_rand()), 0, $length));
+=======
         return strtoupper((string) substr(md5((string) mt_rand()), 0, $length));
+>>>>>>> origin
     }
 }

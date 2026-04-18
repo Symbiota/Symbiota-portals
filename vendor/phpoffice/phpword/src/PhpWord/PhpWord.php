@@ -48,7 +48,11 @@ class PhpWord
     /**
      * Collection of sections.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Element\Section[]
+=======
      * @var Section[]
+>>>>>>> origin
      */
     private $sections = [];
 
@@ -161,9 +165,15 @@ class PhpWord
 
     /**
      * Get compatibility.
+<<<<<<< HEAD
+     *
+     * @return \PhpOffice\PhpWord\Metadata\Compatibility
+     *
+=======
      *
      * @return Metadata\Compatibility
      *
+>>>>>>> origin
      * @since 0.12.0
      */
     public function getCompatibility()
@@ -173,9 +183,15 @@ class PhpWord
 
     /**
      * Get compatibility.
+<<<<<<< HEAD
+     *
+     * @return \PhpOffice\PhpWord\Metadata\Settings
+     *
+=======
      *
      * @return Metadata\Settings
      *
+>>>>>>> origin
      * @since 0.14.0
      */
     public function getSettings()
@@ -195,6 +211,28 @@ class PhpWord
 
     /**
      * Returns the section at the requested position.
+<<<<<<< HEAD
+     *
+     * @param int $index
+     *
+     * @return null|\PhpOffice\PhpWord\Element\Section
+     */
+    public function getSection($index)
+    {
+        if (array_key_exists($index, $this->sections)) {
+            return $this->sections[$index];
+        }
+
+        return null;
+    }
+
+    /**
+     * Create new section.
+     *
+     * @param null|array|string $style
+     *
+     * @return \PhpOffice\PhpWord\Element\Section
+=======
      *
      * @param int $index
      *
@@ -215,6 +253,7 @@ class PhpWord
      * @param null|array|string $style
      *
      * @return Section
+>>>>>>> origin
      */
     public function addSection($style = null)
     {
@@ -258,6 +297,8 @@ class PhpWord
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Get default asian font name.
      */
     public function getDefaultAsianFontName(): string
@@ -292,6 +333,7 @@ class PhpWord
     }
 
     /**
+>>>>>>> origin
      * Get default font size.
      *
      * @return int
@@ -316,7 +358,11 @@ class PhpWord
      *
      * @param array $styles Paragraph style definition
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Paragraph
+=======
      * @return Style\Paragraph
+>>>>>>> origin
      */
     public function setDefaultParagraphStyle($styles)
     {

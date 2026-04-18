@@ -143,11 +143,14 @@ class BigInteger implements \JsonSerializable
                 ['PHP64', ['DefaultEngine']],
                 ['PHP32', ['DefaultEngine']]
             ];
+<<<<<<< HEAD
+=======
             // per https://phpseclib.com/docs/speed PHP 8.4.0+ _significantly_ sped up BCMath
             if (version_compare(PHP_VERSION, '8.4.0') >= 0) {
                 $engines[1][0] = 'BCMath';
                 $engines[2][0] = 'PHP64';
             }
+>>>>>>> origin
 
             foreach ($engines as $engine) {
                 try {
@@ -338,10 +341,19 @@ class BigInteger implements \JsonSerializable
      */
     public function extendedGCD(BigInteger $n)
     {
+<<<<<<< HEAD
+        extract($this->value->extendedGCD($n->value));
+        /**
+         * @var BigInteger $gcd
+         * @var BigInteger $x
+         * @var BigInteger $y
+         */
+=======
         $extended = $this->value->extendedGCD($n->value);
         $gcd = $extended['gcd'];
         $x = $extended['x'];
         $y = $extended['y'];
+>>>>>>> origin
         return [
             'gcd' => new static($gcd),
             'x' => new static($x),
@@ -402,7 +414,11 @@ class BigInteger implements \JsonSerializable
      *
      * Will be called, automatically, when serialize() is called on a BigInteger object.
      *
+<<<<<<< HEAD
+     * __sleep() / __wakeup() have been around since PHP 4.0
+=======
      * __sleep() / __wakeup() have been around since PHP 4.0 but were deprecated in PHP 8.5
+>>>>>>> origin
      *
      * \Serializable was introduced in PHP 5.1 and deprecated in PHP 8.1:
      * https://wiki.php.net/rfc/phase_out_serializable
@@ -438,6 +454,8 @@ class BigInteger implements \JsonSerializable
     }
 
     /**
+<<<<<<< HEAD
+=======
      *  __serialize() magic method
      *
      * @see self::__unserialize()
@@ -470,6 +488,7 @@ class BigInteger implements \JsonSerializable
     }
 
     /**
+>>>>>>> origin
      * JSON Serialize
      *
      * Will be called, automatically, when json_encode() is called on a BigInteger object.
@@ -652,9 +671,16 @@ class BigInteger implements \JsonSerializable
         self::initialize_static_variables();
 
         $class = self::$mainEngine;
+<<<<<<< HEAD
+        extract($class::minMaxBits($bits));
+        /** @var BigInteger $min
+         * @var BigInteger $max
+         */
+=======
         $minMax = $class::minMaxBits($bits);
         $min = $minMax['min'];
         $max = $minMax['max'];
+>>>>>>> origin
         return [
             'min' => new static($min),
             'max' => new static($max)

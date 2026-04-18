@@ -134,6 +134,10 @@ class OccurrenceCleaner extends Manager{
 						//Skip records until start is reached
 						if($cnt >= $start){
 							$sqlFragment = $cnt.' AS dupid FROM omoccurrences WHERE occid IN('.implode(',',$dupArr).') ';
+<<<<<<< HEAD
+							//echo $sql;
+=======
+>>>>>>> origin
 							$retArr = array_merge($retArr,$this->getDuplicates($sqlFragment));
 						}
 						if($cnt > ($start+200)) break 3;
@@ -335,6 +339,14 @@ class OccurrenceCleaner extends Manager{
 	//Bad countries
 	public function getBadCountryCount(){
 		$retCnt = 0;
+<<<<<<< HEAD
+		$sql = 'SELECT COUNT(DISTINCT country) AS cnt
+			FROM omoccurrences
+			WHERE country IS NOT NULL AND collid = '.$this->collid.' AND country NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 50)';
+		$rs = $this->conn->query($sql);
+		if($r = $rs->fetch_object()){
+			$retCnt = $r->cnt;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT COUNT(DISTINCT country) AS cnt
 				FROM omoccurrences
@@ -344,12 +356,22 @@ class OccurrenceCleaner extends Manager{
 				$retCnt = $r->cnt;
 			}
 			$rs->free();
+>>>>>>> origin
 		}
 		return $retCnt;
 	}
 
 	public function getBadCountryArr(){
 		$retArr = array();
+<<<<<<< HEAD
+		$sql = 'SELECT country, count(occid) as cnt
+			FROM omoccurrences
+			WHERE country IS NOT NULL AND collid = '.$this->collid.' AND country NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 50)
+			GROUP BY country';
+		$rs = $this->conn->query($sql);
+		while($r = $rs->fetch_object()){
+			$retArr[$r->country] = $r->cnt;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT country, count(occid) as cnt
 				FROM omoccurrences
@@ -361,6 +383,7 @@ class OccurrenceCleaner extends Manager{
 			}
 			$rs->free();
 			$this->featureCount = count($retArr);
+>>>>>>> origin
 		}
 		return $retArr;
 	}
@@ -393,6 +416,12 @@ class OccurrenceCleaner extends Manager{
 
 	public function getNullCountryNotStateCount(){
 		$retCnt = 0;
+<<<<<<< HEAD
+		$sql = 'SELECT COUNT(DISTINCT stateprovince) AS cnt FROM omoccurrences WHERE (collid = '.$this->collid.') AND (country IS NULL) AND (stateprovince IS NOT NULL)';
+		$rs = $this->conn->query($sql);
+		if($r = $rs->fetch_object()){
+			$retCnt = $r->cnt;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT COUNT(DISTINCT stateprovince) AS cnt FROM omoccurrences WHERE (collid = '.$this->collid.') AND (country IS NULL) AND (stateprovince IS NOT NULL)';
 			$rs = $this->conn->query($sql);
@@ -400,6 +429,7 @@ class OccurrenceCleaner extends Manager{
 				$retCnt = $r->cnt;
 			}
 			$rs->free();
+>>>>>>> origin
 		}
 		return $retCnt;
 	}
@@ -422,6 +452,39 @@ class OccurrenceCleaner extends Manager{
 	}
 
 	//States cleaning functions
+<<<<<<< HEAD
+	public function getBadStateCount($country = ''){
+		$retCnt = array();
+		$sql = 'SELECT COUNT(DISTINCT stateprovince) as cnt
+			FROM omoccurrences WHERE (country IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 50)) AND (stateprovince IS NOT NULL)
+			AND (collid = '.$this->collid.') AND (stateprovince NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 60)) ';
+		if($country) $sql .= 'AND country = "'.$this->cleanInStr($country).'" ';
+		$rs = $this->conn->query($sql);
+		while($r = $rs->fetch_object()){
+			$retCnt = $r->cnt;
+		}
+		$rs->free();
+		return $retCnt;
+	}
+
+	public function getBadStateArr(){
+		$retArr = array();
+		$sql = 'SELECT country, stateprovince, count(DISTINCT occid) as cnt
+			FROM omoccurrences
+			WHERE (country IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 50)) AND (stateprovince IS NOT NULL)
+			AND (collid = '.$this->collid.') AND (stateprovince NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 60))
+			GROUP BY stateprovince ';
+		$rs = $this->conn->query($sql);
+		$cnt = 0;
+		while($r = $rs->fetch_object()){
+			$retArr[$r->country][ucwords(strtolower($r->stateprovince))] = $r->cnt;
+			$cnt++;
+		}
+		$rs->free();
+		$this->featureCount = $cnt;
+		ksort($retArr);
+		return $retArr;
+=======
 	public function getBadStateCount():int{
 		$cnt = 0;
 		if(is_numeric($this->collid)){
@@ -476,6 +539,7 @@ class OccurrenceCleaner extends Manager{
 			WHERE gs.geoLevel = 60 AND gs.parentID = ' . ($countryID ? $countryID : 'g.geoThesID') . ' AND gs.geoTerm = o.stateProvince
 		)';
 		return $sqlFrag;
+>>>>>>> origin
 	}
 
 	public function getGoodStateArr($includeCounties = false){
@@ -512,6 +576,12 @@ class OccurrenceCleaner extends Manager{
 
 	public function getNullStateNotCountyCount(){
 		$retCnt = 0;
+<<<<<<< HEAD
+		$sql = 'SELECT COUNT(DISTINCT county) AS cnt FROM omoccurrences WHERE (collid = '.$this->collid.') AND (country IS NOT NULL) AND (stateprovince IS NULL) AND (county IS NOT NULL)';
+		$rs = $this->conn->query($sql);
+		if($r = $rs->fetch_object()){
+			$retCnt = $r->cnt;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT COUNT(DISTINCT county) AS cnt FROM omoccurrences WHERE (collid = '.$this->collid.') AND (country IS NOT NULL) AND (stateprovince IS NULL) AND (county IS NOT NULL)';
 			$rs = $this->conn->query($sql);
@@ -519,12 +589,23 @@ class OccurrenceCleaner extends Manager{
 				$retCnt = $r->cnt;
 			}
 			$rs->free();
+>>>>>>> origin
 		}
 		return $retCnt;
 	}
 
 	public function getNullStateNotCountyArr(){
 		$retArr = array();
+<<<<<<< HEAD
+		$sql = 'SELECT country, county, COUNT(occid) AS cnt FROM omoccurrences
+			WHERE (collid = '.$this->collid.') AND (stateprovince IS NULL) AND (county IS NOT NULL) AND (country IS NOT NULL)
+			GROUP BY county';
+		$rs = $this->conn->query($sql);
+		$cnt = 0;
+		while($r = $rs->fetch_object()){
+			$retArr[strtoupper($r->country)][$r->county] = $r->cnt;
+			$cnt++;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT country, county, COUNT(occid) AS cnt FROM omoccurrences
 				WHERE (collid = '.$this->collid.') AND (stateprovince IS NULL) AND (county IS NOT NULL) AND (country IS NOT NULL)
@@ -538,11 +619,23 @@ class OccurrenceCleaner extends Manager{
 			$rs->free();
 			$this->featureCount = $cnt;
 			ksort($retArr);
+>>>>>>> origin
 		}
 		return $retArr;
 	}
 
 	//Bad Counties
+<<<<<<< HEAD
+	public function getBadCountyCount($state = ''){
+		$retCnt = array();
+		$sql = 'SELECT COUNT(DISTINCT county) as cnt
+			FROM omoccurrences WHERE (county IS NOT NULL) AND (country = "USA") AND (stateprovince IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 60)) '.
+			'AND (collid = '.$this->collid.') AND (county NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 70)) ';
+		if($state) $sql .= 'AND stateprovince = "'.$this->cleanInStr($state).'" ';
+		$rs = $this->conn->query($sql);
+		if($r = $rs->fetch_object()){
+			$retCnt = $r->cnt;
+=======
 	public function getBadCountyCount():int{
 		$cnt = 0;
 		if(is_numeric($this->collid)){
@@ -552,6 +645,7 @@ class OccurrenceCleaner extends Manager{
 				$cnt = $r->cnt;
 			}
 			$rs->free();
+>>>>>>> origin
 		}
 		return $cnt;
 	}
@@ -559,6 +653,17 @@ class OccurrenceCleaner extends Manager{
 	public function getBadCountyCountArr(){
 		//Returns list of countries and record counts that have bad counties
 		$retArr = array();
+<<<<<<< HEAD
+		$sql = 'SELECT country, stateprovince, county, count(occid) as cnt
+			FROM omoccurrences WHERE (county IS NOT NULL) AND (country = "USA") AND (stateprovince IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 60))
+			AND (collid = '.$this->collid.') AND (county NOT IN(SELECT geoterm FROM geographicthesaurus WHERE geolevel = 70))
+			GROUP BY country, stateprovince, county ';
+		$rs = $this->conn->query($sql);
+		$cnt = 0;
+		while($r = $rs->fetch_object()){
+			$retArr[strtoupper($r->country)][ucwords(strtolower($r->stateprovince))][$r->county] = $r->cnt;
+			$cnt++;
+=======
 		if(is_numeric($this->collid)){
 			$sql = 'SELECT g.geoThesID, o.country, COUNT(DISTINCT o.stateProvince, o.county) as cnt ' . $this->getBadCountyBaseSql() . ' GROUP BY g.geoThesID, o.country';
 			$rs = $this->conn->query($sql);
@@ -566,10 +671,13 @@ class OccurrenceCleaner extends Manager{
 				$retArr[$r->geoThesID . ':' . ucwords($r->country)] = $r->cnt;
 			}
 			$rs->free();
+>>>>>>> origin
 		}
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+=======
 	public function getBadCountyArr($countryID){
 		$retArr = array();
 		if(is_numeric($this->collid)){
@@ -605,6 +713,7 @@ class OccurrenceCleaner extends Manager{
 		return $sqlFrag;
 	}
 
+>>>>>>> origin
 	public function getGoodCountyArr(){
 		$retArr = array();
 		$sql = 'SELECT DISTINCT g1.geoterm as stateName, REPLACE(g2.geoterm," County","") as countyName
@@ -654,6 +763,10 @@ class OccurrenceCleaner extends Manager{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+	//Coordinate field verifier
+	public function getCoordStats(){
+=======
 	/**
 	 * Gets the counts for occurrences without points, with points, no points with
 	 * verbatim point, no points without verbatim points. Operates on collId set in instance
@@ -661,6 +774,7 @@ class OccurrenceCleaner extends Manager{
 	 * @return Array Uses following structure [?coord, ?noCoord, ?noCoord_verbatim, ?noCoord_noVerbatim]
 	 **/
 	public function getCoordStats(): Array {
+>>>>>>> origin
 		$retArr = array();
 		$pointSql = 'SELECT count(*) AS cnt FROM omoccurrences o
 			INNER JOIN omoccurpoints p on p.occid = o.occid
@@ -711,6 +825,78 @@ class OccurrenceCleaner extends Manager{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+	public function verifyCoordAgainstPolitical($queryCountry){
+		set_time_limit(3600);
+		$recCnt = 0;
+		$googleCallCnt = 0;
+		echo '<ul>';
+		echo '<li>Starting coordinate crawl...</li>';
+		$sql = 'SELECT occid, country, stateprovince, county, decimallatitude, decimallongitude '.
+			'FROM omoccurrences '.
+			'WHERE (collid IN('.$this->collid.')) AND (decimallatitude IS NOT NULL) AND (decimallongitude IS NOT NULL) AND (country = "'.$queryCountry.'") '.
+			'AND (occid NOT IN(SELECT occid FROM omoccurverification WHERE category = "coordinate")) '.
+			'ORDER BY decimallatitude, decimallongitude '.
+			'LIMIT 50000';
+		$rs = $this->conn->query($sql);
+		$previousCoordStr = '';
+		while($r = $rs->fetch_object()){
+			echo '<li>Checking occurrence <a href="../editor/occurrenceeditor.php?occid=' . htmlspecialchars($r->occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" target="_blank">' . htmlspecialchars($r->occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a>...</li>';
+			$recCnt++;
+			if($previousCoordStr != $r->decimallatitude.','.$r->decimallongitude){
+				$googleUnits = $this->callGoogleApi($r->decimallatitude, $r->decimallongitude);
+				$googleCallCnt++;
+				$previousCoordStr = $r->decimallatitude.','.$r->decimallongitude;
+			}
+			$ranking = 0;
+			$protocolStr = '';
+			if(isset($googleUnits['country'])){
+				if($this->countryUnitsEqual($googleUnits['country'],$r->country)){
+					$ranking = 2;
+					$protocolStr = 'GoogleApiMatch:countryEqual';
+					if(isset($googleUnits['state'])){
+						if($this->unitsEqual($googleUnits['state'], $r->stateprovince)){
+							$ranking = 5;
+							$protocolStr = 'GoogleApiMatch:stateEqual';
+							if(isset($googleUnits['county'])){
+								if($this->countyUnitsEqual($googleUnits['county'], $r->county)){
+									$ranking = 7;
+									$protocolStr = 'GoogleApiMatch:countyEqual';
+								}
+								else{
+									echo '<li style="margin-left:15px;">County not equal (source: '.$r->county.'; Google value: '.$googleUnits['county'].')</li>';
+								}
+							}
+							else{
+								echo '<li style="margin-left:15px;">County not provided by Google</li>';
+							}
+						}
+						else{
+							echo '<li style="margin-left:15px;">State/Province not equal (source: '.$r->stateprovince.'; Google value: '.$googleUnits['state'].')</li>';
+						}
+					}
+					else{
+						echo '<li style="margin-left:15px;">State/Province not provided by Google</li>';
+					}
+				}
+				else{
+					echo '<li style="margin-left:15px;">Country not equal (source: '.$r->country.'; Google value: '.$googleUnits['country'].')</li>';
+				}
+			}
+			else{
+				echo '<li style="margin-left:15px;">Country not provided by Google</li>';
+			}
+			if($ranking){
+				$this->setVerification($r->occid, 'coordinate', $ranking, $protocolStr);
+				echo '<li style="margin-left:15px;">Verification status set (rank: '.$ranking.', '.$protocolStr.')</li>';
+			}
+			else{
+				echo '<li style="margin-left:15px;">Unable to set verification status</li>';
+			}
+			if($recCnt%100 == 0) echo '<div><b>Processing count: '.$recCnt.' (Google calls '.$googleCallCnt.')</b></div>';
+			flush();
+			ob_flush();
+=======
 	public function questionableRankText(int $rank): string {
 		switch($rank) {
 			case self::UNVERIFIABLE_NO_POLYGON;
@@ -725,6 +911,7 @@ class OccurrenceCleaner extends Manager{
 				return $GLOBALS['LANG']['COUNTY_DOES_NOT_MATCH_COORDS'];
 			default:
 				return $GLOBALS['LANG']['INVALID_RANK'];
+>>>>>>> origin
 		}
 	}
 

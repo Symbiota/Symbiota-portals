@@ -1,9 +1,14 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLabel.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/reports/labeldynamic.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/reports/labeldynamic.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/reports/labeldynamic.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/reports/labeldynamic');
+>>>>>>> origin
 
 $collid = $_POST['collid'];
 $hPrefix = $_POST['hprefix'];
@@ -48,7 +53,11 @@ if($outputType == 'word'){
 	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	header("content-disposition: attachment;filename=labels.doc");
 }
+<<<<<<< HEAD
+elseif($action == 'Export to CSV'){
+=======
 elseif($action == 'csvExport'){
+>>>>>>> origin
 	$labelManager->exportLabelCsvFile($_POST);
 	exit;
 }
@@ -69,9 +78,12 @@ if($SYMB_UID){
 <html lang="<?php echo $LANG_TAG ?>">
 	<head>
 		<title><?php echo $DEFAULT_TITLE . ' ' . $LANG['LABELS']; ?></title>
+<<<<<<< HEAD
+=======
 
 		<link rel="stylesheet" type="text/css" href="<?= $CSS_BASE_PATH ?>/symbiota/collections/reports/labelhelpers.css">
 
+>>>>>>> origin
 		<style type="text/css">
 			.row { display: flex; flex-wrap: nowrap; margin-left: auto; margin-right: auto;}
 			.label { page-break-before: auto; page-break-inside: avoid; }
@@ -118,6 +130,16 @@ if($SYMB_UID){
 			@media print { .controls { display: none; } }
 		</style>
 		<?php
+<<<<<<< HEAD
+		if(isset($targetLabelFormatArr['defaultCss']) && $targetLabelFormatArr['defaultCss']){
+			$cssPath = $targetLabelFormatArr['defaultCss'];
+			if(substr($cssPath,0,1) == '/' && !file_exists($cssPath)){
+				if(file_exists($SERVER_ROOT.$targetLabelFormatArr['defaultCss'])) $cssPath = $CLIENT_ROOT.$targetLabelFormatArr['defaultCss'];
+			}
+			echo '<link href="' . htmlspecialchars($cssPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" type="text/css" rel="stylesheet" />'."\n";
+		}
+=======
+>>>>>>> origin
 		if(isset($targetLabelFormatArr['customCss']) && $targetLabelFormatArr['customCss']){
 			$cssPath = $targetLabelFormatArr['customCss'];
 			if(substr($cssPath,0,1) == '/' && !file_exists($cssPath)){

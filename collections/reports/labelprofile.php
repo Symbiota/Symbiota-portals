@@ -90,6 +90,9 @@ $isGeneralObservation = (($labelManager->getMetaDataTerm('colltype') == 'General
 			*/
 			function openJsonEditorPopup(classTag){
 				activeProfileCode = classTag;
+<<<<<<< HEAD
+				let editorWindow = window.open('labeljsongui.php','scrollbars=1,toolbar=0,resizable=1,width=1000,height=700,left=20,top=20');
+=======
 
 				const container = document.querySelector(`#edit-${classTag}`);
 				const customCss = encodeURIComponent(container.querySelector('[name="customCss"]')?.value || '');
@@ -97,6 +100,7 @@ $isGeneralObservation = (($labelManager->getMetaDataTerm('colltype') == 'General
 
 				let url = `labeljsongui.php?customCss=${customCss}&customStyle=${customStyle}`;
 				let editorWindow = window.open(url, 'scrollbars=1,toolbar=0,resizable=1,width=1000,height=700,left=20,top=20');
+>>>>>>> origin
 				(editorWindow.opener == null) ? editorWindow.opener = self : '';
 				let formatId = "#json-"+classTag;
 				let currJson = $("#json-"+classTag).val();
@@ -114,7 +118,10 @@ $isGeneralObservation = (($labelManager->getMetaDataTerm('colltype') == 'General
 			fieldset legend{ font-weight:bold; }
 			textarea{ width: 800px; height: 150px }
 			input[type=text]{ width:500px }
+<<<<<<< HEAD
+=======
 			button{ display: inline; margin-top: 10px; }
+>>>>>>> origin
 			hr{ margin:15px 0px; }
 			.fieldset-block{ width:700px }
 			.field-block{ margin:3px 0px }
@@ -122,10 +129,17 @@ $isGeneralObservation = (($labelManager->getMetaDataTerm('colltype') == 'General
 			.label-inline{ font-weight: bold; }
 			.field-value{  }
 			.field-inline{  }
+<<<<<<< HEAD
+      .edit-icon{ width:13px; }
+      #preview-label{ border: 1px solid gray; min-height: 100px; padding: 0.5em; }
+      #preview-label.field-block{ line-height: 1.1rem; }
+      #preview-label>.field-block>div{ display: inline; }
+=======
 			.edit-icon{ width:13px; }
 			#preview-label{ border: 1px solid gray; min-height: 100px; padding: 0.5em; }
 			#preview-label.field-block{ line-height: 1.1rem; }
 			#preview-label>.field-block>div{ display: inline; }
+>>>>>>> origin
 		</style>
 	</head>
 	<body>
@@ -311,6 +325,15 @@ $isGeneralObservation = (($labelManager->getMetaDataTerm('colltype') == 'General
 								</div>
 							</div>
 							<div class="field-block">
+<<<<<<< HEAD
+								<div class="label">Default CSS:</div>
+								<div class="field-block">
+									<input name="defaultCss" type="text" value="<?php echo (isset($formatArr['defaultCss']) ? $formatArr['defaultCss'] : $CSS_BASE_PATH . '/symbiota/collections/reports/labelhelpers.css'); ?>" />
+								</div>
+							</div>
+							<div class="field-block">
+=======
+>>>>>>> origin
 								<div class="label">Custom CSS:</div>
 								<div class="field-block">
 									<input name="customCss" type="text" value="<?php echo (isset($formatArr['customCss'])?$formatArr['customCss']:''); ?>" />

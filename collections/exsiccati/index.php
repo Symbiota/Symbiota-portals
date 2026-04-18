@@ -1,6 +1,31 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceExsiccatae.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/exsiccati/index.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/exsiccati/index.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/exsiccati/index.en.php');
+header('Content-Type: text/html; charset='.$CHARSET);
+
+$ometid = array_key_exists('ometid',$_REQUEST) ? filter_var($_REQUEST['ometid'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$omenid = array_key_exists('omenid',$_REQUEST) ? filter_var($_REQUEST['omenid'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$occidToAdd = array_key_exists('occidtoadd',$_REQUEST) ? filter_var($_REQUEST['occidtoadd'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$searchTerm = array_key_exists('searchterm',$_POST) ? htmlspecialchars($_POST['searchterm'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '';
+$specimenOnly = array_key_exists('specimenonly',$_REQUEST) ? filter_var($_REQUEST['specimenonly'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$collId = array_key_exists('collid',$_REQUEST) ? filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$imagesOnly = array_key_exists('imagesonly',$_REQUEST) ? filter_var($_REQUEST['imagesonly'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$sortBy = array_key_exists('sortby',$_REQUEST) ? filter_var($_REQUEST['sortby'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$formSubmit = array_key_exists('formsubmit',$_REQUEST) ? htmlspecialchars($_REQUEST['formsubmit'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE):'';
+
+//Sanitation
+if(!is_numeric($ometid)) $ometid = 0;
+if(!is_numeric($omenid)) $omenid = 0;
+if(!is_numeric($occidToAdd)) $occidToAdd = 0;
+$searchTerm = htmlspecialchars($searchTerm, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+if(!is_numeric($specimenOnly)) $specimenOnly = 0;
+if(!is_numeric($collId)) $collId = 0;
+if(!is_numeric($imagesOnly)) $imagesOnly = 0;
+if(!is_numeric($sortBy)) $sortBy = 0;
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/exsiccati/index');
@@ -16,13 +41,18 @@ $collId = array_key_exists('collid',$_REQUEST) ? Sanitize::int($_REQUEST['collid
 $imagesOnly = array_key_exists('imagesonly',$_REQUEST) ? Sanitize::int($_REQUEST['imagesonly']) : 0;
 $sortBy = array_key_exists('sortby',$_REQUEST) ? Sanitize::int($_REQUEST['sortby']) : 0;
 $formSubmit = array_key_exists('formsubmit',$_REQUEST) ? $_REQUEST['formsubmit'] : '';
+>>>>>>> origin
 
 /*
 if(!$specimenOnly && !$ometid && !array_key_exists('searchterm', $_POST)){
 	//Make specimen only the default action
 	$specimenOnly = 1;
 }
+<<<<<<< HEAD
+	*/
+=======
 */
+>>>>>>> origin
 
 $statusStr = '';
 $isEditor = 0;
@@ -57,7 +87,11 @@ if($isEditor && $formSubmit){
 		$omenid = 0;
 	}
 	elseif($formSubmit == 'Transfer Number'){
+<<<<<<< HEAD
+		$statusStr = $exsManager->transferNumber($omenid,trim($_POST['targetometid'],'k'));
+=======
 		$statusStr = $exsManager->transferNumber($omenid,trim($_POST['targetometid'], 'k'));
+>>>>>>> origin
 	}
 	elseif($formSubmit == 'Add Specimen Link'){
 		$statusStr = $exsManager->addOccLink($_POST);
@@ -78,18 +112,33 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 	$exsManager->exportExsiccatiAsCsv($searchTerm, $specimenOnly, $imagesOnly, $collId, $titleOnly);
 	exit;
 }
+$selectLookupArr = array();
+if($ometid || $omenid) $selectLookupArr = $exsManager->getSelectLookupArr();
+if($ometid) unset($selectLookupArr[$ometid]);
 ?>
 <!DOCTYPE html>
+<<<<<<< HEAD
+<html lang="<?php echo $LANG_TAG ?>">
+<head>
+	<title><?php echo $DEFAULT_TITLE; ?> Exsiccatae</title>
+=======
 <html lang="<?= $LANG_TAG ?>">
 <head>
 	<title><?= $DEFAULT_TITLE ?> Exsiccatae</title>
+>>>>>>> origin
 	<?php
 	include_once($SERVER_ROOT.'/includes/head.php');
 	include_once($SERVER_ROOT.'/includes/googleanalytics.php');
 	?>
+<<<<<<< HEAD
+	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
+	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+=======
 	<link href="<?= $CSS_BASE_PATH ?>/jquery-ui.css" type="text/css" rel="stylesheet">
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+>>>>>>> origin
 	<script src="../../js/symb/shared.js?ver=130926" type="text/javascript"></script>
 	<script type="text/javascript">
 		function toggleExsEditDiv(){
@@ -233,9 +282,12 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 		}
 
 		<?php
+<<<<<<< HEAD
+=======
 		$selectLookupArr = array();
 		if($ometid || $omenid) $selectLookupArr = $exsManager->getSelectLookupArr();
 		if($ometid) unset($selectLookupArr[$ometid]);
+>>>>>>> origin
 		if($omenid){
 			//Exsiccata number section can have a large number of ometid select look ups; using javascript makes page more efficient
 			$selectValues = '';
@@ -261,7 +313,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 		?>
 	</script>
 	<style type="text/css">
+<<<<<<< HEAD
+		#option-div { margin: 5px; width: 300px; text-align: left; float: right; min-height: 325px; }
+=======
 		#option-div { margin: 5px; width: 320px; text-align: left; float: right; min-height: 325px; }
+>>>>>>> origin
 		#option-div fieldset { background-color:#f2f2f2; }
 		.field-div { margin: 2px 0px; }
 		.exs-div { margin-bottom: 5px }
@@ -289,7 +345,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 		<?php
 		if($statusStr){
 			echo '<hr/>';
+<<<<<<< HEAD
+			echo '<div style="margin:10px;color:' . (strpos($statusStr,'SUCCESS') === false ? 'red' : 'green') . ';">' . htmlspecialchars($statusStr, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+=======
 			echo '<div style="margin:10px;color:' . (strpos($statusStr,'SUCCESS') === false ? 'red' : 'green') . ';">' . Sanitize::outString($statusStr) . '</div>';
+>>>>>>> origin
 			echo '<hr/>';
 		}
 		if(!$ometid && !$omenid){
@@ -300,10 +360,17 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 					    <legend><b><?= $LANG['OPTIONS'] ?></b></legend>
 				    	<div>
 				    		<b><?= $LANG['SEARCH'] ?>:</b>
+<<<<<<< HEAD
+							<input type="text" name="searchterm" value="<?php echo $searchTerm;?>" size="20" onchange="this.form.submit()" />
+						</div>
+						<div title="<?= $LANG['INCL_WO_SPECS'] ?>">
+							<input type="checkbox" name="specimenonly" value="1" <?php echo ($specimenOnly?"CHECKED":"");?> onchange="specimenOnlyChanged(this)" />
+=======
 							<input type="text" name="searchterm" value="<?= Sanitize::outString($searchTerm) ?>" size="20" onchange="this.form.submit()" />
 						</div>
 						<div title="<?= $LANG['INCL_WO_SPECS'] ?>">
 							<input type="checkbox" name="specimenonly" value="1" <?= ($specimenOnly ? 'CHECKED' : '') ?> onchange="specimenOnlyChanged(this)" />
+>>>>>>> origin
 							<?= $LANG['DISP_ONLY_W_SPECS'] ?>
 						</div>
 						<div id="qryextradiv" style="margin-left:15px;display:<?= ($specimenOnly ? 'block' : 'none') ?>;" title="including without linked specimen records">
@@ -315,18 +382,39 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 									<?php
 									$acroArr = $exsManager->getCollArr('all');
 									foreach($acroArr as $id => $collTitle){
+<<<<<<< HEAD
+										echo '<option value="' . htmlspecialchars($id, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" ' . ($id==$collId?'SELECTED':'') . '>' . htmlspecialchars($collTitle, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</option>';
+=======
 										echo '<option value="' . $id . '" ' . ($id==$collId ? 'SELECTED' : '') . '>' . $collTitle . '</option>';
+>>>>>>> origin
 									}
 									?>
 								</select>
 							</div>
 							<div>
+<<<<<<< HEAD
+							    <input name='imagesonly' type='checkbox' value='1' <?php echo ($imagesOnly?"CHECKED":""); ?> onchange="this.form.submit()" />
+=======
 							    <input name='imagesonly' type='checkbox' value='1' <?= ($imagesOnly?"CHECKED":"") ?> onchange="this.form.submit()" />
+>>>>>>> origin
 							    <?= $LANG['DISP_ONLY_W_IMGS'] ?>
 							</div>
 						</div>
 						<div style="margin:5px 0px 0px 5px;">
 							<?= $LANG['DISP_SORT_BY'] ?>:<br />
+<<<<<<< HEAD
+							<input type="radio" name="sortby" value="0" <?php echo ($sortBy == 0?"CHECKED":""); ?> onchange="this.form.submit()"> <?= $LANG['TITLE'] ?>
+							<input type="radio" name="sortby" value="1" <?php echo ($sortBy == 1?"CHECKED":""); ?> onchange="this.form.submit()"> <?= $LANG['ABB'] ?>
+						</div>
+						<div style="margin-top:5px">
+							<div>
+								<span title="Exsiccata download: titles only"><button name="formsubmit" type="submit" value="dlexs_titleOnly"><img src="../../images/dl.png" style="width:1.2em;margin-right:0.3em" /><?= $LANG['TITLES'] ?></button></span>
+								<span title="Exsiccata download: with numbers and occurrences"><button name="formsubmit" type="submit" value="dlexs"><img src="../../images/dl.png" style="width:1.2em;margin-right:0.3em" /><?= $LANG['OCCS'] ?></button></span>
+							</div>
+						</div>
+						<div>
+							<button name="formsubmit" type="submit" value="rebuildList"><?= $LANG['REBUILD_LIST'] ?></button>
+=======
 							<input type="radio" name="sortby" value="0" <?= ($sortBy == 0?"CHECKED":"") ?> onchange="this.form.submit()"> <?= $LANG['TITLE'] ?>
 							<input type="radio" name="sortby" value="1" <?= ($sortBy == 1?"CHECKED":"") ?> onchange="this.form.submit()"> <?= $LANG['ABB'] ?>
 						</div>
@@ -352,6 +440,7 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 									</button>
 								</span>
 							</div>
+>>>>>>> origin
 						</div>
 					</fieldset>
 				</form>
@@ -365,7 +454,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 				</div>
 				<div id="exsadddiv" style="display:none;">
 					<form name="exsaddform" action="index.php" method="post" onsubmit="return verfifyExsAddForm(this)">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 						<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 							<legend><b><?= $LANG['ADD_NEW_EXS'] ?></b></legend>
 							<div class="field-div">
 								<?= $LANG['TITLE'] ?>:<br/><input name="title" type="text" value="" style="width:90%;" />
@@ -411,13 +504,21 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 						<li>
 							<?php
 							echo '<div class="exs-div">';
+<<<<<<< HEAD
+							echo '<div class="exstitle-div"><a href="index.php?ometid=' . htmlspecialchars($k, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '&specimenonly=' . htmlspecialchars($specimenOnly, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '&imagesonly=' . htmlspecialchars($imagesOnly, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '&collid=' . htmlspecialchars($collId, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '&sortBy=' . htmlspecialchars($sortBy, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">';
+=======
 							echo '<div class="exstitle-div"><a href="index.php?ometid=' . $k . '&specimenonly=' . $specimenOnly . '&imagesonly=' . $imagesOnly . '&collid=' . $collId . '&sortBy=' . $sortBy . '">';
+>>>>>>> origin
 							echo $tArr['title'];
 							echo '</a></div>';
 							$extra = '';
 							if($tArr['editor']) $extra  = $tArr['editor'];
 							if($tArr['exsrange']) $extra .= ' [' . $tArr['exsrange'] . ']';
+<<<<<<< HEAD
+							if($extra) echo '<div class="exseditor-div" style="margin-left:15px;">' . htmlspecialchars($extra, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+=======
 							if($extra) echo '<div class="exseditor-div" style="margin-left:15px;">' . $extra . '</div>';
+>>>>>>> origin
 							echo '</div>';
 							?>
 						</li>
@@ -450,14 +551,53 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 					if(isset($exsArr['sourceidentifier'])){
 						if(preg_match('/^http.+IndExs.+={1}(\d+)$/', $exsArr['sourceidentifier'], $m)) echo ' (<a href="'.$exsArr['sourceidentifier'].'" target="_blank">IndExs #'.$m[1].'</a>)';
 					}
+<<<<<<< HEAD
+					if($exsArr['abbreviation']) echo '<div>Abbreviation: ' . htmlspecialchars($exsArr['abbreviation'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+					if($exsArr['editor']) echo '<div>Editor(s): ' . htmlspecialchars($exsArr['editor'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+					if($exsArr['exsrange']) echo '<div>Range: ' . htmlspecialchars($exsArr['exsrange'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+					if($exsArr['notes']) echo '<div>Notes: ' . htmlspecialchars($exsArr['notes'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+=======
 					if($exsArr['abbreviation']) echo '<div>Abbreviation: ' . $exsArr['abbreviation'] . '</div>';
 					if($exsArr['editor']) echo '<div>Editor(s): ' . $exsArr['editor'] . '</div>';
 					if($exsArr['exsrange']) echo '<div>Range: ' . $exsArr['exsrange'] . '</div>';
 					if($exsArr['notes']) echo '<div>Notes: ' . $exsArr['notes'] . '</div>';
+>>>>>>> origin
 					?>
 				</div>
 				<div id="exseditdiv" style="display:none;">
 					<form name="exseditform" action="index.php" method="post" onsubmit="return verifyExsEditForm(this);">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+							<legend><b>Edit Title</b></legend>
+							<div class="field-div">
+								<?= $LANG['TITLE'] ?>:<br/><input name="title" type="text" value="<?php echo $exsArr['title']; ?>" style="width:90%;" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['ABBR'] ?>:<br/><input name="abbreviation" type="text" value="<?php echo $exsArr['abbreviation']; ?>" style="width:500px;" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['EDITOR'] ?>:<br/><input name="editor" type="text" value="<?php echo $exsArr['editor']; ?>" style="width:300px;" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['NUM_RANGE'] ?>:<br/><input name="exsrange" type="text" value="<?php echo $exsArr['exsrange']; ?>" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['DATE_RANGE'] ?>:<br/>
+								<input name="startdate" type="text" value="<?php echo $exsArr['startdate']; ?>" /> -
+								<input name="enddate" type="text" value="<?php echo $exsArr['enddate']; ?>" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['SOURCE'] ?>:<br/><input name="source" type="text" value="<?php echo $exsArr['source']; ?>" style="width:480px;" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['SOURCE_ID_INDEXS'] ?>:<br/><input name="sourceidentifier" type="text" value="<?php echo $exsArr['sourceidentifier']; ?>" style="width:90%" />
+							</div>
+							<div class="field-div">
+								<?= $LANG['NOTES'] ?>:<br/><input name="notes" type="text" value="<?php echo $exsArr['notes']; ?>" style="width:90%" />
+							</div>
+							<div style="margin:10px;">
+								<input name="ometid" type="hidden" value="<?php echo $ometid; ?>" />
+=======
 						<fieldset style="margin:10px;padding:15px;">
 							<legend><b>Edit Title</b></legend>
 							<div class="field-div">
@@ -488,21 +628,33 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 							</div>
 							<div style="margin:10px;">
 								<input name="ometid" type="hidden" value="<?= $ometid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Save" ><?= $LANG['SAVE'] ?></button>
 							</div>
 						</fieldset>
 					</form>
 					<form name="exdeleteform" action="index.php" method="post" onsubmit="return confirm('<?= $LANG['SURE_DELETE_EXS'] ?>');">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+							<legend><b><?= $LANG['DEL_EXS'] ?></b></legend>
+							<div style="margin:10px;">
+								<input name="ometid" type="hidden" value="<?php echo $ometid; ?>" />
+=======
 						<fieldset style="margin:10px;padding:15px;">
 							<legend><b><?= $LANG['DEL_EXS'] ?></b></legend>
 							<div style="margin:10px;">
 								<input name="ometid" type="hidden" value="<?= $ometid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Delete Exsiccata" ><?= $LANG['DEL_EXS'] ?></button>
 							</div>
 						</fieldset>
 					</form>
 					<form name="exmergeform" action="index.php" method="post" onsubmit="return verifyExsMergeForm(this);">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 						<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 							<legend><b><?= $LANG['MERGE_EXS'] ?></b></legend>
 							<div style="margin:10px;">
 								<?= $LANG['TARGET_EXS'] ?>:<br/>
@@ -510,13 +662,21 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 									<option value="">-------------------------------</option>
 									<?php
 									foreach($selectLookupArr as $titleId => $titleStr){
+<<<<<<< HEAD
+										echo '<option value="' . htmlspecialchars($titleId, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">' . htmlspecialchars($titleStr, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</option>';
+=======
 										echo '<option value="' . $titleId . '">' . $titleStr . '</option>';
+>>>>>>> origin
 									}
 									?>
 								</select>
 							</div>
 							<div style="margin:10px;">
+<<<<<<< HEAD
+								<input name="ometid" type="hidden" value="<?php echo $ometid; ?>" />
+=======
 								<input name="ometid" type="hidden" value="<?= $ometid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Merge Exsiccatae" ><?= $LANG['MERGE_EXS'] ?></button>
 							</div>
 						</fieldset>
@@ -525,7 +685,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 				<hr/>
 				<div id="numadddiv" style="display:none;">
 					<form name="numaddform" action="index.php" method="post" onsubmit="return verifyNumAddForm(this);">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 						<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 							<legend><b><?= $LANG['ADD_EXS_NUM'] ?></b></legend>
 							<div style="margin:2px;">
 								<?= $LANG['EXS_NUM'] ?>: <input name="exsnumber" type="text" />
@@ -534,7 +698,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								<?= $LANG['NOTES'] ?>: <input name="notes" type="text" style="width:90%" />
 							</div>
 							<div style="margin:10px;">
+<<<<<<< HEAD
+								<input name="ometid" type="hidden" value="<?php echo $ometid; ?>" />
+=======
 								<input name="ometid" type="hidden" value="<?= $ometid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Add New Number" ><?= $LANG['ADD_NEW_NUM'] ?></button>
 							</div>
 						</fieldset>
@@ -549,12 +717,21 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								?>
 								<li>
 									<?php
+<<<<<<< HEAD
+									echo '<div><a href="index.php?omenid=' . htmlspecialchars($k, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">';
+									echo '#' . htmlspecialchars($numArr['number'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+									if($numArr['sciname']) echo ' - <i>' . htmlspecialchars($numArr['sciname'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</i>';
+									if($numArr['occurstr']) echo ', ' . htmlspecialchars($numArr['occurstr'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+									echo '</a></div>';
+									if($numArr['notes']) echo '<div style="margin-left:15px;">' . htmlspecialchars($numArr['notes'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</div>';
+=======
 									echo '<div><a href="index.php?omenid=' . $k . '">';
 									echo '#' . $numArr['number'];
 									if($numArr['sciname']) echo ' - <i>' . $numArr['sciname'] . '</i>';
 									if($numArr['occurstr']) echo ', ' . $numArr['occurstr'];
 									echo '</a></div>';
 									if($numArr['notes']) echo '<div style="margin-left:15px;">' . $numArr['notes'] . '</div>';
+>>>>>>> origin
 									?>
 								</li>
 								<?php
@@ -598,6 +775,14 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 				</div>
 				<div style="margin-left:15px;">
 					<?php
+<<<<<<< HEAD
+					echo htmlspecialchars($mdArr['abbreviation'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</br>';
+					echo htmlspecialchars($mdArr['editor'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+					if($mdArr['exsrange']) echo ' [' . htmlspecialchars($mdArr['exsrange'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ']';
+					if($mdArr['notes']) echo '</br>' . htmlspecialchars($mdArr['notes'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+					if(isset($mdArr['sourceidentifier'])){
+						if(preg_match('/^http.+IndExs.+={1}(\d+)$/', $mdArr['sourceidentifier'], $m)) echo '<br/><a href="' . htmlspecialchars($mdArr['sourceidentifier'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" target="_blank">IndExs #' . htmlspecialchars($m[1], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a>';
+=======
 					echo $mdArr['abbreviation'] . '</br>';
 					echo $mdArr['editor'];
 					if($mdArr['exsrange']) echo ' [' . $mdArr['exsrange'] . ']';
@@ -606,11 +791,24 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 						if(preg_match('/^http.+IndExs.+={1}(\d+)$/', $mdArr['sourceidentifier'], $m)){
 							echo '<br/><a href="' . $mdArr['sourceidentifier'] . '" target="_blank">IndExs #' . $m[1] . '</a>';
 						}
+>>>>>>> origin
 					}
 					?>
 				</div>
 				<div id="numeditdiv" style="display:none;">
 					<form name="numeditform" action="index.php" method="post" onsubmit="return verifyNumEditForm(this)">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+							<legend><b><?= $LANG['EDIT_EXS_NUM'] ?></b></legend>
+							<div style="margin:2px;">
+								<?= $LANG['NUMBER'] ?>: <input name="exsnumber" type="text" value="<?php echo $mdArr['exsnumber']; ?>" />
+							</div>
+							<div style="margin:2px;">
+								<?= $LANG['NOTES'] ?>Notes: <input name="notes" type="text" value="<?php echo $mdArr['notes']; ?>" style="width:90%;" />
+							</div>
+							<div style="margin:10px;">
+								<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+=======
 						<fieldset style="margin:10px;padding:15px;">
 							<legend><b><?= $LANG['EDIT_EXS_NUM'] ?></b></legend>
 							<div style="margin:2px;">
@@ -621,22 +819,35 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 							</div>
 							<div style="margin:10px;">
 								<input name="omenid" type="hidden" value="<?= $omenid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Save Edits" ><?= $LANG['SAVE_EDITS'] ?></button>
 							</div>
 						</fieldset>
 					</form>
 					<form name="numdelform" action="index.php" method="post" onsubmit="return confirm('<?= $LANG['SURE_DEL_EXS_NUM'] ?>')">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+							<legend><b><?= $LANG['DEL_EXS_NUM'] ?></b></legend>
+							<div style="margin:10px;">
+								<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+								<input name="ometid" type="hidden" value="<?php echo $mdArr['ometid']; ?>" />
+=======
 						<fieldset style="margin:10px;padding:15px;">
 							<legend><b><?= $LANG['DEL_EXS_NUM'] ?></b></legend>
 							<div style="margin:10px;">
 								<input name="omenid" type="hidden" value="<?= $omenid ?>" />
 								<input name="ometid" type="hidden" value="<?= $mdArr['ometid'] ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Delete Number" ><?= $LANG['DEL_NUM'] ?></button>
 							</div>
 						</fieldset>
 					</form>
 					<form name="numtransferform" action="index.php" method="post" onsubmit="return verifyNumTransferForm(this);">
+<<<<<<< HEAD
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 						<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 							<legend><b><?= $LANG['TRANSFER_EXS_NUM'] ?></b></legend>
 							<div style="margin:10px;">
 								<?= $LANG['TARGET_EXS'] ?><br/>
@@ -645,16 +856,27 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								</select>
 							</div>
 							<div style="margin:10px;">
+<<<<<<< HEAD
+								<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+								<input name="ometid" type="hidden" value="<?php echo $mdArr['ometid']; ?>" />
+=======
 								<input name="omenid" type="hidden" value="<?= $omenid ?>" />
 								<input name="ometid" type="hidden" value="<?= $mdArr['ometid'] ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Transfer Number" ><?= $LANG['TRANSFER_NUM'] ?></button>
 							</div>
 						</fieldset>
 					</form>
 				</div>
+<<<<<<< HEAD
+				<div id="occadddiv" style="display:<?php echo ($occidToAdd?'block':'none') ?>;">
+					<form name="occaddform" action="index.php" method="post" onsubmit="return verifyOccAddForm(this)">
+						<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 				<div id="occadddiv" style="display:<?= ($occidToAdd?'block':'none') ?>;">
 					<form name="occaddform" action="index.php" method="post" onsubmit="return verifyOccAddForm(this)">
 						<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 							<legend><b><?= $LANG['ADD_OCC_TO_EXS'] ?></b></legend>
 							<div style="margin:2px;">
 								<?= $LANG['COLL'] ?>:  <br/>
@@ -664,7 +886,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 									<?php
 									$collArr = $exsManager->getCollArr();
 									foreach($collArr as $id => $collName){
+<<<<<<< HEAD
+										echo '<option value="' . htmlspecialchars($id, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">' . htmlspecialchars($collName, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</option>';
+=======
 										echo '<option value="' . $id . '">' . $collName . '</option>';
+>>>>>>> origin
 									}
 									?>
 									<option value="occid"><?= $LANG['SYMB_PK_OCCID'] ?></option>
@@ -696,7 +922,11 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								<input name="notes" type="text" value="" style="width:500px;" />
 							</div>
 							<div style="margin:10px;">
+<<<<<<< HEAD
+								<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+=======
 								<input name="omenid" type="hidden" value="<?= $omenid ?>" />
+>>>>>>> origin
 								<button name="formsubmit" type="submit" value="Add Specimen Link" ><?= $LANG['ADD_SPEC_LINK'] ?></button>
 							</div>
 						</fieldset>
@@ -715,35 +945,73 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								<tr>
 									<td>
 										<div style="font-weight:bold;">
+<<<<<<< HEAD
+											<?php
+											echo htmlspecialchars($occArr['collname'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+											?>
+										</div>
+										<div style="">
+											<div style="">
+												<?= $LANG['CATNUM'] ?>: <?php echo htmlspecialchars($occArr['catalognumber'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>
+=======
 											<?= $occArr['collname'] ?>
 										</div>
 										<div style="">
 											<div style="">
 												<?= $LANG['CATNUM'] ?>: <?= $occArr['catalognumber'] ?>
+>>>>>>> origin
 											</div>
 											<?php
 											if($occArr['occurrenceid']){
 												echo '<div style="float:right;">';
+<<<<<<< HEAD
+												echo htmlspecialchars($occArr['occurrenceid'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+=======
 												echo $occArr['occurrenceid'];
+>>>>>>> origin
 												echo '</div>';
 											}
 											?>
 										</div>
 										<div style="clear:both;">
 											<?php
+<<<<<<< HEAD
+											echo htmlspecialchars($occArr['recby'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+											echo ($occArr['recnum']?' #' . htmlspecialchars($occArr['recnum'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ' ':' s.n. ');
+											echo '<span style="margin-left:70px;">' . htmlspecialchars($occArr['eventdate'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</span> ';
+=======
 											echo $occArr['recby'];
 											echo ($occArr['recnum']?' #' . $occArr['recnum'] . ' ':' s.n. ');
 											echo '<span style="margin-left:70px;">' . $occArr['eventdate'] . '</span> ';
+>>>>>>> origin
 											?>
 										</div>
 										<div style="clear:both;">
 											<?php
+<<<<<<< HEAD
+											echo '<i>' . htmlspecialchars($occArr['sciname'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</i> ';
+											echo htmlspecialchars($occArr['author'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+=======
 											echo '<i>' . $occArr['sciname'] . '</i> ';
 											echo $occArr['author'];
+>>>>>>> origin
 											?>
 										</div>
 										<div>
 											<?php
+<<<<<<< HEAD
+											echo htmlspecialchars($occArr['country'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+											echo (($occArr['country'] && $occArr['state'])?', ':'') . htmlspecialchars($occArr['state'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE);
+											echo ($occArr['county'] ? ', ' . htmlspecialchars($occArr['county'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '');
+											echo ($occArr['locality'] ? ', ' . htmlspecialchars($occArr['locality'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '');
+											?>
+										</div>
+										<div>
+											<?php echo htmlspecialchars(($occArr['notes']?$occArr['notes']:''), ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>
+										</div>
+										<div>
+											<a href="#" onclick="openIndPU(<?php echo htmlspecialchars($k, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>)">
+=======
 											echo $occArr['country'];
 											echo (($occArr['country'] && $occArr['state'])?', ':'') . $occArr['state'];
 											echo ($occArr['county'] ? ', ' . $occArr['county'] : '');
@@ -755,6 +1023,7 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 										</div>
 										<div>
 											<a href="#" onclick="openIndPU(<?= $k ?>)">
+>>>>>>> origin
 												Full Record Details
 											</a>
 										</div>
@@ -764,14 +1033,23 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 										if(array_key_exists('img',$occArr)){
 											$imgArr = array_shift($occArr['img']);
 											?>
+<<<<<<< HEAD
+											<a href="<?php echo htmlspecialchars($imgArr['url'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>">
+												<img src="<?php echo htmlspecialchars($imgArr['tnurl'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>" style="width:75px;" />
+=======
 											<a href="<?= $imgArr['url'] ?>">
 												<img src="<?= $imgArr['tnurl'] ?>" style="width:75px;" />
+>>>>>>> origin
 											</a>
 											<?php
 										}
 										if($isEditor){
 											?>
+<<<<<<< HEAD
+											<div style="cursor:pointer;float:right;" onclick="toggle('occeditdiv-<?php echo $k; ?>');" title="<?= $LANG['EDIT_OCC_LINK'] ?>">
+=======
 											<div style="cursor:pointer;float:right;" onclick="toggle('occeditdiv-<?= $k ?>');" title="<?= $LANG['EDIT_OCC_LINK'] ?>">
+>>>>>>> origin
 												<img style="border:0px;" src="../../images/edit.png"/>
 											</div>
 											<?php
@@ -781,6 +1059,21 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 								</tr>
 								<tr>
 									<td colspan="2">
+<<<<<<< HEAD
+										<div id="occeditdiv-<?php echo $k; ?>" style="display:none;">
+											<form name="occeditform-<?php echo $k; ?>" action="index.php" method="post" onsubmit="return verifyOccEditForm(this)">
+												<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+													<legend><b><?= $LANG['EDIT_OCC_LINK'] ?></b></legend>
+													<div style="margin:2px;">
+														<?= $LANG['RANKING'] ?>: <input name="ranking" type="text" value="<?php echo htmlspecialchars($occArr['ranking'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>" />
+													</div>
+													<div style="margin:2px;">
+														<?= $LANG['NOTES'] ?>: <input name="notes" type="text" value="<?php echo htmlspecialchars($occArr['notes'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE); ?>" style="width:450px;" />
+													</div>
+													<div style="margin:10px;">
+														<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+														<input name="occid" type="hidden" value="<?php echo $k; ?>" />
+=======
 										<div id="occeditdiv-<?= $k ?>" style="display:none;">
 											<form name="occeditform-<?= $k ?>" action="index.php" method="post" onsubmit="return verifyOccEditForm(this)">
 												<fieldset style="margin:10px;padding:15px;">
@@ -794,22 +1087,37 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 													<div style="margin:10px;">
 														<input name="omenid" type="hidden" value="<?= $omenid ?>" />
 														<input name="occid" type="hidden" value="<?= $k ?>" />
+>>>>>>> origin
 														<button name="formsubmit" type="submit" value="Save Specimen Link Edit" /><?= $LANG['SAVE_SPEC_LINK_EDIT'] ?></button>
 													</div>
 												</fieldset>
 											</form>
+<<<<<<< HEAD
+											<form name="occdeleteform-<?php echo $k; ?>" action="index.php" method="post" onsubmit="return confirm('<?= $LANG['SURE_DEL_SPEC_LINK'] ?>')">
+												<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+													<legend><b><?= $LANG['DEL_SPEC_LINK'] ?></b></legend>
+													<div style="margin:10px;">
+														<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+														<input name="occid" type="hidden" value="<?php echo $k; ?>" />
+=======
 											<form name="occdeleteform-<?= $k ?>" action="index.php" method="post" onsubmit="return confirm('<?= $LANG['SURE_DEL_SPEC_LINK'] ?>')">
 												<fieldset style="margin:10px;padding:15px;">
 													<legend><b><?= $LANG['DEL_SPEC_LINK'] ?></b></legend>
 													<div style="margin:10px;">
 														<input name="omenid" type="hidden" value="<?= $omenid ?>" />
 														<input name="occid" type="hidden" value="<?= $k ?>" />
+>>>>>>> origin
 														<button name="formsubmit" type="submit" value="Delete Link to Specimen" ><?= $LANG['DEL_SPEC_LINK'] ?></button>
 													</div>
 												</fieldset>
 											</form>
+<<<<<<< HEAD
+											<form name="occtransferform-<?php echo $k; ?>" action="index.php" method="post" onsubmit="return verifyOccTransferForm(this)">
+												<fieldset style="margin:10px;padding:15px;background-color:#B0C4DE;">
+=======
 											<form name="occtransferform-<?= $k ?>" action="index.php" method="post" onsubmit="return verifyOccTransferForm(this)">
 												<fieldset style="margin:10px;padding:15px;">
+>>>>>>> origin
 													<legend><b><?= $LANG['TRANS_SPEC_LINK'] ?></b></legend>
 													<div style="margin:10px;">
 														<?= $LANG['TARGET_EXS'] ?><br/>
@@ -823,8 +1131,13 @@ if($formSubmit == 'dlexs' || $formSubmit == 'dlexs_titleOnly'){
 														<input name="targetexsnumber" type="text" value="" />
 													</div>
 													<div style="margin:10px;">
+<<<<<<< HEAD
+														<input name="omenid" type="hidden" value="<?php echo $omenid; ?>" />
+														<input name="occid" type="hidden" value="<?php echo $k; ?>" />
+=======
 														<input name="omenid" type="hidden" value="<?= $omenid ?>" />
 														<input name="occid" type="hidden" value="<?= $k ?>" />
+>>>>>>> origin
 														<button name="formsubmit" type="submit" value="Transfer Specimen" ><?= $LANG['TRANSFER_SPEC'] ?></button>
 													</div>
 												</fieldset>

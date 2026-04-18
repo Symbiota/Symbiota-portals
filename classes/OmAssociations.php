@@ -25,11 +25,21 @@ class OmAssociations extends Manager{
 		parent::__destruct();
 	}
 
+<<<<<<< HEAD
+	public function getAssociationArr($filter = null, $excludeScriptGenerated = true){
+=======
 	public function getAssociationArr($filter = null){
+>>>>>>> origin
 		$retArr = array();
 		$relOccidArr = array();
 		$uidArr = array();
 		$sql = 'SELECT assocID, occid, '.implode(', ', array_keys($this->schemaMap)).', modifiedUid, modifiedTimestamp, createdUid, initialTimestamp FROM omoccurassociations WHERE ';
+<<<<<<< HEAD
+		if($excludeScriptGenerated){
+			$sql .= "(basisOfRecord IS NULL OR basisOfRecord != 'scriptGenerated') AND ";
+		}
+=======
+>>>>>>> origin
 		if($this->assocID) $sql .= '(assocID = '.$this->assocID.') ';
 		elseif($filter == 'FULL')$sql .= '(occid = '.$this->occid.' OR occidAssociate = '.$this->occid.') ';
 		elseif($this->occid) $sql .= '(occid = '.$this->occid.') ';
@@ -38,7 +48,11 @@ class OmAssociations extends Manager{
 				$sql .= 'AND '.$field.' = "'.$this->cleanInStr($cond).'" ';
 			}
 		}
+<<<<<<< HEAD
+
+=======
 		// echo 'sql is: ' . $sql;
+>>>>>>> origin
 		if($rs = $this->conn->query($sql)){
 			while($r = $rs->fetch_assoc()){
 				$retArr[$r['assocID']] = $r;
@@ -122,6 +136,10 @@ class OmAssociations extends Manager{
 				$paramArr[] = $value;
 			}
 			$sql .= ') VALUES('.trim($sqlValues, ', ').') ';
+<<<<<<< HEAD
+			$insertedRecord = null;
+=======
+>>>>>>> origin
 			if($stmt = $this->conn->prepare($sql)){
 				$stmt->bind_param($this->typeStr, ...$paramArr);
 				try{
@@ -129,6 +147,22 @@ class OmAssociations extends Manager{
 						if($stmt->affected_rows || !$stmt->error){
 							$this->assocID = $stmt->insert_id;
 							$status = true;
+<<<<<<< HEAD
+
+							$fetchSql = 'SELECT * FROM omoccurassociations WHERE assocID = ?';
+							if ($fetchStmt = $this->conn->prepare($fetchSql)) {
+								$fetchStmt->bind_param('i', $this->assocID);
+								$fetchStmt->execute();
+								$result = $fetchStmt->get_result();
+								if ($result->num_rows > 0) {
+									$insertedRecord = $result->fetch_assoc();
+								} else {
+									$this->errorMessage = 'Record not found after insertion.';
+								}
+								$fetchStmt->close();
+							}
+=======
+>>>>>>> origin
 						}
 						else $this->errorMessage = $stmt->error;
 					}

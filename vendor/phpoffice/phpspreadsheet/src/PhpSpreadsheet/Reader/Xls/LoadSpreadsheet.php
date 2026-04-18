@@ -153,7 +153,10 @@ class LoadSpreadsheet extends Xls
 
         // Parse the individual sheets
         $xls->activeSheetSet = false;
+<<<<<<< HEAD
+=======
         $sheetCreated = false;
+>>>>>>> origin
         foreach ($xls->sheets as $sheet) {
             $selectedCells = '';
             if ($sheet['sheetType'] != 0x00) {
@@ -168,7 +171,10 @@ class LoadSpreadsheet extends Xls
 
             // add sheet to PhpSpreadsheet object
             $xls->phpSheet = $xls->spreadsheet->createSheet();
+<<<<<<< HEAD
+=======
             $sheetCreated = true;
+>>>>>>> origin
             //    Use false for $updateFormulaCellReferences to prevent adjustment of worksheet references in formula
             //        cells... during the load, all formulae should be correct, and we're simply bringing the worksheet
             //        name in line with the formula, not the reverse
@@ -570,9 +576,12 @@ class LoadSpreadsheet extends Xls
                 $xls->phpSheet->setSelectedCells($selectedCells);
             }
         }
+<<<<<<< HEAD
+=======
         if ($xls->createBlankSheetIfNoneRead && !$sheetCreated) {
             $xls->spreadsheet->createSheet();
         }
+>>>>>>> origin
         if ($xls->activeSheetSet === false) {
             $xls->spreadsheet->setActiveSheetIndex(0);
         }

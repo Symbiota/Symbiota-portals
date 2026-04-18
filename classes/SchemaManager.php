@@ -80,6 +80,14 @@ class SchemaManager extends Manager{
 									$this->setActiveTable($targetTable);
 									$sqlIsValid = false;
 								}
+<<<<<<< HEAD
+								elseif(strpos($fragment, '/*!') === 0) $stmtType = 'Conditional statement';
+								elseif(preg_match('/^([A-Z0-9_=\s]+)/', $fragment, $m)){
+									$stmtType = $m[1];
+								}
+								$this->logOrEcho('Statement prefix: ' . $stmtType . ($targetTable ? ' '.$targetTable : ''), 1);
+								$sql = $fragment;
+=======
 								elseif(strpos($fragment, '/*!') === 0){
 									$stmtType = 'Conditional statement';
 								}
@@ -109,6 +117,7 @@ class SchemaManager extends Manager{
 									$this->logOrEcho('Statement prefix: ' . $stmtType . ($targetTable ? ' '.$targetTable : ''), 1);
 									$sql = $fragment;
 								}
+>>>>>>> origin
 							}
 							else{
 								if($stmtType == 'ALTER TABLE') $fragment = $this->validateAlterTableFragment($fragment, 'w');
@@ -125,14 +134,22 @@ class SchemaManager extends Manager{
 								if($this->conn->query($sql)){
 									$this->logOrEcho('Success!', 1);
 								}
+<<<<<<< HEAD
+=======
 								else{
 									$this->logOrEcho($sql, 1);
 								}
+>>>>>>> origin
 							}
 							catch(Exception $e){
 								$mysqlError = $this->conn->error;
 								if($mysqlError){
 									$sql = trim($sql,', ') . ';';
+<<<<<<< HEAD
+									if(!$this->amendmentFH) $this->amendmentFH = fopen($this->amendmentPath, 'w');
+									fwrite($this->amendmentFH, '# Error: ' . $mysqlError . "\n\n");
+									fwrite($this->amendmentFH, $sql . "\n\n");
+=======
 									$logErrorInAdendmentSqlFile = true;
 									if(strpos($mysqlError, 'Duplicate column name') !== false) $logErrorInAdendmentSqlFile = false;
 									if(strpos($mysqlError, 'already exists') !== false) $logErrorInAdendmentSqlFile = false;
@@ -142,6 +159,7 @@ class SchemaManager extends Manager{
 										fwrite($this->amendmentFH, '# Error: ' . $mysqlError . "\n\n");
 										fwrite($this->amendmentFH, $sql . "\n\n");
 									}
+>>>>>>> origin
 									$this->logOrEcho('MySQL Error: ' . $mysqlError, 2);
 								}
 								if($e->getMessage() != $mysqlError){
@@ -199,7 +217,11 @@ class SchemaManager extends Manager{
 					$logUrl = str_replace($GLOBALS['SERVER_ROOT'], $GLOBALS['CLIENT_ROOT'], $this->logPath);
 					$this->logOrEcho('Log file: <a href="' . $logUrl . '" target="_blank">' . $logUrl . '</a>');
 					$amendmentUrl = str_replace($GLOBALS['SERVER_ROOT'], $GLOBALS['CLIENT_ROOT'], $this->amendmentPath);
+<<<<<<< HEAD
+					if($this->amendmentFH) $this->logOrEcho('Amendment (failed statements needing to be applied): ' . $amendmentUrl);
+=======
 					if($this->amendmentFH) $this->logOrEcho('Amendment (failed statements, some that might require being applied): <a href="' . $amendmentUrl . '" target="_blank">' . $amendmentUrl . '</a>');
+>>>>>>> origin
 				}
 			}
 		}
@@ -408,6 +430,8 @@ class SchemaManager extends Manager{
 		return $fragment;
 	}
 
+<<<<<<< HEAD
+=======
 	private function runExternalScript($scriptRelativePath){
 		$statusArr = array();
 		$scriptPath = $GLOBALS['SERVER_ROOT'] . '/config/schema/3.0/'. $scriptRelativePath;
@@ -437,6 +461,7 @@ class SchemaManager extends Manager{
 		return $statusArr;
 	}
 
+>>>>>>> origin
 	//Misc support functions
 	private function setDatabaseConnection(){
 		if(!$this->host || !$this->username || !$this->database || !$this->port || !isset($_POST['password']) || !$_POST['password']){

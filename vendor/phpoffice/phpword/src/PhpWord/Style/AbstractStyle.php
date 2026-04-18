@@ -323,7 +323,11 @@ abstract class AbstractStyle
      */
     protected function setObjectVal($value, string $styleName, &$style)
     {
+<<<<<<< HEAD
+        $styleClass = substr(static::class, 0, strrpos(static::class, '\\')) . '\\' . $styleName;
+=======
         $styleClass = substr(static::class, 0, (int) strrpos(static::class, '\\')) . '\\' . $styleName;
+>>>>>>> origin
         if (is_array($value)) {
             /** @var AbstractStyle $style Type hint */
             if (!$style instanceof $styleClass) {

@@ -24,7 +24,10 @@ use PhpOffice\PhpWord\Element\Chart;
  * Charts collection.
  *
  * @since 0.12.0
+<<<<<<< HEAD
+=======
  *
+>>>>>>> origin
  * @extends AbstractCollection<Chart>
  */
 class Charts extends AbstractCollection

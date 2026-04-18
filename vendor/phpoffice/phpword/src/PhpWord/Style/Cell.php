@@ -75,6 +75,8 @@ class Cell extends Border
     private $vAlign;
 
     /**
+<<<<<<< HEAD
+=======
      * @var null|int
      */
     private $paddingTop;
@@ -95,6 +97,7 @@ class Cell extends Border
     private $paddingRight;
 
     /**
+>>>>>>> origin
      * Text Direction.
      *
      * @var string
@@ -158,19 +161,28 @@ class Cell extends Border
 
     /**
      * Set vertical align.
+<<<<<<< HEAD
+     *
+     * @param string $value
+     *
+=======
      *
      * @param null|string $value
      *
+>>>>>>> origin
      * @return self
      */
     public function setVAlign($value = null)
     {
+<<<<<<< HEAD
+=======
         if ($value === null) {
             $this->vAlign = null;
 
             return $this;
         }
 
+>>>>>>> origin
         VerticalJc::validate($value);
         $this->vAlign = $this->setEnumVal($value, VerticalJc::values(), $this->vAlign);
 
@@ -271,19 +283,28 @@ class Cell extends Border
 
     /**
      * Set vertical merge (rowspan).
+<<<<<<< HEAD
+     *
+     * @param string $value
+     *
+=======
      *
      * @param null|string $value
      *
+>>>>>>> origin
      * @return self
      */
     public function setVMerge($value = null)
     {
+<<<<<<< HEAD
+=======
         if ($value === null) {
             $this->vMerge = null;
 
             return $this;
         }
 
+>>>>>>> origin
         $enum = [self::VMERGE_RESTART, self::VMERGE_CONTINUE];
         $this->vMerge = $this->setEnumVal($value, $enum, $this->vMerge);
 
@@ -376,6 +397,8 @@ class Cell extends Border
     public function getNoWrap(): bool
     {
         return $this->noWrap;
+<<<<<<< HEAD
+=======
     }
 
     /**
@@ -456,5 +479,6 @@ class Cell extends Border
         $this->paddingRight = $value;
 
         return $this;
+>>>>>>> origin
     }
 }

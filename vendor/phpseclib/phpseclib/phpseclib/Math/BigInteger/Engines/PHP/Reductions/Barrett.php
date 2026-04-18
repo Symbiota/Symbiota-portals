@@ -98,9 +98,13 @@ abstract class Barrett extends Base
                 'm1' => $m1 // m.length
             ];
         } else {
+<<<<<<< HEAD
+            extract($cache[self::DATA][$key]);
+=======
             $cacheValues = $cache[self::DATA][$key];
             $u = $cacheValues['u'];
             $m1 = $cacheValues['m1'];
+>>>>>>> origin
         }
 
         $cutoff = $m_length + ($m_length >> 1);

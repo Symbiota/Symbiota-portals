@@ -1,9 +1,15 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/InstitutionManager.php');
+<<<<<<< HEAD
+
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/misc/institutioneditor.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/misc/institutioneditor.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/misc/institutioneditor.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/misc/institutioneditor');
+>>>>>>> origin
 
 if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/admin/institutioneditor.php?' . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
 
@@ -31,6 +37,13 @@ if($IS_ADMIN){
 }
 elseif(array_key_exists('CollAdmin', $USER_RIGHTS)){
 	$editorCode = 1;
+<<<<<<< HEAD
+	if($collList && array_intersect($USER_RIGHTS['CollAdmin'], array_keys($collList))){
+		$editorCode = 2;
+	}
+}
+$statusStr = '';
+=======
 	if($iid){
 		if(!$collList){
 			//User can edit because institution is not linked to any collection
@@ -44,6 +57,7 @@ elseif(array_key_exists('CollAdmin', $USER_RIGHTS)){
 }
 $statusStr = '';
 
+>>>>>>> origin
 if($editorCode){
 	if($formSubmit == 'Add Institution'){
 		if($instManager->insertInstitution($_POST)){
@@ -65,12 +79,27 @@ if($editorCode){
 					$statusStr = 'ERROR updating institutions record: ' . $instManager->getErrorMessage();
 				}
 			}
+<<<<<<< HEAD
+			elseif(!empty($_POST['deliid'])){
+				if($instManager->deleteInstitution($_POST['deliid'])){
+=======
 			elseif($formSubmit == 'deleteInstitution'){
 				if($instManager->deleteInstitution($iid)){
+>>>>>>> origin
 					$statusStr = 'SUCCESS! Institution deleted.';
 					$iid = 0;
 				}
 				else{
+<<<<<<< HEAD
+					$statusStr = 'Unable to delete: ';
+					$errorStr = $instManager->getErrorMessage();
+					if($errorStr == 'LINKED_COLLECTIONS'){
+						$statusStr .= 'following collections need to be unlinked before deletion is allowed';
+						$statusStr .= '<ul><li>' . implode('</li><li>', $instManager->getWarningArr()) . '</li></ul>';
+					}
+					elseif($errorStr == 'LINKED_LOANS'){
+						$statusStr .= 'institution is linked to ' . count($instManager->getWarningArr()) . ' loans';
+=======
 					$statusStr = 'ERROR: unable to delete due to ';
 					$errorStr = $instManager->getErrorMessage();
 					if($errorStr == 'LINKED_COLLECTIONS'){
@@ -79,6 +108,7 @@ if($editorCode){
 					}
 					elseif($errorStr == 'LINKED_LOANS'){
 						$statusStr .= 'institution linked to ' . count($instManager->getWarningArr()) . ' loans';
+>>>>>>> origin
 					}
 					else{
 						$errorStr = 'ERROR deleting institution: ' . $errorStr;
@@ -176,6 +206,14 @@ include($SERVER_ROOT.'/includes/header.php');
 <!-- This is inner text! -->
 <div role="main" id="innertext">
 	<h1 class="page-heading"><?php echo $LANG['INSTITUTION_EDITOR']; ?></h1>
+<<<<<<< HEAD
+	<div id="dialog" title="" style="display: none;">
+		<div id="dialogmsg"></div>
+		<select id="getresult">
+		</select>
+	</div>
+=======
+>>>>>>> origin
 	<?php
 	if($statusStr){
 		?>
@@ -265,7 +303,11 @@ include($SERVER_ROOT.'/includes/header.php');
 						</div>
 						<div style="position:relative;clear:both;">
 							<div style="float:left;width:155px;font-weight:bold;">
+<<<<<<< HEAD
+								<?php echo $LANG['CITY']; ?>City:
+=======
 								<?php echo $LANG['CITY']; ?>:
+>>>>>>> origin
 							</div>
 							<div class="editdiv" style="display:<?php echo $eMode?'none':'block'; ?>;">
 								<?php echo $instArr['city']; ?>
@@ -428,8 +470,13 @@ include($SERVER_ROOT.'/includes/header.php');
 							<legend><b><?php echo $LANG['DEL_INSTITUTION']; ?></b></legend>
 							<form name="instdelform" action="institutioneditor.php" method="post" onsubmit="return confirm('<?php echo $LANG['WANT_TO_DELETE_INST']; ?>')">
 								<div style="position:relative;clear:both;">
+<<<<<<< HEAD
+									<button class="button-danger" name="formsubmit" type="submit" value="Delete Institution" <?php if($collList) echo 'disabled'; ?> ><?php echo $LANG['DEL_INSTITUTION']; ?></button>
+									<input name="deliid" type="hidden" value="<?php echo $iid; ?>" />
+=======
 									<input name="iid" type="hidden" value="<?= $iid ?>">
 									<button class="button-danger" name="formsubmit" type="submit" value="deleteInstitution" <?php if($collList) echo 'disabled'; ?> ><?= $LANG['DEL_INSTITUTION'] ?></button>
+>>>>>>> origin
 									<?php
 									if($collList) echo '<div style="margin:15px;color:red;">' . $LANG['DELETION_OF_ADDRESS'] . '</div>';
 									?>
@@ -605,11 +652,15 @@ include($SERVER_ROOT.'/includes/header.php');
 							foreach($instList as $iid => $iArr){
 								echo '<li><a href="institutioneditor.php?iid='.$iid.'">';
 								echo $iArr['institutionname'].' ('.$iArr['institutioncode'].')';
+<<<<<<< HEAD
+								if($editorCode == 3 || array_intersect(explode(',',$iArr['collid']),$USER_RIGHTS["CollAdmin"])){
+=======
 								$editsAllowed = false;
 								if($editorCode == 3) $editsAllowed = true;
 								elseif(!$iArr['collid']) $editsAllowed = true;
 								elseif(array_intersect(explode(',', $iArr['collid']), $USER_RIGHTS['CollAdmin'])) $editsAllowed = true;
 								if($editsAllowed){
+>>>>>>> origin
 									echo ' <a href="institutioneditor.php?emode=1&iid=' . $iid . '"><img src="' . $CLIENT_ROOT . '/images/edit.png" style="width:1.2em;" /></a>';
 								}
 								echo '</a></li>';

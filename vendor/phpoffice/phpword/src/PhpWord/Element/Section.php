@@ -32,7 +32,11 @@ class Section extends AbstractContainer
     /**
      * Section style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\Section
+=======
      * @var ?SectionStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -88,7 +92,11 @@ class Section extends AbstractContainer
     /**
      * Get section style.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\Section
+=======
      * @return ?SectionStyle
+>>>>>>> origin
      */
     public function getStyle()
     {
@@ -197,7 +205,11 @@ class Section extends AbstractContainer
      */
     private function addHeaderFooter($type = Header::AUTO, $header = true)
     {
+<<<<<<< HEAD
+        $containerClass = substr(static::class, 0, strrpos(static::class, '\\')) . '\\' .
+=======
         $containerClass = substr(static::class, 0, strrpos(static::class, '\\') ?: 0) . '\\' .
+>>>>>>> origin
             ($header ? 'Header' : 'Footer');
         $collectionArray = $header ? 'headers' : 'footers';
         $collection = &$this->$collectionArray;

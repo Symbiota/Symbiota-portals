@@ -1,8 +1,13 @@
 <?php
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/loans/loan_langs.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/loans/loan_langs.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/loans/loan_langs.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/loans/loan_langs');
 
+>>>>>>> origin
 ?>
 
 <form name="reportsform" onsubmit="return ProcessReport();" method="post" target="_blank">
@@ -35,4 +40,8 @@ Language::load('collections/loans/loan_langs');
 		<button class="bottom-breathing-room-rel-sm" name="formsubmit" type="submit" onclick="this.form.action ='reports/defaultmailinglabel.php'" value="label"><?php echo $LANG['MAILING_LABEL']; ?></button>
 		<button name="formsubmit" type="submit" onclick="this.form.action ='reports/defaultenvelope.php'" value="envelope"><?php echo $LANG['ENVELOPE']; ?></button>
 	</fieldset>
+<<<<<<< HEAD
 </form>
+=======
+</form>
+>>>>>>> origin

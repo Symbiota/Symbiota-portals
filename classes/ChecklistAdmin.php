@@ -43,8 +43,12 @@ class ChecklistAdmin extends Manager{
 				$newPManager->setUserRights();
 				if($postArr['type'] == 'excludespp' && $postArr['excludeparent']){
 					//If is an exclusion checklists, link to parent checklist
+<<<<<<< HEAD
+					if(!$inventoryManager->insertChildChecklist($postArr['excludeparent'], $newClid, $GLOBALS['SYMB_UID'])){
+=======
 					$inventoryManager->setClid($postArr['excludeparent']);
 					if(!$inventoryManager->insertChildChecklist($newClid, $GLOBALS['SYMB_UID'])){
+>>>>>>> origin
 						$this->errorMessage = 'ERROR linking exclusion checklist to parent: '.$this->conn->error;
 					}
 				}
@@ -179,6 +183,17 @@ class ChecklistAdmin extends Manager{
 				$stmt->execute();
 				if($rs = $stmt->get_result()){
 					$row = $rs->fetch_object();
+<<<<<<< HEAD
+					if($row->footprintGeoJson) {
+						return ["type" => "geoJson", "footprint" => $row->footprintGeoJson];
+					} else {
+						return ["type" => "wkt", "footprint" => $row->footprintWkt];
+					}
+					$rs->free();
+				}
+				$stmt->close();
+			}
+=======
 					$rs->free();
 					$stmt->close();
 					if($row->footprintGeoJson) {
@@ -189,6 +204,7 @@ class ChecklistAdmin extends Manager{
 				}
 			}
 			return false;
+>>>>>>> origin
 		} catch (Exception $e) {
 			error_log('ChecklistAdmin->getFootprint on clid ' . $this->clid . ' :' . $e->getMessage(), 0);
 			return false;
@@ -212,7 +228,11 @@ class ChecklistAdmin extends Manager{
 		$retArr = Array();
 		$targetStr = $this->clid;
 		do{
+<<<<<<< HEAD
+			$sql = 'SELECT c.clid, c.name, child.clid as pclid
+=======
 			$sql = 'SELECT c.clid, c.name, c.type, child.clid as pclid
+>>>>>>> origin
 				FROM fmchklstchildren child INNER JOIN fmchecklists c ON child.clidchild = c.clid
 				WHERE child.clid IN(' . trim($targetStr, ',') . ') AND child.clid != child.clidchild
 				ORDER BY c.name ';
@@ -510,6 +530,11 @@ class ChecklistAdmin extends Manager{
 			$clStr = '';
 			$projStr = '';
 			$sql = 'SELECT role,tablepk FROM userroles WHERE (uid = '.$uid.') AND (role = "ClAdmin" OR role = "ProjAdmin") ';
+<<<<<<< HEAD
+			//$sql = 'SELECT pname FROM userpermissions '.
+			//	'WHERE (uid = '.$uid.') AND (pname LIKE "ClAdmin-%" OR pname LIKE "ProjAdmin-%") ';
+=======
+>>>>>>> origin
 			$rs = $this->conn->query($sql);
 			while($r = $rs->fetch_object()){
 				if($r->role == 'ClAdmin') $clStr .= ','.$r->tablepk;

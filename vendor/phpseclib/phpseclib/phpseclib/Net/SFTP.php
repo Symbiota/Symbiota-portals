@@ -836,8 +836,11 @@ class SFTP extends SSH2
             return false;
         }
 
+<<<<<<< HEAD
+=======
         $path = (string) $path;
 
+>>>>>>> origin
         if (!$this->canonicalize_paths) {
             if ($this->pwd === true) {
                 return '.';
@@ -925,8 +928,11 @@ class SFTP extends SSH2
             return false;
         }
 
+<<<<<<< HEAD
+=======
         $dir = (string) $dir;
 
+>>>>>>> origin
         // assume current dir if $dir is empty
         if ($dir === '') {
             $dir = './';
@@ -936,9 +942,12 @@ class SFTP extends SSH2
         }
 
         $dir = $this->realpath($dir);
+<<<<<<< HEAD
+=======
         if ($dir === false) {
             return false;
         }
+>>>>>>> origin
 
         // confirm that $dir is, in fact, a valid directory
         if ($this->use_stat_cache && is_array($this->query_stat_cache($dir))) {
@@ -3362,7 +3371,12 @@ class SFTP extends SSH2
         if (strlen($this->packet_buffer) < 4) {
             throw new \RuntimeException('Packet is too small');
         }
+<<<<<<< HEAD
+        extract(unpack('Nlength', Strings::shift($this->packet_buffer, 4)));
+        /** @var integer $length */
+=======
         $length = unpack('Nlength', Strings::shift($this->packet_buffer, 4))['length'];
+>>>>>>> origin
 
         $tempLength = $length;
         $tempLength -= strlen($this->packet_buffer);
@@ -3392,7 +3406,11 @@ class SFTP extends SSH2
         $this->packet_type = ord(Strings::shift($this->packet_buffer));
 
         if ($this->use_request_id) {
+<<<<<<< HEAD
+            extract(unpack('Npacket_id', Strings::shift($this->packet_buffer, 4))); // remove the request id
+=======
             $packet_id = unpack('Npacket_id', Strings::shift($this->packet_buffer, 4))['packet_id']; // remove the request id
+>>>>>>> origin
             $length -= 5; // account for the request id and the packet type
         } else {
             $length -= 1; // account for the packet type
@@ -3565,6 +3583,10 @@ class SFTP extends SSH2
 
     /**
      * Enable Date Preservation
+<<<<<<< HEAD
+     *
+=======
+>>>>>>> origin
      */
     public function enableDatePreservation()
     {
@@ -3573,6 +3595,10 @@ class SFTP extends SSH2
 
     /**
      * Disable Date Preservation
+<<<<<<< HEAD
+     *
+=======
+>>>>>>> origin
      */
     public function disableDatePreservation()
     {
@@ -3580,6 +3606,8 @@ class SFTP extends SSH2
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Copy
      *
      * This method (currently) only works if the copy-data extension is available
@@ -3669,6 +3697,7 @@ class SFTP extends SSH2
     }
 
     /**
+>>>>>>> origin
      * POSIX Rename
      *
      * Where rename() fails "if there already exists a file with the name specified by newpath"

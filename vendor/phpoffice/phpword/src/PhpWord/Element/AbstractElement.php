@@ -149,6 +149,11 @@ abstract class AbstractElement
 
     /**
      * Get PhpWord.
+<<<<<<< HEAD
+     *
+     * @return ?PhpWord
+=======
+>>>>>>> origin
      */
     public function getPhpWord(): ?PhpWord
     {
@@ -255,7 +260,11 @@ abstract class AbstractElement
      */
     public function setElementId(): void
     {
+<<<<<<< HEAD
+        $this->elementId = substr(md5(mt_rand()), 0, 6);
+=======
         $this->elementId = substr(md5((string) mt_rand()), 0, 6);
+>>>>>>> origin
     }
 
     /**
@@ -290,6 +299,33 @@ abstract class AbstractElement
 
     /**
      * Get comments start.
+<<<<<<< HEAD
+     *
+     * @return Comments
+     */
+    public function getCommentsRangeStart(): ?Comments
+    {
+        return $this->commentsRangeStart;
+    }
+
+    /**
+     * Get comment start.
+     *
+     * @return Comment
+     */
+    public function getCommentRangeStart(): ?Comment
+    {
+        if ($this->commentsRangeStart != null) {
+            return $this->commentsRangeStart->getItem($this->commentsRangeStart->countItems());
+        }
+
+        return null;
+    }
+
+    /**
+     * Set comment start.
+     */
+=======
      */
     public function getCommentsRangeStart(): ?Comments
     {
@@ -311,6 +347,7 @@ abstract class AbstractElement
     /**
      * Set comment start.
      */
+>>>>>>> origin
     public function setCommentRangeStart(Comment $value): void
     {
         if ($this instanceof Comment) {
@@ -334,6 +371,33 @@ abstract class AbstractElement
 
     /**
      * Get comments end.
+<<<<<<< HEAD
+     *
+     * @return Comments
+     */
+    public function getCommentsRangeEnd(): ?Comments
+    {
+        return $this->commentsRangeEnd;
+    }
+
+    /**
+     * Get comment end.
+     *
+     * @return Comment
+     */
+    public function getCommentRangeEnd(): ?Comment
+    {
+        if ($this->commentsRangeEnd != null) {
+            return $this->commentsRangeEnd->getItem($this->commentsRangeEnd->countItems());
+        }
+
+        return null;
+    }
+
+    /**
+     * Set comment end.
+     */
+=======
      */
     public function getCommentsRangeEnd(): ?Comments
     {
@@ -355,6 +419,7 @@ abstract class AbstractElement
     /**
      * Set comment end.
      */
+>>>>>>> origin
     public function setCommentRangeEnd(Comment $value): void
     {
         if ($this instanceof Comment) {

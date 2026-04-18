@@ -22,7 +22,10 @@ namespace PhpOffice\PhpWord\Collection;
  * Collection abstract class.
  *
  * @since 0.10.0
+<<<<<<< HEAD
+=======
  *
+>>>>>>> origin
  * @template T
  */
 abstract class AbstractCollection

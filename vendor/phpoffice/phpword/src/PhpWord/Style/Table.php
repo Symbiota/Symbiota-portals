@@ -146,7 +146,11 @@ class Table extends Border
     /**
      * Position.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\TablePosition
+=======
      * @var ?TablePosition
+>>>>>>> origin
      */
     private $position;
 
@@ -707,7 +711,11 @@ class Table extends Border
     /**
      * Get position.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\TablePosition
+=======
      * @return ?TablePosition
+>>>>>>> origin
      */
     public function getPosition()
     {

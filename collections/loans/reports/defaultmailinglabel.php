@@ -1,11 +1,18 @@
 <?php
 include_once('../../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLoans.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultmailinglabel.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultmailinglabel.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultmailinglabel.en.php');
+require_once $SERVER_ROOT.'/vendor/phpoffice/phpword/bootstrap.php';
+
+=======
 require_once $SERVER_ROOT.'/vendor/autoload.php';
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/loans/reports/defaultmailinglabel');
 
+>>>>>>> origin
 $collId = $_REQUEST['collid'];
 $outputMode = $_POST['outputmode'];
 $identifier = array_key_exists('identifier',$_REQUEST)?$_REQUEST['identifier']:0;
@@ -130,6 +137,10 @@ else{
 								if(isset($addressArr['address2'])){
 									echo $addressArr['address2'].'<br />';
 								}
+<<<<<<< HEAD
+								echo $addressArr['city'].($addressArr['stateprovince']?', ':'').$addressArr['stateprovince'].' '.$addressArr['postalcode'].'<br />'.$addressArr['country'].'<br />';
+								if($accountNum){
+=======
 								if(isset($addressArr['city'])){
 									echo $addressArr['city'];
 								}
@@ -143,6 +154,7 @@ else{
 									echo ' '.$addressArr['country'].'<br />';
 								}
 								if(isset($accountNum)){
+>>>>>>> origin
 									echo '(Acct. #'.$accountNum.')<br />';
 								}
 								echo '<br />';

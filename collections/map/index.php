@@ -2,6 +2,15 @@
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceMapManager.php');
 include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
+<<<<<<< HEAD
+
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/map/index.' . $LANG_TAG . '.php'))
+	include_once($SERVER_ROOT.'/content/lang/collections/map/index.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/map/index.en.php');
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/list.' . $LANG_TAG . '.php'))
+	include_once($SERVER_ROOT.'/content/lang/collections/list.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/list.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/MappingUtil.php');
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 include_once($SERVER_ROOT . '/classes/CollectionFormManager.php');
@@ -12,6 +21,7 @@ Language::load([
 ]);
 
 $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIENT_ROOT . '/js/symb/' . $LANG_TAG . '.js' : $CLIENT_ROOT . '/js/symb/en.js';
+>>>>>>> origin
 
 header('Content-Type: text/html; charset='.$CHARSET);
 header("Accept-Encoding: gzip, deflate, br");
@@ -19,7 +29,15 @@ ob_start('ob_gzhandler');
 ini_set('max_execution_time', 180); //180 seconds = 3 minutes
 
 $distFromMe = array_key_exists('distFromMe', $_REQUEST) ? filter_var($_REQUEST['distFromMe'], FILTER_SANITIZE_NUMBER_FLOAT) : '';
+<<<<<<< HEAD
+$gridSize = !empty($_REQUEST['gridSizeSetting']) ? filter_var($_REQUEST['gridSizeSetting'], FILTER_SANITIZE_NUMBER_INT) : 60;
+$minClusterSize = !empty($_REQUEST['minClusterSetting']) ? filter_var($_REQUEST['minClusterSetting'], FILTER_SANITIZE_NUMBER_INT) : 10;
+$clusterOff = !empty($_REQUEST['clusterSwitch']) ? $_REQUEST['clusterSwitch'] : 'y';
 $menuClosed = array_key_exists('menuClosed',$_REQUEST)? true: false;
+$recLimit = array_key_exists('recordlimit', $_REQUEST) ? filter_var($_REQUEST['recordlimit'], FILTER_SANITIZE_NUMBER_INT) : 15000;
+=======
+$menuClosed = array_key_exists('menuClosed',$_REQUEST)? true: false;
+>>>>>>> origin
 $catId = array_key_exists('catid',$_REQUEST) ? filter_var($_REQUEST['catid'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $tabIndex = array_key_exists('tabindex',$_REQUEST) ? filter_var($_REQUEST['tabindex'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $submitForm = array_key_exists('submitform', $_REQUEST) ? $_REQUEST['submitform'] : '';
@@ -28,6 +46,17 @@ $shouldUseMinimalMapHeader = $SHOULD_USE_MINIMAL_MAP_HEADER ?? false;
 $topVal = $shouldUseMinimalMapHeader ? '6rem' : '0';
 
 if(!$catId && isset($DEFAULTCATID) && $DEFAULTCATID) $catId = $DEFAULTCATID;
+<<<<<<< HEAD
+
+$mapManager = new OccurrenceMapManager();
+$searchVar = $mapManager->getQueryTermStr();
+if($searchVar && $recLimit) $searchVar .= '&reclimit='.$recLimit;
+
+$obsIDs = $mapManager->getObservationIds();
+
+//Sanitation
+if(!is_string($clusterOff) || strlen($clusterOff) > 1) $clusterOff = 'y';
+=======
 
 $collectionFormManager = new CollectionFormManager();
 $requestSuppliedCatOrd = (array_key_exists('catOrd', $_REQUEST) && $collectionFormManager->areCollectionIdsValid($_REQUEST['catOrd'])) ? explode(',', $_REQUEST['catOrd']) : null;
@@ -36,10 +65,36 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 
 $mapManager = new OccurrenceMapManager();
 $searchVar = $mapManager->getQueryTermStr();
+>>>>>>> origin
 
 $activateGeolocation = 0;
 if(isset($ACTIVATE_GEOLOCATION) && $ACTIVATE_GEOLOCATION == 1) $activateGeolocation = 1;
 
+<<<<<<< HEAD
+//Set default bounding box for portal
+$boundLatMin = -90;
+$boundLatMax = 90;
+$boundLngMin = -180;
+$boundLngMax = 180;
+if(!empty($MAPPING_BOUNDARIES)){
+	$coorArr = explode(';', $MAPPING_BOUNDARIES);
+	if($coorArr && count($coorArr) == 4){
+		$boundLatMin = $coorArr[2];
+		$boundLatMax = $coorArr[0];
+		$boundLngMin = $coorArr[3];
+		$boundLngMax = $coorArr[1];
+	}
+}
+$bounds = [ [$boundLatMax, $boundLngMax], [$boundLatMin, $boundLngMin] ];
+
+//Gets Coordinates
+$coordArr = $mapManager->getCoordinateMap(0,$recLimit);
+$taxaArr = [];
+$recordArr = [];
+$collArr = [];
+
+$recordCnt = 0;
+=======
 $bounds = MappingUtil::getMappingBoundary();
 
 //Gets Coordinates
@@ -48,11 +103,86 @@ list(
 	'recordArr' => $recordArr,
 	'collArr' => $collArr
 ) = $mapManager->getCoordinateMap();
+>>>>>>> origin
 
 if(empty($EXTERNAL_PORTAL_HOSTS)) {
 	$EXTERNAL_PORTAL_HOSTS = [];
 }
 
+<<<<<<< HEAD
+foreach ($coordArr as $collName => $coll) {
+	//Collect all the collections
+	foreach ($coll as $recordId => $record) {
+		if($recordId == 'c') continue;
+
+		//Collect all taxon
+		if(!array_key_exists($record['tid'], $taxaArr)) {
+			$taxaArr[$record['tid']] = [
+				'sn' => $record['sn'],
+				'tid' => $record['tid'],
+				'family' => $record['fam'],
+				'color' => $coll['c'],
+				'records' => [$recordCnt]
+			];
+		} else {
+			array_push($taxaArr[$record['tid']]['records'], $recordCnt);
+		}
+
+		//Collect all Collections
+		if(!array_key_exists($record['collid'], $collArr)) {
+			$collArr[$record['collid']] = [
+				'name' => $collName,
+				'collid' => $record['collid'],
+				'color' => $coll['c'],
+				'records' => [$recordCnt]
+			];
+		} else {
+			array_push($collArr[$record['collid']]['records'], $recordCnt);
+		}
+
+		$llstrArr = explode(',', $record['llStr']);
+		if(count($llstrArr) != 2) continue;
+
+		//Collect all records
+		array_push($recordArr, [
+			'id' => $record['id'],
+			'tid' => $record['tid'],
+			'catalogNumber' => $record['catalogNumber'],
+			'eventdate' => $record['eventdate'],
+			'sciname' => $record['sn'],
+			'collid' => $record['collid'],
+			'family' => $record['fam'],
+			'occid' => $recordId,
+			'collname' => $collName,
+			'type' => in_array($record['collid'], $obsIDs)? 'observation':'specimen',
+			'lat' => floatval($llstrArr[0]),
+			'lng' => floatval($llstrArr[1]),
+		]);
+
+		$recordCnt++;
+	}
+}
+
+if(isset($_REQUEST['llpoint'])) {
+   $llpoint = explode(";", $_REQUEST['llpoint']);
+   if(count($llpoint) === 4) {
+	  $pointLat = $llpoint[0];
+	  $pointLng = $llpoint[1];
+	  $pointRad = $llpoint[2];
+	  $pointUnit = $llpoint[3];
+   }
+} elseif(isset($_REQUEST['llbound'])) {
+   $llbound = explode(";", $_REQUEST['llbound']);
+   if(count($llbound) === 4) {
+	  $upperLat= $llbound[0];
+	  $lowerLat= $llbound[1];
+	  $upperLng= $llbound[2];
+	  $lowerLng = $llbound[3];
+   }
+}
+
+$serverHost = GeneralUtil::getDomain();
+=======
 if(isset($_REQUEST['llpoint'])) {
    $llpoint = explode(";", $_REQUEST['llpoint']);
    if(count($llpoint) === 4) {
@@ -76,6 +206,7 @@ $gtsTermArr = $mapManager->getPaleoGtsTerms();
 $paleoTimes = $mapManager->getPaleoTimes();
 $serverHost = GeneralUtil::getDomain();
 
+>>>>>>> origin
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
@@ -94,12 +225,16 @@ $serverHost = GeneralUtil::getDomain();
 		<script src="<?= $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 		<script src="<?= $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
 		<link href="<?= $CSS_BASE_PATH ?>/symbiota/collections/sharedCollectionStyling.css" type="text/css" rel="stylesheet" />
+<<<<<<< HEAD
+		<link href="../../css/jquery.symbiota.css" type="text/css" rel="stylesheet" />
+=======
 		<script src="<?= $CLIENT_ROOT ?>/js/symb/collections.list.js?ver=20251002>" type="text/javascript"></script>
 		<script src="<?= $CLIENT_ROOT ?>/js/alerts.js?v=202107" type="text/javascript"></script>
 		<script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=2" type="text/javascript"></script>
 		<link href="../../css/jquery.symbiota.css" type="text/css" rel="stylesheet" />
 		<link href="<?= $CSS_BASE_PATH ?>/searchStyles.css?ver=1" type="text/css" rel="stylesheet">
 		<link href="<?= $CSS_BASE_PATH ?>/searchStylesInner.css" type="text/css" rel="stylesheet">
+>>>>>>> origin
 		<script src="../../js/jquery.popupoverlay.js" type="text/javascript"></script>
 		<script src="../../js/jscolor/jscolor.js?ver=1" type="text/javascript"></script>
 		<!---	<script src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=drawing<?= (!empty($GOOGLE_MAP_KEY) && $GOOGLE_MAP_KEY != 'DEV' ? 'key=' . $GOOGLE_MAP_KEY : '') ?>&callback=Function.prototype" ></script> -->
@@ -112,7 +247,11 @@ $serverHost = GeneralUtil::getDomain();
 			include_once($SERVER_ROOT.'/includes/googleMap.php');
 		}
 		?>
+<<<<<<< HEAD
+
+=======
 		<script src="<?php echo $filename ?>" type="text/javascript"></script>
+>>>>>>> origin
 		<script src="../../js/symb/wktpolygontools.js" type="text/javascript"></script>
 		<script src="../../js/symb/MapShapeHelper.js" type="text/javascript"></script>
 		<script src="../../js/symb/localitySuggest.js" type="text/javascript"></script>
@@ -208,6 +347,21 @@ $serverHost = GeneralUtil::getDomain();
 		}
 
 		#mapSearchRecordsTable th {
+<<<<<<< HEAD
+		top: 0;
+		position: sticky;
+		}
+
+		#tabs2 {
+		display:none;
+		padding:0px;
+		display: block;
+		height: 100%;
+		/* overflow: scroll; */
+		}
+		.cluster text {
+		text-shadow: 0 0 8px white, 0 0 8px white, 0 0 8px white;
+=======
 			top: 0;
 			position: sticky;
 		}
@@ -231,6 +385,7 @@ $serverHost = GeneralUtil::getDomain();
 
 		.cluster text {
 			text-shadow: 0 0 8px white, 0 0 8px white, 0 0 8px white;
+>>>>>>> origin
 		}
 
 		<?php if($shouldUseMinimalMapHeader){ ?>
@@ -254,7 +409,11 @@ $serverHost = GeneralUtil::getDomain();
 
 		//Map Globals
 		let shape;
+<<<<<<< HEAD
+		let map_bounds= [ [90, 180], [-90, -180] ];
+=======
 		let map_bounds= [ {lat: 90, lng: 180}, {lat:-90, lng: -180} ];
+>>>>>>> origin
 
 		//Array for holding all search results from current and outside portals
 		let mapGroups = [];
@@ -271,11 +430,14 @@ $serverHost = GeneralUtil::getDomain();
 
 		//Indciates if clustering should be drawn. Only comes into effect after redraw or refreshes
 		let clusteroff = true;
+<<<<<<< HEAD
+=======
 		// Imported value of 
 		let MAP_RECORD_LIMIT;
 
 		//Get paleo times
 		const paleoTimes = <?= json_encode($paleoTimes ?? []) ?>;
+>>>>>>> origin
 
 		const colorChange = new Event("colorchange",  {
 			bubbles: true,
@@ -580,6 +742,8 @@ $serverHost = GeneralUtil::getDomain();
 			}
 		}
 
+<<<<<<< HEAD
+=======
 		function setHeatmap(value) {
 			const heatmap_on_el = document.getElementById('heatmap_on');
 			heatmap_on_el.checked = value;
@@ -592,6 +756,7 @@ $serverHost = GeneralUtil::getDomain();
 			cluster_off_el.dispatchEvent(new Event('change'))
 		}
 
+>>>>>>> origin
 		function leafletInit() {
 
 			L.DivIcon.CustomColor = L.DivIcon.extend({
@@ -627,7 +792,10 @@ $serverHost = GeneralUtil::getDomain();
 
 			let heatmapLayer;
 			let heatmap;
+<<<<<<< HEAD
+=======
 			let highRecordMode = false;
+>>>>>>> origin
 
 			let groupClusters = [];
 
@@ -834,16 +1002,32 @@ $serverHost = GeneralUtil::getDomain();
 				let maxDensityInput = document.getElementById('heat-max-density')
 
 				var cfg = {
+<<<<<<< HEAD
+					"radius": (radius_input? parseFloat(radius_input.value): 50) / 100.00,
+					"maxOpacity": .9,
+					"scaleRadius": true,
+=======
 					"radius": radius_input? parseFloat(radius_input.value): 20,
 					"minOpacity": 0.2,
 					"maxOpacity": 0.9,
 					"scaleRadius": false,
+>>>>>>> origin
 					"useLocalExtrema": false,
 					latField: 'lat',
 					lngField: 'lng',
 				};
 				heatmapLayer = new HeatmapOverlay(cfg);
 
+<<<<<<< HEAD
+				let heatMaxDensity = maxDensityInput? parseInt(maxDensityInput.value) : 3
+				let heatMinDensity = minDensityInput? parseInt(minDensityInput.value) : 1
+
+				heatmapLayer.addTo(map.mapLayer);
+
+				heatmapLayer.setData({
+					max: heatMaxDensity || 3,
+					min: heatMinDensity || 1,
+=======
 				let heatMaxDensity = maxDensityInput && maxDensityInput.value? parseInt(maxDensityInput.value) : Math.floor((recordArr.length * .05))
 				let heatMinDensity = minDensityInput && minDensityInput.value? parseInt(minDensityInput.value) : 1
 
@@ -851,6 +1035,7 @@ $serverHost = GeneralUtil::getDomain();
 				heatmapLayer.setData({
 					max: heatMaxDensity,
 					min: heatMinDensity,
+>>>>>>> origin
 					data: recordArr
 				});
 			}
@@ -868,6 +1053,8 @@ $serverHost = GeneralUtil::getDomain();
 				}
 			}
 
+<<<<<<< HEAD
+=======
 			function setDynamicHeatmap() {
 				zoom =  map.mapLayer.getZoom();
 				if(zoom > 10) {
@@ -877,6 +1064,7 @@ $serverHost = GeneralUtil::getDomain();
 				}
 			}
 
+>>>>>>> origin
 			// Open Record needs oms to spider correctly
 			oms.addListener('click', function(marker) {
 				openRecord(marker.record);
@@ -896,6 +1084,13 @@ $serverHost = GeneralUtil::getDomain();
 				if(heatmapLayer) map.mapLayer.removeLayer(heatmapLayer);
 			})
 
+<<<<<<< HEAD
+			document.getElementById("mapsearchform").addEventListener('submit', async e => {
+				e.preventDefault();
+				if(!verifyCollForm(e.target)) return false;
+
+				showWorking();
+=======
 			document.getElementById("params-form").addEventListener('submit', async e => {
 				e.preventDefault();
 				// if(!verifyCollForm(e.target)) return false;
@@ -903,6 +1098,7 @@ $serverHost = GeneralUtil::getDomain();
 
 				showWorking();
 				storeFormDataInSessionStorage(e.target);
+>>>>>>> origin
 
 				let formData = new FormData(e.target);
 
@@ -962,6 +1158,10 @@ $serverHost = GeneralUtil::getDomain();
 					group.portalMapGroup.genClusters();
 				})
 
+<<<<<<< HEAD
+				autoColorTaxa();
+
+=======
 				if(recordArr && recordArr.length >= map.HIGH_RECORD_THRESHOLD || recordArr.length >= MAP_RECORD_LIMIT ) {
 					if(recordArr.length >= MAP_RECORD_LIMIT) {
 						alert('<?= $LANG["MAP_RECORD_LIMIT_MESSAGE"] ?>');
@@ -983,6 +1183,7 @@ $serverHost = GeneralUtil::getDomain();
 					autoColorTaxa();
 				}
 				
+>>>>>>> origin
 				drawPoints();
 				fitMap();
 				hideWorking();
@@ -1117,15 +1318,27 @@ $serverHost = GeneralUtil::getDomain();
 
 			//Load Data if any with page Load
 			if(recordArr.length > 0) {
+<<<<<<< HEAD
+				let formData = new FormData(document.getElementById("mapsearchform"));
+=======
 				let formData = new FormData(document.getElementById("params-form"));
+>>>>>>> origin
 
 				const group = genMapGroups(recordArr, taxaMap, collArr, "<?=$LANG['CURRENT_PORTAL']?>");
 				group.origin = "<?= $serverHost . $CLIENT_ROOT?>";
 				mapGroups = [group];
 
+<<<<<<< HEAD
+
 				$( document ).ready(function() {
 					// Build Records Panel
 					buildRecordsPanel(recordArr);
+
+=======
+				$( document ).ready(function() {
+					// Build Records Panel
+					buildRecordsPanel(recordArr);
+>>>>>>> origin
 					// Build Taxa | Portal | Collection Panels
 					buildPanels(formData.get('cross_portal_switch'));
 
@@ -1135,6 +1348,12 @@ $serverHost = GeneralUtil::getDomain();
 						group.portalMapGroup.genClusters();
 					})
 
+<<<<<<< HEAD
+					autoColorTaxa();
+
+					drawPoints();
+
+=======
 					if(recordArr && recordArr.length >= map.HIGH_RECORD_THRESHOLD || recordArr.length >= MAP_RECORD_LIMIT) {
 						if(recordArr.length >= MAP_RECORD_LIMIT) {
 							alert('<?= $LANG["MAP_RECORD_LIMIT_MESSAGE"] ?>');
@@ -1156,12 +1375,17 @@ $serverHost = GeneralUtil::getDomain();
 					}
 
 					drawPoints();
+>>>>>>> origin
 					fitMap();
 				})
 			}
 			fitMap();
 		}
+<<<<<<< HEAD
+
+=======
 	
+>>>>>>> origin
 		function googleInit() {
 			let map = new GoogleMap('map')
 
@@ -1394,8 +1618,13 @@ $serverHost = GeneralUtil::getDomain();
 				else if(bounds) map.mapLayer.fitBounds(bounds);
 				else if (map_bounds) {
 					const new_bounds = new google.maps.LatLngBounds()
+<<<<<<< HEAD
+					new_bounds.extend(new google.maps.LatLng(parseFloat(map_bounds[0][0]), parseFloat(map_bounds[0][1])))
+					new_bounds.extend(new google.maps.LatLng(parseFloat(map_bounds[1][0]), parseFloat(map_bounds[1][1])))
+=======
 					new_bounds.extend(new google.maps.LatLng(parseFloat(map_bounds[0].lat), parseFloat(map_bounds[0].lng)))
 					new_bounds.extend(new google.maps.LatLng(parseFloat(map_bounds[1].lat), parseFloat(map_bounds[1].lng)))
+>>>>>>> origin
 					map.mapLayer.fitBounds(new_bounds)
 				}
 			}
@@ -1406,7 +1635,11 @@ $serverHost = GeneralUtil::getDomain();
 				let radius_input = document.getElementById('heat-radius');
 
 				var cfg = {
+<<<<<<< HEAD
+					"radius": (radius_input? parseFloat(radius_input.value): 50) / 100.00,
+=======
 					"radius": radius_input? parseFloat(radius_input.value): 20,
+>>>>>>> origin
 					"maxOpacity": .9,
 					"scaleRadius": true,
 					"useLocalExtrema": false,
@@ -1422,12 +1655,21 @@ $serverHost = GeneralUtil::getDomain();
 				let minDensityInput = document.getElementById('heat-min-density')
 				let maxDensityInput = document.getElementById('heat-max-density')
 
+<<<<<<< HEAD
+				let heatMaxDensity = maxDensityInput? parseInt(maxDensityInput.value) : 3
+				let heatMinDensity = minDensityInput? parseInt(minDensityInput.value) : 1
+
+				heatmapLayer.setData({
+					max: heatMaxDensity || 3,
+					min: heatMinDensity || 1,
+=======
 				let heatMaxDensity = maxDensityInput && maxDensityInput.value? parseInt(maxDensityInput.value) : Math.floor((recordArr.length * .05))
 				let heatMinDensity = minDensityInput && minDensityInput.value? parseInt(minDensityInput.value) : 1
 
 				heatmapLayer.setData({
 					max: heatMaxDensity,
 					min: heatMinDensity,
+>>>>>>> origin
 					data: recordArr
 				});
 			}
@@ -1446,7 +1688,11 @@ $serverHost = GeneralUtil::getDomain();
 				if(heatmapLayer) heatmapLayer.setData({data: []})
 			})
 
+<<<<<<< HEAD
+			document.getElementById("mapsearchform").addEventListener('submit', async e => {
+=======
 			document.getElementById("params-form").addEventListener('submit', async e => {
+>>>>>>> origin
 				e.preventDefault();
 				if(!verifyCollForm(e.target)) return false;
 
@@ -1690,7 +1936,11 @@ $serverHost = GeneralUtil::getDomain();
 
 			if(recordArr.length > 0) {
 				if(shape) map.drawShape(shape);
+<<<<<<< HEAD
+				let formData = new FormData(document.getElementById("mapsearchform"));
+=======
 				let formData = new FormData(document.getElementById("params-form"));
+>>>>>>> origin
 
 				const group = genGroups(recordArr, taxaMap, collArr, "<?= $LANG['CURRENT_PORTAL'] ?>");
 				group.origin = "<?= $serverHost . $CLIENT_ROOT ?>";
@@ -2038,12 +2288,20 @@ $serverHost = GeneralUtil::getDomain();
 				collArr = JSON.parse(data.getAttribute('data-coll-map'));
 				recordArr = JSON.parse(data.getAttribute('data-records'));
 
+<<<<<<< HEAD
+=======
 				MAP_RECORD_LIMIT = parseInt(data.getAttribute('data-record-limit'));
+>>>>>>> origin
 				clusteroff = data.getAttribute('data-cluster-off') ==='y'? true: false;
 
 				externalPortalHosts = JSON.parse(data.getAttribute('data-external-portal-hosts'));
 
+<<<<<<< HEAD
+				searchVar = data.getAttribute('data-search-var');
+				if(searchVar) sessionStorage.querystr = searchVar;
+=======
 				searchVar = setSessionQueryStr();
+>>>>>>> origin
 
 				let shapeType;
 
@@ -2110,6 +2368,8 @@ $serverHost = GeneralUtil::getDomain();
 		<script src="../../js/symb/api.taxonomy.taxasuggest.js?ver=4" type="text/javascript"></script>
 	</head>
 	<body style='width:100%;max-width:100%;min-width:500px;' <?php echo (!$activateGeolocation?'onload="initialize();"':''); ?>>
+<<<<<<< HEAD
+=======
 	<div>
 		<button id="search-panel-button" onclick="document.getElementById('defaultpanel').style.width='29rem'; document.getElementById('search-panel-button').style.display='none';" style="position:absolute;top:0;left:0;margin:0px;z-index:10; gap: 0.2rem<?= $menuClosed ? '' : '; display:none'?>">
 			<span style="padding-bottom:0.2rem">
@@ -2120,36 +2380,99 @@ $serverHost = GeneralUtil::getDomain();
 	</div>
 	<div style="width:100%; max-width:max-content;" role="main" id="innertext" class="inntertext-tab pin-things-here inner-search">
 		<div style="z-index:999;" id="error-msgs" class="errors"></div>
+>>>>>>> origin
 		<?php
 		if($shouldUseMinimalMapHeader) include_once($SERVER_ROOT . '/includes/minimalheader.php');
 		?>
 	  	<h1 class="page-heading screen-reader-only">Map Interface</h1>
 		<div
 			id="service-container"
+<<<<<<< HEAD
+			data-search-var="<?=htmlspecialchars($searchVar)?>"
+=======
 			data-search-var="<?=$searchVar?>"
+>>>>>>> origin
 			data-map-bounds="<?=htmlspecialchars(json_encode($bounds))?>"
 			data-taxa-map="<?=htmlspecialchars(json_encode($taxaArr))?>"
 			data-coll-map="<?=htmlspecialchars(json_encode($collArr))?>"
 			data-records="<?=htmlspecialchars(json_encode($recordArr))?>"
+<<<<<<< HEAD
+			data-cluster-off="<?=htmlspecialchars($clusterOff)?>"
+=======
 			data-record-limit="<?= OccurrenceMapManager::MAP_RECORD_LIMIT ?>"
 			data-cluster-off="<?= $mapManager->getSearchTerm('clusterSwitch') ?>"
+>>>>>>> origin
 			data-external-portal-hosts="<?=htmlspecialchars(json_encode($EXTERNAL_PORTAL_HOSTS))?>"
 			class="service-container"
 		>
 		</div>
+<<<<<<< HEAD
+		<div>
+			<button onclick="document.getElementById('defaultpanel').style.width='29rem';  " style="position:absolute;top:0;left:0;margin:0px;z-index:10; gap: 0.2rem">
+				<span style="padding-bottom:0.2rem">
+					&#9776;
+				</span>
+				<b>Open Search Panel</b>
+			</button>
+		</div>
+		<div id='map' style='width:100vw;height:100vh;z-index:1'></div>
+		<div id="defaultpanel" class="sidepanel"  <?= $menuClosed? 'style="width: 0"': ''?>>
+=======
 		<div id='map' style='width:100vw;height:100vh;z-index:1'></div>
 		<div id="defaultpanel" class="sidepanel"  <?= $menuClosed ? 'style="width: 0"': ''?>>
+>>>>>>> origin
 			<div class="menu" style="display:flex; align-items: center; background-color: var(--menu-top-bg-color); height: 2rem">
 				<a style="text-decoration: none; margin-left: 0.5rem;" href="<?= $CLIENT_ROOT ?>/index.php">
 					<?= $LANG['HOME'] ?>
 				</a>
 				<span style="display: flex; flex-grow: 1; margin-right:1rem; justify-content: right">
+<<<<<<< HEAD
+					<a onclick="document.getElementById('defaultpanel').style.width='0px'">Hide Panel</a>
+=======
 					<a onclick="document.getElementById('defaultpanel').style.width='0px'; document.getElementById('search-panel-button').style.display='block';"><?= $LANG['HIDE_PANEL'] ?></a>
+>>>>>>> origin
 				</span>
 			</div>
 			<div class="panel-content">
 				<div id="mapinterface">
 					<div id="accordion">
+<<<<<<< HEAD
+						<h3 style="margin-top:0"><?= $LANG['SEARCH_CRITERIA'] ?></h3>
+						<div id="tabs1" style="padding:0px;height:100%">
+							<form name="mapsearchform" id="mapsearchform" data-ajax="false">
+								<ul>
+									<li><a href="#searchcollections"><span><?= $LANG['COLLECTIONS'] ?></span></a></li>
+									<li><a href="#searchcriteria"><span><?= $LANG['CRITERIA'] ?></span></a></li>
+									<li><a href="#mapoptions"><span><?= $LANG['MAP_OPTIONS'] ?></span></a></li>
+								</ul>
+								<div id="searchcollections">
+									<div >
+										<?php
+										$collList = $mapManager->getFullCollectionList($catId);
+										$specArr = (isset($collList['spec']) ? $collList['spec'] : null);
+										$obsArr = (isset($collList['obs']) ? $collList['obs'] : null);
+										if($specArr || $obsArr){
+										?>
+										<div id="specobsdiv">
+											<div style="margin:0px 0px 10px 5px;">
+												<input id="dballcb" data-role="none" name="db[]" class="specobs" value='all' type="checkbox" onclick="selectAll(this);" <?php echo (!$mapManager->getSearchTerm('db') || $mapManager->getSearchTerm('db')=='all'?'checked':'') ?> />
+												<?= $LANG['SELECT_DESELECT'].' <a href="../misc/collprofiles.php" target="_blank">' . $LANG['ALL_COLLECTIONS'] . '</a>'; ?>
+											</div>
+											<?php
+											if($specArr){
+											$mapManager->outputFullCollArr($specArr, $catId, false, false);
+											}
+											if($specArr && $obsArr) echo '<hr style="clear:both;margin:20px 0px;"/>';
+											if($obsArr){
+											$mapManager->outputFullCollArr($obsArr, $catId, false, false);
+											}
+											?>
+											<div style="clear:both;">&nbsp;</div>
+										</div>
+										<?php
+										}
+										?>
+=======
 						<h3 id="search_criteria" style="margin-top:0"><?= $LANG['SEARCH_CRITERIA'] ?></h3>
 						<form style="width: 39rem;" name="params-form" id="params-form" data-ajax="false">
 							<div id="tabs1" class="content" style="padding:0px;height:100%">
@@ -2177,11 +2500,27 @@ $serverHost = GeneralUtil::getDomain();
 											}
 											?>
 										</div>
+>>>>>>> origin
 									</div>
 								</div>
 								<div id="searchcriteria" style="padding-top: 0.5rem">
 									<div>
+<<<<<<< HEAD
+										<!-- <div style="float:left;<?= (isset($SOLR_MODE) && $SOLR_MODE ? 'display:none;' : '') ?>">
+											Record Limit:
+											<input data-role="none" type="text" id="recordlimit" style="width:75px;" name="recordlimit" value="<?php echo ($recLimit?$recLimit:""); ?>" title="Maximum record amount returned from search." onchange="return checkRecordLimit(this.form);" />
+										</div> -->
 										<div style="display:flex; gap: 1rem; justify-content: right; height: 2rem">
+											<input type="hidden" id="selectedpoints" value="" />
+											<input type="hidden" id="deselectedpoints" value="" />
+											<input type="hidden" id="selecteddspoints" value="" />
+											<input type="hidden" id="deselecteddspoints" value="" />
+											<input type="hidden" id="gridSizeSetting" name="gridSizeSetting" value="<?php echo $gridSize; ?>" />
+											<input type="hidden" id="minClusterSetting" name="minClusterSetting" value="<?php echo $minClusterSize; ?>" />
+											<input type="hidden" id="clusterSwitch" name="clusterSwitch" value="<?php echo $clusterOff; ?>" />
+=======
+										<div style="display:flex; gap: 1rem; justify-content: right; height: 2rem">
+>>>>>>> origin
 											<input type="hidden" id="pointlat" name="pointlat" value='<?php echo isset($pointLat)? $pointLat:"" ?>' />
 											<input type="hidden" id="pointlong" name="pointlong" value='<?php echo isset($pointLng)? $pointLng:"" ?>' />
 											<input type="hidden" id="pointunits" name="pointunits" value='<?php echo isset($pointUnit)? $pointUnit:"km" ?>' />
@@ -2215,6 +2554,339 @@ $serverHost = GeneralUtil::getDomain();
 												}
 												?>
 											</select>
+<<<<<<< HEAD
+										</div>
+										<div style="margin-top:5px;">
+											<?= $LANG['TAXA'] ?>:
+											<input data-role="none" id="taxa" name="taxa" type="text" style="width:275px;" value="<?= $mapManager->getTaxaSearchTerm(); ?>" title="<?= $LANG['SEPARATE_MULTIPLE'] ?>" />
+										</div>
+									</div>
+									<div style="margin:5 0 5 0;"><hr /></div>
+
+									<?php if(!empty($ENABLE_CROSS_PORTAL)): ?>
+									<?php include('./portalSelector.php')?>
+									<div style="margin:5 0 5 0;"><hr /></div>
+									<?php endif ?>
+									<?php
+									if($mapManager->getSearchTerm('clid')){
+										?>
+										<div>
+											<div style="clear:both;text-decoration: underline;">Species Checklist:</div>
+											<div style="clear:both;margin:5px 0px">
+												<?= $mapManager->getClName() ?><br/>
+												<input data-role="none" type="hidden" id="checklistname" name="checklistname" value="<?= $mapManager->getClName() ?>" />
+												<input id="clid" name="clid" type="hidden"  value="<?= $mapManager->getSearchTerm('clid') ?>" />
+											</div>
+											<div style="clear:both;margin-top:5px;">
+												<div style="float:left">
+													Display:
+												</div>
+												<div style="float:left;margin-left:10px;">
+													<input data-role="none" name="cltype" type="radio" value="all" <?php if($mapManager->getSearchTerm('cltype') == 'all') echo 'checked'; ?> />
+													all specimens within polygon<br/>
+													<input data-role="none" name="cltype" type="radio" value="vouchers" <?php if(!$mapManager->getSearchTerm('cltype') || $mapManager->getSearchTerm('cltype') == 'vouchers') echo 'checked'; ?> />
+													vouchers only
+												</div>
+												<div style="clear: both"></div>
+											</div>
+										</div>
+										<div style="clear:both;margin:0 0 5 0;"><hr /></div>
+										<?php
+									}
+									?>
+									<div>
+										<?= $LANG['COUNTRY'] ?>: <input data-role="none" type="text" id="country" style="width:225px;" name="country" value="<?= $mapManager->getSearchTerm('country') ?>" title="<?= $LANG['SEPARATE_MULTIPLE'] ?>" />
+									</div>
+									<div style="margin-top:5px;">
+										<?= $LANG['STATE'] ?>: <input data-role="none" type="text" id="state" style="width:150px;" name="state" value="<?= $mapManager->getSearchTerm('state') ?>" title="<?= $LANG['SEPARATE_MULTIPLE'] ?>" />
+									</div>
+									<div style="margin-top:5px;">
+										<?= $LANG['COUNTY'] ?>: <input data-role="none" type="text" id="county" style="width:225px;"  name="county" value="<?= $mapManager->getSearchTerm('county') ?>" title="<?= $LANG['SEPARATE_MULTIPLE'] ?>" />
+									</div>
+									<div style="margin-top:5px;">
+										<?= $LANG['LOCALITY'] ?>: <input data-role="none" type="text" id="locality" style="width:225px;" name="local" value="<?= $mapManager->getSearchTerm('local') ?>" />
+									</div>
+									<div style="margin:5 0 5 0;"><hr /></div>
+									<div id="shapecriteria">
+										<div id="noshapecriteria" style="display:<?php echo ((!$mapManager->getSearchTerm('footprintGeoJson') && !$mapManager->getSearchTerm('upperlat'))?'block':'none'); ?>;">
+											<div id="geocriteria" style="display:<?php echo ((!$mapManager->getSearchTerm('footprintGeoJson') && !$distFromMe && !$mapManager->getSearchTerm('pointlat') && !$mapManager->getSearchTerm('upperlat'))?'block':'none'); ?>;">
+												<div>
+													<?= $LANG['SHAPE_TOOLS'] ?>.
+												</div>
+											</div>
+											<div id="distancegeocriteria" style="display:<?php echo ($distFromMe?'block':'none'); ?>;">
+												<div>
+													<?php echo $LANG['WITHIN']; ?>
+													<input data-role="none" type="text" id="distFromMe" style="width:40px;" name="distFromMe" value="<?= $distFromMe ?>" /> miles from me, or
+													<?= strtolower($LANG['SHAPE_TOOLS']) ?>.
+												</div>
+											</div>
+										</div>
+										<div id="polygeocriteria" style="display:<?php echo (($mapManager->getSearchTerm('footprintGeoJson'))?'block':'none'); ?>;">
+											<div>
+												<?= $LANG['WITHIN_POLYGON'] ?>.
+											</div>
+										</div>
+										<div id="circlegeocriteria" style="display:<?php echo (($mapManager->getSearchTerm('pointlat') && !$distFromMe)?'block':'none'); ?>;">
+											<div>
+												<?= $LANG['WITHIN_CIRCLE'] ?>.
+											</div>
+										</div>
+										<div id="rectgeocriteria" style="display:<?php echo ($mapManager->getSearchTerm('upperlat')?'block':'none'); ?>;">
+											<div>
+												<?= $LANG['WITHIN_RECTANGLE'] ?>.
+											</div>
+										</div>
+										<div id="deleteshapediv" style="margin-top:5px;display:<?php echo (($mapManager->getSearchTerm('pointlat') || $mapManager->getSearchTerm('upperlat') || $mapManager->getSearchTerm('footprintGeoJson'))?'block':'none'); ?>;">
+											<button class="button-danger" data-role="none" type="button" onclick="deleteMapShape()"><?= $LANG['DELETE_SHAPE'] ?></button>
+										</div>
+									</div>
+									<div style="margin:5 0 5 0;"><hr /></div>
+									<div>
+										<?= $LANG['COLLECTOR_LASTNAME'] ?>:
+										<input data-role="none" type="text" id="collector" style="width:125px;" name="collector" value="<?php echo $mapManager->getSearchTerm('collector'); ?>" title="" />
+									</div>
+									<div style="margin-top:5px;">
+										<?= $LANG['COLLECTOR_NUMBER'] ?>:
+										<input data-role="none" type="text" id="collnum" style="width:125px;" name="collnum" value="<?php echo $mapManager->getSearchTerm('collnum'); ?>" title="Separate multiple terms by commas and ranges by ' - ' (space before and after dash required), e.g.: 3542,3602,3700 - 3750" />
+									</div>
+									<div style="margin-top:5px;">
+										<?= $LANG['COLLECTOR_DATE'] ?>:
+										<input data-role="none" type="text" id="eventdate1" style="width:80px;" name="eventdate1" style="width:100px;" value="<?php echo $mapManager->getSearchTerm('eventdate1'); ?>" title="Single date or start date of range" /> -
+										<input data-role="none" type="text" id="eventdate2" style="width:80px;" name="eventdate2" style="width:100px;" value="<?php echo $mapManager->getSearchTerm('eventdate2'); ?>" title="End date of range; leave blank if searching for single date" />
+									</div>
+									<div style="margin:10 0 10 0;"><hr></div>
+									<div>
+										<?= $LANG['CATALOG_NUMBER'] ?>:
+										<input data-role="none" type="text" id="catnum" style="width:150px;" name="catnum" value="<?php echo $mapManager->getSearchTerm('catnum'); ?>" title="" />
+									</div>
+									<div style="margin-left:15px;">
+										<input data-role="none" name="includeothercatnum" type="checkbox" value="1" checked /> <?= $LANG['INCLUDE_OTHER_CATNUM'] ?>
+									</div>
+									<div style="margin-top:10px;">
+										<input data-role="none" type='checkbox' name='typestatus' value='1' <?php if($mapManager->getSearchTerm('typestatus')) echo "CHECKED"; ?> >
+										<?= $LANG['LIMIT_TO_TYPE'] ?>
+									</div>
+									<div style="margin-top:5px;">
+										<input data-role="none" type='checkbox' name='hasimages' value='1' <?php if($mapManager->getSearchTerm('hasimages')) echo "CHECKED"; ?> >
+										<?= $LANG['LIMIT_IMAGES'] ?>
+									</div>
+									<div style="margin-top:5px;">
+										<input data-role="none" type='checkbox' name='hasaudio' value='1' <?php if($mapManager->getSearchTerm('hasaudio')) echo "CHECKED"; ?> >
+										<?= $LANG['LIMIT_AUDIO'] ?>
+									</div>
+									<div style="margin-top:5px;">
+										<input data-role="none" type='checkbox' name='hasgenetic' value='1' <?php if($mapManager->getSearchTerm('hasgenetic')) echo "CHECKED"; ?> >
+										<?= $LANG['LIMIT_GENETIC'] ?>
+									</div>
+									<div style="margin-top:5px;">
+										<input data-role="none" type='checkbox' name='includecult' value='1' <?php if($mapManager->getSearchTerm('includecult')) echo "CHECKED"; ?> >
+										<?= $LANG['INCLUDE_CULTIVATED'] ?>
+									</div>
+									<div><hr></div>
+									<input type="hidden" name="reset" value="1" />
+								</div>
+							</form>
+							<div id="mapoptions" style="">
+								<fieldset>
+									<legend><?= $LANG['CLUSTERING'] ?></legend>
+									<label><?= $LANG['TURN_OFF_CLUSTERING'] ?>:</label>
+									<input data-role="none" type="checkbox" id="clusteroff" name="clusteroff" value='1' <?= ($clusterOff=="y"?'checked':'') ?>/>
+
+									<span style="display: flex; align-items:center">
+										<label for="cluster-radius"><?= $LANG['CLUSTER_RADIUS'] ?>: 1 </label>
+										<input style="margin: 0 1rem;"type="range" value="1" id="cluster-radius" name="cluster-radius" min="1" max="100">100
+									</span>
+								</fieldset>
+								<br/>
+								<fieldset>
+									<legend><?= $LANG['HEATMAP']; ?></legend>
+									<label><?= $LANG['TURN_ON_HEATMAP'] ?>:</label>
+									<input data-role="none" type="checkbox" id="heatmap_on" name="heatmap_on" value='1'/>
+									<br/>
+									<span style="display: flex; align-items:center">
+										<label for="heat-radius"><?= $LANG['HEAT_RADIUS'] ?>: 0.1</label>
+										<input style="margin: 0 1rem;"type="range" value="70" id="heat-radius" name="heat-radius" min="1" max="100">1
+									</span>
+
+									<label for="heat-min-density"><?= $LANG['MIN_DENSITY'] ?>: </label>
+									<input style="margin: 0 1rem; width: 5rem;"value="1" id="heat-min-density" name="heat-min-density">
+
+									<br/>
+									<label for="heat-max-density"><?= $LANG['MAX_DENSITY'] ?>: </label>
+									<input style="margin: 0 1rem; width: 5rem;"value="3" id="heat-max-density" name="heat-max-density">
+									<br/>
+								</fieldset>
+								<br/>
+								<fieldset>
+									<legend>
+									   <?= $LANG['ADD_REFERENCE_POINT'] ?>
+									</legend>
+									<div>
+										<div>
+									   <?= $LANG['MARKER_NAME'] ?>:
+											<input name='title' id='title' size='15' type='text' />
+										</div>
+										<div class="latlongdiv">
+											<div>
+											 <div style="float:left;margin-right:5px">
+												<?= $LANG['LATITUDE'] ?>
+												(<?= $LANG['DECIMAL'] ?>):
+												<input name='lat' id='lat' size='10' type='text' /> </div>
+												<div style="float:left;">eg: 34.57</div>
+											</div>
+											<div style="margin-top:5px;clear:both">
+											 <div style="float:left;margin-right:5px">
+												<?= $LANG['LONGITUDE'] ?>
+												(<?= $LANG['DECIMAL'] ?>):
+												<input name='lng' id='lng' size='10' type='text' /> </div>
+												<div style="float:left;">eg: -112.38</div>
+											</div>
+											<div style='font-size:80%;margin-top:5px;clear:both'>
+											 <a href='#' onclick='toggleLatLongDivs();'>
+												<?= $LANG['ENTER_IN_DMS']?>
+											 </a>
+											</div>
+										</div>
+										<div id="useLLDecimal" class='latlongdiv' style='display:none;clear:both'>
+											<div>
+												<?= $LANG['LATITUDE'] ?>:
+												<input name='latdeg' id='latdeg' size='2' type='text' />&deg;
+												<input name='latmin' id='latmin' size='4' type='text' />&prime;
+												<input name='latsec' id='latsec' size='4' type='text' />&Prime;
+												<select name='latns' id='latns'>
+													<option value='N'><?= $LANG['NORTH']; ?></option>
+													<option value='S'><?= $LANG['SOUTH']; ?></option>
+												</select>
+											</div>
+											<div style="margin-top:5px;">
+										  <?= $LANG['LONGITUDE'] ?>:
+												<input name='longdeg' id='longdeg' size='2' type='text' />&deg;
+												<input name='longmin' id='longmin' size='4' type='text' />&prime;
+												<input name='longsec' id='longsec' size='4' type='text' />&Prime;
+												<select name='longew' id='longew'>
+													<option value='E'><?= $LANG['EAST']; ?></option>
+													<option value='W' selected><?= $LANG['WEST']; ?></option>
+												</select>
+											</div>
+											<div style='font-size:80%;margin-top:5px;'>
+											 <a href='#' onclick='toggleLatLongDivs();'>
+												<?= $LANG['ENTER_IN_DECIMAL'] ?>
+											 </a>
+											</div>
+										</div>
+										<div style="margin-top:10px;">
+									   <button onclick='addRefPoint();'>
+										  <?= $LANG['ADD_MARKER'] ?>
+									   </button>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<form style="display:none;" name="csvcontrolform" id="csvcontrolform" action="csvdownloadhandler.php" method="post" onsubmit="">
+								<input data-role="none" name="selectionscsv" id="selectionscsv" type="hidden" value="" />
+								<input data-role="none" name="starrcsv" id="starrcsv" type="hidden" value="" />
+								<input data-role="none" name="typecsv" id="typecsv" type="hidden" value="" />
+								<input data-role="none" name="schema" id="schemacsv" type="hidden" value="" />
+								<input data-role="none" name="identifications" id="identificationscsv" type="hidden" value="" />
+								<input data-role="none" name="images" id="imagescsv" type="hidden" value="" />
+								<input data-role="none" name="format" id="formatcsv" type="hidden" value="" />
+								<input data-role="none" name="cset" id="csetcsv" type="hidden" value="" />
+								<input data-role="none" name="zip" id="zipcsv" type="hidden" value="" />
+								<input data-role="none" name="csvreclimit" id="csvreclimit" type="hidden" value="<?= $recLimit; ?>" />
+							</form>
+						</div>
+						<h3 id="recordstaxaheader" style="display:none;padding-left:30px;"><?= $LANG['RECORDS_TAXA'] ?></h3>
+						<div id="tabs2" style="display:none;padding:0px;">
+							<ul>
+								<li><a href='#occurrencelist'><?= $LANG['RECORDS'] ?></a></li>
+								<li id="cross_portal_list"><a href='#portalsymbology'><span><?= $LANG['PORTAL_LIST'] ?></span></a></li>
+								<li><a href='#symbology'><span><?= $LANG['COLLECTIONS'] ?></span></a></li>
+								<li><a href='#maptaxalist'><span><?= $LANG['TAXA_LIST'] ?></span></a></li>
+							</ul>
+							<div id="occurrencelist">
+								<div style="display: flex; gap: 1rem; margin-bottom: 0.5rem;">
+									<form name="downloadForm" action="../download/index.php" method="post" onsubmit="targetPopup(this)">
+										<button class="icon-button" title="<?= $LANG['DOWNLOAD_SPECIMEN_DATA']; ?>">
+											<svg style="width:1.3em" alt="<?= $LANG['IMG_DWNL_DATA']; ?>" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+										</button>
+										<input name="searchvar" type="hidden" value="<?= $searchVar ?> " />
+										<input name="reclimit" type="hidden" value="<?= $recLimit; ?>" />
+										<input name="sourcepage" type="hidden" value="map" />
+										<input name="dltype" type="hidden" value="specimen" />
+									</form>
+
+									<form name="fullquerykmlform" action="kmlhandler.php" method="post" target="_blank">
+										<button class="icon-button" name="submitaction" type="submit" class="button" title="Download KML file">
+											<svg style="width:1.3em" alt="<?= $LANG['IMG_DWNL_DATA'] ?>" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+											<span style="color: var(--light-color);">KML</span>
+										</button>
+										<input name="searchvar" type="hidden" value="<?= $searchVar ?> " />
+									</form>
+
+									<button class="icon-button" onclick="copyUrl('<?= $serverHost . $CLIENT_ROOT ?>')" title="<?= $LANG['COPY_TO_CLIPBOARD'] ?>">
+										<svg alt="Copy as a link." style="width:1.2em;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z"/></svg>
+									</button>
+								</div>
+
+								<hr/>
+								<div id="record-pagination-top">
+								</div>
+
+								<div id="record-pagination-summary">
+									<?= $LANG['PAGINATION_PAGE'] ?>
+									<span id="record-active-page"></span>
+									<?= $LANG['PAGINATION_RECORDS'] ?>
+									<span id="start-record"></span>-<span id="end-record"></span>
+									<?= ' ' . $LANG['PAGINATION_OF'] . ' ' ?>
+									<span id="pagination-total-records"></span>
+								</div>
+
+								<hr/>
+								<table id="records-table" class="styledtable" style="font-size:.9rem;">
+									<thead>
+										<th><?= $LANG['CATALOG_NUMBER']?></th>
+										<th><?= $LANG['COLLECTOR']?></th>
+										<th><?= $LANG['EVENT_DATE']?></th>
+										<th><?= $LANG['SCINAME']?></th>
+										<th><?= $LANG['MAP_LINK']?></th>
+									</thead>
+									<tbody>
+
+									</tbody>
+								</table>
+								<hr/>
+
+								<div id="record-pagination-bottom">
+								</div>
+
+								<div id="record-pagination-summary-bottom" style="margin-bottom:2rem">
+								</div>
+							</div>
+							<div id="portalsymbology" style="">
+								<div style="height:40px;margin-bottom:15px;">
+								<div style="float:left;">
+										<div>
+											<svg xmlns="http://www.w3.org/2000/svg" style="height:15px;width:15px;margin-bottom:-2px;">">
+												<g>
+													<circle cx="7.5" cy="7.5" r="7" fill="white" stroke="#000000" stroke-width="1px" ></circle>
+												</g>
+											</svg> = <?= $LANG['COLLECTION'] ?>
+										</div>
+										<div style="margin-top:5px;" >
+											<svg style="height:14px;width:14px;margin-bottom:-2px;">" xmlns="http://www.w3.org/2000/svg">
+												<g>
+													<path stroke="#000000" d="m6.70496,0.23296l-6.70496,13.48356l13.88754,0.12255l-7.18258,-13.60611z" stroke-width="1px" fill="white"/>
+												</g>
+											</svg> = <?= $LANG['OBSERVATION'] ?>
+										</div>
+									</div>
+									<div id="portalsymbolizeResetButt" style='float:right;margin-bottom:5px;' >
+										<div>
+											<button data-role="none" id="portalsymbolizeReset1" name="symbolizeReset1" onclick="resetPortalSymbology(true);" ><?= $LANG['RESET_SYMBOLOGY'] ?></button>
+										</div>
+										<div style="margin-top:5px;">
+=======
 										</div>
 										<div style="margin-top:5px;">
 											<?= $LANG['TAXA'] ?>:
@@ -2603,6 +3275,7 @@ $serverHost = GeneralUtil::getDomain();
 											<button data-role="none" id="portalsymbolizeReset1" name="symbolizeReset1" onclick="resetPortalSymbology(true);" ><?= $LANG['RESET_SYMBOLOGY'] ?></button>
 										</div>
 										<div style="margin-top:5px;">
+>>>>>>> origin
 											<button data-role="none" id="randomColorPortal" name="randomColorColl" onclick='autoColorPortal();' ><?= $LANG['AUTO_COLOR'] ?></button>
 										</div>
 									</div>
@@ -2693,6 +3366,9 @@ $serverHost = GeneralUtil::getDomain();
 				<img style="border:0px;width:100px;height:100px;" src="../../images/ajax-loader.gif" />
 			</div>
 		</div>
+<<<<<<< HEAD
+	</body>
+=======
 	</div>
 	</body>
 	<script type="text/javascript">
@@ -2710,4 +3386,5 @@ $serverHost = GeneralUtil::getDomain();
 		});
 
 	</script>
+>>>>>>> origin
 </html>

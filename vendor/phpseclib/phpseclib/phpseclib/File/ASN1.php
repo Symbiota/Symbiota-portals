@@ -273,7 +273,12 @@ abstract class ASN1
             // tags of indefinte length don't really have a header length; this length includes the tag
             $current += ['headerlength' => $length + 2];
             $start += $length;
+<<<<<<< HEAD
+            extract(unpack('Nlength', substr(str_pad($temp, 4, chr(0), STR_PAD_LEFT), -4)));
+            /** @var integer $length */
+=======
             $length = unpack('Nlength', substr(str_pad($temp, 4, chr(0), STR_PAD_LEFT), -4))['length'];
+>>>>>>> origin
         } else {
             $current += ['headerlength' => 2];
         }
@@ -792,11 +797,15 @@ abstract class ASN1
                     $temp = new BigInteger($decoded['content'], -256);
                 }
                 if (isset($mapping['mapping'])) {
+<<<<<<< HEAD
+                    $temp = (int) $temp->toString();
+=======
                     $temp = $temp->toString();
                     if (strlen($temp) > 1) {
                         return false;
                     }
                     $temp = (int) $temp;
+>>>>>>> origin
                     return isset($mapping['mapping'][$temp]) ?
                         $mapping['mapping'][$temp] :
                         false;
@@ -934,6 +943,9 @@ abstract class ASN1
                             an untagged "DummyReference" (see ITU-T Rec. X.683 | ISO/IEC 8824-4, 8.3)."
                          */
                         if (isset($child['explicit']) || $child['type'] == self::TYPE_CHOICE) {
+<<<<<<< HEAD
+                            $subtag = chr((self::CLASS_CONTEXT_SPECIFIC << 6) | 0x20 | $child['constant']);
+=======
                             if ($child['constant'] <= 30) {
                                 $subtag = chr((self::CLASS_CONTEXT_SPECIFIC << 6) | 0x20 | $child['constant']);
                             } else {
@@ -947,6 +959,7 @@ abstract class ASN1
                                 $subtag[strlen($subtag) - 1] = $subtag[strlen($subtag) - 1] & chr(0x7F);
                                 $subtag = chr((self::CLASS_CONTEXT_SPECIFIC << 6) | 0x20 | 0x1f) . $subtag;
                             }
+>>>>>>> origin
                             $temp = $subtag . self::encodeLength(strlen($temp)) . $temp;
                         } else {
                             $subtag = chr((self::CLASS_CONTEXT_SPECIFIC << 6) | (ord($temp[0]) & 0x20) | $child['constant']);
@@ -1155,8 +1168,11 @@ abstract class ASN1
      */
     public static function decodeOID($content)
     {
+<<<<<<< HEAD
+=======
         // BigInteger's are used because of OIDs like 2.25.329800735698586629295641978511506172918
         // https://healthcaresecprivacy.blogspot.com/2011/02/creating-and-using-unique-id-uuid-oid.html elaborates.
+>>>>>>> origin
         static $eighty;
         if (!$eighty) {
             $eighty = new BigInteger(80);

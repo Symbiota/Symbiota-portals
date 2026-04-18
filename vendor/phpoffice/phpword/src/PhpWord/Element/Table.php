@@ -28,7 +28,11 @@ class Table extends AbstractElement
     /**
      * Table style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\Table
+=======
      * @var ?TableStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -62,7 +66,11 @@ class Table extends AbstractElement
      * @param int $height
      * @param mixed $style
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Element\Row
+=======
      * @return Row
+>>>>>>> origin
      */
     public function addRow($height = null, $style = null)
     {
@@ -79,7 +87,11 @@ class Table extends AbstractElement
      * @param int $width
      * @param mixed $style
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Element\Cell
+=======
      * @return Cell
+>>>>>>> origin
      */
     public function addCell($width = null, $style = null)
     {
@@ -103,7 +115,11 @@ class Table extends AbstractElement
     /**
      * Get table style.
      *
+<<<<<<< HEAD
+     * @return null|\PhpOffice\PhpWord\Style\Table|string
+=======
      * @return null|string|TableStyle
+>>>>>>> origin
      */
     public function getStyle()
     {
@@ -141,7 +157,11 @@ class Table extends AbstractElement
 
         $rowCount = count($this->rows);
         for ($i = 0; $i < $rowCount; ++$i) {
+<<<<<<< HEAD
+            /** @var \PhpOffice\PhpWord\Element\Row $row Type hint */
+=======
             /** @var Row $row Type hint */
+>>>>>>> origin
             $row = $this->rows[$i];
             $cellCount = count($row->getCells());
             if ($columnCount < $cellCount) {

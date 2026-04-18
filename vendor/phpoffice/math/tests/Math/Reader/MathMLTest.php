@@ -7,7 +7,10 @@ namespace Tests\PhpOffice\Math\Reader;
 use PhpOffice\Math\Element;
 use PhpOffice\Math\Exception\InvalidInputException;
 use PhpOffice\Math\Exception\NotImplementedException;
+<<<<<<< HEAD
+=======
 use PhpOffice\Math\Exception\SecurityException;
+>>>>>>> origin
 use PhpOffice\Math\Math;
 use PhpOffice\Math\Reader\MathML;
 use PHPUnit\Framework\TestCase;
@@ -295,6 +298,8 @@ class MathMLTest extends TestCase
         $reader = new MathML();
         $math = $reader->read($content);
     }
+<<<<<<< HEAD
+=======
 
     public function testReadSecurity(): void
     {
@@ -306,4 +311,5 @@ class MathMLTest extends TestCase
         $reader = new MathML();
         $math = $reader->read($content);
     }
+>>>>>>> origin
 }

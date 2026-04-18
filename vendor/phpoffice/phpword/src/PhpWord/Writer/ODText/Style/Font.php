@@ -40,7 +40,11 @@ class Font extends AbstractStyle
         if ($stylep instanceof \PhpOffice\PhpWord\Style\Paragraph) {
             $temp1 = clone $stylep;
             $temp1->setStyleName($style->getStyleName());
+<<<<<<< HEAD
+            $temp2 = new \PhpOffice\PhpWord\Writer\ODText\Style\Paragraph($xmlWriter, $temp1);
+=======
             $temp2 = new Paragraph($xmlWriter, $temp1);
+>>>>>>> origin
             $temp2->write();
         }
 

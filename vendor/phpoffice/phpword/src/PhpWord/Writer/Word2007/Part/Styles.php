@@ -78,15 +78,23 @@ class Styles extends AbstractPart
     /**
      * Write default font and other default styles.
      *
+<<<<<<< HEAD
+     * @param \PhpOffice\PhpWord\Style\AbstractStyle[] $styles
+=======
      * @param Style\AbstractStyle[] $styles
+>>>>>>> origin
      */
     private function writeDefaultStyles(XMLWriter $xmlWriter, $styles): void
     {
         $phpWord = $this->getParentWriter()->getPhpWord();
         $fontName = $phpWord->getDefaultFontName();
+<<<<<<< HEAD
+        $fontSize = $phpWord->getDefaultFontSize();
+=======
         $asianFontName = $phpWord->getDefaultAsianFontName();
         $fontSize = $phpWord->getDefaultFontSize();
         $fontColor = $phpWord->getDefaultFontColor();
+>>>>>>> origin
         $language = $phpWord->getSettings()->getThemeFontLang();
         $latinLanguage = ($language == null || $language->getLatin() === null) ? 'en-US' : $language->getLatin();
 
@@ -131,7 +139,11 @@ class Styles extends AbstractPart
         if (isset($styles['Normal'])) {
             $normalStyle = $styles['Normal'];
             // w:pPr
+<<<<<<< HEAD
+            if ($normalStyle instanceof Fontstyle && $normalStyle->getParagraph() != null) {
+=======
             if ($normalStyle instanceof FontStyle && $normalStyle->getParagraph() != null) {
+>>>>>>> origin
                 $styleWriter = new ParagraphStyleWriter($xmlWriter, $normalStyle->getParagraph());
                 $styleWriter->write();
             } elseif ($normalStyle instanceof ParagraphStyle) {

@@ -1,6 +1,16 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceDuplicate.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/dupesearch.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/editor/dupesearch.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/editor/dupesearch.en.php');
+header('Content-Type: text/html; charset='.$CHARSET);
+
+$occidQuery = array_key_exists('occidquery',$_REQUEST) ? htmlspecialchars($_REQUEST['occidquery'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) : '';
+$curOccid = (array_key_exists('curoccid',$_GET) ? filter_var($_REQUEST['curoccid'], FILTER_SANITIZE_NUMBER_INT) : 0);
+$collId = (array_key_exists('collid',$_GET) ? filter_var($_GET['collid'], FILTER_SANITIZE_NUMBER_INT) : 0);
+
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/editor/dupesearch');
@@ -11,6 +21,7 @@ $occidQuery = array_key_exists('occidquery',$_REQUEST) ? htmlspecialchars($_REQU
 $curOccid = (array_key_exists('curoccid',$_GET) ? filter_var($_REQUEST['curoccid'], FILTER_SANITIZE_NUMBER_INT) : 0);
 $collId = (array_key_exists('collid',$_GET) ? filter_var($_GET['collid'], FILTER_SANITIZE_NUMBER_INT) : 0);
 
+>>>>>>> origin
 $occIdMerge = (array_key_exists('occidmerge',$_GET) ? filter_var($_GET['occidmerge'], FILTER_SANITIZE_NUMBER_INT) : 0);
 $submitAction = (array_key_exists('submitaction',$_GET) ? $_GET['submitaction'] : '');
 
@@ -277,8 +288,14 @@ if(!$IS_ADMIN){
 							if($occObj['eventDate2']) {
 								echo ' - <span title="eventDate2">' . $occObj['eventDate2'] . '<span>';
 							}
+<<<<<<< HEAD
+							else{
+								echo '<span style="margin-left:20px;" title="eventdate">'.$LANG['DATE_EMPTY'].'</span>';
+							}
+=======
 							echo '</span>';
 
+>>>>>>> origin
 							if($occObj['associatedCollectors']) echo '<div style="margin-left:10px;" title="associatedCollectors">'.$LANG['ASSOC_COLL'].': '.$occObj['associatedCollectors'].'</div>';
 							?>
 						</div>

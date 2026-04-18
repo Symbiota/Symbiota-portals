@@ -164,7 +164,11 @@ class DateFormatter
         // If the colon preceding minute had been quoted, as happens in
         // Excel 2003 XML formats, m will not have been changed to i above.
         // Change it now.
+<<<<<<< HEAD
+        $format = (string) \preg_replace('/\\\\:m/', ':i', $format);
+=======
         $format = (string) \preg_replace('/\\\:m/', ':i', $format);
+>>>>>>> origin
         $microseconds = (int) $dateObj->format('u');
         if (str_contains($format, ':s.000')) {
             $milliseconds = (int) round($microseconds / 1000.0);

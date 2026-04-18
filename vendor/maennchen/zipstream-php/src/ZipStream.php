@@ -770,7 +770,17 @@ class ZipStream
         if (is_resource($outputStream)) {
             return $outputStream;
         }
+<<<<<<< HEAD
+        $resource = fopen('php://output', 'wb');
+
+        if ($resource === false) {
+            throw new RuntimeException('fopen of php://output failed');
+        }
+
+        return $resource;
+=======
         return fopen('php://output', 'wb');
+>>>>>>> origin
     }
 
     /**

@@ -6,7 +6,10 @@ use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
 use PhpOffice\PhpSpreadsheet\Calculation\Exception;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+<<<<<<< HEAD
+=======
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+>>>>>>> origin
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use Stringable;
 
@@ -30,7 +33,11 @@ final class StructuredReference implements Operand, Stringable
         self::ITEM_SPECIFIER_TOTALS,
     ];
 
+<<<<<<< HEAD
+    private const TABLE_REFERENCE = '/([\p{L}_\\\\][\p{L}\p{N}\._]+)?(\[(?:[^\]\[]+|(?R))*+\])/miu';
+=======
     private const TABLE_REFERENCE = '/([\p{L}_\\\][\p{L}\p{N}\._]+)?(\[(?:[^\]\[]+|(?R))*+\])/miu';
+>>>>>>> origin
 
     private string $value;
 
@@ -178,8 +185,13 @@ final class StructuredReference implements Operand, Stringable
         $cellReference = $cell->getCoordinate();
 
         $columns = [];
+<<<<<<< HEAD
+        $lastColumn = ++$tableRange[1][0];
+        for ($column = $tableRange[0][0]; $column !== $lastColumn; ++$column) {
+=======
         $lastColumn = StringHelper::stringIncrement($tableRange[1][0]);
         for ($column = $tableRange[0][0]; $column !== $lastColumn; StringHelper::stringIncrement($column)) {
+>>>>>>> origin
             $columns[$column] = $worksheet
                 ->getCell($column . ($this->headersRow ?? ($this->firstDataRow - 1)))
                 ->getCalculatedValue();

@@ -376,7 +376,11 @@ class OccurrenceDuplicate {
 		if($occidQuery){
 			$targetFields = array('family', 'sciname', 'scientificNameAuthorship',
 				'identifiedBy', 'dateIdentified', 'identificationReferences', 'identificationRemarks', 'taxonRemarks', 'identificationQualifier',
+<<<<<<< HEAD
+				'recordedBy', 'recordNumber', 'associatedCollectors', 'eventDate', 'verbatimEventDate',
+=======
 				'recordedBy', 'recordNumber', 'associatedCollectors', 'eventDate', 'eventDate2', 'verbatimEventDate',
+>>>>>>> origin
 				'country', 'stateProvince', 'county', 'municipality', 'locality', 'locationID', 'decimalLatitude', 'decimalLongitude', 'geodeticDatum',
 				'coordinateUncertaintyInMeters', 'verbatimCoordinates', 'georeferencedBy', 'georeferenceProtocol',
 				'georeferenceSources', 'georeferenceVerificationStatus', 'georeferenceRemarks',
@@ -419,10 +423,16 @@ class OccurrenceDuplicate {
 		if($eventDate) $queryTerms[] = 'o.eventdate = "'.$this->cleanInStr($eventDate).'"';
 		if($catNum) $queryTerms[] = 'o.catalognumber = "'.$this->cleanInStr($catNum).'"';
 		if(is_numeric($occid)) $queryTerms[] = 'o.occid = '.$occid;
+<<<<<<< HEAD
+		$sql = 'SELECT c.institutioncode, c.collectioncode, c.collectionname, o.occid, o.catalognumber,
+			o.recordedby, o.recordnumber, o.eventdate, o.verbatimeventdate, o.country, o.stateprovince, o.county, o.locality
+			FROM omoccurrences o INNER JOIN omcollections c ON o.collid = c.collid
+=======
 		$sql = 'SELECT c.institutioncode, c.collectioncode, c.collectionname, o.occid, o.catalognumber, o.recordedby, o.recordnumber,
 			o.eventdate, o.verbatimeventdate, o.country, o.stateprovince, o.county, o.locality, COALESCE(od.sciname, o.sciname) AS sciname
 			FROM omoccurrences o INNER JOIN omcollections c ON o.collid = c.collid
 			LEFT JOIN omoccurdeterminations od ON o.occid = od.occid AND od.isCurrent = 1
+>>>>>>> origin
 			WHERE o.occid != ' . $currentOccid;
 		if($queryTerms){
 			$sql .= ' AND ('.implode(') AND (', $queryTerms).') ';

@@ -20,17 +20,33 @@ $searchVar = $collManager->getQueryTermStr();
 	<link href="<?php echo $CSS_BASE_PATH; ?>/jquery-ui.css" type="text/css" rel="stylesheet">
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+	<script src="../js/symb/collections.harvestparams.js?ver=3" type="text/javascript"></script>
+=======
 	<script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=3" type="text/javascript"></script>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/symb/collections.list.js?ver=2" type="text/javascript"></script>
 	<script src="../js/symb/collections.harvestparams.js?ver=5" type="text/javascript"></script>
+>>>>>>> origin
 	<script src="<?= $CLIENT_ROOT ?>/js/symb/mapAidUtils.js?ver=1" type="text/javascript"></script>
 	<script src="../js/symb/collections.traitsearch.js?ver=8" type="text/javascript"></script> <!-- Contains search-by-trait modifications -->
 	<script src="../js/symb/wktpolygontools.js?ver=1c" type="text/javascript"></script>
 	<script type="text/javascript">
+<<<<<<< HEAD
+		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
+		$(document).ready(function() {
+			<?php
+			if($searchVar){
+				?>
+				sessionStorage.querystr = "<?php echo $searchVar; ?>";
+				<?php
+			}
+			?>
+=======
 		const paleoTimes = <?= json_encode($paleoTimes ?? []) ?>;
 		var clientRoot = "<?php echo $CLIENT_ROOT; ?>";
 		$(document).ready(function() {
 			setSessionQueryStr();
+>>>>>>> origin
 			setHarvestParamsForm(document.harvestparams);
 		});
 	</script>
@@ -75,7 +91,11 @@ $searchVar = $collManager->getQueryTermStr();
 	?>
 	<div role="main" id="innertext">
 		<h1 class="page-heading bottom-breathing-room-rel top-breathing-room-rel"><?php echo $LANG['SEARCH']; ?></h1>
+<<<<<<< HEAD
+		<form name="harvestparams" id="harvestparams" action="list.php" method="post" onsubmit="return checkHarvestParamsForm(this)">
+=======
 		<form name="harvestparams" id="harvestparams" action="list.php" method="post" onsubmit="return checkHarvestParamsForm(this, '<?php echo $_SERVER['REQUEST_URI']; ?>');">
+>>>>>>> origin
 			<hr/>
 			<div>
 				<div style="float:left">
@@ -320,6 +340,8 @@ $searchVar = $collManager->getQueryTermStr();
 				</div>
 			</div>
 			<?php
+<<<<<<< HEAD
+=======
 			if(!empty($ACTIVATE_PALEO)) {
 				$gtsTermArr = $collManager->getPaleoGtsTerms();
 				?>
@@ -387,6 +409,7 @@ $searchVar = $collManager->getQueryTermStr();
 				</div>
 				<?php
 			}
+>>>>>>> origin
 			if(!empty($SEARCH_BY_TRAITS)) {
 				$attribSearch = new OccurrenceAttributeSearch();
 				$traitArr = $attribSearch->getTraitSearchArr($SEARCH_BY_TRAITS);
@@ -424,7 +447,10 @@ $searchVar = $collManager->getQueryTermStr();
 				}
 			}
 			?>
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin
 			<div style="float:right;">
 				<div><button type="submit" style="width:100%"><?php echo isset($LANG['BUTTON_NEXT_LIST'])?$LANG['BUTTON_NEXT_LIST']:'List Display'; ?></button></div>
 				<div><button type="button" style="width:100%" onclick="displayTableView(this.form)"><?php echo isset($LANG['BUTTON_NEXT_TABLE'])?$LANG['BUTTON_NEXT_TABLE']:'Table Display'; ?></button></div>
@@ -432,7 +458,11 @@ $searchVar = $collManager->getQueryTermStr();
 			</div>
 			<div>
 				<input name="comingFrom" type="hidden" value="harvestparams" >
+<<<<<<< HEAD
+				<input type="hidden" name="db" value="<?php echo $collManager->getSearchTerm('db'); ?>" />
+=======
 				<input type="hidden" name="db" value="<?php echo $collManager->getSearchTerm('db', $_SERVER['REQUEST_URI']); ?>" />
+>>>>>>> origin
 			</div>
 			<hr/>
 		</form>

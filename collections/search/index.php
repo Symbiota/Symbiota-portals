@@ -7,6 +7,13 @@ include_once($SERVER_ROOT . '/classes/DatasetsMetadata.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceManager.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceAttributeSearch.php');
 include_once($SERVER_ROOT . '/classes/AssociationManager.php');
+<<<<<<< HEAD
+if ($LANG_TAG == 'en' || !file_exists($SERVER_ROOT . '/content/lang/collections/search/index.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT . '/content/lang/collections/search/index.en.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/search/index.' . $LANG_TAG . '.php');
+header('Content-Type: text/html; charset=' . $CHARSET);
+
+$filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIENT_ROOT . '/js/symb/' . $LANG_TAG . '.js' : $CLIENT_ROOT . '/js/symb/en.js';
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 include_once($SERVER_ROOT . '/classes/CollectionFormManager.php');
 
@@ -15,6 +22,7 @@ Language::load('collections/search/index');
 header('Content-Type: text/html; charset=' . $CHARSET);
 
 $JS_LANG_FILENAME = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIENT_ROOT . '/js/symb/' . $LANG_TAG . '.js' : $CLIENT_ROOT . '/js/symb/en.js';
+>>>>>>> origin
 
 $dbsWithBracketsRemoved = array_key_exists("db", $_GET) ?  str_replace(array('[', ']'), '', $_GET["db"]) : '';
 $explodable = $dbsWithBracketsRemoved;
@@ -26,14 +34,23 @@ $collIdsFromUrl = array_key_exists("db", $_GET) ? explode(",", $explodable) : ''
 $collManager = new OccurrenceManager();
 $collectionSource = $collManager->getQueryTermStr();
 
+<<<<<<< HEAD
+=======
 $gtsTermArr = $collManager->getPaleoGtsTerms();
 $paleoTimes = $collManager->getPaleoTimes();
 
+>>>>>>> origin
 $collData = new CollectionMetadata();
 $siteData = new DatasetsMetadata();
 
 $catId = array_key_exists("catid", $_REQUEST) ? $_REQUEST["catid"] : '';
 $collList = $collManager->getFullCollectionList($catId);
+<<<<<<< HEAD
+$specArr = (isset($collList['spec']) ? $collList['spec'] : null);
+$obsArr = (isset($collList['obs']) ? $collList['obs'] : null);
+$associationManager = new AssociationManager();
+$relationshipTypes = $associationManager->getRelationshipTypes();
+=======
 $polygonList = $collManager->getSearchablePolygons();
 $specArr = (isset($collList['spec']) ? $collList['spec'] : null);
 $obsArr = (isset($collList['obs']) ? $collList['obs'] : null);
@@ -46,6 +63,7 @@ $requestSuppliedCatOrd = (array_key_exists('catOrd', $_REQUEST) && $collectionFo
 $requestSuppliedCatExpnd = (array_key_exists('catExpnd', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catExpnd'])) ? explode(',', $_REQUEST['catExpnd']) : null;
 $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catChk'])) ? explode(',', $_REQUEST['catChk']) : null;
 
+>>>>>>> origin
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
@@ -56,6 +74,19 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 	<?php
 	include_once($SERVER_ROOT . '/includes/head.php');
 	?>
+<<<<<<< HEAD
+	<link href="<?= $CLIENT_ROOT ?>/collections/search/css/searchStyles.css?ver=1" type="text/css" rel="stylesheet">
+	<link href="<?= $CLIENT_ROOT ?>/collections/search/css/searchStylesInner.css" type="text/css" rel="stylesheet">
+	<link href="<?= $CLIENT_ROOT ?>/collections/search/css/tables.css" type="text/css" rel="stylesheet">
+	<link href="<?= $CSS_BASE_PATH ?>/symbiota/collections/sharedCollectionStyling.css" type="text/css" rel="stylesheet">
+	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/symb/mapAidUtils.js?ver=1" type="text/javascript"></script>
+	<script src="<?php echo $CLIENT_ROOT . '/js/jquery-ui.min.js'; ?>" type="text/javascript"></script>
+	<script src="<?php echo $CLIENT_ROOT . '/collections/individual/domManipulationUtils.js'; ?>" type="text/javascript"></script>
+	<script src="../../js/symb/localitySuggest.js" type="text/javascript"></script>
+	<script>
+		const clientRoot = '<?php echo $CLIENT_ROOT; ?>';
+=======
 	<link href="<?= $CSS_BASE_PATH ?>/searchStyles.css?ver=1" type="text/css" rel="stylesheet">
 	<link href="<?= $CSS_BASE_PATH ?>/searchStylesInner.css" type="text/css" rel="stylesheet">
 	<link href="<?= $CSS_BASE_PATH ?>/tables.css" type="text/css" rel="stylesheet">
@@ -69,6 +100,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 	<script>
 		const clientRoot = '<?php echo $CLIENT_ROOT; ?>';
 		const paleoTimes = <?= json_encode($paleoTimes ?? []) ?>;
+>>>>>>> origin
 		const handleAccordionExpand = () => {
 			const accordions = document.querySelectorAll('input[class="accordion-selector"]');
 			const accordionIds = [];
@@ -95,6 +127,8 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 			const expandButton = document.getElementById("expand-all-button");
 			expandButton.removeAttribute('style', 'display: none;');
 		};
+<<<<<<< HEAD
+=======
 
 		document.addEventListener('DOMContentLoaded', () => {			
 			document.querySelectorAll('.accordion-header').forEach(accordionHeader => {
@@ -109,6 +143,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 				});
 			});
 		});
+>>>>>>> origin
 	</script>
 
 	<?php include_once($SERVER_ROOT . '/includes/googleanalytics.php'); ?>
@@ -126,7 +161,10 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 </head>
 
 <body>
+<<<<<<< HEAD
+=======
 	<div id="service-container" data-search-var="<?= $collectionSource; ?>"></div>
+>>>>>>> origin
 	<?php
 	include($SERVER_ROOT . '/includes/header.php');
 	?>
@@ -138,7 +176,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 			<button onClick="handleAccordionExpand()" class="inner-search button" id="expand-all-button" type="button" style="font-size: 1rem;"><?= $LANG['EXPAND_ALL_SECTIONS']; ?></button>
 			<button onClick="handleAccordionCollapse()" class="inner-search button" id="collapse-all-button" type="button" style="display: none; font-size: 1rem;"><?= $LANG['COLLAPSE_ALL_SECTIONS']; ?></button>
 		</div>
+<<<<<<< HEAD
+		<form id="params-form" action="<?php echo $CLIENT_ROOT . "/collections/list.php"; ?>">
+=======
 		<form id="params-form" method="POST" action="<?php echo $CLIENT_ROOT . "/collections/list.php"; ?>">
+>>>>>>> origin
 			<!-- Criteria forms -->
 			<div class="accordions">
 				<!-- Taxonomy -->
@@ -147,6 +189,37 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<input type="checkbox" id="taxonomy" class="accordion-selector" checked />
 
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="taxonomy" class="accordion-header"><?php echo $LANG['TAXONOMY'] ?></label>
+
+					<!-- Taxonomy -->
+					<div id="search-form-taxonomy" class="content">
+						<div id="taxa-text" class="input-text-container">
+							<label for="taxa" class="input-text--outlined">
+								<span class="screen-reader-only"><?php echo $LANG['TAXON'] ?></span>
+								<input type="text" name="taxa" id="taxa" data-chip="<?php echo $LANG['TAXON'] ?>" />
+								<span class="inset-input-label"><?php echo $LANG['TAXON'] ?></span>
+							</label>
+						</div>
+						<span class="assistive-text"><?php echo $LANG['TYPE_CHAR_FOR_SUGGESTIONS'] ?></span>
+						<div style="padding-top:14px">
+							<div class="select-container" style="position: relative">
+								<label for="taxontype" class="screen-reader-only"><?php echo $LANG['TAXON_TYPE'] ?></label>
+								<select name="taxontype" id="taxontype" style="margin-top:0;padding-top:0; margin-bottom: 0.5rem">
+									<option id="taxontype-scientific" value="2" data-chip="<?php echo $LANG['TAXON'] . ': ' . $LANG['SCIENTIFIC_NAME'] ?>"><?php echo $LANG['SCIENTIFIC_NAME'] ?></option>
+									<option id="taxontype-family" value="3" data-chip="<?php echo $LANG['TAXON'] . ': ' . $LANG['FAMILY'] ?>"><?php echo $LANG['FAMILY'] ?></option>
+									<option id="taxontype-group" value="4" data-chip="<?php echo $LANG['TAXON'] . ': ' . $LANG['TAXONOMIC_GROUP'] ?>"><?php echo $LANG['TAXONOMIC_GROUP'] ?></option>
+									<option id="taxontype-common" value="5" data-chip="<?php echo $LANG['TAXON'] . ': ' . $LANG['COMMON_NAME'] ?>"><?php echo $LANG['COMMON_NAME'] ?></option>
+								</select>
+								<span class="inset-input-label"><?php echo $LANG['TAXON_TYPE'] ?></span>
+							</div>
+						</div>
+						<div>
+							<input type="checkbox" name="usethes" id="usethes" data-chip="<?php echo $LANG['INCLUDE_SYNONYMS'] ?>" value="1" checked />
+							<label for="usethes">
+								<span class="ml-1"><?php echo $LANG['INCLUDE_SYNONYMS'] ?></span>
+							</label>
+=======
 					<label for="taxonomy" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['TAXONOMY'] ?></label>
 
 					<!-- Taxonomy -->
@@ -179,6 +252,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 								</label>
 								<img src="../../images/info.png" style="width:1em; margin-left:1px;" alt="<?php echo $LANG['SYNONYM_NOTE'] ?>" title="<?php echo $LANG['SYNONYM_NOTE'] ?>" onclick="alert('<?php echo addslashes($LANG['SYNONYM_NOTE']) ?>')"/>
 							</div>
+>>>>>>> origin
 						</div>
 					</div>
 				</section>
@@ -188,7 +262,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<!-- Accordion selector -->
 					<input type="checkbox" id="locality" name="locality" class="accordion-selector" />
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="locality" class="accordion-header"><?php echo $LANG['LOCALITY'] ?></label>
+=======
 					<label for="locality" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['LOCALITY'] ?></label>
+>>>>>>> origin
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-locality">
@@ -240,6 +318,8 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 									</div>
 								</div>
 							</div>
+<<<<<<< HEAD
+=======
 							<?php if (!empty($polygonList)): ?>
 							<div class="input-text-container">
 								<label for="polygons" class="input-text--outlined">
@@ -256,6 +336,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 								</label>
 							</div>
 							<?php endif; ?>
+>>>>>>> origin
 						</div>
 					</div>
 				</section>
@@ -265,7 +346,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<!-- Accordion selector -->
 					<input type="checkbox" id="lat-long" class="accordion-selector" />
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="lat-long" class="accordion-header"><?php echo $LANG['LATITUDE_LONGITUDE'] ?></label>
+=======
 					<label for="lat-long" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['LATITUDE_LONGITUDE'] ?></label>
+>>>>>>> origin
 					<!-- Accordion content -->
 					<div class="content">
 						<p class="assistive-text"><?= $LANG['LAT_LONG_SEARCH_EXPLAIN'] ?></p>
@@ -276,7 +361,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 								<div class="input-text-container">
 									<label for="upperlat" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['NORTHERN_LATITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-90" max="90" id="upperlat" name="upperlat" data-chip="<?php echo $LANG['UPPER_LAT'] ?>" />
+=======
 										<input type="number" step="any" min="0" max="90" id="upperlat" name="upperlat" data-chip="<?php echo $LANG['UPPER_LAT'] ?>" />
+>>>>>>> origin
 										<span class="inset-input-label"><?php echo $LANG['NORTHERN_LATITUDE'] ?></span>
 										<span class="assistive-text"><?php echo $LANG['VALUE_BETWEEN_NUM'] ?></span>
 									</label>
@@ -285,54 +374,87 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 										<span class="screen-reader-only"><?php echo $LANG['SELECT_UPPER_LAT_DIRECTION_NORTH_SOUTH'] ?></span>
 										<select class="mt-1" id="upperlat_NS" name="upperlat_NS">
 											<option value=""><?php echo $LANG['SELECT_NORTH_SOUTH'] ?></option>
+<<<<<<< HEAD
+											<option id="ulN" value="N"><?php echo $LANG['NORTH'] ?></option>
+											<option id="ulS" value="S"><?php echo $LANG['SOUTH'] ?></option>
+=======
 											<option id="ulN" value="N" data-chip="<?php echo $LANG['UPPER_HEMI'] ?>"><?php echo $LANG['NORTH'] ?></option>
 											<option id="ulS" value="S" data-chip="<?php echo $LANG['UPPER_HEMI'] ?>"><?php echo $LANG['SOUTH'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
 								<div class="input-text-container">
 									<label for="bottomlat" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['SOUTHERN_LATITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-90" max="90" id="bottomlat" name="bottomlat" data-chip="<?php echo $LANG['BOTTOM_LAT'] ?>" />
+=======
 										<input type="number" step="any" min="0" max="90" id="bottomlat" name="bottomlat" data-chip="<?php echo $LANG['BOTTOM_LAT'] ?>" />
+>>>>>>> origin
 										<span class="inset-input-label"><?php echo $LANG['SOUTHERN_LATITUDE'] ?></span>
 									</label>
 									<label for="bottomlat_NS">
 										<span class="screen-reader-only"><?php echo $LANG['SELECT_BOTTOM_LAT_DIREC_NORTH_SOUTH'] ?></span>
 										<select class="mt-1" id="bottomlat_NS" name="bottomlat_NS">
 											<option value=""><?php echo $LANG['SELECT_NORTH_SOUTH'] ?></option>
+<<<<<<< HEAD
+											<option id="blN" value="N"><?php echo $LANG['NORTH'] ?></option>
+											<option id="blS" value="S"><?php echo $LANG['SOUTH'] ?></option>
+=======
 											<option id="blN" value="N" data-chip="<?php echo $LANG['BOTTOM_HEMI'] ?>"><?php echo $LANG['NORTH'] ?></option>
 											<option id="blS" value="S" data-chip="<?php echo $LANG['BOTTOM_HEMI'] ?>"><?php echo $LANG['SOUTH'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
 								<div class="input-text-container">
 									<label for="leftlong" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['LEFT_LONGITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-180" max="180" id="leftlong" name="leftlong" data-chip="<?php echo $LANG['LEFT_LONG'] ?>" />
+										<span class="inset-input-label"><?php echo $LANG['WESTERN_LONGITUDE'] ?></span>
+=======
 										<input type="number" step="any" min="0" max="180" id="leftlong" name="leftlong" data-chip="<?php echo $LANG['LEFT_LONG'] ?>" />
 										<span class="inset-input-label"><?php echo $LANG['WESTERN_LONGITUDE'] ?></span>
 										<span class="assistive-text"><?php echo $LANG['VALUES_BETWEEN_0_TO_180'] ?></span>
+>>>>>>> origin
 									</label>
 									<label for="leftlong_EW" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['SELECT_LEFT_LONG_DIREC_WEST_EAST'] ?></span>
 										<select class="mt-1" id="leftlong_EW" name="leftlong_EW">
 											<option value=""><?php echo $LANG['SELECT_WEST_EAST'] ?></option>
+<<<<<<< HEAD
+											<option id="llW" value="W"><?php echo $LANG['WEST'] ?></option>
+											<option id="llE" value="E"><?php echo $LANG['EAST'] ?></option>
+=======
 											<option id="llW" value="W" data-chip="<?php echo $LANG['LEFT_HEMI'] ?>"><?php echo $LANG['WEST'] ?></option>
 											<option id="llE" value="E" data-chip="<?php echo $LANG['LEFT_HEMI'] ?>"><?php echo $LANG['EAST'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
 								<div class="input-text-container">
 									<label for="rightlong" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['RIGHT_LONGITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-180" max="180" id="rightlong" name="rightlong" data-chip="<?php echo $LANG['RIGHT_LONG'] ?>" />
+=======
 										<input type="number" step="any" min="0" max="180" id="rightlong" name="rightlong" data-chip="<?php echo $LANG['RIGHT_LONG'] ?>" />
+>>>>>>> origin
 										<span class="inset-input-label"><?php echo $LANG['EASTERN_LONGITUDE'] ?></span>
 									</label>
 									<label for="rightlong_EW" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['SELECT_RIGHT_LONG_DIREC_WEST_EAST'] ?></span>
 										<select class="mt-1" id="rightlong_EW" name="rightlong_EW">
 											<option value=""><?php echo $LANG['SELECT_WEST_EAST'] ?></option>
+<<<<<<< HEAD
+											<option id="rlW" value="W"><?php echo $LANG['WEST'] ?></option>
+											<option id="rlE" value="E"><?php echo $LANG['EAST'] ?></option>
+=======
 											<option id="rlW" value="W" data-chip="<?php echo $LANG['RIGHT_HEMI'] ?>"><?php echo $LANG['WEST'] ?></option>
 											<option id="rlE" value="E" data-chip="<?php echo $LANG['RIGHT_HEMI'] ?>"><?php echo $LANG['EAST'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
@@ -355,30 +477,48 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 								<div class="input-text-container">
 									<label for="pointlat" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['POINT_LATITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-90" max="90" id="pointlat" name="pointlat" data-chip="<?php echo $LANG['POINT_LAT'] ?>" />
+=======
 										<input type="number" step="any" min="0" max="90" id="pointlat" name="pointlat" data-chip="<?php echo $LANG['POINT_LAT'] ?>" />
+>>>>>>> origin
 										<span class="inset-input-label"><?php echo $LANG['LATITUDE'] ?></span>
 									</label>
 									<label for="pointlat_NS" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['POINT_LAT_DIREC_NORTH_SOUTH'] ?></span>
 										<select class="mt-1" id="pointlat_NS" name="pointlat_NS">
 											<option value=""><?php echo $LANG['SELECT_NORTH_SOUTH'] ?></option>
+<<<<<<< HEAD
+											<option id="N" value="N"><?php echo $LANG['NORTH'] ?></option>
+											<option id="S" value="S"><?php echo $LANG['SOUTH'] ?></option>
+=======
 											<option id="N" value="N" data-chip="<?php echo $LANG['POINT_LAT_HEMI'] ?>"><?php echo $LANG['NORTH'] ?></option>
 											<option id="S" value="S" data-chip="<?php echo $LANG['POINT_LAT_HEMI'] ?>"><?php echo $LANG['SOUTH'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
 								<div class="input-text-container">
 									<label for="pointlong" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['POINT_LONGITUDE'] ?></span>
+<<<<<<< HEAD
+										<input type="number" step="any" min="-180" max="180" id="pointlong" name="pointlong" data-chip="<?php echo $LANG['POINT_LONG'] ?>" />
+=======
 										<input type="number" step="any" min="0" max="180" id="pointlong" name="pointlong" data-chip="<?php echo $LANG['POINT_LONG'] ?>" />
+>>>>>>> origin
 										<span class="inset-input-label"><?php echo $LANG['LONGITUDE'] ?></span>
 									</label>
 									<label for="pointlong_EW" class="input-text--outlined">
 										<span class="screen-reader-only"><?php echo $LANG['POINT_LONGITUDE_DIREC_EAST_WEST'] ?></span>
 										<select class="mt-1" id="pointlong_EW" name="pointlong_EW">
 											<option value=""><?php echo $LANG['SELECT_WEST_EAST'] ?></option>
+<<<<<<< HEAD
+											<option id="W" value="W"><?php echo $LANG['WEST'] ?></option>
+											<option id="E" value="E"><?php echo $LANG['EAST'] ?></option>
+=======
 											<option id="W" value="W" data-chip="<?php echo $LANG['POINT_LONG_HEMI'] ?>"><?php echo $LANG['WEST'] ?></option>
 											<option id="E" value="E" data-chip="<?php echo $LANG['POINT_LONG_HEMI'] ?>"><?php echo $LANG['EAST'] ?></option>
+>>>>>>> origin
 										</select>
 									</label>
 								</div>
@@ -407,7 +547,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<!-- Accordion selector -->
 					<input type="checkbox" id="coll-event" class="accordion-selector" />
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="coll-event" class="accordion-header"><?php echo $LANG['COLLECTING_EVENT'] ?></label>
+=======
 					<label for="coll-event" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['COLLECTING_EVENT'] ?></label>
+>>>>>>> origin
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-coll-event">
@@ -450,7 +594,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<!-- Accordion selector -->
 					<input type="checkbox" id="sample" class="accordion-selector" />
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="sample" class="accordion-header"><?php echo $LANG['SAMPLE_PROPERTIES'] ?></label>
+=======
 					<label for="sample" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['SAMPLE_PROPERTIES'] ?></label>
+>>>>>>> origin
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-sample">
@@ -501,10 +649,17 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 									<label for="materialsampletype"><?= $LANG['MATERIAL_SAMPLE_TYPE'] ?></label>
 									<select name="materialsampletype" id="materialsampletype">
 										<option id="materialsampletype-none" data-chip="<?php echo $LANG['MATERIAL_SAMPLE'] . ': ---' ?>" value="">---------------</option>
+<<<<<<< HEAD
+										<option id="materialsampletype-all-ms" data-chip="<?php echo $LANG['MATERIAL_SAMPLE'] . ': ' . $LANG['ALL_MATERIAL_SAMPLE'] ?>" value="all-ms"><?= $LANG['ALL_MATERIAL_SAMPLE'] ?></option>
+										<?php
+										foreach ($matSampleTypeArr as $matSampeType) {
+											echo '<option id="materialsampletype-' . $matSampeType . '" data-chip="' . $LANG['MATERIAL_SAMPLE'] . ': ' . $matSampeType . '" value="' . $matSampeType . '">' . $matSampeType . '</option>';
+=======
 										<option id="materialsampletype-all-ms" data-chip="<?php echo $LANG['MATERIAL_SAMPLE']?>" value="all-ms"><?= $LANG['ALL_MATERIAL_SAMPLE'] ?></option>
 										<?php
 										foreach ($matSampleTypeArr as $matSampeType) {
 											echo '<option id="materialsampletype-' . $matSampeType . '" data-chip="' . $LANG['MATERIAL_SAMPLE'] . '" value="' . $matSampeType . '">' . $matSampeType . '</option>';
+>>>>>>> origin
 										}
 										?>
 									</select>
@@ -527,7 +682,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 							<!-- Accordion selector -->
 							<input type="checkbox" id="trait" class="accordion-selector" />
 							<!-- Accordion header -->
+<<<<<<< HEAD
+							<label for="trait" class="accordion-header"><?php echo $LANG['TRAIT_CRITERIA'] ?> <a href="https://docs.symbiota.org/User_Guide/traits" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+=======
 							<label for="trait" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['TRAIT_CRITERIA'] ?> <a href="https://docs.symbiota.org/User_Guide/traits" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+>>>>>>> origin
 							<!-- Accordion content -->
 							<div class="content">
 								<div id="search-form-trait">
@@ -569,7 +728,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					<input type="checkbox" id="associations" class="accordion-selector" />
 
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="associations" class="accordion-header"><?php echo $LANG['ASSOCIATIONS'] ?> <a href="https://docs.symbiota.org/User_Guide/associations" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+=======
 					<label for="associations" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['ASSOCIATIONS'] ?> <a href="https://docs.symbiota.org/User_Guide/associations" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+>>>>>>> origin
 
 					<!-- Taxonomy -->
 					<div id="search-form-associations" class="content">
@@ -580,13 +743,22 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 							<div class="select-container" style="margin-left: 1rem; position: relative; width: 40vw;">
 								<label for="association-type" class="screen-reader-only"><?php echo $LANG['ASSOCIATION_TYPE'] ?></label>
 								<select name="association-type" id="association-type" style="margin-top:0;padding-top:0; margin-bottom: 0.5rem">
+<<<<<<< HEAD
+									<option id="association-type-none" value="none" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '- Not Specified' ?>">Not Specified</option>
+									<option id="association-type-any" value="any" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-any' ?>">Any</option>
+=======
 									<option id="association-type-none" value="none" data-chip="<?php echo $LANG['ASSOCIATIONS']?>">Not Specified</option>
 									<option id="association-type-any" value="any" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '' ?>">Any</option>
+>>>>>>> origin
 									<?php
 									$relationshipTypes = $associationManager->getRelationshipTypes();
 									foreach ($relationshipTypes as $relationshipKey => $relationshipType) {
 									?>
+<<<<<<< HEAD
+										<option id="association-type-<?php echo $relationshipKey . '-' . $relationshipType ?>" value="<?php echo $relationshipType ?>" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $relationshipType ?>"><?php echo $relationshipType; ?></option>
+=======
 										<option id="association-type-<?php echo $relationshipKey . '-' . $relationshipType ?>" value="<?php echo $relationshipType ?>" data-chip="<?php echo $LANG['ASSOCIATIONS']?>"><?php echo $relationshipType; ?></option>
+>>>>>>> origin
 									<?php
 									}
 									?>
@@ -601,7 +773,11 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 							<div id="associated-taxa-text" class="input-text-container" style="margin-left: 1rem; margin-right: 1rem; width: 40vw;">
 								<label for="associated-taxa" class="input-text--outlined">
 									<span class="screen-reader-only"><?php echo $LANG['TAXON'] ?></span>
+<<<<<<< HEAD
+									<input type="text" name="associated-taxa" id="associated-taxa" data-chip="<?php echo $LANG['ASSOCIATIONS'] . $LANG['TAXON'] . ': ' ?>" />
+=======
 									<input type="text" name="associated-taxa" id="associated-taxa" data-chip="<?php echo $LANG['ASSOCIATIONS'] . "-" . $LANG['TAXON']?>" />
+>>>>>>> origin
 									<span class="inset-input-label"><?php echo $LANG['TAXON'] ?></span>
 								</label>
 							</div>
@@ -609,10 +785,17 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 								<div class="select-container" style="position: relative; width: 13vw;">
 									<label for="taxontype-association" class="screen-reader-only"><?php echo $LANG['TAXON_TYPE'] ?></label>
 									<select name="taxontype-association" id="taxontype-association" style="margin-top:0;padding-top:0; margin-bottom: 0.5rem">
+<<<<<<< HEAD
+										<option id="taxontype-association-scientific" value="2" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE'] . ': ' . $LANG['SCIENTIFIC_NAME'] ?>"><?php echo $LANG['SCIENTIFIC_NAME'] ?></option>
+										<option id="taxontype-association-family" value="3" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE'] . ': ' . $LANG['FAMILY'] ?>"><?php echo $LANG['FAMILY'] ?></option>
+										<option id="taxontype-association-group" value="4" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE'] . ': ' . $LANG['TAXONOMIC_GROUP'] ?>"><?php echo $LANG['TAXONOMIC_GROUP'] ?></option>
+										<option id="taxontype-association-common" value="5" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE'] . ': ' . $LANG['COMMON_NAME'] ?>"><?php echo $LANG['COMMON_NAME'] ?></option>
+=======
 										<option id="taxontype-association-scientific" value="2" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE']?>"><?php echo $LANG['SCIENTIFIC_NAME'] ?></option>
 										<option id="taxontype-association-family" value="3" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE']?>"><?php echo $LANG['FAMILY'] ?></option>
 										<option id="taxontype-association-group" value="4" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE']?>"><?php echo $LANG['TAXONOMIC_GROUP'] ?></option>
 										<option id="taxontype-association-common" value="5" data-chip="<?php echo $LANG['ASSOCIATIONS'] . '-' . $LANG['TAXON_TYPE']?>"><?php echo $LANG['COMMON_NAME'] ?></option>
+>>>>>>> origin
 									</select>
 									<span class="inset-input-label"><?php echo $LANG['TAXON_TYPE'] ?></span>
 								</div>
@@ -628,6 +811,8 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 					</div>
 				</section>
 
+<<<<<<< HEAD
+=======
 				<!-- Character Search -->
 				<?php if (!empty($characters)): ?>
 				<section>
@@ -778,19 +963,28 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 				<?php
 					} ?>
 
+>>>>>>> origin
 				<!-- Collections -->
 				<section>
 					<!-- Accordion selector -->
 					<input type="checkbox" id="collections" class="accordion-selector" />
 					<!-- Accordion header -->
+<<<<<<< HEAD
+					<label for="collections" class="accordion-header"><?php echo $LANG['COLLECTIONS'] ?></label>
+=======
 					<label for="collections" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['COLLECTIONS'] ?></label>
+>>>>>>> origin
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-colls">
 							<!-- Open Collections modal -->
 							<div id="specobsdiv">
 								<?php
+<<<<<<< HEAD
+								include_once('./collectionContent.php');
+=======
 								include($SERVER_ROOT . '/collections/collectionForm.php');
+>>>>>>> origin
 								?>
 							</div>
 						</div>
@@ -827,6 +1021,25 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 	include($SERVER_ROOT . '/includes/footer.php');
 	?>
 </body>
+<<<<<<< HEAD
+<script src="<?php echo $filename ?>" type="text/javascript"></script>
+<script src="js/searchform.js?ver=2" type="text/javascript"></script>
+<script src="<?php echo $CLIENT_ROOT . '/collections/search/js/alerts.js?v=202107'; ?>" type="text/javascript"></script>
+<script src="<?php echo $CLIENT_ROOT . '/js/symb/api.taxonomy.taxasuggest.js'; ?>" type="text/javascript"></script>
+<script src="<?php echo $CLIENT_ROOT . '/js/symb/collections.index.js?ver=20171215' ?>" type="text/javascript"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		<?php
+		if ($collectionSource) {
+		?>
+			sessionStorage.querystr = "<?php echo $collectionSource; ?>";
+		<?php
+		}
+		?>
+		setSearchForm(document.getElementById("params-form"));
+		toggleTheNonDefaultsClosed(<?php echo $DEFAULTCATID ?>);
+		toggleAccordionsFromSessionStorage(localStorage?.accordionIds?.split(",") || []);
+=======
 <script src="<?= $JS_LANG_FILENAME ?>" type="text/javascript"></script>
 <script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=2" type="text/javascript"></script>
 <script src="<?= $CLIENT_ROOT ?>/js/alerts.js?v=202107" type="text/javascript"></script>
@@ -851,6 +1064,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 			expandCategoriesBasedOnConfig();
 			updateChip(event, isInitialConfig=true);
 		});
+>>>>>>> origin
 	});
 </script>
 <script>
@@ -867,6 +1081,15 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 	const collectionSource = <?php echo isset($collectionSource) ? json_encode($collectionSource) : 'null'; ?>;
 	const collIdsFromUrl = <?php echo isset($collIdsFromUrl) ? json_encode($collIdsFromUrl) : 'null'; ?>;
 	if (collIdsFromUrl && Array.isArray(collIdsFromUrl) && collIdsFromUrl.length > 0) {
+<<<<<<< HEAD
+		uncheckEverything();
+		checkTheCollectionsThatShouldBeChecked(collIdsFromUrl);
+	}
+	const sanitizedCollectionSource = collectionSource.replace('db=', '');
+	if (collectionSource) {
+		uncheckEverything();
+		checkTheCollectionsThatShouldBeChecked(sanitizedCollectionSource);
+=======
 		uncheckEverythingInCollections();
 		checkTheCollectionsThatShouldBeChecked(collIdsFromUrl);
 		closeAllCategories();
@@ -878,6 +1101,7 @@ $requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFo
 		checkTheCollectionsThatShouldBeChecked([sanitizedCollectionSource]);
 		closeAllCategories();
         expandCategoriesWithSomeCheckedChildren();
+>>>>>>> origin
 		updateChip();
 	}
 

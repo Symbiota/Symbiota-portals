@@ -1,5 +1,20 @@
 <?php
 include_once($SERVER_ROOT . "/classes/Database.php");
+<<<<<<< HEAD
+include_once($SERVER_ROOT . "/classes/Sanitize.php");
+include_once($SERVER_ROOT . "/classes/StorageStrategy.php");
+include_once($SERVER_ROOT . "/classes/MediaType.php");
+include_once($SERVER_ROOT . "/classes/MediaException.php");
+include_once($SERVER_ROOT . '/classes/utilities/QueryUtil.php');
+include_once($SERVER_ROOT . '/classes/utilities/OccurrenceUtil.php');
+include_once($SERVER_ROOT . '/classes/utilities/UploadUtil.php');
+
+if(file_exists($SERVER_ROOT.'/content/lang/classes/Media.'.$LANG_TAG.'.php')) {
+	include_once($SERVER_ROOT.'/content/lang/classes/Media.'.$LANG_TAG.'.php');
+} else {
+	include_once($SERVER_ROOT.'/content/lang/classes/Media.en.php');
+}
+=======
 include_once($SERVER_ROOT . "/classes/StorageStrategy.php");
 include_once($SERVER_ROOT . "/classes/MediaType.php");
 include_once($SERVER_ROOT . "/classes/MediaException.php");
@@ -10,6 +25,7 @@ include_once($SERVER_ROOT . '/classes/utilities/UploadUtil.php');
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('classes/Media');
+>>>>>>> origin
 
 function get_occurrence_upload_path($institutioncode, $collectioncode, $catalognumber = null) {
 	$root = $institutioncode . ($collectioncode? '_'. $collectioncode: '') . '/';
@@ -80,10 +96,13 @@ class Media {
 		'm.rights',
 		'm.sortSequence',
 		'm.sortOccurrence',
+<<<<<<< HEAD
+=======
 		// Older schema term that can be "specimen", "field", or NULL
 		// More in reference the subject of the media
 		'm.imageType',
 		'm.initialtimestamp',
+>>>>>>> origin
 		"IFNULL(m.creator,CONCAT_WS(' ',u.firstname,u.lastname)) AS creatorDisplay",
 		't.sciname',
 		't.author',
@@ -184,7 +203,10 @@ class Media {
 	/**
 	 * @param mixed $url
 	 * @param mixed $text
+<<<<<<< HEAD
+=======
 	 * @return string
+>>>>>>> origin
 	 */
 	static function render_media_link($url, $text) {
 		$slash_route = substr($url, 0, 1) == '/';
@@ -198,6 +220,8 @@ class Media {
 	}
 
 	/**
+<<<<<<< HEAD
+=======
 	 * Creates html option output for users
 	 *
 	 * @param ?int $userId What user id is selected
@@ -218,6 +242,7 @@ class Media {
 	}
 
 	/**
+>>>>>>> origin
 	 * @param mixed $mime
 	 */
 	public static function getAllowedMime($mime) {
@@ -269,7 +294,11 @@ class Media {
 			'm4a' => ['audio/mp4', 'audio/x-m4a'],
 			'mp4' => 'audio/mp4',
 			'mid' => 'audio/midi',
+<<<<<<< HEAD
+			'mp3' => [ 'audio/mp3', 'audio/mpeg', 'audio/mpg', 'audio/mpeg3' ],
+=======
 			'mp3' => [ 'audio/mpeg', 'audio/mp3', 'audio/mpg', 'audio/mpeg3' ],
+>>>>>>> origin
 			'ogg' => 'audio/ogg',
 			'ra' => 'audio/x-realaudio',
 			'ram' => 'audio/x-pn-realaudio',
@@ -278,14 +307,26 @@ class Media {
 			'wma' => 'audio/x-ms-wma',
 		];
 
+<<<<<<< HEAD
+=======
 		$misc = [
 			'pdf' => 'application/pdf',
 		];
 
+>>>>>>> origin
 		if($type === MediaType::Image) {
 			return $image[$ext] ?? false;
 		} else if ($type=== MediaType::Audio) {
 			return $audio[$ext] ?? false;
+<<<<<<< HEAD
+		} else {
+			$audio_result = $audio[$ext] ?? false;
+			$image_result = $image[$ext] ?? false;
+			if($audio_result && !$image_result) {
+				return $audio_result;
+			} else if(!$audio_result && $image_result) {
+				return $image_result;
+=======
 		} else if ($type=== MediaType::Misc) {
 			return $misc[$ext] ?? false;
 		} else {
@@ -299,6 +340,7 @@ class Media {
 				return $image_result;
 			} else if(!$audio_result && !$image_result && $misc_result) {
 				return $misc_result;
+>>>>>>> origin
 			} else {
 				// There was some mime type ambiguity so return false
 				return false;
@@ -395,6 +437,22 @@ class Media {
 		//Not Sure if I Need
 		$mapLargeImg = !($clean_post_arr['nolgimage']?? true);
 
+<<<<<<< HEAD
+		$sql = <<< SQL
+		SELECT tidinterpreted 
+		FROM omoccurrences 
+		WHERE tidinterpreted IS NOT NULL AND occid = ? 
+		SQL;
+
+		$taxon_result = QueryUtil::executeQuery(
+			$conn,
+			$sql,
+			[$clean_post_arr['occid']]
+		);
+
+		if(!isset($clean_post_arr['tid']) && $row = $taxon_result->fetch_object()) {
+			$clean_post_arr['tid'] = $row->tidinterpreted;
+=======
 		if(empty($clean_post_arr['tid']) && !empty($clean_post_arr['occid'])){
 			$sql = <<< SQL
 			SELECT tidinterpreted 
@@ -411,6 +469,7 @@ class Media {
 			if($row = $taxon_result->fetch_object()) {
 				$clean_post_arr['tid'] = $row->tidinterpreted;
 			}
+>>>>>>> origin
 		}
 
 		if(!($clean_post_arr['copytoserver'] ?? false) && !($clean_post_arr['format'] ?? false)) {
@@ -427,6 +486,10 @@ class Media {
 			}
 		}
 
+<<<<<<< HEAD
+		if(!self::getAllowedMime($clean_post_arr['format'])) {
+			throw new MediaException(MediaException::FileTypeNotAllowed, ' ' . $file['type']);
+=======
 		// Converts Deprecated mimes to proper mime type
 		if($real_mime = UploadUtil::DEPRECATED_MIME_CONVERSION[$clean_post_arr['format']] ?? false) {
 			$clean_post_arr['format'] = $real_mime;
@@ -434,6 +497,7 @@ class Media {
 
 		if(!self::getAllowedMime($clean_post_arr['format'])) {
 			throw new MediaException(MediaException::FileTypeNotAllowed, ' ' . $clean_post_arr['format']);
+>>>>>>> origin
 		}
 
 		$keyValuePairs = [
@@ -479,7 +543,11 @@ class Media {
 		INSERT INTO media($keys) VALUES ($parameters)
 		SQL;
 
+<<<<<<< HEAD
+		$result = QueryUtil::executeQuery($conn, $sql, array_values($keyValuePairs));
+=======
 		QueryUtil::executeQuery($conn, $sql, array_values($keyValuePairs));
+>>>>>>> origin
 		//Insert to other tables as needed like imagetags...
 
 		$media_id = $conn->insert_id;
@@ -508,12 +576,16 @@ class Media {
 		mysqli_begin_transaction($conn);
 
 		try {
+<<<<<<< HEAD
+			if(!self::isValidFile($file) && ($post_arr['copytoserver'] ?? false)) {
+=======
 			if(self::isValidFile($file)) {
 				$pathInfo =	pathinfo($file['name']);
 				$pathInfo['filename'] = self::cleanFileName($pathInfo['filename']);
 				$file['name'] = $pathInfo['filename'] . '.' . $pathInfo['extension'];
 				$file['full_path'] = $file['name'];
 			} else if($post_arr['copytoserver'] ?? false) {
+>>>>>>> origin
 				$file = UploadUtil::downloadFromRemote($post_arr['originalUrl'], $GLOBALS['ALLOWED_MEDIA_MIME_TYPES']);
 				$createdFilepaths[] = $file['tmp_name'];
 			}
@@ -527,12 +599,16 @@ class Media {
 					$post_arr['sourceIdentifier'] = 'filename: ' . $file['name'];
 				}
 			}
+<<<<<<< HEAD
+			
+=======
 			else{
 				UploadUtil::validateFileError($file);
 				if (empty($post_arr['originalUrl']))
         			throw new MediaException(MediaException::NoFileUploaded);
 			}
 
+>>>>>>> origin
 			$media_metadata = self::insert($post_arr, $conn);
 			$media_type = MediaType::tryFrom($media_metadata['mediaType']);
 
@@ -575,11 +651,17 @@ class Media {
 					$width = $size[0];
 					$height = $size[1];
 
+<<<<<<< HEAD
+					$storage->upload($file);
+
+					$urls = [ 
+=======
 
 					$storage->upload($file);
 					$createdFilepaths['originalUrl'] = $storage->getDirPath($file);
 
 					$urls = [
+>>>>>>> origin
 						'thumbnailUrl' => [
 							'name' => self::addToFilename($file['name'], '_tn'),
 							'width' => $GLOBALS['IMG_TN_WIDTH']?? 200,
@@ -604,11 +686,23 @@ class Media {
 
 							if($storage->file_exists($data['name'])) {
 								$metadata[$url] = $storage->getUrlPath($data['name']);
+<<<<<<< HEAD
+								$createdFilepaths[] = $url;
+=======
 								$createdFilepaths[$url] = $storage->getDirPath($data['name']);
+>>>>>>> origin
 							}
 
 						}
 					}
+<<<<<<< HEAD
+					self::update_metadata($metadata, $media_metadata['mediaID'], $conn);
+				} elseif($media_type === MediaType::Audio) {
+					$storage->upload($file);
+				}
+			}
+
+=======
 
 					self::update_metadata($metadata, $media_metadata['mediaID'], $conn);
 				} elseif($media_type === MediaType::Audio) {
@@ -624,20 +718,28 @@ class Media {
 				self::insertMediaMetadata($media_metadata['mediaID'], $field, filesize($filepath), md5_file($filepath));
 			}
 
+>>>>>>> origin
 			mysqli_commit($conn);
 		} catch(Throwable $th) {
 			mysqli_rollback($conn);
 
+<<<<<<< HEAD
+			foreach($createdFilepaths as $filepath) {
+				unlink($filepath);
+=======
 			foreach($createdFilepaths as $field => $filepath) {
 				if(file_exists($filepath)) {
 					unlink($filepath);
 				}
+>>>>>>> origin
 			}
 
 			array_push(self::$errors, $th->getMessage());
 		}
 	}
 
+<<<<<<< HEAD
+=======
 	private static function insertMediaMetadata(int $mediaID, string $field, int $bytes, string $md5sum, ?mysqli $conn = null): void{
 		if(!$conn) {
 			$conn = Database::connect('write');
@@ -650,6 +752,7 @@ class Media {
 		]);
 	}
 
+>>>>>>> origin
 	public static function getMediaTypeStrFromMime(string $mime) {
 		$media_type_str = explode('/', $mime)[0];
 		$media_type = MediaType::tryFrom($media_type_str);
@@ -765,7 +868,11 @@ class Media {
 		return $errors;
 	}
 
+<<<<<<< HEAD
+	private static function check_file_rename(string $old_filepath, string $new_filepath) {		
+=======
 	private static function check_file_rename(string $old_filepath, string $new_filepath) {
+>>>>>>> origin
 		if($old_filepath && $new_filepath) {
 			$old_file = self::parseFileName($old_filepath);
 			$new_file = self::parseFileName($new_filepath);
@@ -835,9 +942,15 @@ class Media {
 			$current_media_arr = self::getMedia($media_id);
 			// If file is stored locally then check to make sure the extension is not being changed
 			foreach(['url', 'thumbnailUrl', 'originalUrl'] as $url) {
+<<<<<<< HEAD
+				if(array_key_exists($url, $data) && $storage->file_exists($current_media_arr[$url])) {
+					self::check_file_rename(
+						$current_media_arr[$url], 
+=======
 				if(array_key_exists($url, $data) && !empty($current_media_arr[$url]) && $storage->file_exists($current_media_arr[$url])) {
 					self::check_file_rename(
 						$current_media_arr[$url],
+>>>>>>> origin
 						$data[$url]
 					);
 				}
@@ -1011,9 +1124,12 @@ class Media {
 			case 'image/gif':
 				$image = imagecreatefromgif($src_path);
 				break;
+<<<<<<< HEAD
+=======
 			case 'image/bmp':
 				$image = imagecreatefrombmp($src_path);
 				break;
+>>>>>>> origin
 			default:
 				throw new Exception(
 					'Mime Type: ' . $mime_type . ' not supported for creation'
@@ -1162,6 +1278,15 @@ class Media {
 
 			//Unlink all files
 			if($remove_files) {
+<<<<<<< HEAD
+				foreach($media_urls as $url) {
+					if($url && file_exists($GLOBALS['SERVER_ROOT'] . $url)) {
+						if(!is_writable($GLOBALS['SERVER_ROOT'] . $url)) {
+							throw new MediaException(MediaException::FilepathNotWritable, $url);
+						}
+						if(!unlink($GLOBALS['SERVER_ROOT'] . $url)) {
+							error_log("WARNING: File (path: " . $url . ") failed to delete from server");
+=======
 				$root_url = self::getMediaRootUrl();
 				$root_path = self::getMediaRootPath();
 				foreach($media_urls as $url) {
@@ -1178,6 +1303,7 @@ class Media {
 									throw new MediaException(MediaException::FilepathNotWritable, $path);
 								}
 							}
+>>>>>>> origin
 						}
 					}
 				}
@@ -1221,11 +1347,17 @@ class Media {
 	 * @param int $tid
 	 * @param string $media_type Should use MediaType Constants
 	 */
+<<<<<<< HEAD
+	public static function getByTid(int $tid, string $media_type = null): Array {
+=======
 	public static function getByTid(int $tid, string $media_type = null, ?Paginator $paginator): Array {
+>>>>>>> origin
 		if(!$tid) return [];
 		$parameters = [$tid];
 
 		$sql ='SELECT ' . implode(',', self::MEDIA_ITEM_SELECT_SCHEMA) . ' FROM media m '.
+<<<<<<< HEAD
+=======
 			'INNER JOIN taxstatus ts ON m.tid = ts.tid ' .
 			'INNER JOIN taxa t ON m.tid = t.tid ' .
 			// 'LEFT JOIN taxa t ON t.tid = m.tid ' .
@@ -1255,6 +1387,7 @@ class Media {
 		$parameters = [$tid];
 
 		$sql ='SELECT ' . 'count(*) as cnt' . ' FROM media m '.
+>>>>>>> origin
 			'LEFT JOIN taxa t ON t.tid = m.tid ' .
 			'LEFT JOIN users u on u.uid = m.creatorUid ' .
 			'WHERE m.tid = ?';
@@ -1264,9 +1397,16 @@ class Media {
 			array_push($parameters, $media_type);
 		}
 
+<<<<<<< HEAD
+		$sql .= ' ORDER BY sortsequence IS NULL ASC, sortsequence ASC';
+		$results = QueryUtil::executeQuery(Database::connect('readonly'), $sql, $parameters);
+
+		return Sanitize::out(self::get_media_items($results));
+=======
 		$results = QueryUtil::executeQuery(Database::connect('readonly'), $sql, $parameters);
 
 		return $results->fetch_object()->cnt;
+>>>>>>> origin
 	}
 
 	/**
@@ -1443,7 +1583,10 @@ class Media {
 		}
 		return $bool;
 	}
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin
 	/**
 	 * @return bool
 	 * @param mixed $imgArr
@@ -1459,6 +1602,11 @@ class Media {
 		}
 		return $bool;
 	}
+<<<<<<< HEAD
+}
+
+?>
+=======
 
 	/**
 	 * @return void
@@ -1516,3 +1664,4 @@ class Media {
 	}
 }
 
+>>>>>>> origin

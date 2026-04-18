@@ -51,7 +51,11 @@ class Chart extends AbstractElement
     /**
      * Chart style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\Chart
+=======
      * @var ?ChartStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -121,7 +125,11 @@ class Chart extends AbstractElement
     /**
      * Get chart style.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\Chart
+=======
      * @return ?ChartStyle
+>>>>>>> origin
      */
     public function getStyle()
     {

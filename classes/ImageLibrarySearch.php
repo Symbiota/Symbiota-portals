@@ -16,7 +16,10 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 	private $imageCount = 0;
 	private $imageType = 0;
 	private $mediaType = null;
+<<<<<<< HEAD
+=======
 	private $sortBy = '';
+>>>>>>> origin
 
 	private $recordCount = 0;
 	private $tidFocus;
@@ -35,6 +38,58 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 		parent::__destruct();
 	}
 
+<<<<<<< HEAD
+	public function getImageArr($pageRequest, $cntPerPage, $sortBy = ''){
+		$retArr = Array();
+		$this->setSqlWhere();
+		$this->setRecordCnt();
+		$sql = 'SELECT m.mediaID, m.tid, IFNULL(t.sciname,o.sciname) as sciname, m.url, m.thumbnailurl, m.originalurl, m.creatorUid, m.caption, m.occid, m.mediaType ';
+		$sqlWhere = $this->sqlWhere;
+		if($this->imageCount == 1) $sqlWhere .= 'GROUP BY sciname ';
+		elseif($this->imageCount == 2) $sqlWhere .= 'GROUP BY m.occid ';
+		$sql .= $this->getSqlBase() . $sqlWhere;
+		if($sortBy == 'sciname') $sql .= 'ORDER BY t.sciname, o.sciname ';
+		$bottomLimit = ($pageRequest - 1) * $cntPerPage;
+		$sql .= 'LIMIT '.$bottomLimit . ',' . $cntPerPage;
+		//echo '<div>Spec sql: '.$sql.'</div>';
+		$occArr = array();
+		$result = $this->conn->query($sql);
+		$imgId = 0;
+		while($r = $result->fetch_object()){
+			if($imgId == $r->mediaID) continue;
+			$imgId = $r->mediaID;
+			$retArr[$imgId]['mediaID'] = $r->mediaID;
+			//$retArr[$imgId]['tidaccepted'] = $r->tidinterpreted;
+			$retArr[$imgId]['tid'] = $r->tid;
+			$retArr[$imgId]['sciname'] = $r->sciname;
+			$retArr[$imgId]['url'] = $r->url;
+			$retArr[$imgId]['thumbnailurl'] = $r->thumbnailurl;
+			$retArr[$imgId]['originalurl'] = $r->originalurl;
+			$retArr[$imgId]['uid'] = $r->creatorUid;
+			$retArr[$imgId]['caption'] = $r->caption;
+			$retArr[$imgId]['occid'] = $r->occid;
+			$retArr[$imgId]['mediaType'] = $r->mediaType;
+			//$retArr[$imgId]['stateprovince'] = $r->stateprovince;
+			//$retArr[$imgId]['catalognumber'] = $r->catalognumber;
+			//$retArr[$imgId]['instcode'] = $r->instcode;
+			if($r->occid) $occArr[$r->occid] = $r->occid;
+		}
+		$result->free();
+		if($occArr){
+			//Get occurrence data
+			$collArr = array();
+			$sql2 = 'SELECT occid, catalognumber, sciname, recordedby, stateprovince, collid FROM omoccurrences WHERE occid IN('.implode(',',$occArr).')';
+			$rs2 = $this->conn->query($sql2);
+			while($r2 = $rs2->fetch_object()){
+				$retArr['occ'][$r2->occid]['catnum'] = $r2->catalognumber;
+				$retArr['occ'][$r2->occid]['sciname'] = $r2->sciname;
+				$retArr['occ'][$r2->occid]['recordedby'] = $r2->recordedby;
+				$retArr['occ'][$r2->occid]['stateprovince'] = $r2->stateprovince;
+				$retArr['occ'][$r2->occid]['collid'] = $r2->collid;
+				$collArr[$r2->collid] = $r2->collid;
+			}
+			$rs2->free();
+=======
 	public function getImageArr($pageRequest, $cntPerPage){
 		$retArr = Array();
 		$this->setSqlWhere();
@@ -92,6 +147,7 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 				error_log('ERROR returning media for image search tool (' . $sql2 . ') :' . $e->getMessage());
 				return false;
 			}
+>>>>>>> origin
 			//Get collection data
 			$sql3 = 'SELECT collid, CONCAT_WS("-",institutioncode, collectioncode) as instcode FROM omcollections WHERE collid IN('.implode(',',$collArr).')';
 			$rs3 = $this->conn->query($sql3);
@@ -105,6 +161,12 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 
 	private function setSqlWhere(){
 		$sqlWhere = '';
+<<<<<<< HEAD
+		if($this->dbStr){
+			$sqlWhere .= OccurrenceSearchSupport::getDbWhereFrag($this->cleanInStr($this->dbStr));
+		}
+=======
+>>>>>>> origin
 		if(isset($this->taxaArr['taxa'])){
 			$sqlWhereTaxa = '';
 			foreach($this->taxaArr['taxa'] as $searchTaxon => $searchArr){
@@ -200,12 +262,18 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 		}
 		*/
 		if($this->imageType){
+<<<<<<< HEAD
+			if($this->imageType == 1){
+				//Specimen or Vouchered Observations Images
+				$sqlWhere .= 'AND (m.occid IS NOT NULL) ';
+=======
 			//0 = display all images, do not add a collection related condition to SQL
 			if($this->imageType == 1){
 				//Specimen or Vouchered Observations Images
 				if($this->dbStr){
 					$sqlWhere .= OccurrenceSearchSupport::getDbWhereFrag($this->cleanInStr($this->dbStr));
 				}
+>>>>>>> origin
 			}
 			elseif($this->imageType == 3){
 				//Field Images (lacking specific locality details)
@@ -228,6 +296,21 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 			elseif($this->imageCount == 2) $sql = 'SELECT COUNT(DISTINCT m.occid) AS cnt ';
 		}
 		$sql .= $this->getSqlBase(true).$this->sqlWhere;
+<<<<<<< HEAD
+		$result = $this->conn->query($sql);
+		if($row = $result->fetch_object()){
+			$this->recordCount = $row->cnt;
+		}
+		$result->free();
+	}
+
+	private function getSqlBase($isForCount = false){
+		$sql = 'FROM media m ';
+		if($this->taxaArr){
+			$sql .= 'INNER JOIN taxa t ON m.tid = t.tid ';
+		}
+		elseif(!$isForCount){
+=======
 		if($result = $this->conn->query($sql)){
 			if($row = $result->fetch_object()){
 				$this->recordCount = $row->cnt;
@@ -242,6 +325,7 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 			$sql .= 'INNER JOIN taxa t ON m.tid = t.tid ';
 		}
 		elseif(!$avoidLeftJoin){
+>>>>>>> origin
 			$sql .= 'LEFT JOIN taxa t ON m.tid = t.tid ';
 		}
 		if(strpos($this->sqlWhere,'ts.taxauthid')){
@@ -253,9 +337,18 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 		if($this->keywords){
 			//$sql .= 'INNER JOIN imagekeywords ik ON m.mediaID = ik.mediaid ';
 		}
+<<<<<<< HEAD
+		if($this->imageType == 1){
+			$sql .= 'INNER JOIN omoccurrences o ON m.occid = o.occid ';
+		}
+		else{
+			$sql .= 'LEFT JOIN omoccurrences o ON m.occid = o.occid ';
+		}
+=======
 		if($this->imageType == 1 || $this->imageCount == 2){
 			$sql .= 'INNER JOIN omoccurrences o ON m.occid = o.occid ';
 		}
+>>>>>>> origin
 		return $sql;
 	}
 
@@ -265,6 +358,14 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 		return $this->searchSupportManager->getFullCollectionList($catId, true);
 	}
 
+<<<<<<< HEAD
+	public function outputFullCollArr($occArr, $targetCatID = 0){
+		if(!$this->searchSupportManager) $this->searchSupportManager = new OccurrenceSearchSupport($this->conn);
+		$this->searchSupportManager->outputFullCollArr($occArr, $targetCatID, false, false);
+	}
+
+=======
+>>>>>>> origin
 	//Misc support functions
 	public function getQueryTermStr(){
 		$retStr = '';
@@ -311,6 +412,29 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 	}
 
 	//Listing functions
+<<<<<<< HEAD
+	public function getCreatorUidArr(){
+		$retArr = array();
+		$sql1 = 'SELECT DISTINCT creatorUid FROM media WHERE creatorUid IS NOT NULL';
+		$rs1 = $this->conn->query($sql1);
+		while ($r1 = $rs1->fetch_object()) {
+			$retArr[$r1->creatorUid] = '';
+		}
+		$rs1->free();
+		if($retArr){
+			$sql2 = 'SELECT uid, CONCAT_WS(", ", lastname, firstname) AS fullname FROM users WHERE uid IN(' . implode(',', array_keys($retArr)) . ')';
+			$rs2 = $this->conn->query($sql2);
+			while ($r2 = $rs2->fetch_object()) {
+				$retArr[$r2->uid] = $r2->fullname;
+			}
+			$rs2->free();
+		}
+		asort($retArr, SORT_NATURAL | SORT_FLAG_CASE);
+		return $retArr;
+	}
+
+=======
+>>>>>>> origin
 	public function getTagArr(){
 		$retArr = array();
 		$sql = 'SELECT tagkey, CONCAT_WS(" - ",shortlabel,tagDescription) as displayText FROM imagetagkey ORDER BY tagkey';
@@ -446,9 +570,12 @@ class ImageLibrarySearch extends OccurrenceTaxaManager{
 	public function getMediaType() {
 		return $this->mediaType;
 	}
+<<<<<<< HEAD
+=======
 
 	public function setSortBy($sortByStr){
 		if($sortByStr) $this->sortBy = $sortByStr;
 	}
+>>>>>>> origin
 }
 ?>

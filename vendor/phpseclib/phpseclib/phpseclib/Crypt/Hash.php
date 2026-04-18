@@ -194,6 +194,8 @@ class Hash
     private static $maxwordrange128;
     /**#@-*/
 
+<<<<<<< HEAD
+=======
     /**#@+
      * AES_CMAC variables
      *
@@ -203,6 +205,7 @@ class Hash
     private $k2;
     /**#@-*/
 
+>>>>>>> origin
     /**
      * Default Constructor.
      *
@@ -308,6 +311,8 @@ class Hash
                 $this->length = abs(substr($hash, -3)) >> 3;
                 $this->algo = 'umac';
                 return;
+<<<<<<< HEAD
+=======
             case 'aes_cmac':
                 if ($oldHash != $this->hashParam) {
                     $this->recomputeAESKey = true;
@@ -316,6 +321,7 @@ class Hash
                 $this->length = 16;
                 $this->algo = 'aes_cmac';
                 return;
+>>>>>>> origin
             case 'md2-96':
             case 'md5-96':
             case 'sha1-96':
@@ -994,6 +1000,8 @@ class Hash
     public function hash($text)
     {
         $algo = $this->algo;
+<<<<<<< HEAD
+=======
         // https://www.rfc-editor.org/rfc/rfc4493.html
         // https://en.wikipedia.org/wiki/One-key_MAC
         if ($algo == 'aes_cmac') {
@@ -1057,6 +1065,7 @@ class Hash
             $y = $M_last ^ $x;
             return $c->encrypt($y);
         }
+>>>>>>> origin
         if ($algo == 'umac') {
             if ($this->recomputeAESKey) {
                 if (!is_string($this->nonce)) {
@@ -1871,6 +1880,8 @@ class Hash
     }
 
     /**
+<<<<<<< HEAD
+=======
      *  OMAC Padding
      *
      * @link https://www.rfc-editor.org/rfc/rfc4493.html#section-2.4
@@ -1882,6 +1893,7 @@ class Hash
     }
 
     /**
+>>>>>>> origin
      *  __toString() magic method
      */
     public function __toString()

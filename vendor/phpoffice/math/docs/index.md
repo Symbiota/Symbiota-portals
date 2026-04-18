@@ -48,7 +48,11 @@ Math is an open source project licensed under the terms of [MIT](https://github.
 | **Simple**                | Fraction             | :material-check: | :material-check: |
 |                           | Superscript          | :material-check: |                  |
 | **Architectural**         | Row                  | :material-check: | :material-check: |
+<<<<<<< HEAD
+|                           | Semantics            |                  |                  |
+=======
 |                           | Semantics            | :material-check: |                  |
+>>>>>>> origin
 
 ## Contributing
 

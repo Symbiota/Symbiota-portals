@@ -139,6 +139,9 @@ class Stream
     protected function parse_path($path)
     {
         $orig = $path;
+<<<<<<< HEAD
+        extract(parse_url($path) + ['port' => 22]);
+=======
         $url = parse_url($path) + ['port' => 22];
 
         $keys = ['scheme', 'host', 'port', 'user', 'pass', 'path', 'query', 'fragment'];
@@ -148,6 +151,7 @@ class Stream
             }
         }
 
+>>>>>>> origin
         if (isset($query)) {
             $path .= '?' . $query;
         } elseif (preg_match('/(\?|\?#)$/', $orig)) {

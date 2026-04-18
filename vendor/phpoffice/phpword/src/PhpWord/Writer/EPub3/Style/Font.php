@@ -16,6 +16,31 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
+<<<<<<<< HEAD:vendor/phpoffice/phpword/src/PhpWord/SimpleType/TblWidth.php
+namespace PhpOffice\PhpWord\SimpleType;
+
+use PhpOffice\PhpWord\Shared\AbstractEnum;
+
+/**
+ * Table Width Units.
+ *
+ * @since 0.15.0
+ * @see http://www.datypic.com/sc/ooxml/t-w_ST_TblWidth.html
+ */
+final class TblWidth extends AbstractEnum
+{
+    //No Width
+    const NIL = 'nil';
+
+    //Automatically Determined Width
+    const AUTO = 'auto';
+
+    //Width in Fiftieths of a Percent
+    const PERCENT = 'pct';
+
+    //Width in Twentieths of a Point
+    const TWIP = 'dxa';
+========
 namespace PhpOffice\PhpWord\Writer\EPub3\Style;
 
 /**
@@ -36,4 +61,5 @@ class Font extends AbstractStyle
 
         return $content;
     }
+>>>>>>>> origin:vendor/phpoffice/phpword/src/PhpWord/Writer/EPub3/Style/Font.php
 }

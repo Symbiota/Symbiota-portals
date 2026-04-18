@@ -254,7 +254,10 @@ class Gnumeric extends BaseReader
         (new Properties($this->spreadsheet))->readProperties($xml, $gnmXML);
 
         $worksheetID = 0;
+<<<<<<< HEAD
+=======
         $sheetCreated = false;
+>>>>>>> origin
         foreach ($gnmXML->Sheets->Sheet as $sheetOrNull) {
             $sheet = self::testSimpleXml($sheetOrNull);
             $worksheetName = (string) $sheet->Name;
@@ -266,7 +269,10 @@ class Gnumeric extends BaseReader
 
             // Create new Worksheet
             $this->spreadsheet->createSheet();
+<<<<<<< HEAD
+=======
             $sheetCreated = true;
+>>>>>>> origin
             $this->spreadsheet->setActiveSheetIndex($worksheetID);
             //    Use false for $updateFormulaCellReferences to prevent adjustment of worksheet references in formula
             //        cells... during the load, all formulae should be correct, and we're simply bringing the worksheet
@@ -323,6 +329,53 @@ class Gnumeric extends BaseReader
         }
 
         $this->processDefinedNames($gnmXML);
+<<<<<<< HEAD
+
+        $this->setSelectedSheet($gnmXML);
+
+        // Return
+        return $this->spreadsheet;
+    }
+
+    private function setSelectedSheet(SimpleXMLElement $gnmXML): void
+    {
+        if (isset($gnmXML->UIData)) {
+            $attributes = self::testSimpleXml($gnmXML->UIData->attributes());
+            $selectedSheet = (int) $attributes['SelectedTab'];
+            $this->spreadsheet->setActiveSheetIndex($selectedSheet);
+        }
+    }
+
+    private function setSelectedCells(?SimpleXMLElement $sheet): void
+    {
+        if ($sheet !== null && isset($sheet->Selections)) {
+            foreach ($sheet->Selections as $selection) {
+                $startCol = (int) ($selection->StartCol ?? 0);
+                $startRow = (int) ($selection->StartRow ?? 0) + 1;
+                $endCol = (int) ($selection->EndCol ?? $startCol);
+                $endRow = (int) ($selection->endRow ?? 0) + 1;
+
+                $startColumn = Coordinate::stringFromColumnIndex($startCol + 1);
+                $endColumn = Coordinate::stringFromColumnIndex($endCol + 1);
+
+                $startCell = "{$startColumn}{$startRow}";
+                $endCell = "{$endColumn}{$endRow}";
+                $selectedRange = $startCell . (($endCell !== $startCell) ? ':' . $endCell : '');
+                $this->spreadsheet->getActiveSheet()->setSelectedCell($selectedRange);
+
+                break;
+            }
+        }
+    }
+
+    private function processMergedCells(?SimpleXMLElement $sheet): void
+    {
+        //    Handle Merged Cells in this worksheet
+        if ($sheet !== null && isset($sheet->MergedRegions)) {
+            foreach ($sheet->MergedRegions->Merge as $mergeCells) {
+                if (str_contains((string) $mergeCells, ':')) {
+                    $this->spreadsheet->getActiveSheet()->mergeCells($mergeCells, Worksheet::MERGE_CELL_CONTENT_HIDE);
+=======
 
         $this->setSelectedSheet($gnmXML);
 
@@ -528,11 +581,175 @@ class Gnumeric extends BaseReader
                 // Worksheet might still be null if we're only loading selected sheets rather than the full spreadsheet
                 if ($worksheet !== null) {
                     $this->spreadsheet->addDefinedName(DefinedName::createInstance($name, $worksheet, $value));
+>>>>>>> origin
                 }
             }
         }
     }
 
+<<<<<<< HEAD
+    private function processAutofilter(?SimpleXMLElement $sheet): void
+    {
+        if ($sheet !== null && isset($sheet->Filters)) {
+            foreach ($sheet->Filters->Filter as $autofilter) {
+                if ($autofilter !== null) {
+                    $attributes = $autofilter->attributes();
+                    if (isset($attributes['Area'])) {
+                        $this->spreadsheet->getActiveSheet()->setAutoFilter((string) $attributes['Area']);
+                    }
+                }
+            }
+        }
+    }
+
+    private function setColumnWidth(int $whichColumn, float $defaultWidth): void
+    {
+        $columnDimension = $this->spreadsheet->getActiveSheet()
+            ->getColumnDimension(Coordinate::stringFromColumnIndex($whichColumn + 1));
+        if ($columnDimension !== null) {
+            $columnDimension->setWidth($defaultWidth);
+        }
+    }
+
+    private function setColumnInvisible(int $whichColumn): void
+    {
+        $columnDimension = $this->spreadsheet->getActiveSheet()
+            ->getColumnDimension(Coordinate::stringFromColumnIndex($whichColumn + 1));
+        if ($columnDimension !== null) {
+            $columnDimension->setVisible(false);
+        }
+    }
+
+    private function processColumnLoop(int $whichColumn, int $maxCol, ?SimpleXMLElement $columnOverride, float $defaultWidth): int
+    {
+        $columnOverride = self::testSimpleXml($columnOverride);
+        $columnAttributes = self::testSimpleXml($columnOverride->attributes());
+        $column = $columnAttributes['No'];
+        $columnWidth = ((float) $columnAttributes['Unit']) / 5.4;
+        $hidden = (isset($columnAttributes['Hidden'])) && ((string) $columnAttributes['Hidden'] == '1');
+        $columnCount = (int) ($columnAttributes['Count'] ?? 1);
+        while ($whichColumn < $column) {
+            $this->setColumnWidth($whichColumn, $defaultWidth);
+            ++$whichColumn;
+        }
+        while (($whichColumn < ($column + $columnCount)) && ($whichColumn <= $maxCol)) {
+            $this->setColumnWidth($whichColumn, $columnWidth);
+            if ($hidden) {
+                $this->setColumnInvisible($whichColumn);
+            }
+            ++$whichColumn;
+        }
+
+        return $whichColumn;
+    }
+
+    private function processColumnWidths(?SimpleXMLElement $sheet, int $maxCol): void
+    {
+        if ((!$this->readDataOnly) && $sheet !== null && (isset($sheet->Cols))) {
+            //    Column Widths
+            $defaultWidth = 0;
+            $columnAttributes = $sheet->Cols->attributes();
+            if ($columnAttributes !== null) {
+                $defaultWidth = $columnAttributes['DefaultSizePts'] / 5.4;
+            }
+            $whichColumn = 0;
+            foreach ($sheet->Cols->ColInfo as $columnOverride) {
+                $whichColumn = $this->processColumnLoop($whichColumn, $maxCol, $columnOverride, $defaultWidth);
+            }
+            while ($whichColumn <= $maxCol) {
+                $this->setColumnWidth($whichColumn, $defaultWidth);
+                ++$whichColumn;
+            }
+        }
+    }
+
+    private function setRowHeight(int $whichRow, float $defaultHeight): void
+    {
+        $rowDimension = $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow);
+        if ($rowDimension !== null) {
+            $rowDimension->setRowHeight($defaultHeight);
+        }
+    }
+
+    private function setRowInvisible(int $whichRow): void
+    {
+        $rowDimension = $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow);
+        if ($rowDimension !== null) {
+            $rowDimension->setVisible(false);
+        }
+    }
+
+    private function processRowLoop(int $whichRow, int $maxRow, ?SimpleXMLElement $rowOverride, float $defaultHeight): int
+    {
+        $rowOverride = self::testSimpleXml($rowOverride);
+        $rowAttributes = self::testSimpleXml($rowOverride->attributes());
+        $row = $rowAttributes['No'];
+        $rowHeight = (float) $rowAttributes['Unit'];
+        $hidden = (isset($rowAttributes['Hidden'])) && ((string) $rowAttributes['Hidden'] == '1');
+        $rowCount = (int) ($rowAttributes['Count'] ?? 1);
+        while ($whichRow < $row) {
+            ++$whichRow;
+            $this->setRowHeight($whichRow, $defaultHeight);
+        }
+        while (($whichRow < ($row + $rowCount)) && ($whichRow < $maxRow)) {
+            ++$whichRow;
+            $this->setRowHeight($whichRow, $rowHeight);
+            if ($hidden) {
+                $this->setRowInvisible($whichRow);
+            }
+        }
+
+        return $whichRow;
+    }
+
+    private function processRowHeights(?SimpleXMLElement $sheet, int $maxRow): void
+    {
+        if ((!$this->readDataOnly) && $sheet !== null && (isset($sheet->Rows))) {
+            //    Row Heights
+            $defaultHeight = 0;
+            $rowAttributes = $sheet->Rows->attributes();
+            if ($rowAttributes !== null) {
+                $defaultHeight = (float) $rowAttributes['DefaultSizePts'];
+            }
+            $whichRow = 0;
+
+            foreach ($sheet->Rows->RowInfo as $rowOverride) {
+                $whichRow = $this->processRowLoop($whichRow, $maxRow, $rowOverride, $defaultHeight);
+            }
+            // never executed, I can't figure out any circumstances
+            // under which it would be executed, and, even if
+            // such exist, I'm not convinced this is needed.
+            //while ($whichRow < $maxRow) {
+            //    ++$whichRow;
+            //    $this->spreadsheet->getActiveSheet()->getRowDimension($whichRow)->setRowHeight($defaultHeight);
+            //}
+        }
+    }
+
+    private function processDefinedNames(?SimpleXMLElement $gnmXML): void
+    {
+        //    Loop through definedNames (global named ranges)
+        if ($gnmXML !== null && isset($gnmXML->Names)) {
+            foreach ($gnmXML->Names->Name as $definedName) {
+                $name = (string) $definedName->name;
+                $value = (string) $definedName->value;
+                if (stripos($value, '#REF!') !== false || empty($value)) {
+                    continue;
+                }
+
+                [$worksheetName] = Worksheet::extractSheetTitle($value, true);
+                $worksheetName = trim($worksheetName, "'");
+                $worksheet = $this->spreadsheet->getSheetByName($worksheetName);
+                // Worksheet might still be null if we're only loading selected sheets rather than the full spreadsheet
+                if ($worksheet !== null) {
+                    $this->spreadsheet->addDefinedName(DefinedName::createInstance($name, $worksheet, $value));
+                }
+            }
+        }
+    }
+
+=======
+>>>>>>> origin
     private function parseRichText(string $is): RichText
     {
         $value = new RichText();

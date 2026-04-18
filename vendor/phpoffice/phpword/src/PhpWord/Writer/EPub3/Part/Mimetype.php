@@ -16,6 +16,26 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
+<<<<<<<< HEAD:vendor/phpoffice/phpword/src/PhpWord/SimpleType/VerticalJc.php
+namespace PhpOffice\PhpWord\SimpleType;
+
+use PhpOffice\PhpWord\Shared\AbstractEnum;
+
+/**
+ * Vertical Alignment Type.
+ *
+ * Introduced in ISO/IEC-29500:2008.
+ *
+ * @see http://www.datypic.com/sc/ooxml/t-w_ST_VerticalJc.html
+ * @since 0.17.0
+ */
+final class VerticalJc extends AbstractEnum
+{
+    const TOP = 'top';
+    const CENTER = 'center';
+    const BOTH = 'both';
+    const BOTTOM = 'bottom';
+========
 namespace PhpOffice\PhpWord\Writer\EPub3\Part;
 
 /**
@@ -30,4 +50,5 @@ class Mimetype extends AbstractPart
     {
         return 'application/epub+zip';
     }
+>>>>>>>> origin:vendor/phpoffice/phpword/src/PhpWord/Writer/EPub3/Part/Mimetype.php
 }

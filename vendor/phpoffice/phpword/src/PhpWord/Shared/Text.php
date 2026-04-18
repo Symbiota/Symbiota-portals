@@ -17,8 +17,11 @@
  */
 
 namespace PhpOffice\PhpWord\Shared;
+<<<<<<< HEAD
+=======
 
 use PhpOffice\PhpWord\Exception\Exception;
+>>>>>>> origin
 
 /**
  * Text.
@@ -150,9 +153,12 @@ class Text
         if (null !== $value && !self::isUTF8($value)) {
             // PHP8.2 : utf8_encode is deprecated, but mb_convert_encoding always usable
             $value = (function_exists('mb_convert_encoding')) ? mb_convert_encoding($value, 'UTF-8', 'ISO-8859-1') : utf8_encode($value);
+<<<<<<< HEAD
+=======
             if ($value === false) {
                 throw new Exception('Unable to convert text to UTF-8');
             }
+>>>>>>> origin
         }
 
         return $value;

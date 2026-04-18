@@ -2,7 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel;
 
+<<<<<<< HEAD
+=======
 use Composer\Pcre\Preg;
+>>>>>>> origin
 use Datetime;
 use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
 use PhpOffice\PhpSpreadsheet\Calculation\Functions;
@@ -13,6 +16,8 @@ class TimeValue
 {
     use ArrayEnabled;
 
+<<<<<<< HEAD
+=======
     private const EXTRACT_TIME = '/\b'
         . '(\d+)' // match[1] - hour
         . '(:' // start of match[2] (rest of string) - colon
@@ -26,6 +31,7 @@ class TimeValue
         . ')' // end of match[2]
         . '/i';
 
+>>>>>>> origin
     /**
      * TIMEVALUE.
      *
@@ -57,11 +63,23 @@ class TimeValue
         }
 
         // try to parse as time iff there is at least one digit
+<<<<<<< HEAD
+        if (is_string($timeValue) && preg_match('/\\d/', $timeValue) !== 1) {
+=======
         if (is_string($timeValue) && !Preg::isMatch('/\d/', $timeValue)) {
+>>>>>>> origin
             return ExcelError::VALUE();
         }
 
         $timeValue = trim((string) $timeValue, '"');
+<<<<<<< HEAD
+        $timeValue = str_replace(['/', '.'], '-', $timeValue);
+
+        $arraySplit = preg_split('/[\/:\-\s]/', $timeValue) ?: [];
+        if ((count($arraySplit) == 2 || count($arraySplit) == 3) && $arraySplit[0] > 24) {
+            $arraySplit[0] = ((int) $arraySplit[0] % 24);
+            $timeValue = implode(':', $arraySplit);
+=======
         if (Preg::isMatch(self::EXTRACT_TIME, $timeValue, $matches)) {
             if (empty($matches[6])) { // am/pm
                 $hour = (int) $matches[0];
@@ -71,6 +89,7 @@ class TimeValue
             } else {
                 $timeValue = $matches[0] . 'm';
             }
+>>>>>>> origin
         }
 
         $PHPDateArray = Helpers::dateParse($timeValue);

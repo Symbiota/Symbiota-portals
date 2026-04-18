@@ -177,7 +177,11 @@ class Date
             throw new Exception("Invalid string $value supplied for datatype Date");
         }
 
+<<<<<<< HEAD
+        if (preg_match('/^\\s*\\d?\\d:\\d\\d(:\\d\\d([.]\\d+)?)?\\s*(am|pm)?\\s*$/i', $value) == 1) {
+=======
         if (preg_match('/^\s*\d?\d:\d\d(:\d\d([.]\d+)?)?\s*(am|pm)?\s*$/i', $value) == 1) {
+>>>>>>> origin
             $newValue = fmod($newValue, 1.0);
         }
 

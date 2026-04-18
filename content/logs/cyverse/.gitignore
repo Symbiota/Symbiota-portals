@@ -2,4 +2,7 @@
 *
 # Except this file
 !.gitignore
+<<<<<<<< HEAD:content/geoJSON/.gitignore
+========
 !index.php
+>>>>>>>> origin:content/logs/cyverse/.gitignore

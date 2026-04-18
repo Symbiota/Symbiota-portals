@@ -6,8 +6,13 @@ use PhpOffice\PhpSpreadsheet\Reader;
 
 class XmlScanner
 {
+<<<<<<< HEAD
+    private const ENCODING_PATTERN = '/encoding\\s*=\\s*(["\'])(.+?)\\1/s';
+    private const ENCODING_UTF7 = '/encoding\\s*=\\s*(["\'])UTF-7\\1/si';
+=======
     private const ENCODING_PATTERN = '/encoding\s*=\s*(["\'])(.+?)\1/s';
     private const ENCODING_UTF7 = '/encoding\s*=\s*(["\'])UTF-7\1/si';
+>>>>>>> origin
 
     private string $pattern;
 
@@ -41,7 +46,11 @@ class XmlScanner
         $charset = $this->findCharSet($xml);
         $foundUtf7 = $charset === 'UTF-7';
         if ($charset !== 'UTF-8') {
+<<<<<<< HEAD
+            $testStart = '/^.{0,4}\\s*<?xml/s';
+=======
             $testStart = '/^.{0,4}\s*<?xml/s';
+>>>>>>> origin
             $startWithXml1 = preg_match($testStart, $xml);
             $xml = self::forceString(mb_convert_encoding($xml, 'UTF-8', $charset));
             if ($startWithXml1 === 1 && preg_match($testStart, $xml) !== 1) {
@@ -87,7 +96,11 @@ class XmlScanner
     public function scan($xml): string
     {
         // Don't rely purely on libxml_disable_entity_loader()
+<<<<<<< HEAD
+        $pattern = '/\\0*' . implode('\\0*', str_split($this->pattern)) . '\\0*/';
+=======
         $pattern = '/\0*' . implode('\0*', str_split($this->pattern)) . '\0*/';
+>>>>>>> origin
 
         $xml = "$xml";
         if (preg_match($pattern, $xml)) {

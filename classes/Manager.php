@@ -37,6 +37,16 @@ class Manager  {
 		}
 	}
 
+<<<<<<< HEAD
+	protected function getConfigAttribute($attrName){
+		$attrValue = '';
+		if($attrName){
+			$sql = 'SELECT attributeValue FROM adminconfig WHERE attributeName = ?';
+			if($stmt = $this->conn->prepare($sql)){
+				$stmt->bind_param('s', $attrName);
+				$stmt->execute();
+				$stmt->bind_result($attrValue);
+=======
 	protected function getConfigAttribute($propName){
 		$propValue = '';
 		if($propName){
@@ -45,11 +55,16 @@ class Manager  {
 				$stmt->bind_param('s', $propName);
 				$stmt->execute();
 				$stmt->bind_result($propValue);
+>>>>>>> origin
 				$stmt->fetch();
 				$stmt->close();
 			}
 		}
+<<<<<<< HEAD
+		return $attrValue;
+=======
 		return $propValue;
+>>>>>>> origin
 	}
 
 	protected function setLogFH($logPath){

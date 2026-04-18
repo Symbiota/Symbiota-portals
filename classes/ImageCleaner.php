@@ -57,7 +57,11 @@ class ImageCleaner extends Manager{
 		$this->imgManager->setTestOrientation($this->testOrientation);
 		//Get image recordset to be processed
 		$sql = 'SELECT DISTINCT m.mediaID, m.url, m.originalurl, m.thumbnailurl, m.format ';
+<<<<<<< HEAD
+		if($this->collid) $sql .= ', o.catalognumber FROM media m INNER JOIN omoccurrences o ON m.occid = o.occid ';
+=======
 		if($this->collid) $sql .= ', o.catalognumber, o.occid FROM media m INNER JOIN omoccurrences o ON m.occid = o.occid ';
+>>>>>>> origin
 		else $sql .= 'FROM media m ';
 		if($this->tidArr) $sql .= 'INNER JOIN taxaenumtree e ON m.tid = e.tid ';
 		$sql .= $this->getSqlWhere() . 'ORDER BY RAND()';
@@ -68,10 +72,15 @@ class ImageCleaner extends Manager{
 		while($r = $result->fetch_object()){
 			$status = true;
 			$cnt++;
+<<<<<<< HEAD
+			$mediaID = $row->mediaID;
+			$this->logOrEcho($cnt.': Building thumbnail: <a href="../imgdetails.php?mediaid=' . $mediaID . '" target="_blank">' . $mediaID . '</a>...');
+=======
 			$mediaID = $r->mediaID;
 			$url = '../imgdetails.php?mediaid=' . $mediaID;
 			if($this->collid) $url = '../../collections/editor/occurrenceeditor.php?tabtarget=2&occid=' . $r->occid;
 			$this->logOrEcho($cnt.': Building thumbnail: <a href="' . $url . '" target="_blank">' . $mediaID . '</a>...');
+>>>>>>> origin
 			$this->conn->autocommit(false);
 			//Tag for updating; needed to ensure two parallel processes are not processing the same image
 			$testSql = 'SELECT thumbnailurl, url FROM media WHERE (mediaID = '. $mediaID . ') FOR UPDATE ';
@@ -94,10 +103,17 @@ class ImageCleaner extends Manager{
 			$this->conn->commit();
 			$this->conn->autocommit(true);
 
+<<<<<<< HEAD
+			$setFormat = ($row->format?false:true);
+			$catNum = '';
+			if(isset($row->catalognumber)) $catNum = $row->catalognumber;
+			if(!$this->buildImageDerivatives($mediaID, $catNum, $row->url, $row->thumbnailurl, $row->originalurl, $setFormat)){
+=======
 			$setFormat = ($r->format?false:true);
 			$catNum = '';
 			if(isset($r->catalognumber)) $catNum = $r->catalognumber;
 			if(!$this->buildImageDerivatives($mediaID, $catNum, $r->url, $r->thumbnailurl, $r->originalurl, $setFormat)){
+>>>>>>> origin
 				$this->logOrEcho($this->errorMessage, 1);
 			}
 			if(!$status) $this->logOrEcho($this->errorMessage,1);
@@ -266,6 +282,75 @@ class ImageCleaner extends Manager{
 		$this->conn->query($sqlWeb);
 	}
 
+<<<<<<< HEAD
+	private function getTropicosWebUrl($url){
+		$imgUrl = '';
+		if(preg_match('/imageid=(\d+)$/', $url, $m)){
+			$imageID = $m[1];
+			//http://mbgserv18.mobot.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=http://mbgserv18:8057/TropicosImages2/100309000/100309162.jp2&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=0.2';
+			$newImgUrl = 'http://mbgserv18.mobot.org/adore-djatoka/resolver?url_ver=Z39.88-2004&rft_id=http://mbgserv18:8057/TropicosImages2/'.substr($imageID, 0, 6).'000/'.$imageID.'.jp2&svc_id=info:lanl-repo/svc/getRegion&svc_val_fmt=info:ofi/fmt:kev:mtx:jpeg2000&svc.format=image/jpeg&svc.scale=0.2';
+
+			if(copy($newImgUrl,$this->imgManager->getTargetPath().$this->imgManager->getImgName().'_web'.$this->imgManager->getImgExt())){
+				$imgUrl = $this->imgManager->getTargetPath().$this->imgManager->getImgName().'_web'.$this->imgManager->getImgExt();
+			}
+			exit;
+		}
+		return $imgUrl;
+	}
+
+	private function getTropicosWebUrl2($url){
+		//Extract image id
+		$imgUrl = '';
+		if(preg_match('/imageid=(\d+)$/', $url, $m)){
+			$imageID = $m[1];
+			$imgDisplayUrl = 'http://www.tropicos.org/Image/'.$imageID;
+			$ip = $_SERVER['HTTP_HOST'];
+			$header = array();
+			$header[]  = "Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
+			$header[] = "Cache-Control: max-age=0";
+			$header[] = "Connection: keep-alive";
+			$header[] = "Keep-Alive: 300";
+			$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
+			$header[] = "Accept-Language: en-us,en;q=0.5";
+			$header[] = "Pragma: "; // browsers = blank
+			$header[] = "X_FORWARDED_FOR: " . $ip;
+			$header[] = "REMOTE_ADDR: " . $ip;
+
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL,$imgDisplayUrl);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch,CURLOPT_COOKIEFILE,'cookies.txt');
+			curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+			curl_setopt($ch,CURLOPT_COOKIEJAR,'cookies.txt');
+			curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_HOST']);
+			curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			$htmlSource = curl_exec($ch);
+
+			curl_close($ch);
+
+			//$htmlSource = file_get_contents($imgDisplayUrl);
+			//echo 'source: '.$htmlSource; exit;
+
+			if($htmlSource){
+				$doc = new DOMDocument();
+				libxml_use_internal_errors(true);
+				$doc->loadHTML($htmlSource);
+				foreach($doc->getElementsByTagName('img') as $link) {
+					if($link->getAttribute('id')){
+						if($link->getAttribute('id') == 'ctl00_MainContentPlaceHolder_imageDetailsControl_ImageHolder'){
+							$imgUrl = $link->getAttribute('src');
+						}
+					}
+				}
+			}
+		}
+		return $imgUrl;
+	}
+
+=======
+>>>>>>> origin
 	//Test and refresh image thumbnails for remote images
 	public function getProcessingCnt($postArr){
 		$retCnt = 0;
@@ -309,9 +394,13 @@ class ImageCleaner extends Manager{
 			$url = $r->url;
 			$urlTn = $r->thumbnailurl;
 			$urlOrig = $r->originalurl;
+<<<<<<< HEAD
+			$this->logOrEcho($cnt.'. Rebuilding thumbnail: <a href="../imgdetails.php?mediaid=' . $r->mediaID . '" target="_blank">' . $r->mediaID . '</a> [cat#: ' . htmlspecialchars($r->catalognumber, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ']...',0,'div');
+=======
 			$url = '../imgdetails.php?mediaid=' . $r->mediaID;
 			if($this->collid) $url = '../../collections/editor/occurrenceeditor.php?tabtarget=2&occid=' . $r->occid;
 			$this->logOrEcho($cnt.'. Rebuilding thumbnail: <a href="' . $url . '" target="_blank">' . $r->mediaID . '</a> [cat#: ' . htmlspecialchars($r->catalognumber, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . ']...',0,'div');
+>>>>>>> origin
 			//echo 'evaluate_ts: '.$postArr['evaluate_ts'].'<br/>';
 			$tsSource = 0;
 			if($postArr['evaluate_ts']){

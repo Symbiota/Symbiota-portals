@@ -1,9 +1,16 @@
 <?php
+<<<<<<< HEAD
+   include_once('../../config/symbini.php');
+   if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/tools/mapaids.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/tools/mapaids.' . $LANG_TAG . '.php');
+	else include_once($SERVER_ROOT . '/content/lang/collections/tools/mapaids.en.php');
+   include_once($SERVER_ROOT.'/classes/ChecklistAdmin.php');
+=======
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/tools/mapaids');
 
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 
 $clid = array_key_exists("clid",$_REQUEST) && is_numeric($_REQUEST["clid"])? $_REQUEST["clid"]:0;
@@ -163,6 +170,20 @@ else{
 		}
 
 		function setRectangle(upperLat, lowerLat, leftLng, rightLng) {
+<<<<<<< HEAD
+
+			setField("upperlat_NS", upperLat > 0 ? "N": "S");
+			setField("upperlat", Math.abs(upperLat).toFixed(SIG_FIGS));
+
+			setField("bottomlat_NS", lowerLat > 0 ? "N": "S");
+			setField("bottomlat", Math.abs(lowerLat).toFixed(SIG_FIGS));
+
+			setField("leftlong_EW", leftLng > 0 ? "E": "W");
+			setField("leftlong", Math.abs(leftLng).toFixed(SIG_FIGS));
+
+			setField("rightlong_EW", rightLng> 0 ? "E": "W");
+			setField("rightlong", Math.abs(rightLng).toFixed(SIG_FIGS));
+=======
 			setField("upperlat_NS", upperLat > 0 ? "N": "S");
 			setField("upperlat", (getField("upperlat_NS")? Math.abs(upperLat): upperLat).toFixed(SIG_FIGS));
 
@@ -174,6 +195,7 @@ else{
 
 			setField("rightlong_EW", rightLng> 0 ? "E": "W");
 			setField("rightlong", (getField("rightlong_EW")? Math.abs(rightLng): rightLng).toFixed(SIG_FIGS));
+>>>>>>> origin
 		}
 
 		function setCircle(radius, center_lat, center_lng) {
@@ -289,6 +311,15 @@ else{
 					const rightLng = getField("rightlong");
 
 					if(isNumeric(upperLat) && isNumeric(lowerLat) && isNumeric(leftLng) && isNumeric(rightLng)) {
+<<<<<<< HEAD
+						return {
+							type: "rectangle",
+							upperLat: upperLat * (getField("upperlat_NS") === "N"? 1: -1),
+							rightLng: rightLng * (getField("rightlong_EW") === "E"? 1: -1),
+
+							lowerLat: lowerLat * (getField("bottomlat_NS") === "N"? 1: -1),
+							leftLng: leftLng * (getField("leftlong_EW") === "E"? 1: -1),
+=======
 console.log(!getField("leftlong_EW"));
 						return {
 							type: "rectangle",
@@ -296,6 +327,7 @@ console.log(!getField("leftlong_EW"));
 							rightLng: rightLng * (getField("rightlong_EW") === "E" || !getField("rightlong_EW")? 1: -1),
 							lowerLat: lowerLat * (getField("bottomlat_NS") === "N" || !getField("bottomlat_NS")? 1: -1),
 							leftLng: leftLng * (getField("leftlong_EW") === "E" || !getField("leftlong_EW")? 1: -1),
+>>>>>>> origin
 						}
 					}
 				break;
@@ -331,11 +363,15 @@ console.log(!getField("leftlong_EW"));
 				lang
 			};
 
+<<<<<<< HEAD
+			let map = new LeafletMap('map', MapOptions );
+=======
 			let map = new LeafletMap(
 				'map',
 				MapOptions,
 				JSON.parse(`<?= json_encode($GEO_JSON_LAYERS ?? []) ?>`)
 			);
+>>>>>>> origin
 
 			map.enableDrawing({
 				polyline: false,

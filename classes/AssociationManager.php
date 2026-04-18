@@ -1,5 +1,9 @@
 <?php
 
+<<<<<<< HEAD
+use function PHPUnit\Framework\isEmpty;
+=======
+>>>>>>> origin
 
 include_once($SERVER_ROOT.'/classes/OccurrenceTaxaManager.php');
 include_once($SERVER_ROOT.'/classes/utilities/TaxonomyUtil.php');
@@ -47,6 +51,9 @@ class AssociationManager extends OccurrenceTaxaManager{
 		}
 	}
 
+<<<<<<< HEAD
+
+=======
 	protected function getAcceptedChildren($tid){
 		$returnArr = array();
 		$typeStr1 = '';
@@ -70,6 +77,7 @@ class AssociationManager extends OccurrenceTaxaManager{
 		}
 		return $returnArr;
 	}
+>>>>>>> origin
 
 	public function getAssociatedRecords($associationArr) {
 		$sql = '';
@@ -98,10 +106,16 @@ class AssociationManager extends OccurrenceTaxaManager{
 			$reverseRelationshipStr = (array_key_exists('relationship', $associationArr) && $associationArr['relationship'] !== 'any') ? ("='" . $reverseAssociationType . "'") : ' IS NOT NULL';
 
 			$reverseSql = "SELECT oa.occidAssociate FROM omoccurrences o INNER JOIN omoccurassociations oa ON o.occid = oa.occid LEFT JOIN omoccurdeterminations od ON oa.occid = od.occid " . $familyJoinStr . " WHERE oa.relationship " . $reverseRelationshipStr . " ";
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin
 			$reverseSql .= $this->getAssociatedTaxonWhereFrag($associationArr);
 
 			// External, observational, or resource associations
 			$externalAndObservationalSql = "SELECT oa.occid FROM omoccurrences o INNER JOIN omoccurassociations oa ON o.occid = oa.occid  LEFT JOIN omoccurdeterminations od ON oa.occid = od.occid " . $familyJoinStr . " WHERE (oa.associationType='observational' OR oa.associationType='externalOccurrence' OR oa.associationType='resource') AND oa.relationship " . $relationshipStr . " ";
+<<<<<<< HEAD
+=======
 			$searchTidsExist = isset($associationArr['taxa']) && isset($associationArr['search']) && 
 			   isset($associationArr['taxa'][$associationArr['search']]['tid']) && 
 			   is_array($associationArr['taxa'][$associationArr['search']]['tid']) && 
@@ -112,6 +126,7 @@ class AssociationManager extends OccurrenceTaxaManager{
 				$offTargetStr = "AND o.tidinterpreted NOT IN(" . implode(',', $tIdsNotToMatch) . ") ";
 				$externalAndObservationalSql .= $offTargetStr;
 			}
+>>>>>>> origin
 			$externalAndObservationalSql .= $this->getAssociatedTaxonWhereFrag($associationArr);
 	
 			if(array_key_exists('search', $associationArr)){
@@ -179,6 +194,10 @@ class AssociationManager extends OccurrenceTaxaManager{
 							//Return matches that are not linked to thesaurus
 							if($rankid > 179){
 								if($this->exactMatchOnly) $sqlWhereTaxa .= 'OR (o.sciname = "' . $term . '") ';
+<<<<<<< HEAD
+								else $sqlWhereTaxa .= "OR (o.sciname LIKE '" . $term . "%' AND od.isCurrent=1) OR (oa.verbatimsciname LIKE '" . $term . "%') ";
+=======
+>>>>>>> origin
 							}
 						}
 						else{

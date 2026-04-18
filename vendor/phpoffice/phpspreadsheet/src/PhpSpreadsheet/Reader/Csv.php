@@ -432,6 +432,28 @@ class Csv extends BaseReader
                     $rowDatum = $rowDatum ?? '';
                 } else {
                     $this->convertBoolean($rowDatum);
+<<<<<<< HEAD
+                }
+                $numberFormatMask = $this->castFormattedNumberToNumeric ? $this->convertFormattedNumber($rowDatum) : '';
+                if (($rowDatum !== '' || $this->preserveNullString) && $this->readFilter->readCell($columnLetter, $currentRow)) {
+                    if ($this->contiguous) {
+                        if ($noOutputYet) {
+                            $noOutputYet = false;
+                            ++$outRow;
+                        }
+                    } else {
+                        $outRow = $currentRow;
+                    }
+                    // Set basic styling for the value (Note that this could be overloaded by styling in a value binder)
+                    if ($numberFormatMask !== '') {
+                        $sheet->getStyle($columnLetter . $outRow)
+                            ->getNumberFormat()
+                            ->setFormatCode($numberFormatMask);
+                    }
+                    // Set cell value
+                    $sheet->getCell($columnLetter . $outRow)->setValue($rowDatum);
+=======
+>>>>>>> origin
                 }
                 $numberFormatMask = $this->castFormattedNumberToNumeric ? $this->convertFormattedNumber($rowDatum) : '';
                 if (($rowDatum !== '' || $this->preserveNullString) && $this->readFilter->readCell($columnLetter, $currentRow)) {

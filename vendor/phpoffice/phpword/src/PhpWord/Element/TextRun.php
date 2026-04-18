@@ -86,9 +86,12 @@ class TextRun extends AbstractContainer
         foreach ($this->getElements() as $element) {
             if ($element instanceof Text) {
                 $outstr .= $element->getText();
+<<<<<<< HEAD
+=======
             } elseif ($element instanceof Ruby) {
                 $outstr .= $element->getBaseTextRun()->getText() .
                     ' (' . $element->getRubyTextRun()->getText() . ')';
+>>>>>>> origin
             }
         }
 

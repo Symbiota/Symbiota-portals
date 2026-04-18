@@ -30,7 +30,11 @@ class Footnote extends AbstractContainer
     /**
      * Paragraph style.
      *
+<<<<<<< HEAD
+     * @var null|\PhpOffice\PhpWord\Style\Paragraph|string
+=======
      * @var null|Paragraph|string
+>>>>>>> origin
      */
     protected $paragraphStyle;
 
@@ -44,7 +48,11 @@ class Footnote extends AbstractContainer
     /**
      * Create new instance.
      *
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Paragraph|string $paragraphStyle
+=======
      * @param array|Paragraph|string $paragraphStyle
+>>>>>>> origin
      */
     public function __construct($paragraphStyle = null)
     {
@@ -55,7 +63,11 @@ class Footnote extends AbstractContainer
     /**
      * Get paragraph style.
      *
+<<<<<<< HEAD
+     * @return null|\PhpOffice\PhpWord\Style\Paragraph|string
+=======
      * @return null|Paragraph|string
+>>>>>>> origin
      */
     public function getParagraphStyle()
     {

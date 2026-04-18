@@ -1,6 +1,14 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceEditReview.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/editreviewer.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/editor/editreviewer.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/editor/editreviewer.en.php');
+header('Content-Type: text/html; charset='.$CHARSET);
+
+if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/editor/editreviewer.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
+
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/editor/editreviewer');
@@ -9,6 +17,7 @@ header('Content-Type: text/html; charset='.$CHARSET);
 
 if(!$SYMB_UID) header('Location: ../../profile/index.php?refurl=../collections/editor/editreviewer.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
 
+>>>>>>> origin
 $collid = filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT);
 $displayMode = array_key_exists('display', $_REQUEST) ? filter_var($_REQUEST['display'], FILTER_SANITIZE_NUMBER_INT) : '1';
 $faStatus = array_key_exists('fastatus', $_REQUEST) ? filter_var($_REQUEST['fastatus'], FILTER_SANITIZE_NUMBER_INT) : '';
@@ -335,7 +344,11 @@ $navStr .= '</div>';
 							</div>
 							<div style="clear:both;margin:15px 0px;">
 								<hr/>
+<<<<<<< HEAD
+								<a href="#" onclick="toggle('additional')"><b><?php echo $LANG['ADDITIONAL_ACTIONS']; ?></b></a>
+=======
 								<a href="#" onclick="toggle('additional');return false;"><b><?php echo $LANG['ADDITIONAL_ACTIONS']; ?></b></a>
+>>>>>>> origin
 							</div>
 							<div id="additional" style="display:none">
 								<div style="margin:10px 15px;">
@@ -358,7 +371,11 @@ $navStr .= '</div>';
 					<?php
 					echo '<div style="clear:both">'.$navStr.'</div>';
 					?>
+<<<<<<< HEAD
+					<table class="styledtable" style="font-size:1.25rem;" aria-label="<?php echo (isset($LANG['TABLE']) ? $LANG['TABLE'] : 'Table of Records'); ?>" aria-labeledby="table-desc">
+=======
 					<table class="styledtable" aria-label="<?php echo (isset($LANG['TABLE']) ? $LANG['TABLE'] : 'Table of Records'); ?>" aria-labeledby="table-desc">
+>>>>>>> origin
 						<caption id="table-desc" class="bottom-breathing-room-rel top-breathing-room-rel screen-reader-only">
 							<?php echo $LANG['TABLE_DESC']; ?>
 						</caption>

@@ -60,8 +60,12 @@ class XMLWriter extends \XMLWriter
         }
     }
 
+<<<<<<< HEAD
+    public function __wakeup(): void
+=======
     /** @param mixed[] $data */
     public function __unserialize(array $data): void
+>>>>>>> origin
     {
         $this->tempFileName = '';
 

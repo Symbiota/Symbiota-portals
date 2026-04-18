@@ -350,9 +350,15 @@ class OccurrenceEditReview extends Manager{
 
 	private function applyPaleoEdits($occid, $fieldName, $value, $applyTask){
 		$status = true;
+<<<<<<< HEAD
+		$sql = 'DELETE FROM omoccurpaleo WHERE (occid = '.$occid.')';
+		if($value) $sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = '.($value !== ''?'"'.$this->cleanInStr($value).'"':'NULL').' WHERE (occid = '.$occid.')';
+		echo '<div>'.$sql.'</div>';
+=======
 		$sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = NULL WHERE (occid = '.$occid.')';
 		if($value) $sql = 'UPDATE omoccurpaleo SET '.$fieldName.' = '.($value !== ''?'"'.$this->cleanInStr($value).'"':'NULL').' WHERE (occid = '.$occid.')';
 		//echo '<div>'.$sql.'</div>';
+>>>>>>> origin
 		if(!$this->conn->query($sql)){
 			$warningKey = 'ERROR_REVERTING_PALEO';
 			if($applyTask == 'apply') $warningKey = 'ERROR_APPLYING_PALEO';

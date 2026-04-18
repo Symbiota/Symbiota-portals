@@ -24,7 +24,10 @@ use PhpOffice\PhpWord\Element\Endnote;
  * Endnotes collection.
  *
  * @since 0.10.0
+<<<<<<< HEAD
+=======
  *
+>>>>>>> origin
  * @extends AbstractCollection<Endnote>
  */
 class Endnotes extends AbstractCollection

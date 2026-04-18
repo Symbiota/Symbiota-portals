@@ -30,7 +30,11 @@ use PhpOffice\PhpWord\Writer\HTML\Style\Paragraph as ParagraphStyleWriter;
 use PhpOffice\PhpWord\Writer\HTML\Style\Table as TableStyleWriter;
 
 /**
+<<<<<<< HEAD
+ * RTF head part writer.
+=======
  * HTML head part writer.
+>>>>>>> origin
  *
  * @since 0.11.0
  */
@@ -90,7 +94,10 @@ class Head extends AbstractPart
         $astarray = [
             'font-family' => $this->getFontFamily(Settings::getDefaultFontName(), $this->getParentWriter()->getDefaultGenericFont()),
             'font-size' => Settings::getDefaultFontSize() . 'pt',
+<<<<<<< HEAD
+=======
             'color' => "#{$defaultFontColor}",
+>>>>>>> origin
         ];
         // Mpdf sometimes needs separate tag for body; doesn't harm others.
         $bodyarray = $astarray;

@@ -22,13 +22,19 @@ use DateTime;
 use DOMElement;
 use InvalidArgumentException;
 use PhpOffice\Math\Reader\OfficeMathML;
+<<<<<<< HEAD
+=======
 use PhpOffice\PhpWord\ComplexType\RubyProperties;
+>>>>>>> origin
 use PhpOffice\PhpWord\ComplexType\TblWidth as TblWidthComplexType;
 use PhpOffice\PhpWord\Element\AbstractContainer;
 use PhpOffice\PhpWord\Element\AbstractElement;
 use PhpOffice\PhpWord\Element\FormField;
+<<<<<<< HEAD
+=======
 use PhpOffice\PhpWord\Element\Ruby;
 use PhpOffice\PhpWord\Element\Text;
+>>>>>>> origin
 use PhpOffice\PhpWord\Element\TextRun;
 use PhpOffice\PhpWord\Element\TrackChange;
 use PhpOffice\PhpWord\PhpWord;
@@ -187,7 +193,11 @@ abstract class AbstractPart
     /**
      * Read w:p.
      *
+<<<<<<< HEAD
+     * @param \PhpOffice\PhpWord\Element\AbstractContainer $parent
+=======
      * @param AbstractContainer $parent
+>>>>>>> origin
      * @param string $docPart
      *
      * @todo Get font style for preserve text
@@ -300,8 +310,12 @@ abstract class AbstractPart
         if ($headingDepth !== null) {
             $textContent = null;
             $nodes = $xmlReader->getElements('w:r|w:hyperlink', $domNode);
+<<<<<<< HEAD
+            if ($nodes->length === 1) {
+=======
             $hasRubyElement = $xmlReader->elementExists('w:r/w:ruby', $domNode);
             if ($nodes->length === 1 && !$hasRubyElement) {
+>>>>>>> origin
                 $textContent = htmlspecialchars($xmlReader->getValue('w:t', $nodes->item(0)), ENT_QUOTES, 'UTF-8');
             } else {
                 $textContent = new TextRun($paragraphStyle);
@@ -455,7 +469,11 @@ abstract class AbstractPart
     /**
      * Read w:r.
      *
+<<<<<<< HEAD
+     * @param \PhpOffice\PhpWord\Element\AbstractContainer $parent
+=======
      * @param AbstractContainer $parent
+>>>>>>> origin
      * @param string $docPart
      * @param mixed $paragraphStyle
      *
@@ -484,7 +502,114 @@ abstract class AbstractPart
 
                 $this->setCommentReference('start', $id, $parent->getElement($parent->countElements() - 1));
                 $this->setCommentReference('end', $id, $parent->getElement($parent->countElements() - 1));
+<<<<<<< HEAD
             }
+        }
+    }
+
+    /**
+     * Parses nodes under w:r.
+     *
+     * @param string $docPart
+     * @param mixed $paragraphStyle
+     * @param mixed $fontStyle
+     */
+    protected function readRunChild(XMLReader $xmlReader, DOMElement $node, AbstractContainer $parent, $docPart, $paragraphStyle = null, $fontStyle = null): void
+    {
+        $runParent = $node->parentNode->parentNode;
+        if ($node->nodeName == 'w:footnoteReference') {
+            // Footnote
+            $wId = $xmlReader->getAttribute('w:id', $node);
+            $footnote = $parent->addFootnote();
+            $footnote->setRelationId($wId);
+        } elseif ($node->nodeName == 'w:endnoteReference') {
+            // Endnote
+            $wId = $xmlReader->getAttribute('w:id', $node);
+            $endnote = $parent->addEndnote();
+            $endnote->setRelationId($wId);
+        } elseif ($node->nodeName == 'w:pict') {
+            // Image
+            $rId = $xmlReader->getAttribute('r:id', $node, 'v:shape/v:imagedata');
+            $target = $this->getMediaTarget($docPart, $rId);
+            if ($this->hasImageLoading() && null !== $target) {
+                if ('External' == $this->getTargetMode($docPart, $rId)) {
+                    $imageSource = $target;
+                } else {
+                    $imageSource = "zip://{$this->docFile}#{$target}";
+                }
+                $parent->addImage($imageSource);
+            }
+        } elseif ($node->nodeName == 'w:drawing') {
+            // Office 2011 Image
+            $xmlReader->registerNamespace('wp', 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing');
+            $xmlReader->registerNamespace('r', 'http://schemas.openxmlformats.org/officeDocument/2006/relationships');
+            $xmlReader->registerNamespace('pic', 'http://schemas.openxmlformats.org/drawingml/2006/picture');
+            $xmlReader->registerNamespace('a', 'http://schemas.openxmlformats.org/drawingml/2006/main');
+
+            $name = $xmlReader->getAttribute('name', $node, 'wp:inline/a:graphic/a:graphicData/pic:pic/pic:nvPicPr/pic:cNvPr');
+            $embedId = $xmlReader->getAttribute('r:embed', $node, 'wp:inline/a:graphic/a:graphicData/pic:pic/pic:blipFill/a:blip');
+            if ($name === null && $embedId === null) { // some Converters puts images on a different path
+                $name = $xmlReader->getAttribute('name', $node, 'wp:anchor/a:graphic/a:graphicData/pic:pic/pic:nvPicPr/pic:cNvPr');
+                $embedId = $xmlReader->getAttribute('r:embed', $node, 'wp:anchor/a:graphic/a:graphicData/pic:pic/pic:blipFill/a:blip');
+            }
+            $target = $this->getMediaTarget($docPart, $embedId);
+            if ($this->hasImageLoading() && null !== $target) {
+                $imageSource = "zip://{$this->docFile}#{$target}";
+                $parent->addImage($imageSource, null, false, $name);
+            }
+        } elseif ($node->nodeName == 'w:object') {
+            // Object
+            $rId = $xmlReader->getAttribute('r:id', $node, 'o:OLEObject');
+            // $rIdIcon = $xmlReader->getAttribute('r:id', $domNode, 'w:object/v:shape/v:imagedata');
+            $target = $this->getMediaTarget($docPart, $rId);
+            if (null !== $target) {
+                $textContent = "&lt;Object: {$target}>";
+                $parent->addText($textContent, $fontStyle, $paragraphStyle);
+            }
+        } elseif ($node->nodeName == 'w:br') {
+            $parent->addTextBreak();
+        } elseif ($node->nodeName == 'w:tab') {
+            $parent->addText("\t");
+        } elseif ($node->nodeName == 'mc:AlternateContent') {
+            if ($node->hasChildNodes()) {
+                // Get fallback instead of mc:Choice to make sure it is compatible
+                $fallbackElements = $node->getElementsByTagName('Fallback');
+
+                if ($fallbackElements->length) {
+                    $fallback = $fallbackElements->item(0);
+                    // TextRun
+                    $textContent = htmlspecialchars($fallback->nodeValue, ENT_QUOTES, 'UTF-8');
+
+                    $parent->addText($textContent, $fontStyle, $paragraphStyle);
+                }
+            }
+        } elseif ($node->nodeName == 'w:t' || $node->nodeName == 'w:delText') {
+            // TextRun
+            $textContent = htmlspecialchars($xmlReader->getValue('.', $node), ENT_QUOTES, 'UTF-8');
+
+            if ($runParent->nodeName == 'w:hyperlink') {
+                $rId = $xmlReader->getAttribute('r:id', $runParent);
+                $target = $this->getMediaTarget($docPart, $rId);
+                if (null !== $target) {
+                    $parent->addLink($target, $textContent, $fontStyle, $paragraphStyle);
+                } else {
+                    $parent->addText($textContent, $fontStyle, $paragraphStyle);
+                }
+            } else {
+                /** @var AbstractElement $element */
+                $element = $parent->addText($textContent, $fontStyle, $paragraphStyle);
+                if (in_array($runParent->nodeName, ['w:ins', 'w:del'])) {
+                    $type = ($runParent->nodeName == 'w:del') ? TrackChange::DELETED : TrackChange::INSERTED;
+                    $author = $runParent->getAttribute('w:author');
+                    $date = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $runParent->getAttribute('w:date'));
+                    $date = $date instanceof DateTime ? $date : null;
+                    $element->setChangeInfo($type, $author, $date);
+                }
+=======
+>>>>>>> origin
+            }
+        } elseif ($node->nodeName == 'w:softHyphen') {
+            $element = $parent->addText("\u{200c}", $fontStyle, $paragraphStyle);
         }
     }
 
@@ -704,11 +829,16 @@ abstract class AbstractPart
             'alignment' => [self::READ_VALUE, 'w:jc'],
             'basedOn' => [self::READ_VALUE, 'w:basedOn'],
             'next' => [self::READ_VALUE, 'w:next'],
+<<<<<<< HEAD
+            'indent' => [self::READ_VALUE, 'w:ind', 'w:left'],
+            'hanging' => [self::READ_VALUE, 'w:ind', 'w:hanging'],
+=======
             'indentLeft' => [self::READ_VALUE, 'w:ind', 'w:left'],
             'indentRight' => [self::READ_VALUE, 'w:ind', 'w:right'],
             'indentHanging' => [self::READ_VALUE, 'w:ind', 'w:hanging'],
             'indentFirstLine' => [self::READ_VALUE, 'w:ind', 'w:firstLine'],
             'indentFirstLineChars' => [self::READ_VALUE, 'w:ind', 'w:firstLineChars'],
+>>>>>>> origin
             'spaceAfter' => [self::READ_VALUE, 'w:spacing', 'w:after'],
             'spaceBefore' => [self::READ_VALUE, 'w:spacing', 'w:before'],
             'widowControl' => [self::READ_FALSE, 'w:widowControl'],

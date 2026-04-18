@@ -41,6 +41,8 @@ class MathML implements WriterInterface
         $tagName = $this->getElementTagName($element);
 
         // Element\AbstractGroupElement
+<<<<<<< HEAD
+=======
         if ($element instanceof Element\Semantics) {
             $this->output->startElement($tagName);
             // Write elements
@@ -61,6 +63,7 @@ class MathML implements WriterInterface
         }
 
         // Element\AbstractGroupElement
+>>>>>>> origin
         if ($element instanceof Element\AbstractGroupElement) {
             $this->output->startElement($tagName);
             foreach ($element->getElements() as $childElement) {
@@ -141,9 +144,12 @@ class MathML implements WriterInterface
         if ($element instanceof Element\Operator) {
             return 'mo';
         }
+<<<<<<< HEAD
+=======
         if ($element instanceof Element\Semantics) {
             return 'semantics';
         }
+>>>>>>> origin
 
         throw new NotImplementedException(sprintf(
             '%s : The element of the class `%s` has no tag name',

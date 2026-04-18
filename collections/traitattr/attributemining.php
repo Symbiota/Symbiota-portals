@@ -8,6 +8,12 @@ Language::load('collections/traitattr/attributemining');
 header("Content-Type: text/html; charset=".$CHARSET);
 
 if(!$SYMB_UID) header('Location: '.$CLIENT_ROOT.'/profile/index.php?refurl=../collections/traitattr/attributemining.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
+<<<<<<< HEAD
+
+if ($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/collections/traitattr/attributemining.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT . '/content/lang/collections/traitattr/attributemining.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/traitattr/attributemining.en.php');
+=======
+>>>>>>> origin
 
 $collid = array_key_exists('collid',$_REQUEST)?$_REQUEST['collid']:'';
 $selectAll = array_key_exists('selectall',$_POST)?$_POST['selectall']:'';
@@ -220,8 +226,13 @@ $fieldArr = array('habitat' => 'Habitat', 'substrate' => 'Substrate', 'occurrenc
 						<?php echo $LANG['OCC_TRAITS_MAPPING'] ?><span id="moreSpan">.. <a href="#" onclick="displayDetailDiv(this)"><?php echo $LANG['MORE'] ?></a></span>
 						<div id="detailDiv" style="display:none"><?php echo $LANG['PHENOLOGY_TRAIT_MAPPING'] ?><a href="https://tools.gbif.org/dwca-validator/extension.do?id=http://rs.iobis.org/obis/terms/ExtendedMeasurementOrFact" target="_blank"><?php echo $LANG['MEASUREMENT_OR_FACT'] ?></a> <?php echo $LANG['DWC_EXTENSION_FILE'] ?></div>
 					</div>
+<<<<<<< HEAD
+					<fieldset style="margin:15px;padding:15px;">
+						<legend><b><?php echo $LANG['HARVESTING_FILTER'] ?></b></legend>
+=======
 					<fieldset>
 						<legend><?php echo $LANG['HARVESTING_FILTER'] ?></legend>
+>>>>>>> origin
 						<form name="filterform" method="post" action="attributemining.php" onsubmit="return verifyFilterForm(this)" >
 							<div>
 							<?php echo $LANG['OCC_TRAIT'] ?>
@@ -276,8 +287,13 @@ $fieldArr = array('habitat' => 'Habitat', 'substrate' => 'Substrate', 'occurrenc
 					$valueArr = $attrManager->getFieldValueArr($traitID, $fieldName, $tidFilter, $stringFilter);
 					?>
 					<div id="traitdiv" style="width:700px">
+<<<<<<< HEAD
+						<fieldset style="margin:15px;padding:15px">
+							<legend><b><?php echo $fieldArr[$fieldName]; ?></b></legend>
+=======
 						<fieldset>
 							<legend><?php echo $fieldArr[$fieldName]; ?></legend>
+>>>>>>> origin
 							<form name="miningform" method="post" action="attributemining.php" onsubmit="return verifyMiningForm(this)">
 								<b><?php echo $LANG['SELECT_SOURCE_FIELD_VALUES'] ?></b><?php echo $LANG['HOLD_DOWN_BUTTONS_TO_SELECT'] ?><br/>
 								<div style="margin:5px;border:2px solid;width:100%;height:200px;resize: both;overflow: auto">

@@ -4,7 +4,10 @@ include_once('Person.php');
 include_once('utilities/Encryption.php');
 include_once('utilities/GeneralUtil.php');
 include_once('utilities/QueryUtil.php');
+<<<<<<< HEAD
+=======
 include_once('utilities/Sanitize.php');
+>>>>>>> origin
 @include_once 'Mail.php';
 
 class ProfileManager extends Manager{
@@ -125,6 +128,11 @@ class ProfileManager extends Manager{
 			}
 			else echo 'error preparing statement: '.$this->conn->error;
 		}
+<<<<<<< HEAD
+		return $status;
+	}
+
+=======
 		if(!$status) $this->checkResetRequired();
 		return $status;
 	}
@@ -150,6 +158,7 @@ class ProfileManager extends Manager{
 		}
 	}
 
+>>>>>>> origin
 	private function authenticateUsingPasswordBcrypt($pwdStr){
 		try {
 			$params = [];
@@ -168,10 +177,17 @@ class ProfileManager extends Manager{
 				$sql,
 				$params
 			);
+<<<<<<< HEAD
+
+			$user = $rs->fetch_object();
+
+			if(!$user->password) {
+=======
 			$user = $rs->fetch_object();
 
 			if(empty($user->password)) {
 				if(!empty($user->username)) $this->errorMessage = 'PASSWORD_RESET_REQUIRED';
+>>>>>>> origin
 				return false;
 			}
 
@@ -536,6 +552,13 @@ class ProfileManager extends Manager{
 		$initialDynamicProperties['accessibilityPref'] = $isAccessiblePreferred === "1" ? true : false;
 		$jsonDynProps = json_encode($initialDynamicProperties);
 
+<<<<<<< HEAD
+		$sql = 'INSERT INTO users(username, password, email, firstName, lastName, title, institution, country, city, state, zip, guid, dynamicProperties) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+		$hash = $this->hash($pwd);
+
+		if(!$hash) {
+			$this->errorMessage = 'ERROR inserting new user: Failed to encrypt password';
+=======
 		$sql = 'INSERT INTO users(username, password, email, firstName, lastName, title, institution, country, city, state, zip, guid, dynamicProperties) VALUES(?,CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?))))),?,?,?,?,?,?,?,?,?,?,?)';
 
 		$hash = $pwd;
@@ -548,11 +571,16 @@ class ProfileManager extends Manager{
 				$this->errorMessage = 'ERROR inserting new user: Failed to encrypt password';
 				return $status;
 			}
+>>>>>>> origin
 		}
 
 		$this->resetConnection();
 		if($stmt = $this->conn->prepare($sql)) {
+<<<<<<< HEAD
+			$stmt->bind_param('sssssssssssss', $this->userName, $this->hash($pwd), $email, $firstName, $lastName, $title, $institution, $country, $city, $state, $zip, $guid, $jsonDynProps);
+=======
 			$stmt->bind_param('sssssssssssss', $this->userName, $hash, $email, $firstName, $lastName, $title, $institution, $country, $city, $state, $zip, $guid, $jsonDynProps);
+>>>>>>> origin
 			$stmt->execute();
 			if($stmt->affected_rows){
 				$this->uid = $stmt->insert_id;
@@ -1149,10 +1177,17 @@ class ProfileManager extends Manager{
 		$sql = 'SELECT collid, institutioncode, collectioncode, collectionname, colltype FROM omcollections WHERE collid IN('.$collidStr.') ORDER BY collectionname';
 		if($rs = $this->conn->query($sql)){
 			while($r = $rs->fetch_object()){
+<<<<<<< HEAD
+				$retArr[$r->collid]['collectionname'] = $r->collectionname;
+				$retArr[$r->collid]['collectioncode'] = $r->collectioncode;
+				$retArr[$r->collid]['institutioncode'] = $r->institutioncode;
+				$retArr[$r->collid]['colltype'] = $r->colltype;
+=======
 				$retArr[$r->collid]['collectionname'] = Sanitize::outString($r->collectionname);
 				$retArr[$r->collid]['collectioncode'] = Sanitize::outString($r->collectioncode);
 				$retArr[$r->collid]['institutioncode'] = Sanitize::outString($r->institutioncode);
 				$retArr[$r->collid]['colltype'] = Sanitize::outString($r->colltype);
+>>>>>>> origin
 			}
 			$rs->free();
 		}

@@ -118,6 +118,21 @@ class ChecklistVoucherAdmin extends Manager {
 				$this->clName = 'Unknown';
 			}
 			$result->free();
+<<<<<<< HEAD
+			//Get children checklists
+			$sqlChildBase = 'SELECT clidchild FROM fmchklstchildren WHERE clid != clidchild AND clid IN(';
+			$sqlChild = $sqlChildBase.$this->clid.')';
+			do{
+				$childStr = "";
+				$rsChild = $this->conn->query($sqlChild);
+				while($rChild = $rsChild->fetch_object()){
+					$this->childClidArr[] = $rChild->clidchild;
+					$childStr .= ','.$rChild->clidchild;
+				}
+				$sqlChild = $sqlChildBase.substr($childStr,1).')';
+			}while($childStr);
+=======
+>>>>>>> origin
 		}
 	}
 
@@ -189,7 +204,10 @@ class ChecklistVoucherAdmin extends Manager {
 	}
 
 	public function getQueryVariableArr(){
+<<<<<<< HEAD
+=======
 		if(!$this->queryVariablesArr) $this->setCollectionVariables();
+>>>>>>> origin
 		return $this->queryVariablesArr;
 	}
 
@@ -423,6 +441,28 @@ class ChecklistVoucherAdmin extends Manager {
 		}
 	}
 
+<<<<<<< HEAD
+	//Checklist Coordinate functions
+	public function addExternalVouchers($tid, $dataAsJson){
+		// EG suggested storing external (e.g., iNaturalist) voucher records in the `fmchklstcoordinates` table as this table
+		//   was un- or under-used as of schema 3.0. The `notes` column serves as a flag for these vouchers. --CDT 2023-08-21
+		$status = false;
+		$inputData = json_decode($dataAsJson, true);
+		// for single vouchers, add ll, for multiple use zero :(.
+		// we could try averaging ll for multiples, but then the software would be introducing non-real data, which is bad.
+		// not that zero/zero is real data either... CDT 8/2023
+		$lat = (count($inputData) == 1 ? $inputData[0]['lat'] : 0);
+		$lng = (count($inputData) == 1 ? $inputData[0]['lng'] : 0);
+		$sourceIdentifier = $inputData[0]['id'];
+		$referenceUrl = null;
+		if($sourceIdentifier) $referenceUrl = 'https://www.inaturalist.org/observations/'.$sourceIdentifier;
+		if(is_numeric($tid) && $lat && $lng){
+			unset($inputData[0]['lat']);
+			unset($inputData[0]['lng']);
+			unset($inputData[0]['taxon']);
+			$inputArr = array('tid' => $tid, 'decimalLatitude' => $lat, 'decimalLongitude' => $lng, 'sourceName' => 'EXTERNAL_VOUCHER',
+				'sourceIdentifier' => $sourceIdentifier, 'referenceUrl' => $referenceUrl, 'dynamicProperties' => json_encode($inputData));
+=======
 	/* Checklist Coordinate functions
 	*  @param Int $tid Internal taxonomic id
 	*  @param Array $vouchers Json structure expected [ { lat, lng, id, user, date, repository }... ]
@@ -489,6 +529,7 @@ class ChecklistVoucherAdmin extends Manager {
 		if(is_numeric($tid) && $lat && $lng){
 			$inputArr = array('tid' => $tid, 'decimalLatitude' => $lat, 'decimalLongitude' => $lng, 'sourceName' => 'EXTERNAL_VOUCHER',
 				'sourceIdentifier' => $sourceIdentifier, 'referenceUrl' => $referenceUrl, 'dynamicProperties' => json_encode($dataAsJson));
+>>>>>>> origin
 			$inventoryManager = new ImInventories();
 			$inventoryManager->setClid($this->clid);
 			if($inventoryManager->insertChecklistCoordinates($inputArr)){
@@ -499,7 +540,11 @@ class ChecklistVoucherAdmin extends Manager {
 				if(strpos($errStr, 'Duplicate') !== false) $errStr = 'Voucher already linked!';
 				$this->errorMessage = $errStr;
 			}
+<<<<<<< HEAD
+		}
+=======
 		}*/
+>>>>>>> origin
 		return $status;
 	}
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com)
+<<<<<<< HEAD
+and this project adheres to [Semantic Versioning](https://semver.org).
+
+## 2025-02-07 - 3.9.1
+
+### Fixed
+
+- Xls writer Parser Mishandling True/False Argument. Backport of [PR #4333](https://github.com/PHPOffice/PhpSpreadsheet/pull/4333)
+- Xls writer Parser Parse By Character Not Byte. Backport of [PR #4344](https://github.com/PHPOffice/PhpSpreadsheet/pull/4344)
+
+=======
 and this project adheres to [Semantic Versioning](https://semver.org). This is always true of the master branch. Some earlier branches, including the branch from which you are reading this file, remain supported and security fixes are applied to them; if the security fix represents a breaking change, it may have to be applied as a minor or patch version.
 
 ## 2025-11-24 - 3.10.2
@@ -62,6 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org). This is a
 - Xls writer Parser Mishandling True/False Argument. Backport of [PR #4333](https://github.com/PHPOffice/PhpSpreadsheet/pull/4333)
 - Xls writer Parser Parse By Character Not Byte. Backport of [PR #4344](https://github.com/PHPOffice/PhpSpreadsheet/pull/4344)
 
+>>>>>>> origin
 ## 2025-01-26 - 3.9.0
 
 ### Added

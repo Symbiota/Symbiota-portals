@@ -46,6 +46,8 @@ abstract class BaseReader implements IReader
      *        Currently implemented only for Xlsx.
      */
     protected bool $ignoreRowsWithNoCells = false;
+<<<<<<< HEAD
+=======
 
     /**
      * Allow external images. Use with caution.
@@ -59,6 +61,7 @@ abstract class BaseReader implements IReader
      * possibly due to a typo when using LoadSheetsOnly.
      */
     protected bool $createBlankSheetIfNoneRead = false;
+>>>>>>> origin
 
     /**
      * IReadFilter instance.
@@ -158,6 +161,59 @@ abstract class BaseReader implements IReader
         $this->readFilter = $readFilter;
 
         return $this;
+    }
+
+    public function getSecurityScanner(): ?XmlScanner
+    {
+        return $this->securityScanner;
+    }
+
+    public function getSecurityScannerOrThrow(): XmlScanner
+    {
+        if ($this->securityScanner === null) {
+            throw new ReaderException('Security scanner is unexpectedly null');
+        }
+
+        return $this->securityScanner;
+    }
+
+    protected function processFlags(int $flags): void
+    {
+        if (((bool) ($flags & self::LOAD_WITH_CHARTS)) === true) {
+            $this->setIncludeCharts(true);
+        }
+        if (((bool) ($flags & self::READ_DATA_ONLY)) === true) {
+            $this->setReadDataOnly(true);
+        }
+        if (((bool) ($flags & self::IGNORE_EMPTY_CELLS)) === true) {
+            $this->setReadEmptyCells(false);
+        }
+        if (((bool) ($flags & self::IGNORE_ROWS_WITH_NO_CELLS)) === true) {
+            $this->setIgnoreRowsWithNoCells(true);
+        }
+    }
+
+    protected function loadSpreadsheetFromFile(string $filename): Spreadsheet
+    {
+        throw new PhpSpreadsheetException('Reader classes must implement their own loadSpreadsheetFromFile() method');
+    }
+
+    /**
+     * Loads Spreadsheet from file.
+     *
+     * @param int $flags the optional second parameter flags may be used to identify specific elements
+     *                       that should be loaded, but which won't be loaded by default, using these values:
+     *                            IReader::LOAD_WITH_CHARTS - Include any charts that are defined in the loaded file
+     */
+    public function load(string $filename, int $flags = 0): Spreadsheet
+    {
+        $this->processFlags($flags);
+
+        try {
+            return $this->loadSpreadsheetFromFile($filename);
+        } catch (ReaderException $e) {
+            throw $e;
+        }
     }
 
     /**

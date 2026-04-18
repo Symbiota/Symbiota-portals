@@ -148,7 +148,11 @@ class Paragraph extends AbstractStyle
     /**
      * Write tabs.
      *
+<<<<<<< HEAD
+     * @param \PhpOffice\PhpWord\Style\Tab[] $tabs
+=======
      * @param Style\Tab[] $tabs
+>>>>>>> origin
      */
     private function writeTabs(XMLWriter $xmlWriter, $tabs): void
     {

@@ -163,12 +163,20 @@ class Document extends AbstractPart
 
             foreach ($section->getHeaders() as $header) {
                 $type = $header->getType();
+<<<<<<< HEAD
+                if ($evenOdd || $type !== FOOTER::EVEN) {
+=======
                 if ($evenOdd || $type !== Footer::EVEN) {
+>>>>>>> origin
                     $content .= '{\\header';
                     if ($type === Footer::FIRST) {
                         $content .= 'f';
                     } elseif ($evenOdd) {
+<<<<<<< HEAD
+                        $content .= ($type === FOOTER::EVEN) ? 'l' : 'r';
+=======
                         $content .= ($type === Footer::EVEN) ? 'l' : 'r';
+>>>>>>> origin
                     }
                     foreach ($header->getElements() as $element) {
                         $cl = get_class($element);
@@ -183,12 +191,20 @@ class Document extends AbstractPart
             }
             foreach ($section->getFooters() as $footer) {
                 $type = $footer->getType();
+<<<<<<< HEAD
+                if ($evenOdd || $type !== FOOTER::EVEN) {
+=======
                 if ($evenOdd || $type !== Footer::EVEN) {
+>>>>>>> origin
                     $content .= '{\\footer';
                     if ($type === Footer::FIRST) {
                         $content .= 'f';
                     } elseif ($evenOdd) {
+<<<<<<< HEAD
+                        $content .= ($type === FOOTER::EVEN) ? 'l' : 'r';
+=======
                         $content .= ($type === Footer::EVEN) ? 'l' : 'r';
+>>>>>>> origin
                     }
                     foreach ($footer->getElements() as $element) {
                         $cl = get_class($element);

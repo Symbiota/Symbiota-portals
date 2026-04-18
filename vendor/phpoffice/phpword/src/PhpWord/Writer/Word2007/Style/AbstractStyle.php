@@ -31,7 +31,11 @@ abstract class AbstractStyle
     /**
      * XML writer.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Shared\XMLWriter
+=======
      * @var XMLWriter
+>>>>>>> origin
      */
     private $xmlWriter;
 
@@ -61,7 +65,11 @@ abstract class AbstractStyle
     /**
      * Get XML Writer.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Shared\XMLWriter
+=======
      * @return XMLWriter
+>>>>>>> origin
      */
     protected function getXmlWriter()
     {

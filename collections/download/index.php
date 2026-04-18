@@ -1,6 +1,20 @@
 <?php
 include_once('../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/DwcArchiverCore.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/collections/download/index.' . $LANG_TAG . '.php')) include_once($SERVER_ROOT.'/content/lang/collections/download/index.' . $LANG_TAG . '.php');
+else include_once($SERVER_ROOT . '/content/lang/collections/download/index.en.php');
+
+header("Content-Type: text/html; charset=".$CHARSET);
+
+$sourcePage = array_key_exists('sourcepage', $_REQUEST) ? $_REQUEST['sourcepage'] : 'specimen';
+$downloadType = array_key_exists('dltype', $_REQUEST) ? $_REQUEST['dltype'] : 'specimen';
+$taxonFilterCode = array_key_exists('taxonFilterCode', $_REQUEST) ? filter_var($_REQUEST['taxonFilterCode'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$displayHeader = array_key_exists('displayheader', $_REQUEST) ? filter_var($_REQUEST['displayheader'], FILTER_SANITIZE_NUMBER_INT) : 0;
+$searchVar = array_key_exists('searchvar', $_REQUEST) ? htmlspecialchars($_REQUEST['searchvar'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE| ENT_QUOTES) : '';
+
+$dwcManager = new DwcArchiverCore();
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/download/index');
@@ -20,6 +34,7 @@ $searchVar = array_key_exists('searchvar', $_REQUEST) ? htmlspecialchars($_REQUE
 
 $dwcManager = new DwcArchiverCore();
 $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIENT_ROOT . '/js/symb/' . $LANG_TAG . '.js' : $CLIENT_ROOT . '/js/symb/en.js';
+>>>>>>> origin
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
@@ -33,7 +48,10 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 	?>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+=======
 	<script src="<?php echo $filename ?>" type="text/javascript"></script>
+>>>>>>> origin
 	<script>
 		$(document).ready(function() {
 			var dialogArr = new Array("schemanative","schemadwc", "taxaresolution");
@@ -97,7 +115,10 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 				if(obj.form.attributes) obj.form.attributes.checked = false;
 				if(obj.form.materialsample) obj.form.materialsample.checked = false;
 				if(obj.form.identifiers) obj.form.identifiers.checked = false;
+<<<<<<< HEAD
+=======
 				if(obj.form.associations) obj.form.associations.checked = false;
+>>>>>>> origin
 			}
 		}
 
@@ -145,8 +166,12 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 			<?= $LANG['GUIDE_TWO'] ?>
 		</div>
 		<div style='margin:30px 15px;'>
+<<<<<<< HEAD
+			<form name="downloadform" action="downloadhandler.php" method="post" onsubmit="return validateDownloadForm(this);">
+=======
 			<form id="downloadform" name="downloadform" action="downloadhandler.php" method="post" onsubmit="return validateDownloadForm(this);">
 				<input type="hidden" name="downloadToken" id="downloadTokenInput" value="">
+>>>>>>> origin
 				<fieldset>
 					<legend>
 						<?php
@@ -176,6 +201,12 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 								</a><br/>
 								<div id="schemadwcinfodialog">
 									<?= $LANG['DARWIN_GUIDE'] ?>
+<<<<<<< HEAD
+									<a href="http://rs.tdwg.org/dwc/index.htm"target='_blank'> <?= $LANG['DARWIN_GUIDE_LINK'] ?></a>.
+								</div>
+							</div>
+						</fieldset>
+=======
 									<a href="http://rs.tdwg.org/dwc/index.htm" target='_blank'> <?= $LANG['DARWIN_GUIDE_LINK'] ?></a>.
 								</div>
 							</div>
@@ -194,6 +225,7 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 							</div>
 						</fieldset>
 
+>>>>>>> origin
 						<fieldset class="sectionDiv">
 							<legend>  <?= $LANG['DATA_EXTS'] ?>:</legend>
 							<div class="formElemDiv">
@@ -207,7 +239,10 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 								if($dwcManager->hasAttributes()) echo '<input type="checkbox" name="attributes" id="attributes" value="1" onchange="extensionSelected(this)" checked /> <label for="attributes">' . $LANG['INCLUDE_ATTR'] . '</label><br/>';
 								if($dwcManager->hasMaterialSamples()) echo '<input type="checkbox" name="materialsample" id="materialsample" value="1" onchange="extensionSelected(this)" checked /><label for="materialsample">' . $LANG['IMCLUDE_MAT'] . '</label><br/>';
 								if($dwcManager->hasIdentifiers()) echo '<input type="checkbox" name="identifiers" id="identifiers" value="1" onchange="extensionSelected(this)" checked /> <label for="identifiers">' . $LANG['INCLUDE_IDENT'] . '</label><br/>';
+<<<<<<< HEAD
+=======
 								if($dwcManager->hasAssociations()) echo '<input type="checkbox" name="associations" id="associations" value="1" onchange="extensionSelected(this)" checked /> <label for="associations">' . $LANG['INCLUDE_ASSOCIATIONS'] . '</label><br/>';
+>>>>>>> origin
 								?>
 								*<?= $LANG['DATA_EXT_NOTE'] ?>
 							</div>
@@ -248,6 +283,14 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 						if($downloadType == 'checklist') echo '<input name="schema" type="hidden" value="checklist" />';
 						elseif($downloadType == 'georef') echo '<input name="schema" type="hidden" value="georef" />';
 						?>
+<<<<<<< HEAD
+						<input name="publicsearch" type="hidden" value="1" />
+						<input name="taxonFilterCode" type="hidden" value="<?= $taxonFilterCode; ?>" />
+						<input name="sourcepage" type="hidden" value="<?= htmlspecialchars($sourcePage); ?>" />
+						<input name="searchvar" type="hidden" value="<?= $searchVar ?>" />
+						<button type="submit" name="submitaction"><?= $LANG['DOWNLOAD_DATA'] ?></button>
+						<img id="workingcircle" src="../../images/ajax-loader_sm.gif" style="margin-bottom:-4px;width:20px;display:none;" />
+=======
 						<input name="publicsearch" type="hidden" value="<?= $isPublicSearch ?>" />
 						<input name="taxonFilterCode" type="hidden" value="<?= $taxonFilterCode; ?>" />
 						<input name="sourcepage" type="hidden" value="<?= htmlspecialchars($sourcePage); ?>" />
@@ -257,6 +300,7 @@ $filename = file_exists($SERVER_ROOT . '/js/symb/' . $LANG_TAG . '.js') ? $CLIEN
 							<span id="spinner-span"></span>
 							<img id="workingcircle" src="../../images/ajax-loader_sm.gif" style="margin-bottom:-4px;width:20px;display:none;" />
 						</div>
+>>>>>>> origin
 					</div>
 					<div class="sectionDiv">
 						*  <?= $LANG['LIMIT_NOTE'] ?>

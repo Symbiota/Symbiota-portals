@@ -87,7 +87,11 @@ class Paragraph extends Border
     /**
      * Indentation.
      *
+<<<<<<< HEAD
+     * @var null|\PhpOffice\PhpWord\Style\Indentation
+=======
      * @var null|Indentation
+>>>>>>> origin
      */
     private $indentation;
 
@@ -323,7 +327,13 @@ class Paragraph extends Border
     }
 
     /**
+<<<<<<< HEAD
+     * Get indentation.
+     *
+     * @return null|\PhpOffice\PhpWord\Style\Indentation
+=======
      * Get hanging.
+>>>>>>> origin
      */
     public function getHanging(): ?float
     {
@@ -349,7 +359,15 @@ class Paragraph extends Border
     }
 
     /**
+<<<<<<< HEAD
+     * Set shading.
+     *
+     * @param mixed $value
+     *
+     * @return self
+=======
      * Get firstLine.
+>>>>>>> origin
      */
     public function getIndentFirstLine(): ?float
     {
@@ -417,7 +435,13 @@ class Paragraph extends Border
     }
 
     /**
+<<<<<<< HEAD
+     * Get indentation.
+     *
+     * @return int
+=======
      * Set hanging indentation.
+>>>>>>> origin
      */
     public function setIndentHanging(?float $value = null): self
     {
@@ -425,15 +449,33 @@ class Paragraph extends Border
     }
 
     /**
+<<<<<<< HEAD
+     * Set indentation.
+     *
+     * @param int $value
+     *
+     * @return self
+=======
      * Set firstline indentation.
+>>>>>>> origin
      */
     public function setIndentFirstLine(?float $value = null): self
     {
+<<<<<<< HEAD
+        return $this->setIndentation(['left' => $value]);
+    }
+
+    /**
+     * Get hanging.
+     *
+     * @return int
+=======
         return $this->setIndentation(['firstLine' => $value]);
     }
 
     /**
      * Set firstlineChars indentation.
+>>>>>>> origin
      */
     public function setIndentFirstLineChars(int $value = 0): self
     {
@@ -441,10 +483,28 @@ class Paragraph extends Border
     }
 
     /**
+<<<<<<< HEAD
+     * Set hanging.
+     *
+     * @param int $value
+     *
+     * @return self
+=======
      * Set left indentation.
+>>>>>>> origin
      */
     public function setIndentLeft(?float $value = null): self
     {
+<<<<<<< HEAD
+        return $this->setIndentation(['hanging' => $value]);
+    }
+
+    /**
+     * Get spacing.
+     *
+     * @return \PhpOffice\PhpWord\Style\Spacing
+     *
+=======
         return $this->setIndentation(['left' => $value]);
     }
 
@@ -461,6 +521,7 @@ class Paragraph extends Border
      *
      * @return Spacing
      *
+>>>>>>> origin
      * @todo Rename to getSpacing in 1.0
      */
     public function getSpace()
@@ -565,7 +626,11 @@ class Paragraph extends Border
      *
      * @param string $value Possible values are defined in LineSpacingRule
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Paragraph
+=======
      * @return Paragraph
+>>>>>>> origin
      */
     public function setSpacingLineRule($value)
     {
@@ -779,7 +844,11 @@ class Paragraph extends Border
     /**
      * Get shading.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Shading
+=======
      * @return Shading
+>>>>>>> origin
      */
     public function getShading()
     {

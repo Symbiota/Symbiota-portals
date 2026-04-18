@@ -121,6 +121,10 @@ class OccurrenceAccessStats extends Manager{
 		return $status;
 	}
 
+<<<<<<< HEAD
+	//Create summary reports and cache statistics
+
+=======
 	public function insertDownloadOccurrences($occurAccessID, $omExportID){
 		$status = false;
 		if(is_numeric($occurAccessID)){
@@ -141,6 +145,7 @@ class OccurrenceAccessStats extends Manager{
 
 	//Create summary reports and cache statistics
 
+>>>>>>> origin
 
 	//Reports
 	public function getSummaryReport(){

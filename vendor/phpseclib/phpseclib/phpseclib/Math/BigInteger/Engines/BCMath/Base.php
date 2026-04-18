@@ -91,7 +91,11 @@ abstract class Base extends BCMath
      */
     protected static function multiplyReduce($x, $y, $n, $class)
     {
+<<<<<<< HEAD
+        return static::reduce(bcmul($x, $y), $n);
+=======
         return static::reduce(bcmul($x, $y, 0), $n);
+>>>>>>> origin
     }
 
     /**
@@ -105,6 +109,10 @@ abstract class Base extends BCMath
      */
     protected static function squareReduce($x, $n, $class)
     {
+<<<<<<< HEAD
+        return static::reduce(bcmul($x, $x), $n);
+=======
         return static::reduce(bcmul($x, $x, 0), $n);
+>>>>>>> origin
     }
 }

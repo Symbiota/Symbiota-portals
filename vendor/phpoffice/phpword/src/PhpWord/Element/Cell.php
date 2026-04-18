@@ -40,7 +40,11 @@ class Cell extends AbstractContainer
     /**
      * Cell style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\Cell
+=======
      * @var ?CellStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -48,7 +52,11 @@ class Cell extends AbstractContainer
      * Create new instance.
      *
      * @param null|int $width
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Cell $style
+=======
      * @param array|CellStyle $style
+>>>>>>> origin
      */
     public function __construct($width = null, $style = null)
     {
@@ -59,7 +67,11 @@ class Cell extends AbstractContainer
     /**
      * Get cell style.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\Cell
+=======
      * @return ?CellStyle
+>>>>>>> origin
      */
     public function getStyle()
     {

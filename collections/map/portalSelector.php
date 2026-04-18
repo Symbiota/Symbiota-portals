@@ -1,8 +1,15 @@
 <?php
 include_once('../../config/symbini.php');
+<<<<<<< HEAD
+
+if ($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/collections/portalSelector.' . $LANG_TAG . '.php')) {
+   include_once($SERVER_ROOT . '/content/lang/collections/portalSelector.' . $LANG_TAG . '.php');
+}
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/portalSelector');
+>>>>>>> origin
 
 $conn = MySQLiConnectionFactory::getCon('readonly');
 

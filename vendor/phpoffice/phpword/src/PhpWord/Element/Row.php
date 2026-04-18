@@ -37,7 +37,11 @@ class Row extends AbstractElement
     /**
      * Row style.
      *
+<<<<<<< HEAD
+     * @var ?\PhpOffice\PhpWord\Style\Row
+=======
      * @var ?RowStyle
+>>>>>>> origin
      */
     private $style;
 
@@ -66,7 +70,11 @@ class Row extends AbstractElement
      * @param int $width
      * @param mixed $style
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Element\Cell
+=======
      * @return Cell
+>>>>>>> origin
      */
     public function addCell($width = null, $style = null)
     {
@@ -90,7 +98,11 @@ class Row extends AbstractElement
     /**
      * Get row style.
      *
+<<<<<<< HEAD
+     * @return ?\PhpOffice\PhpWord\Style\Row
+=======
      * @return ?RowStyle
+>>>>>>> origin
      */
     public function getStyle()
     {

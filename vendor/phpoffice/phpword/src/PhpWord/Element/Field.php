@@ -129,16 +129,26 @@ class Field extends AbstractElement
     /**
      * Font style.
      *
+<<<<<<< HEAD
+     * @var \PhpOffice\PhpWord\Style\Font|string
+=======
      * @var Font|string
+>>>>>>> origin
      */
     protected $fontStyle;
 
     /**
      * Set Font style.
      *
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Font|string $style
+     *
+     * @return \PhpOffice\PhpWord\Style\Font|string
+=======
      * @param array|Font|string $style
      *
      * @return Font|string
+>>>>>>> origin
      */
     public function setFontStyle($style = null)
     {
@@ -159,7 +169,11 @@ class Field extends AbstractElement
     /**
      * Get Font style.
      *
+<<<<<<< HEAD
+     * @return \PhpOffice\PhpWord\Style\Font|string
+=======
      * @return Font|string
+>>>>>>> origin
      */
     public function getFontStyle()
     {
@@ -173,7 +187,11 @@ class Field extends AbstractElement
      * @param array $properties
      * @param array $options
      * @param null|string|TextRun $text
+<<<<<<< HEAD
+     * @param array|\PhpOffice\PhpWord\Style\Font|string $fontStyle
+=======
      * @param array|Font|string $fontStyle
+>>>>>>> origin
      */
     public function __construct($type = null, $properties = [], $options = [], $text = null, $fontStyle = null)
     {

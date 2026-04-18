@@ -6,7 +6,10 @@ use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
 use PhpOffice\PhpSpreadsheet\Cell\AddressRange;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+<<<<<<< HEAD
+=======
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
+>>>>>>> origin
 use PhpOffice\PhpSpreadsheet\Style\Conditional;
 use PhpOffice\PhpSpreadsheet\Worksheet\AutoFilter;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
@@ -411,7 +414,11 @@ class ReferenceHelper
         }
         $highColumn = Coordinate::columnIndexFromString($highestDataColumn);
         for ($row = $startRow; $row <= $highestDataRow; ++$row) {
+<<<<<<< HEAD
+            for ($col = $startCol, $colString = $startColString; $col <= $highColumn; ++$col, ++$colString) {
+=======
             for ($col = $startCol, $colString = $startColString; $col <= $highColumn; ++$col, StringHelper::stringIncrement($colString)) {
+>>>>>>> origin
                 $worksheet->getCell("$colString$row"); // create cell if it doesn't exist
             }
         }
@@ -922,7 +929,11 @@ class ReferenceHelper
     {
         $cellAddress = $definedName->getValue();
         $asFormula = ($cellAddress[0] === '=');
+<<<<<<< HEAD
+        if ($definedName->getWorksheet() !== null && $definedName->getWorksheet()->getHashInt() === $worksheet->getHashInt()) {
+=======
         if ($definedName->getWorksheet() === $worksheet) {
+>>>>>>> origin
             /**
              * If we delete the entire range that is referenced by a Named Range, MS Excel sets the value to #REF!
              * PhpSpreadsheet still only does a basic adjustment, so the Named Range will still reference Cells.
@@ -941,7 +952,11 @@ class ReferenceHelper
 
     private function updateNamedFormula(DefinedName $definedName, Worksheet $worksheet, string $beforeCellAddress, int $numberOfColumns, int $numberOfRows): void
     {
+<<<<<<< HEAD
+        if ($definedName->getWorksheet() !== null && $definedName->getWorksheet()->getHashInt() === $worksheet->getHashInt()) {
+=======
         if ($definedName->getWorksheet() === $worksheet) {
+>>>>>>> origin
             /**
              * If we delete the entire range that is referenced by a Named Formula, MS Excel sets the value to #REF!
              * PhpSpreadsheet still only does a basic adjustment, so the Named Formula will still reference Cells.
@@ -1000,7 +1015,11 @@ class ReferenceHelper
         $endColumnId = Coordinate::stringFromColumnIndex($beforeColumn);
 
         for ($row = 1; $row <= $highestRow - 1; ++$row) {
+<<<<<<< HEAD
+            for ($column = $startColumnId; $column !== $endColumnId; ++$column) {
+=======
             for ($column = $startColumnId; $column !== $endColumnId; StringHelper::stringIncrement($column)) {
+>>>>>>> origin
                 $coordinate = $column . $row;
                 $this->clearStripCell($worksheet, $coordinate);
             }
@@ -1010,9 +1029,15 @@ class ReferenceHelper
     private function clearRowStrips(string $highestColumn, int $beforeColumn, int $beforeRow, int $numberOfRows, Worksheet $worksheet): void
     {
         $startColumnId = Coordinate::stringFromColumnIndex($beforeColumn);
+<<<<<<< HEAD
+        ++$highestColumn;
+
+        for ($column = $startColumnId; $column !== $highestColumn; ++$column) {
+=======
         StringHelper::stringIncrement($highestColumn);
 
         for ($column = $startColumnId; $column !== $highestColumn; StringHelper::stringIncrement($column)) {
+>>>>>>> origin
             for ($row = $beforeRow + $numberOfRows; $row <= $beforeRow - 1; ++$row) {
                 $coordinate = $column . $row;
                 $this->clearStripCell($worksheet, $coordinate);
@@ -1091,10 +1116,14 @@ class ReferenceHelper
         $toColRef = $rangeEnd + $numberOfColumns;
 
         do {
+<<<<<<< HEAD
+            $autoFilter->shiftColumn(Coordinate::stringFromColumnIndex($endColRef), Coordinate::stringFromColumnIndex($toColRef));
+=======
             $autoFilter->shiftColumn(
                 Coordinate::stringFromColumnIndex($endColRef),
                 Coordinate::stringFromColumnIndex($toColRef)
             );
+>>>>>>> origin
             --$endColRef;
             --$toColRef;
         } while ($startColRef <= $endColRef);
@@ -1109,8 +1138,13 @@ class ReferenceHelper
 
         do {
             $autoFilter->shiftColumn($startColID, $toColID);
+<<<<<<< HEAD
+            ++$startColID;
+            ++$toColID;
+=======
             StringHelper::stringIncrement($startColID);
             StringHelper::stringIncrement($toColID);
+>>>>>>> origin
         } while ($startColID !== $endColID);
     }
 
@@ -1173,10 +1207,14 @@ class ReferenceHelper
         $toColRef = $rangeEnd + $numberOfColumns;
 
         do {
+<<<<<<< HEAD
+            $table->shiftColumn(Coordinate::stringFromColumnIndex($endColRef), Coordinate::stringFromColumnIndex($toColRef));
+=======
             $table->shiftColumn(
                 Coordinate::stringFromColumnIndex($endColRef),
                 Coordinate::stringFromColumnIndex($toColRef)
             );
+>>>>>>> origin
             --$endColRef;
             --$toColRef;
         } while ($startColRef <= $endColRef);
@@ -1191,8 +1229,13 @@ class ReferenceHelper
 
         do {
             $table->shiftColumn($startColID, $toColID);
+<<<<<<< HEAD
+            ++$startColID;
+            ++$toColID;
+=======
             StringHelper::stringIncrement($startColID);
             StringHelper::stringIncrement($toColID);
+>>>>>>> origin
         } while ($startColID !== $endColID);
     }
 

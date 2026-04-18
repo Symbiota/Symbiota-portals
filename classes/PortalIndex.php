@@ -30,6 +30,23 @@ class PortalIndex extends OmCollections{
 	public function getPortalIndexArr($portalIdentifier){
 		if(!isset($GLOBALS['ACTIVATE_PORTAL_INDEX'])) return false;
 		$retArr = array();
+<<<<<<< HEAD
+		$sql = 'SELECT portalID, portalName, acronym, portalDescription, urlRoot, securityKey, symbiotaVersion,
+			guid, manager, managerEmail, primaryLead, primaryLeadEmail, notes, initialTimestamp
+			FROM portalindex ';
+		if($portalIdentifier){
+			if(is_numeric($portalIdentifier)) $sql .= 'WHERE portalID = '.$portalIdentifier;
+			else $sql .= 'WHERE guid = "'.$portalIdentifier.'" ';
+		}
+		else $sql .= 'ORDER BY portalName';
+		$rs = $this->conn->query($sql);
+		while($r = $rs->fetch_assoc()){
+			$retArr[$r['portalID']] = $r;
+		}
+		$rs->free();
+
+		if($retArr){
+=======
 		$sql = 'SELECT portalID, portalName, acronym, portalDescription, urlRoot, securityKey, symbiotaVersion, apiVersion,
 			guid, manager, managerEmail, primaryLead, primaryLeadEmail, notes, initialTimestamp
 			FROM portalindex ';
@@ -55,6 +72,7 @@ class PortalIndex extends OmCollections{
 
 		if($retArr){
 			//Add counts to output array
+>>>>>>> origin
 			$sql = 'SELECT p.portalID, count(o.occid) as cnt
 				FROM portaloccurrences o INNER JOIN portalpublications p ON o.pubid = p.pubid
 				WHERE p.portalID IN('.implode(',',array_keys($retArr)).') GROUP BY p.portalID';
@@ -67,6 +85,8 @@ class PortalIndex extends OmCollections{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+=======
 	public function updateInstallation($portalID, $remotePath){
 		$status = false;
 		$remoteArr = $this->getAPIResponse($remotePath . '/api/v2/installation/status');
@@ -111,11 +131,16 @@ class PortalIndex extends OmCollections{
 		return $status;
 	}
 
+>>>>>>> origin
 	public function getCollectionList($urlRoot, $collID=''){
 		if(!isset($GLOBALS['ACTIVATE_PORTAL_INDEX'])) return false;
 		$retArr = array();
 		$url = $urlRoot.'/api/v2/collection/'.$collID;
+<<<<<<< HEAD
+		if($retArr = $this->getAPIResponce($url)){
+=======
 		if($retArr = $this->getAPIResponse($url)){
+>>>>>>> origin
 			if(!$collID){
 				$retArr = $retArr['results'];
 				foreach($retArr as $id => $collArr){
@@ -159,11 +184,19 @@ class PortalIndex extends OmCollections{
 		$retArr = array();
 		//Get collection identifier
 		$url = $urlRoot.'/api/v2/occurrence/'.$id;
+<<<<<<< HEAD
+		$occurArr = $this->getAPIResponce($url);
+		//Get collection metadata
+		if(isset($occurArr['collID'])){
+			$url = $urlRoot.'/api/v2/collection/'.$occurArr['collID'];
+			$retArr = $this->getAPIResponce($url);
+=======
 		$occurArr = $this->getAPIResponse($url);
 		//Get collection metadata
 		if(isset($occurArr['collID'])){
 			$url = $urlRoot.'/api/v2/collection/'.$occurArr['collID'];
 			$retArr = $this->getAPIResponse($url);
+>>>>>>> origin
 			if(!$retArr) return false;
 		}
 		return $retArr;
@@ -200,6 +233,20 @@ class PortalIndex extends OmCollections{
 		if($remotePath){
 			if(substr($remotePath,-9) == 'index.php') $remotePath = substr($remotePath, 0, strlen($remotePath)-9);
 			if(substr($remotePath,-1) != '/') $remotePath .= '/';
+<<<<<<< HEAD
+			//https://midwestherbaria.org/portal/api/v2/installation/518a57c3-98ce-4977-bb1c-e9eb39d45732/touch?endpoint=https://panamabiota.org/stri
+			//Handshake from remote to local
+			//$self = $this->getSelfDetails();
+			//$handShakeUrl = $remotePath.'api/v2/installation/'.$self['guid'].'/touch?endpoint='.$self['urlRoot'];
+			//Handshake from local to remote
+			$pingUrl = $remotePath.'api/v2/installation/ping';
+			$remoteArr = $this->getAPIResponce($pingUrl);
+			if($remoteArr){
+				if($remoteArr['guid']){
+					$handShakeUrl = GeneralUtil::getDomain().$GLOBALS['CLIENT_ROOT'].'/api/v2/installation/'.$remoteArr['guid'].'/touch?endpoint='.$remoteArr['urlRoot'];
+					//echo '<div>Handshake URL: '.$handShakeUrl.'</div>';
+					$respArr = $this->getAPIResponce($handShakeUrl);
+=======
 			//Handshake from remote to local
 			//$self = $this->getSelfDetails();
 			//$handShakeUrl = $remotePath.'api/v2/installation/'.$self['guid'].'/handshake?endpoint='.$self['urlRoot'];
@@ -214,6 +261,7 @@ class PortalIndex extends OmCollections{
 				if($remoteArr['guid']){
 					$handShakeUrl = GeneralUtil::getDomain().$GLOBALS['CLIENT_ROOT'].'/api/v2/installation/'.$remoteArr['guid'].'/handshake?endpoint='.$remoteArr['urlRoot'];
 					$respArr = $this->getAPIResponse($handShakeUrl);
+>>>>>>> origin
 				}
 				else{
 					$this->errorMessage = 'Portal GUID not set within target portal: '.$remoteArr['urlRoot'];
@@ -230,7 +278,11 @@ class PortalIndex extends OmCollections{
 		if(!isset($GLOBALS['ACTIVATE_PORTAL_INDEX'])) return false;
 		$portal = $this->getPortalIndexArr($portalID);
 		$url = $portal[$portalID]['urlRoot'].'/api/v2/collection/'.$remoteID;
+<<<<<<< HEAD
+		$collArr = $this->getAPIResponce($url);
+=======
 		$collArr = $this->getAPIResponse($url);
+>>>>>>> origin
 		$targetCollid = $collArr['collID'];
 		if(!$collArr['collectionID']){
 			if(isset($collArr['recordID'])) $collArr['collectionID'] = $collArr['recordID'];
@@ -272,7 +324,11 @@ class PortalIndex extends OmCollections{
 		return $collid;
 	}
 
+<<<<<<< HEAD
+	private function getAPIResponce($url, $asyc = false){
+=======
 	private function getAPIResponse($url, $asyc = false){
+>>>>>>> origin
 		$status = false;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -283,11 +339,16 @@ class PortalIndex extends OmCollections{
 		if($asyc) curl_setopt($ch, CURLOPT_TIMEOUT_MS, 500);
 		$resJson = curl_exec($ch);
 		$this->returnHeader = curl_getinfo($ch);
+<<<<<<< HEAD
+		if($this->returnHeader['http_code'] == '200') $status = true;
+		elseif($this->returnHeader['http_code'] == '404') $this->errorMessage = '404 ULR Not Found';
+=======
 		if($this->returnHeader['http_code'] == '200'){
 			$status = true;
 			$this->errorMessage = '';
 		}
 		elseif($this->returnHeader['http_code'] == '404') $this->errorMessage = '404 URL Not Found';
+>>>>>>> origin
 		else $this->errorMessage = 'http code '.$this->returnHeader['http_code'];
 		curl_close($ch);
 		if($status) return json_decode($resJson, true);

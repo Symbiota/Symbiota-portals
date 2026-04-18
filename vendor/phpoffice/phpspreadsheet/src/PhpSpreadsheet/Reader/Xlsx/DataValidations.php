@@ -26,7 +26,11 @@ class DataValidations
             $range = strtoupper((string) $dataValidation['sqref']);
             $rangeSet = explode(' ', $range);
             foreach ($rangeSet as $range) {
+<<<<<<< HEAD
+                if (preg_match('/^[A-Z]{1,3}\\d{1,7}/', $range, $matches) === 1) {
+=======
                 if (preg_match('/^[A-Z]{1,3}\d{1,7}/', $range, $matches) === 1) {
+>>>>>>> origin
                     // Ensure left/top row of range exists, thereby
                     // adjusting high row/column.
                     $this->worksheet->getCell($matches[0]);

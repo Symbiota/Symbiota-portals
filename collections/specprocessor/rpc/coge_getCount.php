@@ -21,13 +21,21 @@ if($collid && is_numeric($collid)){
 		$dwcaHandler = new DwcArchiverCore();
 		$dwcaHandler->setCollArr($collid);
 		$dwcaHandler->setVerboseMode(0);
+<<<<<<< HEAD
+		$dwcaHandler->setOverrideConditionLimit(true);
+=======
+>>>>>>> origin
 		$dwcaHandler->addCondition('catalognumber','NOT_NULL');
 		$dwcaHandler->addCondition('locality','NOT_NULL');
 		if($processingStatus) $dwcaHandler->addCondition('processingstatus','EQUALS',$processingStatus);
 		if($customField1) $dwcaHandler->addCondition($customField1,$_REQUEST['ct1'],$_REQUEST['cv1']);
 		if($customField2) $dwcaHandler->addCondition($customField2,$_REQUEST['ct2'],$_REQUEST['cv2']);
 		if($customField3) $dwcaHandler->addCondition($customField3,$_REQUEST['ct3'],$_REQUEST['cv3']);
+<<<<<<< HEAD
+		$cntStr = $dwcaHandler->getOccurrenceCnt();
+=======
 		$cntStr = $dwcaHandler->getOccurrenceCount();
+>>>>>>> origin
 	}
 }
 echo json_encode($cntStr)

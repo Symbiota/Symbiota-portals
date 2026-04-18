@@ -1,11 +1,18 @@
 <?php
 include_once('../../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLoans.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultinvoice.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultinvoice.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/loans/reports/defaultinvoice.en.php');
+require_once $SERVER_ROOT.'/vendor/phpoffice/phpword/bootstrap.php';
+
+=======
 require_once $SERVER_ROOT.'/vendor/autoload.php';
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/loans/reports/defaultinvoice');
 
+>>>>>>> origin
 $collId = array_key_exists('collid', $_REQUEST) ? filter_var($_REQUEST['collid'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $identifier = array_key_exists('identifier',$_REQUEST) ? filter_var($_REQUEST['identifier'], FILTER_SANITIZE_NUMBER_INT) : 0;
 $loanType = array_key_exists('loantype',$_REQUEST) ? $_REQUEST['loantype'] : '';
@@ -445,6 +452,9 @@ else{
 									</tr>
 								<?php } ?>
 								<tr>
+<<<<<<< HEAD
+									<td><?php echo $addressArr['city'].($addressArr['stateprovince']?', ':'').$addressArr['stateprovince'].' '.$addressArr['postalcode'].' '.$addressArr['country']; ?></td>
+=======
 									<td>
 										<?php 
 										if (isset($addressArr['city'])) echo $addressArr['city'];
@@ -453,6 +463,7 @@ else{
 										if (isset($addressArr['country'])) echo ' '.$addressArr['country'];
 										?>
 									</td>
+>>>>>>> origin
 								</tr>
 								<tr>
 									<td><?php if(isset($addressArr['phone'])) echo $addressArr['phone']; ?></td>
@@ -473,9 +484,14 @@ else{
 									<td>
 										<div class="toaddress">
 											<?php
+<<<<<<< HEAD
+											echo $invoiceArr['contact'].'<br />';
+											echo $invoiceArr['institutionname'].' ('.$invoiceArr['institutioncode'].')<br />';
+=======
 											echo $invoiceArr['contact'] . '<br />';
 											$institutionCodeStr = !empty($invoiceArr['institutioncode']) ? ' ('.$invoiceArr['institutioncode'] . ')' : '';
 											echo $invoiceArr['institutionname'] . $institutionCodeStr . '<br />';
+>>>>>>> origin
 											if($invoiceArr['institutionname2']) echo $invoiceArr['institutionname2'].'<br />';
 											if($invoiceArr['address1']) echo $invoiceArr['address1'].'<br />';
 											if($invoiceArr['address2']) echo $invoiceArr['address2'].'<br />';

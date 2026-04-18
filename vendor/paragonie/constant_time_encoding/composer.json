@@ -40,10 +40,15 @@
     "php": "^8"
   },
   "require-dev": {
+<<<<<<< HEAD
+    "phpunit/phpunit": "^9",
+    "vimeo/psalm": "^4|^5"
+=======
     "infection/infection": "^0",
     "nikic/php-fuzzer": "^0",
     "phpunit/phpunit": "^9|^10|^11",
     "vimeo/psalm": "^4|^5|^6"
+>>>>>>> origin
   },
   "autoload": {
     "psr-4": {
@@ -54,6 +59,8 @@
     "psr-4": {
       "ParagonIE\\ConstantTime\\Tests\\": "tests/"
     }
+<<<<<<< HEAD
+=======
   },
   "scripts": {
     "mutation-test": "infection"
@@ -63,5 +70,6 @@
     "allow-plugins": {
       "infection/extension-installer": true
     }
+>>>>>>> origin
   }
 }

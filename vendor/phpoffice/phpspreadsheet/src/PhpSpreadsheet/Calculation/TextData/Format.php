@@ -2,7 +2,10 @@
 
 namespace PhpOffice\PhpSpreadsheet\Calculation\TextData;
 
+<<<<<<< HEAD
+=======
 use Composer\Pcre\Preg;
+>>>>>>> origin
 use DateTimeInterface;
 use PhpOffice\PhpSpreadsheet\Calculation\ArrayEnabled;
 use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
@@ -134,11 +137,19 @@ class Format
 
         $format = (string) NumberFormat::convertSystemFormats($format);
 
+<<<<<<< HEAD
+        if (!is_numeric($value) && Date::isDateTimeFormatCode($format)) {
+            $value1 = DateTimeExcel\DateValue::fromString($value);
+            $value2 = DateTimeExcel\TimeValue::fromString($value);
+            /** @var float|int|string */
+            $value = (is_numeric($value1) && is_numeric($value2)) ? ($value1 + $value2) : (is_numeric($value1) ? $value2 : $value1);
+=======
         if (!is_numeric($value) && Date::isDateTimeFormatCode($format) && !Preg::isMatch('/^\s*\d+(\s+\d+)+\s*$/', $value)) {
             $value1 = DateTimeExcel\DateValue::fromString($value);
             $value2 = DateTimeExcel\TimeValue::fromString($value);
             /** @var float|int|string */
             $value = (is_numeric($value1) && is_numeric($value2)) ? ($value1 + $value2) : (is_numeric($value1) ? $value1 : (is_numeric($value2) ? $value2 : $value));
+>>>>>>> origin
         }
 
         return (string) NumberFormat::toFormattedString($value, $format);
@@ -294,7 +305,11 @@ class Format
         }
 
         if (!is_numeric($value)) {
+<<<<<<< HEAD
+            $decimalPositions = preg_match_all('/' . preg_quote($decimalSeparator, '/') . '/', $value, $matches, PREG_OFFSET_CAPTURE);
+=======
             $decimalPositions = Preg::matchAllWithOffsets('/' . preg_quote($decimalSeparator, '/') . '/', $value, $matches);
+>>>>>>> origin
             if ($decimalPositions > 1) {
                 return ExcelError::VALUE();
             }

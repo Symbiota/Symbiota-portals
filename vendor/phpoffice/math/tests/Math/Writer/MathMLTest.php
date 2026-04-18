@@ -80,6 +80,8 @@ class MathMLTest extends WriterTestCase
         $this->assertIsSchemaMathMLValid($output);
     }
 
+<<<<<<< HEAD
+=======
     public function testWriteSemantics(): void
     {
         $opTimes = new Element\Operator('&InvisibleTimes;');
@@ -109,6 +111,7 @@ class MathMLTest extends WriterTestCase
         $this->assertIsSchemaMathMLValid($output);
     }
 
+>>>>>>> origin
     public function testWriteNotImplemented(): void
     {
         $this->expectException(NotImplementedException::class);

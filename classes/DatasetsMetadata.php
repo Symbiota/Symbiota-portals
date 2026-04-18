@@ -1,14 +1,26 @@
+<<<<<<< HEAD
+<?php 
+=======
 <?php
+>>>>>>> origin
 
   include_once($SERVER_ROOT.'/classes/Manager.php');
 
  /**
  * Controler class for /neon/classes/DatasetsMetadata.php
+<<<<<<< HEAD
+ * 
+ */
+
+ class DatasetsMetadata extends Manager {
+   
+=======
  *
  */
 
  class DatasetsMetadata extends Manager {
 
+>>>>>>> origin
   public function __construct() {
     parent::__construct(null,'readonly');
     $this->verboseMode = 2;
@@ -25,14 +37,22 @@
   public function getNeonDomains(){
     $dataArr = array();
 
+<<<<<<< HEAD
+    $sql = 'SELECT d.name AS domainnumber, s.domainname, d.datasetid FROM omoccurdatasets AS d JOIN neon_field_sites AS s ON d.name = s.domainnumber GROUP BY domainnumber ORDER BY domainnumber;';
+=======
     $sql = 'SELECT IFNULL(d.name, d.datasetName) AS domainnumber, s.domainname, d.datasetid FROM omoccurdatasets AS d JOIN neon_field_sites AS s ON d.name = s.domainnumber GROUP BY domainnumber ORDER BY domainnumber;';
+>>>>>>> origin
 
     $result = $this->conn->query($sql);
 
     while ($row = $result->fetch_assoc()){
       $dataArr[] = $row;
     }
+<<<<<<< HEAD
+    $result->free(); 
+=======
     $result->free();
+>>>>>>> origin
     return $dataArr;
   }
 

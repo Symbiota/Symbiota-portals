@@ -144,6 +144,24 @@ class InstitutionManager extends Manager{
 
 	private function verifyInstitutionDeletion($iid){
 		$status = true;
+		if($this->verifyInstitutionDeletion($delIid)){
+			$sql = 'DELETE FROM institutions WHERE iid = ?';
+			if($stmt = $this->conn->prepare($sql)){
+				$stmt->bind_param('i', $delIid);
+				$stmt->execute();
+				if($stmt->affected_rows || !$stmt->error) $status = true;
+				else{
+					$status = false;
+					$this->errorMessage = $stmt->error;
+				}
+				$stmt->close();
+			}
+		}
+		return $status;
+	}
+
+	private function verifyInstitutionDeletion($iid){
+		$status = true;
 		//Check to see if record is linked to collections
 		$sql = 'SELECT CONCAT_WS(" ", collectionName, CONCAT_WS(":", institutionCode, collectionCode)) AS name
 			FROM omcollections

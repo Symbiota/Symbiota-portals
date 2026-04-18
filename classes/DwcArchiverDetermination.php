@@ -1,6 +1,11 @@
 <?php
 include_once($SERVER_ROOT . '/classes/DwcArchiverBaseManager.php');
 
+<<<<<<< HEAD
+	public static function getDeterminationArr($schemaType,$extended){
+		$fieldArr = array();
+		$fieldArr['coreid'] = 'o.occid';
+=======
 class DwcArchiverDetermination extends DwcArchiverBaseManager{
 
 	private $extended = false;
@@ -24,6 +29,7 @@ class DwcArchiverDetermination extends DwcArchiverBaseManager{
 		$fieldArr = array();
 		$termArr = array();
 		$fieldArr['coreid'] = 'x.occid';
+>>>>>>> origin
 		$termArr['identifiedBy'] = 'http://rs.tdwg.org/dwc/terms/identifiedBy';
 		$fieldArr['identifiedBy'] = 'd.identifiedBy';
 		//$termArr['identifiedByID'] = 'https://symbiota.org/terms/identifiedByID';
@@ -56,6 +62,11 @@ class DwcArchiverDetermination extends DwcArchiverBaseManager{
 		$fieldArr['recordID'] = 'd.recordID AS recordID';
 		$termArr['modified'] = 'http://purl.org/dc/terms/modified';
 		$fieldArr['modified'] = 'd.initialTimeStamp AS modified';
+<<<<<<< HEAD
+		$termArr['detID'] = 'https://symbiota.org/terms/detID';
+		$fieldArr['detID'] = 'd.detID';
+=======
+>>>>>>> origin
 
 		$this->fieldArr['terms'] = $this->trimBySchemaType($termArr);
 		$this->fieldArr['fields'] =  $this->trimBySchemaType($fieldArr);
@@ -63,11 +74,19 @@ class DwcArchiverDetermination extends DwcArchiverBaseManager{
 
 	private function trimBySchemaType($dataArr){
 		$trimArr = array();
+<<<<<<< HEAD
+		if($schemaType == 'dwc'){
+			$trimArr = array('identifiedByID', 'tidInterpreted', 'identificationIsCurrent');
+		}
+		elseif($schemaType == 'symbiota'){
+			if(!$extended){
+=======
 		if($this->schemaType == 'dwc'){
 			$trimArr = array('identifiedByID', 'tidInterpreted', 'identificationIsCurrent');
 		}
 		elseif($this->schemaType == 'symbiota'){
 			if(!$this->extended){
+>>>>>>> origin
 				$trimArr = array('identifiedByID', 'tidInterpreted');
 			}
 		}
@@ -77,6 +96,22 @@ class DwcArchiverDetermination extends DwcArchiverBaseManager{
 		return array_diff_key($dataArr, array_flip($trimArr));
 	}
 
+<<<<<<< HEAD
+	public static function getSql($fieldArr, $tableJoins, $conditionSql){
+		$sql = '';
+		if($fieldArr && $conditionSql){
+			$sql = 'SELECT ';
+			$delimiter = '';
+			foreach($fieldArr as $fieldSql){
+				if($fieldSql) $sql .= $delimiter.$fieldSql;
+				$delimiter = ', ';
+			}
+			$sql .= ' FROM omoccurdeterminations d INNER JOIN omoccurrences o ON d.occid = o.occid LEFT JOIN taxa t ON d.tidinterpreted = t.tid ';
+			$sql .= $tableJoins;
+			$sql .= $conditionSql.' AND d.appliedstatus = 1 ';
+			$sql .= 'ORDER BY o.collid';
+			//echo '<div>'.$sql.'</div>'; exit;
+=======
 	private function setSql(){
 		if($this->fieldArr){
 			$sqlFrag = '';
@@ -86,6 +121,7 @@ class DwcArchiverDetermination extends DwcArchiverBaseManager{
 			$this->sqlArr[] = 'SELECT ' . trim($sqlFrag, ', ') . ' FROM omoccurdeterminations d INNER JOIN omexportoccurrences x ON d.occid = x.occid
 				LEFT JOIN taxa t ON d.tidinterpreted = t.tid
 				WHERE x.omExportID = ? AND d.appliedstatus = 1 ';
+>>>>>>> origin
 		}
 	}
 

@@ -74,13 +74,22 @@ class Paragraph extends AbstractStyle
             } elseif (substr($styleName, 0, 2) === 'HD') {
                 $styleAuto = true;
                 $psm = 'Heading_' . substr($styleName, 2);
+<<<<<<< HEAD
+                $stylep = \PhpOffice\PhpWord\Style::getStyle($psm);
+                if ($stylep instanceof \PhpOffice\PhpWord\Style\Font) {
+=======
                 $stylep = Style::getStyle($psm);
                 if ($stylep instanceof Style\Font) {
+>>>>>>> origin
                     if (method_exists($stylep, 'getParagraph')) {
                         $stylep = $stylep->getParagraph();
                     }
                 }
+<<<<<<< HEAD
+                if ($stylep instanceof \PhpOffice\PhpWord\Style\Paragraph) {
+=======
                 if ($stylep instanceof Style\Paragraph) {
+>>>>>>> origin
                     if ($stylep->hasPageBreakBefore()) {
                         $breakbefore = true;
                     }

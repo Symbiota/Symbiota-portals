@@ -52,7 +52,11 @@ class Container extends AbstractElement
             return;
         }
         $containerClass = substr(get_class($container), strrpos(get_class($container), '\\') + 1);
+<<<<<<< HEAD
+        $withoutP = in_array($containerClass, ['TextRun', 'Footnote', 'Endnote', 'ListItemRun']);
+=======
         $withoutP = in_array($containerClass, $this->containerWithoutP);
+>>>>>>> origin
         $xmlWriter = $this->getXmlWriter();
 
         // Loop through elements
@@ -76,6 +80,13 @@ class Container extends AbstractElement
 
     /**
      * Write individual element.
+<<<<<<< HEAD
+     *
+     * @param bool $withoutP
+     *
+     * @return string
+=======
+>>>>>>> origin
      */
     private function writeElement(XMLWriter $xmlWriter, Element $element, bool $withoutP): string
     {

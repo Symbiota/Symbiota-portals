@@ -117,6 +117,16 @@ class Html extends BaseWriter
      * Is the current writer creating PDF?
      */
     protected bool $isPdf = false;
+<<<<<<< HEAD
+
+    /**
+     * Is the current writer creating mPDF?
+     *
+     * @deprecated 2.0.1 use instanceof Mpdf instead
+     */
+    protected bool $isMPdf = false;
+=======
+>>>>>>> origin
 
     /**
      * Generate the Navigation block.
@@ -507,7 +517,11 @@ class Html extends BaseWriter
                             $rowData[$column] = ($sheet->getCellCollection()->has($cellAddress)) ? $cellAddress : '';
                         }
                         ++$column;
+<<<<<<< HEAD
+                        ++$colStr;
+=======
                         StringHelper::stringIncrement($colStr);
+>>>>>>> origin
                     }
                     $html .= $this->generateRow($sheet, $rowData, $row - 1, $cellType);
                 }
@@ -777,8 +791,13 @@ class Html extends BaseWriter
                     $totalHeight += ($height >= 0) ? $height : $defaultRowHeight;
                 }
                 $rightEdge = $brCoordinate[2];
+<<<<<<< HEAD
+                ++$rightEdge;
+                for ($column = $tlCoordinate[2]; $column !== $rightEdge; ++$column) {
+=======
                 StringHelper::stringIncrement($rightEdge);
                 for ($column = $tlCoordinate[2]; $column !== $rightEdge; StringHelper::stringIncrement($column)) {
+>>>>>>> origin
                     $width = $sheet->getColumnDimension($column)->getWidth();
                     $width = ($width < 0) ? self::DEFAULT_CELL_WIDTH_PIXELS : SharedDrawing::cellDimensionToPixels($sheet->getColumnDimension($column)->getWidth(), $this->defaultFont);
                     $totalWidth += $width;
@@ -873,7 +892,11 @@ class Html extends BaseWriter
             if ($this->shouldGenerateColumn($sheet, $colStr)) {
                 $css['table.sheet' . $sheetIndex . ' col.col' . $column]['width'] = self::DEFAULT_CELL_WIDTH_POINTS . 'pt';
             }
+<<<<<<< HEAD
+            ++$colStr;
+=======
             StringHelper::stringIncrement($colStr);
+>>>>>>> origin
         }
 
         // col elements, loop through columnDimensions and set width
@@ -1405,7 +1428,11 @@ class Html extends BaseWriter
 
             // Converts the cell content so that spaces occuring at beginning of each new line are replaced by &nbsp;
             // Example: "  Hello\n to the world" is converted to "&nbsp;&nbsp;Hello\n&nbsp;to the world"
+<<<<<<< HEAD
+            $cellData = Preg::replace('/(?m)(?:^|\\G) /', '&nbsp;', $cellData);
+=======
             $cellData = Preg::replace('/(?m)(?:^|\G) /', '&nbsp;', $cellData);
+>>>>>>> origin
 
             // convert newline "\n" to '<br>'
             $cellData = nl2br($cellData);
@@ -1593,8 +1620,13 @@ class Html extends BaseWriter
             if ($worksheet->hyperlinkExists($coordinate) && !$worksheet->getHyperlink($coordinate)->isInternal()) {
                 $url = $worksheet->getHyperlink($coordinate)->getUrl();
                 $urlDecode1 = html_entity_decode($url, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+<<<<<<< HEAD
+                $urlTrim = Preg::replace('/^\\s+/u', '', $urlDecode1);
+                $parseScheme = Preg::isMatch('/^([\\w\\s\\x00-\\x1f]+):/u', strtolower($urlTrim), $matches);
+=======
                 $urlTrim = Preg::replace('/^\s+/u', '', $urlDecode1);
                 $parseScheme = Preg::isMatch('/^([\w\s\x00-\x1f]+):/u', strtolower($urlTrim), $matches);
+>>>>>>> origin
                 if ($parseScheme && !in_array($matches[1], ['http', 'https', 'file', 'ftp', 'mailto', 's3'], true)) {
                     $cellData = htmlspecialchars($url, Settings::htmlEntityFlags());
                     $cellData = self::replaceControlChars($cellData);
@@ -1660,7 +1692,11 @@ class Html extends BaseWriter
     private static function replaceControlChars(string $convert): string
     {
         return (string) preg_replace_callback(
+<<<<<<< HEAD
+            '/[\\x00-\\x1f]/',
+=======
             '/[\x00-\x1f]/',
+>>>>>>> origin
             [self::class, 'replaceNonAscii'],
             $convert
         );
@@ -1763,7 +1799,11 @@ class Html extends BaseWriter
         $color = null; // initialize
         $matches = [];
 
+<<<<<<< HEAD
+        $color_regex = '/^\\[[a-zA-Z]+\\]/';
+=======
         $color_regex = '/^\[[a-zA-Z]+\]/';
+>>>>>>> origin
         if (Preg::isMatch($color_regex, $format, $matches)) {
             $color = str_replace(['[', ']'], '', $matches[0]);
             $color = strtolower($color);

@@ -698,7 +698,12 @@ class OccurrenceUtil {
 			if($tr == 'forma') $recMap["taxonrank"] = 'f.';
 		}
 
+<<<<<<< HEAD
+		//Populate sciname if null
+		if(array_key_exists('sciname',$recMap) && $recMap['sciname']){
+=======
 		if(!empty($recMap['sciname'])){
+>>>>>>> origin
 			if(substr($recMap['sciname'],-4) == ' sp.') $recMap['sciname'] = substr($recMap['sciname'],0,-4);
 			if(substr($recMap['sciname'],-3) == ' sp') $recMap['sciname'] = substr($recMap['sciname'],0,-3);
 
@@ -712,6 +717,19 @@ class OccurrenceUtil {
 			}
 		}
 		else{
+<<<<<<< HEAD
+			if(array_key_exists('genus',$recMap) && array_key_exists('specificepithet',$recMap)){
+				//Build sciname from individual units supplied by source
+				$sciName = trim($recMap['genus'].' '.$recMap['specificepithet']);
+				if(array_key_exists('infraspecificepithet',$recMap)){
+					if(array_key_exists('taxonrank',$recMap) && strtolower($recMap['taxonrank'])!== 'cultivar') $sciName .= ' '.$recMap['taxonrank'];
+					$sciName .= ' '.$recMap['infraspecificepithet'];
+				}
+				if(array_key_exists('cultivarepithet',$recMap) && !empty($recMap['cultivarepithet']) ){
+					$sciName .= " " . self::standardizeCultivarEpithet($recMap['cultivarepithet']);
+				}
+				if(array_key_exists('tradename',$recMap) && !empty($recMap['tradename'])){
+=======
 			//Populate sciname when null
 			if(!empty($recMap['genus']) && !empty($recMap['specificepithet'])){
 				//Build sciname from individual units supplied by source
@@ -724,10 +742,51 @@ class OccurrenceUtil {
 					$sciName .= ' ' . self::standardizeCultivarEpithet($recMap['cultivarepithet']);
 				}
 				if(!empty($recMap['tradename'])){
+>>>>>>> origin
 					$sciName .= ' ' . self::standardizeTradeName($recMap['tradename']);
 				}
 				$recMap['sciname'] = trim($sciName);
 			}
+<<<<<<< HEAD
+			elseif(array_key_exists('scientificname',$recMap)){
+				//Clean and parse scientific name
+				$parsedArr = TaxonomyUtil::parseScientificName($recMap['scientificname']);
+				$scinameStr = '';
+				if(array_key_exists('unitind1', $parsedArr)){
+					$scinameStr .= $parsedArr['unitind1'];
+					if($parsedArr['unitind1'] != '×' || $parsedArr['unitind1'] != '†') $scinameStr .= ' ';
+				}
+				if(array_key_exists('unitname1',$parsedArr)){
+					$scinameStr = $parsedArr['unitname1'].' ';
+					if(!array_key_exists('genus',$recMap) || $recMap['genus']){
+						$recMap['genus'] = $parsedArr['unitname1'];
+					}
+				}
+				if(array_key_exists('unitind2', $parsedArr)){
+					$scinameStr .= $parsedArr['unitind2'];
+					if($parsedArr['unitind2'] != '×') $scinameStr .= ' ';
+				}
+				if(array_key_exists('unitname2',$parsedArr)){
+					$scinameStr .= $parsedArr['unitname2'].' ';
+					if(!array_key_exists('specificepithet',$recMap) || !$recMap['specificepithet']){
+						$recMap['specificepithet'] = $parsedArr['unitname2'];
+					}
+				}
+				if(array_key_exists('unitind3',$parsedArr)){
+					$scinameStr .= $parsedArr['unitind3'].' ';
+					if((!array_key_exists('taxonrank',$recMap) || !$recMap['taxonrank'])){
+						$recMap['taxonrank'] = $parsedArr['unitind3'];
+					}
+				}
+				if(array_key_exists('unitname3',$parsedArr)){
+					$scinameStr .= $parsedArr['unitname3'];
+					if(!array_key_exists('infraspecificepithet',$recMap) || !$recMap['infraspecificepithet']){
+						$recMap['infraspecificepithet'] = $parsedArr['unitname3'];
+					}
+				}
+				if(array_key_exists('author',$parsedArr)){
+					if(!array_key_exists('scientificnameauthorship',$recMap) || !$recMap['scientificnameauthorship']){
+=======
 			elseif(!empty($recMap['scientificname'])){
 				//Clean and parse scientific name
 				$parsedArr = TaxonomyUtil::parseScientificName($recMap['scientificname']);
@@ -766,16 +825,24 @@ class OccurrenceUtil {
 				}
 				if(!empty($parsedArr['author'])){
 					if(empty($recMap['scientificnameauthorship'])){
+>>>>>>> origin
 						$recMap['scientificnameauthorship'] = $parsedArr['author'];
 					}
 				}
 				$recMap['sciname'] = trim($scinameStr);
 			}
 		}
+<<<<<<< HEAD
+		if(isset($recMap['authorinfraspecific']) && $recMap['authorinfraspecific']){
+			$recMap['scientificnameauthorship'] = $recMap['authorinfraspecific'];
+		}
+		elseif(isset($recMap['authorspecies']) && $recMap['authorspecies']){
+=======
 		if(!empty($recMap['authorinfraspecific'])){
 			$recMap['scientificnameauthorship'] = $recMap['authorinfraspecific'];
 		}
 		elseif(!empty($recMap['authorspecies'])){
+>>>>>>> origin
 			$recMap['scientificnameauthorship'] = $recMap['authorspecies'];
 		}
 		unset($recMap['authorinfraspecific']);

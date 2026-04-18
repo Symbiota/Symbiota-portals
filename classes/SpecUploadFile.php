@@ -1,9 +1,14 @@
 <?php
 include_once($SERVER_ROOT.'/classes/SpecUploadBase.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT . '/content/lang/classes/SpecUploadFile.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/classes/OccurrenceEditorDeterminations.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT . '/content/lang/classes/SpecUploadFile.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('classes/SpecUploadFile');
 
+>>>>>>> origin
 class SpecUploadFile extends SpecUploadBase{
 
 	private $ulFileName;
@@ -119,7 +124,10 @@ class SpecUploadFile extends SpecUploadBase{
 			$this->outputMsg('<li>Beginning to load records...</li>',1);
 			while($recordArr = $this->getRecordArr($fh)){
 				$recMap = Array();
+<<<<<<< HEAD
+=======
 				$recMapPaleo = Array();
+>>>>>>> origin
 				$hasCultivarEpithet = false;
 				$hasTradeName = false;
 				$isCultivar = false;
@@ -141,11 +149,14 @@ class SpecUploadFile extends SpecUploadBase{
 						if(strtolower($valueStr) == 'cultivar' && $sMap['field'] == 'taxonrank'){
 							$isCultivar = true;
 						}
+<<<<<<< HEAD
+=======
 						if($this->paleoSupport && strpos($symbField, 'paleo') === 0){
 							$cleanKey = substr($symbField, 6);
 							$recMapPaleo[$cleanKey] = $valueStr;
 							continue;
 						}
+>>>>>>> origin
 						//If value is enclosed by quotes, remove quotes
 						if(substr($valueStr,0,1) == '"' && substr($valueStr,-1) == '"'){
 							$valueStr = substr($valueStr,1,strlen($valueStr)-2);
@@ -162,8 +173,11 @@ class SpecUploadFile extends SpecUploadBase{
 					unset($recMap);
 					continue;
 				}
+<<<<<<< HEAD
+=======
 				if (!empty($recMapPaleo))
 					$recMap['paleo'] = $recMapPaleo;
+>>>>>>> origin
 				$this->loadRecord($recMap);
 				unset($recMap);
 			}

@@ -89,9 +89,15 @@ class Comments extends AbstractPart
 
     /**
      * Set element.
+<<<<<<< HEAD
+     *
+     * @param \PhpOffice\PhpWord\Element\Comment[] $elements
+     *
+=======
      *
      * @param Comment[] $elements
      *
+>>>>>>> origin
      * @return self
      */
     public function setElements($elements)

@@ -59,6 +59,8 @@ class Xlsx extends BaseReader
     private Styles $styleReader;
 
     private array $sharedFormulae = [];
+<<<<<<< HEAD
+=======
 
     private bool $parseHuge = false;
 
@@ -72,6 +74,7 @@ class Xlsx extends BaseReader
     {
         $this->parseHuge = $parseHuge;
     }
+>>>>>>> origin
 
     /**
      * Create a new Xlsx Reader instance.
@@ -134,8 +137,13 @@ class Xlsx extends BaseReader
         }
         $rels = @simplexml_load_string(
             $this->getSecurityScannerOrThrow()->scan($contents),
+<<<<<<< HEAD
+            'SimpleXMLElement',
+            0,
+=======
             SimpleXMLElement::class,
             $this->parseHuge ? LIBXML_PARSEHUGE : 0,
+>>>>>>> origin
             $ns
         );
 
@@ -149,8 +157,13 @@ class Xlsx extends BaseReader
         $contents = $this->getFromZipArchive($this->zip, $filename);
         $rels = simplexml_load_string(
             $this->getSecurityScannerOrThrow()->scan($contents),
+<<<<<<< HEAD
+            'SimpleXMLElement',
+            0,
+=======
             SimpleXMLElement::class,
             $this->parseHuge ? LIBXML_PARSEHUGE : 0,
+>>>>>>> origin
             ($ns === '' ? $ns : '')
         );
 
@@ -263,9 +276,13 @@ class Xlsx extends BaseReader
                                         $this->zip,
                                         $fileWorksheetPath
                                     )
+<<<<<<< HEAD
+                                )
+=======
                                 ),
                             null,
                             $this->parseHuge ? LIBXML_PARSEHUGE : 0
+>>>>>>> origin
                         );
                         $xml->setParserProperty(2, true);
 
@@ -762,7 +779,10 @@ class Xlsx extends BaseReader
 
                     $charts = $chartDetails = [];
 
+<<<<<<< HEAD
+=======
                     $sheetCreated = false;
+>>>>>>> origin
                     if ($xmlWorkbookNS->sheets) {
                         foreach ($xmlWorkbookNS->sheets->sheet as $eleSheet) {
                             $eleSheetAttr = self::getAttributes($eleSheet);
@@ -1248,7 +1268,11 @@ class Xlsx extends BaseReader
                                                 // Set comment properties
                                                 $comment = $docSheet->getComment([$column + 1, $row + 1]);
                                                 $comment->getFillColor()->setRGB($fillColor);
+<<<<<<< HEAD
+                                                if (isset($drowingImages[$fillImageRelId])) {
+=======
                                                 if (isset($fillImageRelId, $drowingImages[$fillImageRelId])) {
+>>>>>>> origin
                                                     $objDrawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
                                                     $objDrawing->setName($fillImageTitle);
                                                     $imagePath = str_replace(['../', '/xl/'], 'xl/', $drowingImages[$fillImageRelId]);
@@ -1483,7 +1507,11 @@ class Xlsx extends BaseReader
                                                         );
                                                         if (isset($images[$linkImageKey])) {
                                                             $url = str_replace('xl/drawings/', '', $images[$linkImageKey]);
+<<<<<<< HEAD
+                                                            $objDrawing->setPath($url, false);
+=======
                                                             $objDrawing->setPath($url, false, allowExternal: $this->allowExternalImages);
+>>>>>>> origin
                                                         }
                                                         if ($objDrawing->getPath() === '') {
                                                             continue;
@@ -1581,7 +1609,11 @@ class Xlsx extends BaseReader
                                                         );
                                                         if (isset($images[$linkImageKey])) {
                                                             $url = str_replace('xl/drawings/', '', $images[$linkImageKey]);
+<<<<<<< HEAD
+                                                            $objDrawing->setPath($url, false);
+=======
                                                             $objDrawing->setPath($url, false, allowExternal: $this->allowExternalImages);
+>>>>>>> origin
                                                         }
                                                         if ($objDrawing->getPath() === '') {
                                                             continue;
@@ -1852,9 +1884,14 @@ class Xlsx extends BaseReader
                             }
                         }
                     }
+<<<<<<< HEAD
+
+                    (new WorkbookView($excel))->viewSettings($xmlWorkbook, $mainNS, $mapSheetId, $this->readDataOnly);
+=======
                     if ($this->createBlankSheetIfNoneRead && !$sheetCreated) {
                         $excel->createSheet();
                     }
+>>>>>>> origin
 
                     (new WorkbookView($excel))->viewSettings($xmlWorkbook, $mainNS, $mapSheetId, $this->readDataOnly);
 
@@ -2025,9 +2062,13 @@ class Xlsx extends BaseReader
             // exists and not empty if the ribbon have some pictures (other than internal MSO)
             $UIRels = simplexml_load_string(
                 $this->getSecurityScannerOrThrow()
+<<<<<<< HEAD
+                    ->scan($dataRels)
+=======
                     ->scan($dataRels),
                 SimpleXMLElement::class,
                 $this->parseHuge ? LIBXML_PARSEHUGE : 0
+>>>>>>> origin
             );
             if (false !== $UIRels) {
                 // we need to save id and target to avoid parsing customUI.xml and "guess" if it's a pseudo callback who load the image
@@ -2418,9 +2459,15 @@ class Xlsx extends BaseReader
                         $lastCol = $firstCol;
                         $lastRow = $firstRow;
                     }
+<<<<<<< HEAD
+                    ++$lastCol;
+                    for ($row = $firstRow; $row <= $lastRow; ++$row) {
+                        for ($col = $firstCol; $col !== $lastCol; ++$col) {
+=======
                     StringHelper::stringIncrement($lastCol);
                     for ($row = $firstRow; $row <= $lastRow; ++$row) {
                         for ($col = $firstCol; $col !== $lastCol; StringHelper::stringIncrement($col)) {
+>>>>>>> origin
                             if ($numberStoredAsText === '1') {
                                 $sheet->getCell("$col$row")->getIgnoredErrors()->setNumberStoredAsText(true);
                             }

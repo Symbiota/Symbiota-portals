@@ -174,6 +174,37 @@ class RpcOccurrenceEditor extends RpcBase{
 	//Used by /collections/editor/rpc/getspeciessuggest.php,
 	public function getSpeciesSuggest($term){
 		$retArr = Array();
+<<<<<<< HEAD
+		$term = preg_replace('/[^a-zA-Z()\-. ]+/', '', $term);
+		$term = preg_replace('/\s{1}x{1}\s{0,1}$/i', ' _ ', $term);
+		$term = preg_replace('/\s{1}x{1}\s{1}/i', ' _ ', $term);
+
+		// Enable scientific name entry shortcuts: 2-3 letter codes separated by spaces, e.g. "pse men"
+		// Split the search string by spaces if there are any.
+		$str1 = ''; $str2 = ''; $str3 = '';
+		$strArr = explode(' ',$term);
+		$strCnt = count($strArr);
+		$str1 = $strArr[0];
+		if($strCnt > 1){
+			$str2 = $strArr[1];
+		}
+		if($strCnt > 2){
+			$str3 = $strArr[2];
+		}
+
+		$sql = 'SELECT DISTINCT tid, sciname FROM taxa WHERE unitname1 LIKE "' . $str1 . '%" ';
+		if($str2){
+			$sql .= 'AND unitname2 LIKE "'.$str2.'%" ';
+		}
+		if($str3){
+			$sql .= 'AND unitname3 LIKE "'.$str3.'%" ';
+		}
+		$sql .= 'ORDER BY sciname';
+
+		// If the search term has an infraspecific separator, use the old version of the SQL, otherwise, no matches will be returned
+		if(array_intersect($strArr, array("var.", "ssp.", "nothossp.", "f.", "×", "x", "†"))) $sql = 'SELECT DISTINCT tid, sciname FROM taxa WHERE sciname LIKE "'.$term.'%" ';
+
+=======
 		$fullterm = preg_replace('/[^a-zA-Z()\-. ]+/', '', $term);
 		$fullterm = preg_replace('/\s{1}x{1}\s{0,1}$/i', ' _ ', $fullterm);
 		$fullterm = preg_replace('/\s{1}x{1}\s{1}/i', ' _ ', $fullterm);
@@ -193,6 +224,7 @@ class RpcOccurrenceEditor extends RpcBase{
 
 		$sql .= 'ORDER BY sciname';
 
+>>>>>>> origin
 		$rs = $this->conn->query($sql);
 		while ($r = $rs->fetch_object()){
 			$retArr[] = array('id' => $r->tid, 'value' => $r->sciname);
@@ -228,7 +260,11 @@ class RpcOccurrenceEditor extends RpcBase{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+	//Used by /collections/editor/rpc/localitysecuritycheck.php
+=======
 	//Used by /collections/editor/rpc/securitycheck.php
+>>>>>>> origin
 	public function getStateSecuritySetting($tid, $state){
 		$retStr = 0;
 		if(is_numeric($tid) && $state){
@@ -289,6 +325,31 @@ class RpcOccurrenceEditor extends RpcBase{
 		return $retArr;
 	}
 
+<<<<<<< HEAD
+	//Used by /collections/editor/rpc/getPaleoGtsParents.php
+	public function getPaleoGtsParents($term){
+		$retArr = Array();
+		$sql = 'SELECT gtsid, gtsterm, rankid, rankname, parentgtsid FROM omoccurpaleogts WHERE rankid > 10 AND gtsterm = "'.$this->cleanInStr($term).'"';
+		$parentId = '';
+		do{
+			$rs = $this->conn->query($sql);
+			if($r = $rs->fetch_object()){
+				if($parentId == $r->parentgtsid){
+					$parentId = 0;
+				}
+				else{
+					$retArr[] = array("rankid" => $r->rankid, "value" => $r->gtsterm);
+					$parentId = $r->parentgtsid;
+				}
+			}
+			else $parentId = 0;
+			$rs->free();
+			$sql = 'SELECT gtsid, gtsterm, rankid, rankname, parentgtsid FROM omoccurpaleogts WHERE rankid > 10 AND gtsid = '.$parentId;
+		}while($parentId);
+		return $retArr;
+	}
+
+=======
 	//Paleo funcitons
 	//Used by /collections/editor/rpc/getPaleoGtsTable.php
 	//Returns a simple table representation of parent terms
@@ -485,6 +546,7 @@ class RpcOccurrenceEditor extends RpcBase{
 		return $tableStr;
 	}
 
+>>>>>>> origin
 	//Setters and getters
 	public function isValidApiCall(){
 		//Verification also happening within haddler checking is user is logged in and a valid admin/editor

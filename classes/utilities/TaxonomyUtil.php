@@ -43,10 +43,16 @@ class TaxonomyUtil {
 				$inStr = str_ireplace(' sp.','',$inStr);
 			}
 			//Remove extra spaces
+<<<<<<< HEAD
+			$inStr = preg_replace('/\s\s+/',' ',$inStr);
+			if(!$inStr) return $retArr;
+			$sciNameArr = explode(' ',trim($inStr));
+=======
 			$inStr = trim(str_replace(["\xA0", "\xC2\xA0"], ' ', $inStr));	//Normalize string by removing non-breaking spaces, plus trim spaces
 			$inStr = preg_replace('/\s\s+/',' ',$inStr);				//Remove multiple spaces
 			if(!$inStr) return $retArr;
 			$sciNameArr = explode(' ', $inStr);
+>>>>>>> origin
 			$okToCloseConn = true;
 			if($conn !== null) $okToCloseConn = false;
 			if(count($sciNameArr)){
@@ -59,11 +65,18 @@ class TaxonomyUtil {
 					if($unitStr) array_unshift($sciNameArr, $unitStr);
 				}
 				elseif($sciNameArr[0] == '†' || mb_ord($sciNameArr[0]) == 8224){
+<<<<<<< HEAD
+					$retArr['unitind1'] = array_shift($sciNameArr);
+				}
+				elseif(strpos($sciNameArr[0],chr(8224)) === 0 ){
+					$retArr['unitind1'] = '†';
+=======
 					//No longer include support for extinction dagger unless $ACTIVATE_PALEO_DAGGER variable is added to symbini.php
 					if(!empty($GLOBALS['ACTIVATE_PALEO_DAGGER'])) $retArr['unitind1'] = array_shift($sciNameArr);
 				}
 				elseif(strpos($sciNameArr[0],chr(8224)) === 0 ){
 					if(!empty($GLOBALS['ACTIVATE_PALEO_DAGGER'])) $retArr['unitind1'] = '†';
+>>>>>>> origin
 					$sciNameArr[0] = trim($sciNameArr[0],'†');
 				}
 				//Genus
@@ -181,7 +194,11 @@ class TaxonomyUtil {
 						if(!isset($retArr['rankid']) || !$retArr['rankid']) $retArr['rankid'] = 220;
 					}
 				}
+<<<<<<< HEAD
+				
+=======
 
+>>>>>>> origin
 				//Check the retArr[author] array for cultivar epithet, tradename, author
 				$retArr['author'] = str_replace(['‘', '’'], "'", $retArr['author']);
 				 if (preg_match("/'([^']+)'/", $retArr['author'], $matches)){
@@ -253,7 +270,11 @@ class TaxonomyUtil {
 			}
 			if(!empty($retArr['tradename'])){
 				$sciname .= ' ' . self::standardizeTradeName($retArr['tradename']);
+<<<<<<< HEAD
+				
+=======
 
+>>>>>>> origin
 			}
 			$retArr['sciname'] = trim($sciname);
 		}

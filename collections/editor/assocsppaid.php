@@ -1,9 +1,14 @@
 <?php
 include_once('../../config/symbini.php');
+<<<<<<< HEAD
+if($LANG_TAG != 'en' && file_exists($SERVER_ROOT.'/content/lang/collections/editor/assocsppaid.'.$LANG_TAG.'.php')) include_once($SERVER_ROOT.'/content/lang/collections/editor/assocsppaid.'.$LANG_TAG.'.php');
+else include_once($SERVER_ROOT.'/content/lang/collections/editor/assocsppaid.en.php');
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/editor/assocsppaid');
 
+>>>>>>> origin
 header("Content-Type: text/html; charset=".$CHARSET);
 ?>
 <!DOCTYPE html>

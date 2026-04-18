@@ -2,6 +2,13 @@
 declare(strict_types=1);
 namespace ParagonIE\ConstantTime;
 
+<<<<<<< HEAD
+use RangeException;
+use TypeError;
+
+/**
+ *  Copyright (c) 2016 - 2022 Paragon Initiative Enterprises.
+=======
 use Override;
 use RangeException;
 use SensitiveParameter;
@@ -16,6 +23,7 @@ use function unpack;
 
 /**
  *  Copyright (c) 2016 - 2025 Paragon Initiative Enterprises.
+>>>>>>> origin
  *  Copyright (c) 2014 Steve "Sc00bz" Thomas (steve at tobtu dot com)
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -51,6 +59,21 @@ abstract class Hex implements EncoderInterface
      * @return string
      * @throws TypeError
      */
+<<<<<<< HEAD
+    public static function encode(
+        #[\SensitiveParameter]
+        string $binString
+    ): string {
+        $hex = '';
+        $len = Binary::safeStrlen($binString);
+        for ($i = 0; $i < $len; ++$i) {
+            /** @var array<int, int> $chunk */
+            $chunk = \unpack('C', $binString[$i]);
+            $c = $chunk[1] & 0xf;
+            $b = $chunk[1] >> 4;
+
+            $hex .= \pack(
+=======
     #[Override]
     public static function encode(
         #[SensitiveParameter]
@@ -72,6 +95,7 @@ abstract class Hex implements EncoderInterface
             $b = $chunk[1] >> 4;
 
             $hex .= pack(
+>>>>>>> origin
                 'CC',
                 (87 + $b + ((($b - 10) >> 8) & ~38)),
                 (87 + $c + ((($c - 10) >> 8) & ~38))
@@ -89,6 +113,21 @@ abstract class Hex implements EncoderInterface
      * @throws TypeError
      */
     public static function encodeUpper(
+<<<<<<< HEAD
+        #[\SensitiveParameter]
+        string $binString
+    ): string {
+        $hex = '';
+        $len = Binary::safeStrlen($binString);
+
+        for ($i = 0; $i < $len; ++$i) {
+            /** @var array<int, int> $chunk */
+            $chunk = \unpack('C', $binString[$i]);
+            $c = $chunk[1] & 0xf;
+            $b = $chunk[1] >> 4;
+
+            $hex .= \pack(
+=======
         #[SensitiveParameter]
         string $binString
     ): string {
@@ -102,6 +141,7 @@ abstract class Hex implements EncoderInterface
             $b = $chunk[1] >> 4;
 
             $hex .= pack(
+>>>>>>> origin
                 'CC',
                 (55 + $b + ((($b - 10) >> 8) & ~6)),
                 (55 + $c + ((($c - 10) >> 8) & ~6))
@@ -119,6 +159,17 @@ abstract class Hex implements EncoderInterface
      * @return string (raw binary)
      * @throws RangeException
      */
+<<<<<<< HEAD
+    public static function decode(
+        #[\SensitiveParameter]
+        string $encodedString,
+        bool $strictPadding = false
+    ): string {
+        $hex_pos = 0;
+        $bin = '';
+        $c_acc = 0;
+        $hex_len = Binary::safeStrlen($encodedString);
+=======
     #[Override]
     public static function decode(
         #[SensitiveParameter]
@@ -136,6 +187,7 @@ abstract class Hex implements EncoderInterface
         $bin = '';
         $c_acc = 0;
         $hex_len = strlen($encodedString);
+>>>>>>> origin
         $state = 0;
         if (($hex_len & 1) !== 0) {
             if ($strictPadding) {
@@ -149,7 +201,11 @@ abstract class Hex implements EncoderInterface
         }
 
         /** @var array<int, int> $chunk */
+<<<<<<< HEAD
+        $chunk = \unpack('C*', $encodedString);
+=======
         $chunk = unpack('C*', $encodedString);
+>>>>>>> origin
         while ($hex_pos < $hex_len) {
             ++$hex_pos;
             $c = $chunk[$hex_pos];
@@ -167,7 +223,11 @@ abstract class Hex implements EncoderInterface
             if ($state === 0) {
                 $c_acc = $c_val * 16;
             } else {
+<<<<<<< HEAD
+                $bin .= \pack('C', $c_acc | $c_val);
+=======
                 $bin .= pack('C', $c_acc | $c_val);
+>>>>>>> origin
             }
             $state ^= 1;
         }

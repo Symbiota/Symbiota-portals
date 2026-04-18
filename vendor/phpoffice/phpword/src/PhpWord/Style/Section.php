@@ -137,9 +137,15 @@ class Section extends Border
 
     /**
      * Line numbering.
+<<<<<<< HEAD
+     *
+     * @var \PhpOffice\PhpWord\Style\LineNumbering
+     *
+=======
      *
      * @var LineNumbering
      *
+>>>>>>> origin
      * @see  http://www.schemacentral.com/sc/ooxml/e-w_lnNumType-1.html
      */
     private $lineNumbering;

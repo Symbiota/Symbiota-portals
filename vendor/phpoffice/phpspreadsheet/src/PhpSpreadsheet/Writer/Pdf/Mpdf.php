@@ -10,6 +10,16 @@ class Mpdf extends Pdf
     public const SIMULATED_BODY_START = '<!-- simulated body start -->';
     private const BODY_TAG = '<body>';
 
+<<<<<<< HEAD
+    /**
+     * Is the current writer creating mPDF?
+     *
+     * @deprecated 2.0.1 use instanceof Mpdf instead
+     */
+    protected bool $isMPdf = true;
+
+=======
+>>>>>>> origin
     /**
      * Gets the implementation of external PDF library that should be used.
      *
@@ -40,6 +50,8 @@ class Mpdf extends Pdf
 
         //  Create PDF
         $config = ['tempDir' => $this->tempDir . '/mpdf'];
+<<<<<<< HEAD
+=======
         $restoreHandler = false;
         if (PHP_VERSION_ID >= self::$temporaryVersionCheck) {
             // @codeCoverageIgnoreStart
@@ -47,6 +59,7 @@ class Mpdf extends Pdf
             $restoreHandler = true;
             // @codeCoverageIgnoreEnd
         }
+>>>>>>> origin
         $pdf = $this->createExternalWriterInstance($config);
         $ortmp = $orientation;
         $pdf->_setPageSize($paperSize, $ortmp);
@@ -90,6 +103,11 @@ class Mpdf extends Pdf
         $str = $pdf->Output('', 'S');
         fwrite($fileHandle, $str);
 
+<<<<<<< HEAD
+        parent::restoreStateAfterSave();
+    }
+
+=======
         if ($restoreHandler) {
             restore_error_handler(); // @codeCoverageIgnore
         }
@@ -114,6 +132,7 @@ class Mpdf extends Pdf
         return false; // continue error handling
     }
 
+>>>>>>> origin
     /**
      * Convert inches to mm.
      */

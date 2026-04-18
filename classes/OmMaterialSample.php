@@ -2,7 +2,10 @@
 include_once($SERVER_ROOT . '/config/dbconnection.php');
 include_once($SERVER_ROOT . '/classes/utilities/OccurrenceUtil.php');
 include_once($SERVER_ROOT . '/classes/utilities/UuidFactory.php');
+<<<<<<< HEAD
+=======
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+>>>>>>> origin
 
 class OmMaterialSample{
 
@@ -177,6 +180,8 @@ class OmMaterialSample{
 	public function getErrorMessage(){
 		return $this->errorMessage;
 	}
+<<<<<<< HEAD
+=======
 
 	/**
 	 * Function to get key values of material sample fields and their translated
@@ -225,5 +230,6 @@ class OmMaterialSample{
 			'sampleDesignation' => $LANG['SAMPLE_DESIGNATION']
 		];
 	 }
+>>>>>>> origin
 }
 ?>

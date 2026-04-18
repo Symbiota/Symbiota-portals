@@ -78,7 +78,11 @@ class Table extends AbstractElement
     private function writeRow(XMLWriter $xmlWriter, RowElement $row): void
     {
         $xmlWriter->startElement('table:table-row');
+<<<<<<< HEAD
+        /** @var \PhpOffice\PhpWord\Element\Row $row Type hint */
+=======
         /** @var RowElement $row Type hint */
+>>>>>>> origin
         foreach ($row->getCells() as $cell) {
             $xmlWriter->startElement('table:table-cell');
             $xmlWriter->writeAttribute('office:value-type', 'string');

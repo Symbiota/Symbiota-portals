@@ -51,7 +51,11 @@ SSH-2, SFTP, X.509, an arbitrary-precision integer arithmetic library, Ed25519 /
 * PHP4 compatible
 * Composer compatible (PSR-0 autoloading)
 * Install using Composer: `composer require phpseclib/phpseclib:~1.0`
+<<<<<<< HEAD
+* [Download 1.0.23 as ZIP](http://sourceforge.net/projects/phpseclib/files/phpseclib1.0.23.zip/download)
+=======
 * [Download 1.0.24 as ZIP](http://sourceforge.net/projects/phpseclib/files/phpseclib1.0.24.zip/download)
+>>>>>>> origin
 
 ## Security contact information
 
@@ -63,6 +67,16 @@ Need Support?
 
 * [Checkout Questions and Answers on Stack Overflow](http://stackoverflow.com/questions/tagged/phpseclib)
 * [Create a Support Ticket on GitHub](https://github.com/phpseclib/phpseclib/issues/new)
+<<<<<<< HEAD
+* [Browse the Support Forum](http://www.frostjedi.com/phpbb/viewforum.php?f=46) (no longer in use)
+
+## Special Thanks
+
+Special Thanks to our $50+ sponsors!:
+
+- Allan Simon
+- [ChargeOver](https://chargeover.com/)
+=======
 
 ## Special Thanks
 
@@ -77,6 +91,7 @@ Need Support?
 - Allan Simon
 - [ChargeOver](https://chargeover.com/)
 - <a href="https://jb.gg/OpenSource"><img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg" height="20px"></a>
+>>>>>>> origin
 
 ## Contributing
 

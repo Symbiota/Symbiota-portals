@@ -47,9 +47,12 @@ class Styles extends AbstractPart
                 if (array_key_exists('size', $fontDefaultStyle)) {
                     $phpWord->setDefaultFontSize($fontDefaultStyle['size']);
                 }
+<<<<<<< HEAD
+=======
                 if (array_key_exists('color', $fontDefaultStyle)) {
                     $phpWord->setDefaultFontColor($fontDefaultStyle['color']);
                 }
+>>>>>>> origin
                 if (array_key_exists('lang', $fontDefaultStyle)) {
                     $phpWord->getSettings()->setThemeFontLang(new Language($fontDefaultStyle['lang']));
                 }

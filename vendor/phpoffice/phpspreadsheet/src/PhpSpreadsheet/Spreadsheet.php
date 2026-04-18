@@ -7,12 +7,19 @@ use PhpOffice\PhpSpreadsheet\Calculation\Calculation;
 use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
 use PhpOffice\PhpSpreadsheet\Document\Properties;
 use PhpOffice\PhpSpreadsheet\Document\Security;
+<<<<<<< HEAD
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Shared\File;
+=======
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+>>>>>>> origin
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Iterator;
 use PhpOffice\PhpSpreadsheet\Worksheet\Table;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx as XlsxWriter;
 
 class Spreadsheet implements JsonSerializable
 {
@@ -680,8 +687,13 @@ class Spreadsheet implements JsonSerializable
      */
     public function getIndex(Worksheet $worksheet, bool $noThrow = false): int
     {
+        $wsHash = $worksheet->getHashInt();
         foreach ($this->workSheetCollection as $key => $value) {
+<<<<<<< HEAD
+            if ($value->getHashInt() === $wsHash) {
+=======
             if ($value === $worksheet) {
+>>>>>>> origin
                 return $key;
             }
         }
@@ -1059,7 +1071,21 @@ class Spreadsheet implements JsonSerializable
      */
     public function copy(): self
     {
+<<<<<<< HEAD
+        $filename = File::temporaryFilename();
+        $writer = new XlsxWriter($this);
+        $writer->setIncludeCharts(true);
+        $writer->save($filename);
+
+        $reader = new XlsxReader();
+        $reader->setIncludeCharts(true);
+        $reloadedSpreadsheet = $reader->load($filename);
+        unlink($filename);
+
+        return $reloadedSpreadsheet;
+=======
         return unserialize(serialize($this));
+>>>>>>> origin
     }
 
     public function __clone()
@@ -1531,6 +1557,17 @@ class Spreadsheet implements JsonSerializable
     /**
      * @throws Exception
      */
+<<<<<<< HEAD
+    public function __serialize(): array
+    {
+        throw new Exception('Spreadsheet objects cannot be serialized');
+    }
+
+    /**
+     * @throws Exception
+     */
+=======
+>>>>>>> origin
     public function jsonSerialize(): mixed
     {
         throw new Exception('Spreadsheet objects cannot be json encoded');

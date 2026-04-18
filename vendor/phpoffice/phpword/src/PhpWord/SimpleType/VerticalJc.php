@@ -16,6 +16,10 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
+<<<<<<< HEAD
+<<<<<<<< HEAD:vendor/phpoffice/phpword/src/PhpWord/SimpleType/VerticalJc.php
+=======
+>>>>>>> origin
 namespace PhpOffice\PhpWord\SimpleType;
 
 use PhpOffice\PhpWord\Shared\AbstractEnum;
@@ -34,4 +38,23 @@ final class VerticalJc extends AbstractEnum
     const CENTER = 'center';
     const BOTH = 'both';
     const BOTTOM = 'bottom';
+<<<<<<< HEAD
+========
+namespace PhpOffice\PhpWord\Writer\EPub3\Part;
+
+/**
+ * Class for EPub3 mimetype part.
+ */
+class Mimetype extends AbstractPart
+{
+    /**
+     * Write part content.
+     */
+    public function write(): string
+    {
+        return 'application/epub+zip';
+    }
+>>>>>>>> origin:vendor/phpoffice/phpword/src/PhpWord/Writer/EPub3/Part/Mimetype.php
+=======
+>>>>>>> origin
 }

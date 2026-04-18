@@ -51,6 +51,8 @@ class TextBox extends Image
 
         if ($style->getBgColor()) {
             $xmlWriter->writeAttribute('fillcolor', $style->getBgColor());
+<<<<<<< HEAD
+=======
         } else {
             $xmlWriter->writeAttribute('filled', 'f');
         }
@@ -58,6 +60,7 @@ class TextBox extends Image
         if (!$style->getBorderColor()) {
             $xmlWriter->writeAttribute('stroked', 'f');
             $xmlWriter->writeAttribute('strokecolor', 'white');
+>>>>>>> origin
         }
 
         $styleWriter->write();

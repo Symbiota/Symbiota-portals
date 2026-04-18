@@ -29,32 +29,52 @@ class Indentation extends AbstractStyle
     /**
      * Left indentation (twip).
      *
+<<<<<<< HEAD
+     * @var float|int
+=======
      * @var null|float
+>>>>>>> origin
      */
     private $left = 0;
 
     /**
      * Right indentation (twip).
      *
+<<<<<<< HEAD
+     * @var float|int
+=======
      * @var null|float
+>>>>>>> origin
      */
     private $right = 0;
 
     /**
      * Additional first line indentation (twip).
      *
+<<<<<<< HEAD
+     * @var float|int
+=======
      * @var null|float
+>>>>>>> origin
      */
     private $firstLine = 0;
 
     /**
+<<<<<<< HEAD
+     * Indentation removed from first line (twip).
+     *
+     * @var float|int
+=======
      * Additional first line chars indentation (twip).
      *
      * @var int
+>>>>>>> origin
      */
     private $firstLineChars = 0;
 
     /**
+<<<<<<< HEAD
+=======
      * Indentation removed from first line (twip).
      *
      * @var null|float
@@ -62,6 +82,7 @@ class Indentation extends AbstractStyle
     private $hanging = 0;
 
     /**
+>>>>>>> origin
      * Create a new instance.
      *
      * @param array $style
@@ -73,6 +94,11 @@ class Indentation extends AbstractStyle
 
     /**
      * Get left.
+<<<<<<< HEAD
+     *
+     * @return float|int
+=======
+>>>>>>> origin
      */
     public function getLeft(): ?float
     {
@@ -81,8 +107,17 @@ class Indentation extends AbstractStyle
 
     /**
      * Set left.
+<<<<<<< HEAD
+     *
+     * @param float|int $value
+     *
+     * @return self
+     */
+    public function setLeft($value)
+=======
      */
     public function setLeft(?float $value): self
+>>>>>>> origin
     {
         $this->left = $this->setNumericVal($value);
 
@@ -91,6 +126,11 @@ class Indentation extends AbstractStyle
 
     /**
      * Get right.
+<<<<<<< HEAD
+     *
+     * @return float|int
+=======
+>>>>>>> origin
      */
     public function getRight(): ?float
     {
@@ -99,8 +139,17 @@ class Indentation extends AbstractStyle
 
     /**
      * Set right.
+<<<<<<< HEAD
+     *
+     * @param float|int $value
+     *
+     * @return self
+     */
+    public function setRight($value)
+=======
      */
     public function setRight(?float $value): self
+>>>>>>> origin
     {
         $this->right = $this->setNumericVal($value);
 
@@ -109,6 +158,11 @@ class Indentation extends AbstractStyle
 
     /**
      * Get first line.
+<<<<<<< HEAD
+     *
+     * @return float|int
+=======
+>>>>>>> origin
      */
     public function getFirstLine(): ?float
     {
@@ -117,8 +171,17 @@ class Indentation extends AbstractStyle
 
     /**
      * Set first line.
+<<<<<<< HEAD
+     *
+     * @param float|int $value
+     *
+     * @return self
+     */
+    public function setFirstLine($value)
+=======
      */
     public function setFirstLine(?float $value): self
+>>>>>>> origin
     {
         $this->firstLine = $this->setNumericVal($value);
 
@@ -126,7 +189,13 @@ class Indentation extends AbstractStyle
     }
 
     /**
+<<<<<<< HEAD
+     * Get hanging.
+     *
+     * @return float|int
+=======
      * Get first line chars.
+>>>>>>> origin
      */
     public function getFirstLineChars(): int
     {
@@ -153,6 +222,13 @@ class Indentation extends AbstractStyle
 
     /**
      * Set hanging.
+<<<<<<< HEAD
+     *
+     * @param float|int $value
+     *
+     * @return self
+=======
+>>>>>>> origin
      */
     public function setHanging(?float $value = null): self
     {
