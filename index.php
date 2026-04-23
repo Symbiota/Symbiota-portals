@@ -40,9 +40,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				Los datos añadidos en el portal son de libre acceso, pero se insta a citar adecuadamente el origen de los mismos.
 				</p>
 				</p>
-				El portal está alojado en los servidores del Centro de <a href="https://biokic.asu.edu/">Integración del Conocimiento de
-				la Biodiversidad (BIOKIC)</a> de la Universidad Estatal de Arizona (ASU), en Estados Unidos. Para más información o para
-				integrar datos por favor comunicarse con Samanta Orellana (<a href="mailto:sorellana@asu.edu">sorellana@asu.edu</a>) o
+				
+				El portal está alojado en los servidores del <a href="https://biodiversity.ku.edu/">Instituto de Biodiversidad de la Universidad de Kansas</a>, en Estados Unidos. Para más información o para
+				integrar datos por favor comunicarse con Samanta Orellana (<a href="mailto:samanta.orellana@ku.edu)">samanta.orellana@ku.edu)</a>) o
 				Jennifer Girón (<a href="mailto:entiminae@gmail.com">entiminae@gmail.com</a>).
 				</p>
 			</div>
@@ -61,9 +61,8 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				citation is encouraged.
 				</p>
 				<p>
-				The Weevil Portal is hosted by the <a href="https://biokic.asu.edu/">Biodiversity Knowledge Integration Center (BIOKIC)</a>
-				at Arizona State University, USA. For further information or to have a collection data ingested, please contact Samanta 
-				Orellana (<a href="mailto:sorellana@asu.edu">sorellana@asu.edu</a>) or Jennifer Girón (<a href="mailto:entiminae@gmail.com">entiminae@gmail.com</a>).
+				The Weevil Portal is hosted by the <a href="https://biodiversity.ku.edu/">Biodiversity Institute at the University of Kansas</a>, USA. For further information or to have a collection data ingested, please contact Samanta 
+				Orellana (<a href="mailto:samanta.orellana@ku.edu)">samanta.orellana@ku.edu)</a>) or Jennifer Girón (<a href="mailto:entiminae@gmail.com">entiminae@gmail.com</a>).
 				</p>
 			</div>
 			<?php
