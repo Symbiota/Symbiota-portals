@@ -2,4 +2,26 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ .top-wrapper {
+    background-color: var(--header-bg-color);
+    display: grid;
+    grid-template-areas: "brand login";
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    min-width: 0;
+    width: 100%;
+    padding: 11rem 0;
+    background-image: var(--header-bg-image);
+    background-position: center;
+    background-size: cover;
+  }
+
+  header {
+    gap: 0;
+    grid-template-areas:
+      "top"
+      "menu";
+    grid-template-rows: auto fit-content(100%);
+    min-width: 0;
+    min-height: 0;
+  }
