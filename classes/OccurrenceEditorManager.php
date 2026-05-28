@@ -1145,7 +1145,7 @@ class OccurrenceEditorManager {
 										$status = $LANG['ERROR_ADDING_EXS_NO'] . ': ' . $this->conn->error . ' ';
 									}
 								}
-								//Exsiccati was editted
+								//Exsiccati was edited
 								if ($exsNumberId) {
 									//Use REPLACE rather than INSERT so that if record with occid already exists, it will be removed before insert
 									$sql1 = 'REPLACE INTO omexsiccatiocclink(omenid, occid) VALUES(' . $exsNumberId . ',' . $this->occid . ')';
@@ -2022,7 +2022,6 @@ class OccurrenceEditorManager {
 			$this->sqlWhere = $this->getBatchUpdateWhere($fn, $ov, $buMatch);
 			$this->addTableJoins($sqlOccid);
 			$sqlOccid .= $this->sqlWhere;
-			// echo $sqlOccid.'<br/>';
 			$rs = $this->conn->query($sqlOccid);
 			while ($r = $rs->fetch_object()) {
 				$occidArr[] = $r->occid;
@@ -2053,31 +2052,41 @@ class OccurrenceEditorManager {
 				}
 
 				//Insert data from target table into omoccuredits
-				$sqlWhere = 'WHERE occid IN(' . implode(',', $occidArr) . ')';
-				$sql = 'INSERT INTO omoccuredits(occid,fieldName,fieldValueOld,fieldValueNew,appliedStatus,uid,editType) ' .
+				$sqlEdits = 'INSERT INTO omoccuredits(occid,fieldName,fieldValueOld,fieldValueNew,appliedStatus,uid,editType) ' .
 					'SELECT o.occid, "' . $fn . '" AS fieldName, IFNULL(' . $fn . ',"") AS oldValue, IFNULL(' . $nvSqlFrag . ',"") AS newValue, ' .
 					'1 AS appliedStatus, ' . $GLOBALS['SYMB_UID'] . ' AS uid, 1 FROM ' . $targetTable . ' as o ';
+				$sqlWhere = 'WHERE occid IN(' . implode(',', $occidArr) . ')';
 
 				// This Solution is a bit scuffed their isn't a nice way of getting many to one
 				// tables in the batch update system without rebuilding most of it
 				if ($fn === 'identifierValue' || $fn === 'identifierName') {
-					$sql .= ' JOIN omoccuridentifiers AS id ON id.occid = o.occid ';
-					$sqlWhere = 'WHERE id.occid IN(' . implode(',', $occidArr) . ')' . ' AND ' . $fn . ' = ' . '"' . $ov . '" ';
+					$sqlEdits .= ' JOIN omoccuridentifiers id ON id.occid = o.occid ';
+					$sqlEdits .= 'WHERE id.occid IN(' . implode(',', $occidArr) . ') ';
+					if (!$buMatch || $ov === '') {
+						//Match whole field
+						$sqlEdits .= 'AND ' . $fn . ' = ' . '"' . $ov . '" ';
+					}
+					else{
+						//Match any part of field
+						$sqlEdits .= 'AND ' . $fn . ' LIKE ' . '"%' . $ov . '%" ';
+					}
 				}
-
-				$sql .= $sqlWhere;
-
-				if (!$this->conn->query($sql)) {
+				else{
+					$sqlEdits .= $sqlWhere;
+				}
+				if (!$this->conn->query($sqlEdits)) {
 					$statusStr = $LANG['ERROR_ADDING_UPDATE'] . ': ' . $this->conn->error;
 				}
+
 				//Apply edits to core tables
 				if ((empty($this->collMap) || !empty($this->collMap['paleoActivated'])) && in_array($fn, $this->fieldArr['omoccurpaleo'])) {
 					$sql = 'UPDATE omoccurpaleo SET ' . $fn . ' = ' . $nvSqlFrag . ' ' . $sqlWhere;
 				} else if ($fn === 'identifierValue' || $fn === 'identifierName') {
-					$sql = 'UPDATE omoccuridentifiers as id SET ' . $fn . ' = ' . $nvSqlFrag . ' ' . $sqlWhere;
+					$sql = 'UPDATE omoccuridentifiers SET ' . $fn . ' = ' . $nvSqlFrag . ' ' . $sqlWhere;
 				} else {
 					$sql = 'UPDATE omoccurrences SET ' . $fn . ' = ' . $nvSqlFrag . ' ' . $sqlWhere;
 				}
+
 				if (!$this->conn->query($sql)) {
 					$statusStr = $LANG['ERROR_APPLYING_BATCH_EDITS'] . ': ' . $this->conn->error;
 				}
@@ -2118,12 +2127,13 @@ class OccurrenceEditorManager {
 		}
 
 		if (!$buMatch || $ov === '') {
+			//Match whole field
 			if (in_array($fn, $this->fieldArr['omoccurpaleo']))
 				$sql .= ' AND (paleo.'.$fn.' '.($ov===''?'IS NULL':'= "'.$ov.'"').') ';
 			else
 				$sql .= ' AND (' . $tablePrefix . $fn . ' ' . ($ov === '' ? 'IS NULL' : '= "' . $ov . '"') . ') ';
 		} else {
-			//Selected "Match any part of field"
+			//Match any part of field
 			if (in_array($fn, $this->fieldArr['omoccurpaleo']))
 				$sql .= ' AND (paleo.'.$fn.' LIKE "%'.$ov.'%") ';
 			else
@@ -2489,10 +2499,10 @@ class OccurrenceEditorManager {
 	public function getEditArr() {
 		$retArr = array();
 		$this->setOccurArr();
-		$sql = 'SELECT e.ocedid, e.fieldname, e.fieldvalueold, e.fieldvaluenew, e.reviewstatus, e.appliedstatus, ' .
-			'CONCAT_WS(", ",u.lastname,u.firstname) as editor, e.initialtimestamp ' .
-			'FROM omoccuredits e INNER JOIN users u ON e.uid = u.uid ' .
-			'WHERE e.occid = ' . $this->occid . ' ORDER BY e.initialtimestamp DESC ';
+		$sql = 'SELECT e.ocedid, e.fieldname, e.fieldvalueold, e.fieldvaluenew, e.reviewstatus, e.appliedstatus,
+			CONCAT_WS(", ",u.lastname,u.firstname) as editor, e.initialtimestamp
+			FROM omoccuredits e INNER JOIN users u ON e.uid = u.uid
+			WHERE e.occid = ' . $this->occid . ' ORDER BY e.initialtimestamp DESC ';
 		$result = $this->conn->query($sql);
 		if ($result) {
 			while ($r = $result->fetch_object()) {
@@ -2514,6 +2524,27 @@ class OccurrenceEditorManager {
 				$retArr[$k]['edits'][$r->appliedstatus][$r->ocedid]['current'] = $currentCode;
 			}
 			$result->free();
+		}
+
+		return $retArr;
+	}
+
+	public function getModDates(){
+		$retArr = array();
+		//Add date entered, modifed, and by whom
+		$sql = 'SELECT dateEntered, modified, dateLastModified, recordEnteredBy FROM omoccurrences WHERE occid = ?';
+		if($stmt = $this->conn->prepare($sql)){
+			$stmt->bind_param('i', $this->occid);
+			$stmt->execute();
+			$rs = $stmt->get_result();
+			if($r = $rs->fetch_object()){
+				$retArr['dateEntered'] = $r->dateEntered;
+				$retArr['modified'] = $r->modified;
+				$retArr['dateLastModified'] = $r->dateLastModified;
+				$retArr['recordEnteredBy'] = $r->recordEnteredBy;
+			}
+			$rs->free();
+			$stmt->close();
 		}
 		return $retArr;
 	}
