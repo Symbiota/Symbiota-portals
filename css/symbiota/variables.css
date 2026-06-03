@@ -2,11 +2,11 @@
    ========================================================================== */
 :root {
   --header-bg-image: url("");
-  --header-bg-color: #6D874C; /** Transparent color if adding header bg-image **/
-  --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
-  --logo-width: 120px;
-  --menu-top-bg-color: #2E360F;
+  --header-bg-color: #fefbf7; /** Transparent color if adding header bg-image **/
+  --header-font-color: #145250;
+  --brand-font-size: 2rem;
+  --logo-width: 200px;
+  --menu-top-bg-color: #92a451;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
   --body-text-color: #000000;
@@ -15,10 +15,10 @@
   --footer-bg-color: #f0f3ed;
   --heading-font-family: "Open Sans", sans-serif;
   --link-color: #cc8a36;
-  --darkest-color: #2E360F;
-  --medium-color: #6D874C;
+  --darkest-color: #145250;
+  --medium-color: #4f9685;
   --light-color: #fae9d4;
-  --bright-color: #F695A9;
+  --bright-color: #f58381;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }

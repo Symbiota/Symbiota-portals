@@ -41,12 +41,11 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 			<div class="top-brand">
 				<a href="<?= $CLIENT_ROOT ?>">
 					<div class="image-container">
-						<img src="<?= $CLIENT_ROOT ?>/images/layout/HibiscusFragilis.png" alt="Hibiscus fragilis">
+						<img src="<?= $CLIENT_ROOT ?>/images/layout/RHOIO_logo.png" alt="RHOIO logo">
 					</div>
 				</a>
 				<div class="brand-name">
-					<h1><?= $LANG['H_HEADER'] ?></h1>
-					<h2><?= $LANG['H_HEADER2'] ?></h2>
+					<h1><?= $LANG['H_HEADER2'] ?></h1>
 				</div>
 			</div>
 		</div>
