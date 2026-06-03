@@ -2,4 +2,16 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+
+ .button-tertiary {
+  background-color: transparent;
+  border: 2px solid var(--bright-color);
+  padding: 0.5rem 0.9rem;
+  color: var(--bright-color);
+}
+
+.button-secondary {
+  background-color: var(--bright-color);
+  color: var(--darkest-color);
+  border: 2px solid var(--bright-color);
+}
