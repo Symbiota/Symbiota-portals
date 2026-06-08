@@ -10,7 +10,7 @@
 */
 
 $LANG['H_HEADER'] = 'WIOH';
-$LANG['H_HEADER2'] = 'West Indian Ocean Herbarium Network';
+$LANG['H_HEADER2'] = 'West Indian Ocean Islands Herbarium Network';
 $LANG['F_GBIF'] = 'Global Biodiversity Information Facility';
 
 ?>
