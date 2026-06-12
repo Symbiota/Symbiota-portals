@@ -74,6 +74,18 @@ $LANG['F_READ_DOCS'] = 'read the docs';
 $LANG['F_CONTACT'] = 'or contact the';
 $LANG['F_SSH'] = 'Symbiota Support Hub';
 $LANG['F_POWERED_BY'] = 'Powered by';
+$LANG['F_VARUNA'] = 'VARUNA Project and AFD';
+$LANG['F_VARUNA_LOGO'] = 'VARUNA Project and AFD Logos';
+$LANG['F_MAU'] = 'Mauritius Herbarium';
+$LANG['F_MAU_LOGO'] = 'Mauritius Herbarium Logo';
+$LANG['F_DBEV'] = 'University of Antananarivo Herbarium (DBEV)';
+$LANG['F_DBEV_LOGO'] = 'DBEV Logo';
+$LANG['F_HKM'] = 'National Herbarium of Comoros (HKM)';
+$LANG['F_HKM_LOGO'] = 'HKM Logo';
+$LANG['F_REU'] = 'University of Reunion Herbarium (REU)';
+$LANG['F_REU_LOGO'] = 'REU Logo';
+$LANG['F_TAN'] = 'Botanical and Zoological Garden of Tsimbazaza Herbarium (TAN)';
+$LANG['F_TAN_LOGO'] = 'TAN Logo';
 
 include('header.en.override.php');
 ?>
