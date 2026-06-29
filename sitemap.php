@@ -78,6 +78,7 @@ if(!$schemaVersion){
 				<h2><?= $LANG['ADDITIONAL_RESOURCES'] ?></h2>
 			</div>
 			<ul>
+				<li><a href="<?= $CLIENT_ROOT ?>/geothesaurus/index.php"><?= $LANG['GEOTHESAURUS'] ?></a></li>
 				<?php
 				if($smManager->hasGlossary()){
 					?>
@@ -201,6 +202,11 @@ if(!$schemaVersion){
 							<li>
 								<a href="<?= $CLIENT_ROOT ?>/admin/othercatalog.php">
 									<?= $LANG['OTHER_CAT_TRANSFER'] ?>
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/admin/batchupdatestats.php">
+									<?= $LANG['BATCH_UPDATE_STATS'] ?>
 								</a>
 							</li>
 						</ul>
