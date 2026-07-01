@@ -86,6 +86,12 @@ $LANG['F_REU'] = 'Herbario de la Universidad de la Reunión (REU)';
 $LANG['F_REU_LOGO'] = 'Logotipo de REU';
 $LANG['F_TAN'] = 'Herbario Jardín Botánico y Zoológico de Tsimbazaza (TAN)';
 $LANG['F_TAN_LOGO'] = 'Logotipo TAN';
+$LANG['F_CBNM'] = "Conservatoire Botanique National de Mascarin (CBNM)";
+$LANG['F_CBNM_LOGO'] = 'Logotipo CBNM';
+$LANG['F_SEY'] = "Herbier National des Seychelles (SEY)";
+$LANG['F_SEY_LOGO'] = 'Logotipo SEY';
+$LANG['F_TEF'] = "FOFIFA: Centre National de la Recherche Appliquée au Développement Rural (TEF)";
+$LANG['F_TEF_LOGO'] = 'Logotipo TEF';
 
 include('header.es.override.php');
 ?>

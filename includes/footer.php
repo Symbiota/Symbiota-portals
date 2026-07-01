@@ -27,6 +27,15 @@
 		<a href="https://plants.jstor.org/partner/TAN" target="_blank" title="<?= $LANG['F_TAN'] ?>" aria-label="<?= $LANG['F_TAN'] ?>">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/TAN.JPG"  alt="<?= $LANG['F_TAN_LOGO'] ?>" />
 		</a>
+		<a href="https://www.cbnm.org/" target="_blank" title="<?= $LANG['F_CBNM'] ?>" aria-label="<?= $LANG['F_CBNM'] ?>">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/CBNM logo.jpg"  alt="<?= $LANG['F_CBNM_LOGO'] ?>" />
+		</a>
+		<a href="https://seychellesnationalmuseums.org/the-herbarium/" target="_blank" title="<?= $LANG['F_SEY'] ?>" aria-label="<?= $LANG['F_SEY'] ?>">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/SEY LOGO.png"  alt="<?= $LANG['F_SEY_LOGO'] ?>" />
+		</a>
+		<a href="https://plants.jstor.org/partner/TEF" target="_blank" title="<?= $LANG['F_TEF'] ?>" aria-label="<?= $LANG['F_TEF'] ?>">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/TEF logo.jpg"  alt="<?= $LANG['F_TEF_LOGO'] ?>" />
+		</a>
 	</div>
 	<p>
 		<?= $LANG['F_MORE_INFO'] ?>, <a href="https://docs.symbiota.org/about/" target="_blank" rel="noopener noreferrer"><?= $LANG['F_READ_DOCS'] ?></a> <?= $LANG['F_CONTACT'] ?>
