@@ -17,7 +17,10 @@
 		</a>
 	</div>
 	<p>
-		<?= (empty($DEFAULT_TITLE) ? 'This portal' : $DEFAULT_TITLE) . ' ' . 'is part of the SEINet Portal Network. <a href="https://symbiota.org/seinet/" target="_blank">Learn more here</a>.'; ?>
+		<?= (empty($DEFAULT_TITLE) ? 'This portal' : $DEFAULT_TITLE) . ' ' . 'is supported by the Dr.\'s Noel & Patricia Holmgren Intermountain Herbarium Excellence Fund.'; ?>
+	</p>
+	<p>
+		Part of the <a href="https://symbiota.org/seinet/" target="_blank">SEINet Portal Network</a>
 	</p>
 	<p>
 		<?= $LANG['F_POWERED_BY'] ?> <a href="https://symbiota.org/" target="_blank">Symbiota</a>.
