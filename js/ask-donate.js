@@ -20,14 +20,14 @@ banner_style.textContent = `
 	}
 	@media (max-width: 768px) {
 		.ask{
-			top: 10px;
+			top: 50%;
 			right: 10px;
 			left: 10px;
 			max-width: none;
-  	}
-}
+			font-size: 13px;
+  		}
+	}
 `;
-document.head.appendChild(banner_style);
 
 const banner_div = document.createElement('div');
 const portal_domain = window.location.hostname.toUpperCase();
@@ -61,6 +61,7 @@ banner_div.innerHTML = `
 `;
 
 if (!(document.cookie.match(/^(.*;)?\s*hide_donate\s*=\s*[^;]+(.*)?$/))) {
+	document.head.appendChild(banner_style);
     document.body.appendChild(banner_div);
 }
 
