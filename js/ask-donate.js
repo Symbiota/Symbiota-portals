@@ -34,7 +34,7 @@ const portal_domain = window.location.hostname.toUpperCase();
 banner_div.innerHTML = `
   <div id="ask" class="ask">
 		<div style="position:absolute; top:12px; right:10px; display:flex; gap:10px;">
-			<a href="https://tinyurl.com/supportsymbiota" target="_blank" class="button" style="background-color:#b9d432; text-decoration:none;" onclick="hideDonation(30*30*24*31);">
+			<a href="https://tinyurl.com/supportsymbiota" target="_blank" class="button" style="background-color:var(--darkest-color); color:#fafafa; text-decoration:none;" onclick="setDonateCookie(60*60*24*31);">
 				Donate
 			</a>
 		</div>
@@ -52,9 +52,9 @@ banner_div.innerHTML = `
 		<br>
 		-${portal_domain}, Nico, Ed, Jenn, Katie, Greg
 		<br><br>
-		<a href="https://symbiota.org/donate/" target="_blank" onclick="hideDonation(30*30*24*31);">More Ways to Support the Portal</a> 
+		<a href="https://symbiota.org/donate/" target="_blank" onclick="setDonateCookie(60*60*24*31);">More Ways to Support the Portal</a> 
 		<div style="position:absolute; bottom:12px; right:10px; display:flex; gap:10px;">
-			<button class="button" onclick="hideDonation(30*30*24*7);">Close</button>
+			<button class="button" onclick="setDonateCookie(60*60*24*7); hideDonation();">Close</button>
 		</div>
 		</p>
 	</div>
@@ -64,7 +64,10 @@ if (!(document.cookie.match(/^(.*;)?\s*hide_donate\s*=\s*[^;]+(.*)?$/))) {
     document.body.appendChild(banner_div);
 }
 
-function hideDonation(time){
+function setDonateCookie(time){
     document.cookie = "hide_donate=true; max-age=" + time + "; path=/; Secure; SameSite=Strict";
-    document.getElementById('ask').style.display = 'none';
 };
+
+function hideDonation(){
+	document.getElementById('ask').style.display = 'none';
+}
