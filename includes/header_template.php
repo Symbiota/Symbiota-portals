@@ -103,7 +103,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</a>
 					</li>
 					<li>
-						<a href="https://tinyurl.com/supportsymbiota" style="background-color:#b9d432; color:#1b3d2f; padding:6px 12px; border-radius:8px;">
+						<a href="https://tinyurl.com/supportsymbiota">
 							<?= $LANG['DONATE'] ?>
 						</a>
 					</li>
