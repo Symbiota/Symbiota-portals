@@ -24,9 +24,15 @@ banner_style.textContent = `
 	}
 
 	.ask-content {
-		padding: 24px 30px 20px;
+		padding: 4px 26px;
 		background: #fff;
 		font-size: 16px;
+		line-height: 1.6;
+	}
+
+	.ask-content mark {
+		background-color: #eff8d9;
+		color: #186536;
 	}
 
 	.ask-footer {
@@ -40,14 +46,13 @@ banner_style.textContent = `
 	}
 
 	@keyframes slideUp {
-		0% { opacity: 0; transform: translateY(70%); }
+		0% { opacity: 0; transform: translateY(75%); }
 		100% { opacity: 1; transform: translateY(0); }
 	}
 
 	@media (max-width: 768px) {
 		.ask {
 			top: 50%;
-			right: 10px;
 			left: 10px;
 			max-width: none;
   		}
@@ -61,7 +66,7 @@ banner_div.innerHTML = `
 	<div id="ask" class="ask">
 
 		<div class="ask-header">
-			<h2 style="color: white; font-size: 23px;">Hello Portal User!</h2>
+			<h2 style="color:#fff; font-size:23px;">Hello Portal User!</h2>
 
 			<button type="button" class="button" onclick="setDonateCookie(60*60*24*7); hideDonation();">
 				Close
@@ -69,29 +74,31 @@ banner_div.innerHTML = `
 		</div>
 
 		<div class="ask-content">
-			<p style="margin: 0;">
+			<p>
 				Do you use and love ${portal_domain} and its collections?
-				<br><br>
-				This portal, and others like it, relies on a small, dedicated group of people, the Symbiota Support Hub (SSH) for website support.  
-				<br><br>
-				Federal funding for the SSH has ended, and this small team is now maintaining 52+ portals and 90 million occurrence records of life on earth… and still growing!
-				<br><br>
-				Please support this portal through a donation to the SSH.  Doing so helps each collection that shares data here.
-				<br><br>
-				Thank you very much.
-				<br>
+			</p>
+			<p>
+				This portal, and others like it, relies on a <strong>small, dedicated group of people</strong>, the Symbiota Support Hub (SSH) for website support.
+			</p>
+			<p>
+				<strong style="color:red;">Federal funding for the SSH has ended</strong>, and this small team is now maintaining <mark>52+ portals</mark> and <mark>90 million occurrence records</mark> of life on earth... and still growing!
+			</p>
+			<p>
+				<a href="https://tinyurl.com/supportsymbiota">Please support this portal through a donation to the SSH.</a> Doing so helps each collection that shares data here.
+			</p>
+			<p>
+				Thank you very much. <br>
 				-${portal_domain}, Nico, Ed, Jenn, Katie, Greg
 			</p>
 		</div>
 
 		<div class="ask-footer">
-			<a href="https://symbiota.org/donate" target="_blank" style="color: var(--link-color);
-			font-weight: 700; text-decoration: underline;" onclick="setDonateCookie(60*60*24*31);">
-				More Ways to Support the Portal
-			</a>
-
 			<a href="https://tinyurl.com/supportsymbiota" target="_blank" class="button" style="background-color:var(--darkest-color); color:#fff; text-decoration:none;" onclick="setDonateCookie(60*60*24*31);">
 				Donate
+			</a>
+
+			<a href="https://symbiota.org/donate" target="_blank" style="color:var(--link-color); text-decoration:underline;" onclick="setDonateCookie(60*60*24*31);">
+				More Ways to Support the Portal
 			</a>
 		</div>
 	</div>
