@@ -5,7 +5,13 @@ Language::load('templates/header');
 
 $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.php' : '/collections/search/index.php';
 ?>
-<script src="<?= $CLIENT_ROOT ?>/js/ask-donate.js" defer></script> 
+<script src="<?= $CLIENT_ROOT ?>/js/symb/ask/ask.js" defer></script>
+<script>
+	const Donate_link = '<?= $DONATE_LINK ?>';
+</script>
+<script src="<?= $CLIENT_ROOT ?>/js/symb/ask/translations/<?= $LANG_TAG ?>/common.js"></script>
+<script src="<?= $CLIENT_ROOT ?>/js/symb/ask/translations/overrides/<?= $LANG_TAG ?>/common.overrides.js"></script>
+
 <div class="header-wrapper">
 	<header>
 		<div class="top-wrapper">
