@@ -3,10 +3,10 @@ const portal_domain = window.location.hostname.toUpperCase();
 const languages = {
 	en: {
 		header: 'Hello Portal User!',
-		main: `<p>Do you use and love ${portal_domain} and its collections?</p>
+		main: `<p style="font-size:17px; font-weight:600;">Do you use and love ${portal_domain} and its collections?</p>
 			<p>This portal, and others like it, relies on a <strong>small, dedicated group of people</strong>, the Symbiota Support Hub (SSH) for website support.</p>
 			<p><strong style="color:red;">Federal funding for the SSH has ended</strong>, and this small team is now maintaining <mark>52+ portals</mark> and <mark>90 million occurrence records</mark> of life on earth... and still growing!</p>
-			<p><a href="https://tinyurl.com/supportsymbiota">Please support this portal through a donation to the SSH.</a> Doing so helps each collection that shares data here.</p>
+			<p><a href="https://tinyurl.com/supportsymbiota" target="_blank" onclick="setDonateCookie(60*60*24*31);">Please support this portal through a donation to the SSH.</a> Doing so helps each collection that shares data here.</p>
 			<p>Thank you very much.<br>-${portal_domain}, Nico, Ed, Jenn, Katie, Greg</p>`,
 		close: 'Close',
 		donate: 'Donate',
@@ -14,10 +14,10 @@ const languages = {
 	},
 	es: {
 		header: '¡Hola, Usuario del Portal!',
-		main: `<p>¿Utilizas y te encanta ${portal_domain} y sus colecciones?</p>
+		main: `<p style="font-size:17px; font-weight:600;">¿Utilizas y te encanta ${portal_domain} y sus colecciones?</p>
 			<p>Este portal, al igual que otros similares, cuenta con el apoyo de un <strong>pequeño grupo de personas muy comprometidas</strong>, el Symbiota Support Hub (SSH), que se encarga del mantenimiento del sitio web.</p>
 			<p><strong style="color:red;">La financiación federal para el SSH ha finalizado</strong>, y este pequeño equipo se encarga ahora del mantenimiento de <mark>más de 52 portales</mark> y <mark>90 millones de registros de presencia</mark> de vida en la Tierra... ¡y la cifra sigue creciendo!</p>
-			<p><a href="https://tinyurl.com/supportsymbiota">Por favor, apoya este portal mediante una donación al SSH.</a> Tu contribución ayuda a cada colección que comparte datos aquí.</p>
+			<p><a href="https://tinyurl.com/supportsymbiota" target="_blank" onclick="setDonateCookie(60*60*24*31);">Por favor, apoya este portal mediante una donación al SSH.</a> Tu contribución ayuda a cada colección que comparte datos aquí.</p>
 			<p>Muchas gracias.<br>-${portal_domain}, Nico, Ed, Jenn, Katie, Greg</p>`,
 		close: 'Cerrar',
 		donate: 'Donar',
@@ -25,10 +25,10 @@ const languages = {
 	},
 	fr: {
 		header: 'Bonjour, Utilisateur de Portal !',
-		main: `<p>Utilisez-vous et appréciez-vous ${portal_domain} et ses collections ?</p>
+		main: `<p style="font-size:17px; font-weight:600;">Utilisez-vous et appréciez-vous ${portal_domain} et ses collections ?</p>
 			<p>Ce portail, ainsi que d'autres similaires, s'appuie sur un <strong>petit groupe de personnes dévouées</strong>, le Symbiota Support Hub (SSH), pour l'assistance technique du site web.</p>
 			<p><strong style="color:red;">Le financement fédéral du SSH a pris fin</strong>, et cette petite équipe assure désormais la maintenance de <mark>plus de 52 portails</mark> et de <mark>90 millions d'enregistrements d'occurrences</mark> de la vie sur Terre… et ce chiffre ne cesse d'augmenter !</p>
-			<p><a href="https://tinyurl.com/supportsymbiota">Merci de soutenir ce portail en faisant un don au SSH.</a> Cela aide chacune des collections qui partagent leurs données ici.</p>
+			<p><a href="https://tinyurl.com/supportsymbiota" target="_blank" onclick="setDonateCookie(60*60*24*31);">Merci de soutenir ce portail en faisant un don au SSH.</a> Cela aide chacune des collections qui partagent leurs données ici.</p>
 			<p>Merci beaucoup.<br>-${portal_domain}, Nico, Ed, Jenn, Katie, Greg</p>`,
 		close: 'Fermer',
 		donate: 'Doar',
