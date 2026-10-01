@@ -48,13 +48,16 @@ banner_style.textContent = `
 		max-width: 50%;
 		border: none;
 		border-radius: 8px;
-		overflow: auto;
+		overflow: hidden;
 		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
 		z-index: 9999;
 		animation: slideUp 0.6s ease-out forwards;
+		display: flex;
+    	flex-direction: column;	
 	}
 
 	.ask-header {
+	    flex-shrink: 0;
 		height: 70px;
 		padding: 10px 28px;
 		background: var(--menu-top-bg-color);
@@ -68,6 +71,8 @@ banner_style.textContent = `
 		background: #fff;
 		font-size: 16px;
 		line-height: 1.6;
+		overflow-y: auto;
+		min-height: 0;
 	}
 
 	.ask-content mark {
@@ -90,7 +95,7 @@ banner_style.textContent = `
 		100% { opacity: 1; transform: translateY(0); }
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 600px) {
 		.ask {
 			top: 50%;
 			left: 10px;
