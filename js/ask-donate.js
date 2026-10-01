@@ -46,6 +46,7 @@ banner_style.textContent = `
 		bottom: 10px;
 		right: 10px;
 		max-width: 50%;
+		max-height: 60%;
 		border: none;
 		border-radius: 8px;
 		overflow: hidden;
@@ -97,9 +98,9 @@ banner_style.textContent = `
 
 	@media (max-width: 600px) {
 		.ask {
-			top: 50%;
 			left: 10px;
 			max-width: none;
+			max-height: 50%;
   		}
 	}
 `;
