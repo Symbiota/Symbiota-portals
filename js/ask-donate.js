@@ -31,7 +31,7 @@ const languages = {
 			<p><a href="https://tinyurl.com/supportsymbiota" target="_blank" onclick="setDonateCookie(60*60*24*31);">Merci de soutenir ce portail en faisant un don au SSH.</a> Cela aide chacune des collections qui partagent leurs données ici.</p>
 			<p>Merci beaucoup.<br>-${portal_domain}, Nico, Ed, Jenn, Katie, Greg</p>`,
 		close: 'Fermer',
-		donate: 'Doar',
+		donate: 'Donner',
 		more_ways: ' D\'autres Façons de Soutenir le Portail',
 	}
 };
