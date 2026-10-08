@@ -4,6 +4,7 @@ include_once('Person.php');
 include_once('utilities/Encryption.php');
 include_once('utilities/GeneralUtil.php');
 include_once('utilities/QueryUtil.php');
+include_once('utilities/Sanitize.php');
 @include_once 'Mail.php';
 
 class ProfileManager extends Manager{
@@ -100,34 +101,28 @@ class ProfileManager extends Manager{
 		return $status;
 	}
 
-	private function authenticateUsingPassword($pwdStr){
-		if($GLOBALS['USE_BCRYPT'] ?? false) {
-			return $this->authenticateUsingPasswordBcrypt($pwdStr);
-		} else {
-			return $this->authenticateUsingPasswordOld($pwdStr);
-		}
-	}
-
-	private function authenticateUsingPasswordOld($pwdStr){
-		$status = false;
-		if($pwdStr){
-			$sql = 'SELECT uid, firstname, username FROM users WHERE (password = CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?)))))) AND (username = ? OR email = ?) ';
-
-			if($stmt = $this->conn->prepare($sql)){
-				if($stmt->bind_param('sss', $pwdStr, $this->userName, $this->userName)){
-					$stmt->execute();
-					$stmt->bind_result($this->uid, $this->displayName, $this->userName);
-					if($stmt->fetch()) $status = true;
-					$stmt->close();
-				}
-				else echo 'error binding parameters: '.$stmt->error;
+	private function checkResetRequired(){
+		//Check to see if password field was set to NULL, which forces a password reset
+		try {
+			$sql = 'SELECT uid, firstname, username, password FROM users WHERE password IS NULL AND ';
+			if($this->uid) {
+				$sql .= '(uid = ?)';
+				$params = [ $this->uid ];
+			} else {
+				$sql .= '(username = ? OR email = ?)';
+				$params = [ $this->userName, $this->userName ];
 			}
-			else echo 'error preparing statement: '.$this->conn->error;
+			$rs = QueryUtil::executeQuery($this->conn, $sql, $params);
+			$user = $rs->fetch_object();
+			if($user){
+				$this->errorMessage = 'PASSWORD_RESET_REQUIRED';
+			}
+		} catch (Exception $e) {
+			return false;
 		}
-		return $status;
 	}
 
-	private function authenticateUsingPasswordBcrypt($pwdStr){
+	private function authenticateUsingPassword($pwdStr){
 		try {
 			$params = [];
 			$sql = 'SELECT uid, firstname, username, password FROM users WHERE ';
@@ -145,10 +140,10 @@ class ProfileManager extends Manager{
 				$sql,
 				$params
 			);
-
 			$user = $rs->fetch_object();
 
-			if(!$user->password) {
+			if(empty($user->password)) {
+				if(!empty($user->username)) $this->errorMessage = 'PASSWORD_RESET_REQUIRED';
 				return false;
 			}
 
@@ -170,6 +165,26 @@ class ProfileManager extends Manager{
 			//Some erroring setting
 			return false;
 		}
+	}
+
+	private function authenticateUsingPasswordOld($pwdStr){
+		$status = false;
+		if($pwdStr){
+			$sql = 'SELECT uid, firstname, username FROM users WHERE (password = CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?)))))) AND (username = ? OR email = ?) ';
+
+			if($stmt = $this->conn->prepare($sql)){
+				if($stmt->bind_param('sss', $pwdStr, $this->userName, $this->userName)){
+					$stmt->execute();
+					$stmt->bind_result($this->uid, $this->displayName, $this->userName);
+					if($stmt->fetch()) $status = true;
+					$stmt->close();
+				}
+				else echo 'error binding parameters: '.$stmt->error;
+			}
+			else echo 'error preparing statement: '.$this->conn->error;
+		}
+		if(!$status) $this->checkResetRequired();
+		return $status;
 	}
 
 	private function authenticateLoginAs(){
@@ -311,38 +326,7 @@ class ProfileManager extends Manager{
 		return $status;
 	}
 
-	public function changePassword($newPwd, $oldPwd = "", $isSelf = 0) {
-		if($GLOBALS['USE_BCRYPT'] ?? false) {
-			return $this->changePasswordBcrypt($newPwd, $oldPwd, $isSelf);
-		} else {
-			return $this->changePasswordOld($newPwd, $oldPwd, $isSelf);
-		}
-	}
-
-	public function changePasswordOld ($newPwd, $oldPwd = "", $isSelf = 0) {
-		if($newPwd){
-			$this->resetConnection();
-			if($isSelf){
-				$testStatus = true;
-				$sql = 'SELECT uid FROM users WHERE (uid = ?) AND (password = CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?))))))';
-				if($stmt = $this->conn->prepare($sql)){
-					$stmt->bind_param('is', $this->uid, $oldPwd);
-					$stmt->execute();
-					$stmt->store_result();
-					if(!$stmt->num_rows){
-						$testStatus = false;
-					}
-					$stmt->close();
-					if(!$testStatus) return false;
-				}
-			}
-			if(!$this->testAgainstPrevious($newPwd)) return false;
-			if($this->updatePassword($this->uid, $newPwd)) return true;
-		}
-		return false;
-	}
-
-	public function changePasswordBcrypt($newPwd, $oldPwd = "", $isSelf = 0) {
+	public function changePassword($newPwd, $oldPwd = '', $isSelf = 0) {
 		if(!$newPwd) return false;
 
 		$this->resetConnection();
@@ -384,7 +368,6 @@ class ProfileManager extends Manager{
 		if($un && $newPassword){
 			$uid = 0;
 			$email = '';
-			$un = $this->cleanInStr($un);
 			$sql = 'SELECT uid, email FROM users WHERE (username = ?) OR (email = ?)';
 			if($stmt = $this->conn->prepare($sql)){
 				$stmt->bind_param('ss', $un, $un);
@@ -405,8 +388,8 @@ class ProfileManager extends Manager{
 				$body = 'Your '.$GLOBALS['DEFAULT_TITLE'].' password has been reset to: '.$newPassword.'<br/><br/> '.
 					'After logging in, you can change your password by clicking on the My Profile link within the site menu and then selecting the Edit Profile tab. '.
 					'If you have problems, contact the System Administrator: '.$GLOBALS['ADMIN_EMAIL'].'<br/><br/>'.
-					'Data portal: <a href="' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '/">' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a><br/>'.
-					'Direct link to your user profile: <a href="' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '/profile/viewprofile.php?tabindex=2">' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '/profile/viewprofile.php</a>';
+					'Data portal: <a href="' . $serverPath . '/">' . $serverPath . '</a><br/>'.
+					'Direct link to your user profile: <a href="' . $serverPath . '/profile/viewprofile.php?tabindex=2">' . $serverPath . '/profile/viewprofile.php</a>';
 
 				if($this->sendEmail($email, $subject, $body, $from)){
 					$this->resetConnection();
@@ -423,28 +406,7 @@ class ProfileManager extends Manager{
 		return $status;
 	}
 
-	private function updatePassword($uid, $newPassword){
-		if($GLOBALS['USE_BCRYPT'] ?? false) {
-			return $this->updatePasswordBcrypt($uid, $newPassword);
-		} else {
-			return $this->updatePasswordOld($uid, $newPassword);
-		}
-	}
-
-	private function updatePasswordOld($uid, $newPassword){
-		$status = false;
-		$sql = 'UPDATE users SET password = CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?))))) WHERE (uid = ?)';
-		if($stmt = $this->conn->prepare($sql)){
-			$stmt->bind_param('si', $newPassword, $uid);
-			$stmt->execute();
-			if(!$stmt->error) $status = true;
-			else $this->errorMessage = $stmt->error;
-			$stmt->close();
-		}
-		return $status;
-	}
-
-	private function updatePasswordBcrypt(int $uid, string $newPassword): bool {
+	private function updatePassword(int $uid, string $newPassword): bool{
 		$status = false;
 		$sql = 'UPDATE users SET password = ? WHERE (uid = ?)';
 		$hash = $this->hash($newPassword);
@@ -459,14 +421,16 @@ class ProfileManager extends Manager{
 		return $status;
 	}
 
-	private function generateNewPassword(){
-		// generate new random password
-		$newPassword = "";
-		$alphabet = str_split("0123456789abcdefghijklmnopqrstuvwxyz");
-		for($i = 0; $i<10; $i++) {
-			$newPassword .= $alphabet[rand(0,count($alphabet)-1)];
+	private function generateNewPassword(int $length = 13): string {
+		$alphabet = '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ!#%&';
+		$alphabetLength = strlen($alphabet);
+
+		$password = '';
+		for ($i = 0; $i < $length; $i++) {
+			$password .= $alphabet[random_int(0, $alphabetLength - 1)];
 		}
-		return $newPassword;
+
+		return $password;
 	}
 
 	/**
@@ -513,18 +477,12 @@ class ProfileManager extends Manager{
 		$initialDynamicProperties['accessibilityPref'] = $isAccessiblePreferred === "1" ? true : false;
 		$jsonDynProps = json_encode($initialDynamicProperties);
 
-		$sql = 'INSERT INTO users(username, password, email, firstName, lastName, title, institution, country, city, state, zip, guid, dynamicProperties) VALUES(?,CONCAT(\'*\', UPPER(SHA1(UNHEX(SHA1(?))))),?,?,?,?,?,?,?,?,?,?,?)';
+		$sql = 'INSERT INTO users(username, password, email, firstName, lastName, title, institution, country, city, state, zip, guid, dynamicProperties) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
+		$hash = $this->hash($pwd);
 
-		$hash = $pwd;
-
-		if($GLOBALS['USE_BCRYPT'] ?? false) {
-			$sql = 'INSERT INTO users(username, password, email, firstName, lastName, title, institution, country, city, state, zip, guid, dynamicProperties) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)';
-			$hash = $this->hash($pwd);
-
-			if(!$hash) {
-				$this->errorMessage = 'ERROR inserting new user: Failed to encrypt password';
-				return $status;
-			}
+		if(!$hash) {
+			$this->errorMessage = 'ERROR inserting new user: Failed to encrypt password';
+			return $status;
 		}
 
 		$this->resetConnection();
@@ -547,9 +505,6 @@ class ProfileManager extends Manager{
 		else $this->errorMessage = 'ERROR inserting new user: '.$this->conn->error;
 
 		return $status;
-	}
-
-	private function registerOld(array $userOptions) {
 	}
 
 	public function lookupUserName($emailAddr){
@@ -577,7 +532,7 @@ class ProfileManager extends Manager{
 		if($loginStr){
 			$subject = $GLOBALS['DEFAULT_TITLE'].' Login Name';
 			$serverPath = GeneralUtil::getDomain().$GLOBALS['CLIENT_ROOT'];
-			$bodyStr = 'Your '.$GLOBALS['DEFAULT_TITLE'].' (<a href="' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">' . htmlspecialchars($serverPath, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a>) login name is: '.
+			$bodyStr = 'Your '.$GLOBALS['DEFAULT_TITLE'].' (<a href="' . $serverPath . '">' . $serverPath . '</a>) login name is: '.
 				$loginStr.'<br/><br/>If you continue to have login issues, contact the System Administrator: '.$GLOBALS['ADMIN_EMAIL'];
 			$status = $this->sendEmail($emailAddr, $subject, $bodyStr, $from);
 		}
@@ -917,7 +872,7 @@ class ProfileManager extends Manager{
 			if($tidArr){
 				foreach($tidArr as $tid => $taxonName){
 					echo '<div style="margin:10px;">';
-					echo '<div><b><u>'.$taxonName.'</u></b></div>';
+					echo '<div><b><u>' . Sanitize::outString($taxonName) . '</u></b></div>';
 					echo '<ul style="margin:10px;">';
 					$sql = 'SELECT DISTINCT o.occid, o.catalognumber, IFNULL(o.sciname,t.sciname) as sciname, o.stateprovince, '.
 						'CONCAT_WS("-",IFNULL(o.institutioncode,c.institutioncode),IFNULL(o.collectioncode,c.collectioncode)) AS collcode '.
@@ -933,9 +888,9 @@ class ProfileManager extends Manager{
 					$rs = $this->conn->query($sql);
 					if($rs->num_rows){
 						while($r = $rs->fetch_object()){
-							echo '<li><i>'.$r->sciname.'</i>, ';
-							echo '<a href="../collections/editor/occurrenceeditor.php?occid=' . htmlspecialchars($r->occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" target="_blank">';
-							echo $r->catalognumber.'</a> ['.$r->collcode.']'.($r->stateprovince?', '.$r->stateprovince:'');
+							echo '<li><i>' . Sanitize::outString($r->sciname) . '</i>, ';
+							echo '<a href="../collections/editor/occurrenceeditor.php?occid=' . $r->occid . '" target="_blank">';
+							echo Sanitize::outString($r->catalognumber) . '</a> [' . Sanitize::outString($r->collcode). ']' . ($r->stateprovince ? ', ' . Sanitize::outString($r->stateprovince) : '');
 							echo '</li>'."\n";
 						}
 					}
@@ -968,8 +923,8 @@ class ProfileManager extends Manager{
 			if($rs->num_rows){
 				while($r = $rs->fetch_object()){
 					echo '<li>';
-					echo '<a href="../collections/editor/occurrenceeditor.php?occid=' . htmlspecialchars($r->occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" target="_blank">';
-					echo $r->catalognumber.'</a> ['.$r->collcode.']'.($r->stateprovince?', '.$r->stateprovince:'');
+					echo '<a href="../collections/editor/occurrenceeditor.php?occid=' . $r->occid . '" target="_blank">';
+					echo Sanitize::outString($r->catalognumber) . '</a> [' . Sanitize::outString($r->collcode) . ']' . ($r->stateprovince?', ' . Sanitize::outString($r->stateprovince):'');
 					echo '</li>'."\n";
 				}
 			}
@@ -1015,10 +970,10 @@ class ProfileManager extends Manager{
 					$pkArr['collections'][$role][$tablePK]['CollectionCode'] = $collectionCode;
 					$pkArr['collections'][$role][$tablePK]['InstitutionCode'] = $institutionCode;
 				}
-				elseif($r->role == 'ClAdmin'){
+				elseif($role == 'ClAdmin'){
 					$pkArr['checklists'][$role][$tablePK]['ChecklistName'] = $name;
 				}
-				elseif($r->role == 'ProjAdmin'){
+				elseif($role == 'ProjAdmin'){
 					$pkArr['projects'][$role][$tablePK]['ProjectName'] = $projName;
 				}
 				else{
@@ -1126,10 +1081,10 @@ class ProfileManager extends Manager{
 		$sql = 'SELECT collid, institutioncode, collectioncode, collectionname, colltype FROM omcollections WHERE collid IN('.$collidStr.') ORDER BY collectionname';
 		if($rs = $this->conn->query($sql)){
 			while($r = $rs->fetch_object()){
-				$retArr[$r->collid]['collectionname'] = $r->collectionname;
-				$retArr[$r->collid]['collectioncode'] = $r->collectioncode;
-				$retArr[$r->collid]['institutioncode'] = $r->institutioncode;
-				$retArr[$r->collid]['colltype'] = $r->colltype;
+				$retArr[$r->collid]['collectionname'] = Sanitize::outString($r->collectionname);
+				$retArr[$r->collid]['collectioncode'] = Sanitize::outString($r->collectioncode);
+				$retArr[$r->collid]['institutioncode'] = Sanitize::outString($r->institutioncode);
+				$retArr[$r->collid]['colltype'] = Sanitize::outString($r->colltype);
 			}
 			$rs->free();
 		}
