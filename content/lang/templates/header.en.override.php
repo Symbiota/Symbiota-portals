@@ -42,6 +42,6 @@ $LANG['H_MENU_LINK_LICH'] = 'Lichen Portal';
 $LANG['H_MENU_LINK_SEINET'] = 'Vascular Plant Portal';
 $LANG['H_MENU_LINK_SYMBHELP'] = 'Symbiota Help Page';
 $LANG['H_MENU_OTHER_TK'] = 'Symbiota toolkit';
-$LANG['H_MENU_ACK'] = 'Acknowledgements';?>
+$LANG['H_MENU_ACK'] = 'Acknowledgements';
 
 ?>

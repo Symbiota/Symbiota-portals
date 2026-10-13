@@ -42,6 +42,6 @@ $LANG['H_MENU_LINK_LICH'] = 'Portal de Líquenes';
 $LANG['H_MENU_LINK_SEINET'] = 'Portal de Plantas Vasculares';
 $LANG['H_MENU_LINK_SYMBHELP'] = 'Página de Ayuda de Symbiota';
 $LANG['H_MENU_OTHER_TK'] = 'Herramientas de Symbiota';
-$LANG['H_MENU_ACK'] = 'Agradecimientos';?>
+$LANG['H_MENU_ACK'] = 'Agradecimientos';
 
 ?>
