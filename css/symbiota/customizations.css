@@ -2,4 +2,47 @@
 Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
- 
+ .brand-name h2 {
+    font-size: calc(var(--brand-font-size) * 0.3);
+  }
+
+  .menu a {
+    display: block;
+    color: black;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+.brand-name h2 {
+  color: var(--header-font-color);
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 5px white;
+}
+
+.welcome-text {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+    text-shadow: 0 0 5px white;
+    font-weight : bold;  
+  }
+
+  .button-secondary > a {
+    color: var(--light-color);
+  }
+
+  .button-tertiary {
+    background-color: none;
+    border: 3px solid var(--bright-color);
+    padding: 0.5rem 0.9rem;
+  }
+
+  .button-tertiary > a {
+    color: var(--darkest-color);
+  }
+
+  .button-secondary {
+    color: var(--light-color);
+  }
