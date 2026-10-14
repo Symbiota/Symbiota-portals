@@ -26,7 +26,7 @@ banner_style.textContent = `
 	    flex-shrink: 0;
 		height: 70px;
 		padding: 10px 28px;
-		background: var(--menu-top-bg-color);
+		background: #b3d3b7;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
