@@ -74,6 +74,24 @@ $LANG['F_READ_DOCS'] = 'read the docs';
 $LANG['F_CONTACT'] = 'or contact the';
 $LANG['F_SSH'] = 'Symbiota Support Hub';
 $LANG['F_POWERED_BY'] = 'Powered by';
+$LANG['F_VARUNA'] = 'VARUNA Project and AFD';
+$LANG['F_VARUNA_LOGO'] = 'VARUNA Project and AFD Logos';
+$LANG['F_MAU'] = 'Mauritius Herbarium';
+$LANG['F_MAU_LOGO'] = 'Mauritius Herbarium Logo';
+$LANG['F_DBEV'] = 'University of Antananarivo Herbarium (DBEV)';
+$LANG['F_DBEV_LOGO'] = 'DBEV Logo';
+$LANG['F_HKM'] = 'National Herbarium of Comoros (HKM)';
+$LANG['F_HKM_LOGO'] = 'HKM Logo';
+$LANG['F_REU'] = 'University of Reunion Herbarium (REU)';
+$LANG['F_REU_LOGO'] = 'REU Logo';
+$LANG['F_TAN'] = 'Botanical and Zoological Garden of Tsimbazaza Herbarium (TAN)';
+$LANG['F_TAN_LOGO'] = 'TAN Logo';
+$LANG['F_CBNM'] = "Conservatoire Botanique National de Mascarin (CBNM)";
+$LANG['F_CBNM_LOGO'] = 'CBNM Logo';
+$LANG['F_SEY'] = "Herbier National des Seychelles (SEY)";
+$LANG['F_SEY_LOGO'] = 'SEY Logo';
+$LANG['F_TEF'] = "FOFIFA: Centre National de la Recherche Appliquée au Développement Rural (TEF)";
+$LANG['F_TEF_LOGO'] = 'TEF Logo';
 
 include('header.en.override.php');
 ?>
