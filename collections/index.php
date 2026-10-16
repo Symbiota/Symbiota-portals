@@ -12,6 +12,9 @@ Language::load([
 
 header("Content-Type: text/html; charset=".$CHARSET);
 
+if($LANG_TAG == 'es'){
+	$catId = '2,1,4,5,6,3,7,8';
+}
 
 $collManager = new OccurrenceManager();
 $collManager->reset();
