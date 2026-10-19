@@ -1,0 +1,239 @@
+:root {
+  --header-bg-image: url("../images/header_cleanup.png");
+  --header-bg-color-opacity: rgba(245, 245, 245, 0.05); /* off-white with 5% opacity */
+  --header-bg-color: rgba(245, 245, 245, 1.00);
+  --header-bg-color-olive: rgba(177, 189, 163, 1);
+  --menu-top-bg-color: rgba(185, 178, 178, 1);
+  --menu-top-font-color: rgba(0, 0, 0, 1);
+  --bright-color: rgba(177, 189, 163, 1);
+  --footer-bg-color: var(--bright-color);
+}
+
+/* Maintenance Banner Styling (no Bootstrap dependency) */
+.maintenance-banner {
+  margin: 0 !important;
+  padding: 0.75rem 1.25rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  text-align: center !important;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Warning style (default) */
+.maintenance-banner {
+  background-color: #fff3cd !important;
+  color: #856404 !important;
+  border-bottom: 1px solid #ffc107 !important;
+}
+
+.maintenance-banner a {
+  color: #856404 !important;
+  text-decoration: underline !important;
+  font-weight: 600 !important;
+}
+
+.maintenance-banner a:hover {
+  opacity: 0.8 !important;
+  text-decoration: underline !important;
+}
+
+/* Ensure the header uses the background image properly */
+header {
+  background-image: var(--header-bg-image) !important;
+  /* background-blend-mode: soft-light !important; */
+  background-position: center center !important;
+  background-size: 100% auto !important;
+  background-repeat: no-repeat !important;
+  background-color: var(--header-bg-color-olive) !important;
+  position: relative !important;
+
+  /* Add padding for the inset border space */
+  padding: 6px !important;
+
+  /* Create gradient that fades from transparent to off-white */
+  /*
+  background:
+    linear-gradient(to right,
+      transparent 50%,
+      rgba(245, 245, 245, 0.9) 100%
+    ),
+    var(--header-bg-image) !important;
+    */
+
+  /* Add inset border */
+  box-shadow: inset 0 0 0 2px rgba(177, 189, 163, 0.5) !important;
+}
+
+.top-wrapper {
+  background-color: var(--header-bg-color) !important;
+}
+
+/* Header mast title styling */
+.header-mast-title {
+  font-size: 3.0em !important;  /* Added !important to ensure override */
+}
+
+.header-mast-title .dark {
+  color: #000000 !important;
+  text-shadow:
+    1px 1px 1px rgba(177, 189, 163, 0.9),
+    -1px 1px 1px rgba(177, 189, 163, 0.9),
+    1px -1px 1px rgba(177, 189, 163, 0.9),
+    -1px -1px 1px rgba(177, 189, 163, 0.9) !important;
+}
+
+/* Specifically target the span with light class inside header-mast-title */
+.header-mast-title {
+  color: #f5f5f5 !important;
+  text-shadow:
+    -1px -1px 1px rgba(3, 3, 3, 0.9),
+    1px -1px 1px rgba(3, 3, 3, 0.9),
+    -1px 1px 1px rgba(3, 3, 3, 0.9),
+    1px 1px 1px rgba(3, 3, 3, 0.9) !important;
+}
+
+.top-wrapper {
+  background-color: var(--header-bg-color-opacity) !important;
+}
+
+/* Menu styling updates */
+nav.top-menu {
+    color: var(--menu-top-font-color) !important;
+    border: 1px solid rgba(177, 189, 163, 0.5) !important;  /* Thin border using olive color */
+    background: linear-gradient(
+        to top,
+        rgba(185, 178, 178, 1) 0%,        /* Starting with your menu color */
+        rgba(185, 178, 178, 1) 40%,       /* Hold solid through middle */
+        rgba(245, 245, 245, 0.95) 100%    /* Fade to light at bottom */
+    ) !important;
+}
+
+/* Ensure menu items inherit the darker color */
+nav.top-menu a,
+nav.top-menu li {
+    color: rgba(0, 0, 0, 0.8) !important;  /* Slightly softer than pure black */
+}
+
+/* Enhance dropdown menus to match the style */
+nav.top-menu > ul > li:hover > ul,
+nav.top-menu > ul > li:focus-within > ul {
+    border: 1px solid rgba(177, 189, 163, 0.5) !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(185, 178, 178, 1) 0%,
+        rgba(245, 245, 245, 0.95) 100%
+    ) !important;
+}
+
+/* Menu item hover effects */
+nav.top-menu li:hover,
+nav.top-menu li:focus-within {
+    background: linear-gradient(
+        to bottom,
+        rgba(245, 245, 245, 0.95) 0%,    /* Light at top */
+        rgba(185, 178, 178, 1) 100%      /* Fade to menu color at bottom */
+    ) !important;
+    border-radius: 3px !important;        /* Slightly rounded corners */
+    transition: all 0.2s ease-out !important;
+}
+
+/* Ensure text remains dark on hover */
+nav.top-menu li:hover > a,
+nav.top-menu li:focus-within > a {
+    color: rgba(0, 0, 0, 0.9) !important;  /* Slightly darker on hover */
+}
+
+/* Style for dropdown menu items on hover */
+nav.top-menu > ul > li:hover > ul li:hover,
+nav.top-menu > ul > li:focus-within > ul li:hover {
+    background: linear-gradient(
+        to bottom,
+        rgba(245, 245, 245, 0.95) 0%,
+        rgba(185, 178, 178, 1) 100%
+    ) !important;
+}
+
+nav.top-menu {
+    padding-top: 0.3rem !important;      /* Adjust these padding values */
+    padding-bottom: 0.3rem !important;    /* to control the height */
+    /* OR use explicit height: */
+    /* height: 3rem !important; */        /* Uncomment and adjust this value if you prefer fixed height */
+    min-height: 2rem !important;          /* Ensures minimum height even with content */
+}
+
+/* Adjust the menu items vertical alignment if needed */
+nav.top-menu ul.menu > li {
+    padding-top: 0.25rem !important;      /* Fine-tune item vertical positioning */
+    padding-bottom: 0.25rem !important;
+}
+
+/* Optional: Add subtle shadow for depth */
+.menu-wrapper {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Add dark halo to light text on hover */
+.ui-tabs-nav > *:hover,
+.sidepanel .menu > *:hover,
+button:hover {
+    text-shadow:
+        -1px -1px 1px rgba(0, 0, 0, 0.7),
+        1px -1px 1px rgba(0, 0, 0, 0.7),
+        -1px 1px 1px rgba(0, 0, 0, 0.7),
+        1px 1px 1px rgba(0, 0, 0, 0.7) !important;
+    transition: text-shadow 0.0s ease-out;
+}
+
+.ui-tabs-nav > *:hover,
+.sidepanel .menu > *:hover,
+button:hover {
+    color: var(--bright-color) !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 768px) {
+  .header-mast-title {
+    font-size: 2em !important;
+  }
+}
+
+.brand-name {
+    /* Tighter blur container */
+    display: inline-flex !important;      /* Only take up needed space */
+    flex-direction: column !important;
+    width: auto !important;               /* Let content determine width */
+    height: auto !important;
+    padding: 0.75rem 1.5rem !important;   /* Reduced padding */
+
+    /* Blur effect */
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .brand-name {
+        width: 100% !important;           /* Full width container */
+        background: rgba(255, 255, 255, 0.1) !important;  /* More transparent */
+        backdrop-filter: blur(12px) !important;           /* Stronger blur */
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-radius: 0 !important;      /* Remove border radius */
+        padding: 1rem !important;         /* Adjust padding */
+        margin: 0 !important;             /* Remove margins */
+
+        /* Position against header */
+        position: relative !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    .brand-name h1,
+    .brand-name h2 {
+        text-align: center !important;    /* Center text on mobile */
+    }
+}
