@@ -17,7 +17,7 @@ $LANG['H_HOME_WELCOME'] = 'Welcome to the Mycology Collections data Portal';
 $LANG['H_HOME_SUMMARY'] = 'The Mycology Collections data Portal (MyCoPortal) is more than just a web site - it is a suite of user-friendly, web-based data access technologies to aid taxonomists, field biologists, ecologists, educators, and citizen scientists in the study of fungal diversity.  The data are derived from a network of universities, botanical gardens, museums, and agencies that provide taxonomic, environmental, and specimen-based information.  Using the Symbiota (<a href="https://symbiota.org" target="_blank">https://symbiota.org</a>) system of virtual online floras, these data are directly accessible to dynamically generate geo-referenced species checklists, distribution maps, and interactive identification keys, all linked with a rich collection of digital imagery documenting fungal diversity of North America.';
 $LANG['H_ADVANCED_SEARCH'] = 'Advanced Search';
 $LANG['H_MENU_EXPLORE'] = 'Explore';
-$LANG['H_MENU_EXSICCATI'] = 'Exsicatti';
+$LANG['H_MENU_EXSICCATI'] = 'Exsiccatae';
 $LANG['H_MENU_CROWDSOURCE'] = 'Crowdsource';
 $LANG['H_MENU_CROWDSOURCE_GETINVOLVED'] = 'Get Involved';
 $LANG['H_MENU_CROWDSOURCE_SCOREBOARD'] = 'Score Board';
