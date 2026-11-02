@@ -1,5 +1,6 @@
 /config/dbconnection.php
 /config/symbini.php
+temp/cap_storage.json
 /temp
 .project
 .settings/org.eclipse.core.resources.prefs
