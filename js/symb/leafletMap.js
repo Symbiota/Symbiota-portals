@@ -90,6 +90,8 @@ class LeafletMap {
       drawColor: this.DEFAULT_SHAPE_OPTIONS,
       lang: "en",
    };
+
+   HIGH_RECORD_THRESHOLD=10000;
    
    /* To Hold Reference to Leaflet Map */
    mapLayer;
@@ -243,7 +245,7 @@ class LeafletMap {
 				"Satellite": Esri_WorldImagery,
 			};
 			const overlays = {
-				"Macrostrat": L.layerGroup([macro_strat])
+				"Geology": L.layerGroup([macro_strat])
 			}
 
 			for(let layer of geoJSONLayers) {
@@ -673,7 +675,8 @@ class LeafletMap {
       this.drawLayer = drawnItems;
       this.mapLayer.addLayer(drawnItems);
 
-	  L.Draw.Polygon.prototype.options.shapeOptions.draggable = true;
+      // Disable this flag, because it causes the "polygon movable outside of edit mode" bug
+	   // L.Draw.Polygon.prototype.options.shapeOptions.draggable = true;
 
       //Jank workaround for leaflet-draw api
       const setDrawColor = (drawOption) => {

@@ -2,7 +2,7 @@
 include_once('../config/symbini.php');
 include_once($SERVER_ROOT . '/classes/ChecklistManager.php');
 include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
-require_once($SERVER_ROOT . '/vendor/phpoffice/phpword/bootstrap.php');
+require_once($SERVER_ROOT . '/vendor/autoload.php');
 
 header('Content-Type: text/html; charset=' . $CHARSET);
 ini_set('max_execution_time', 240); //240 seconds = 4 minutes
@@ -36,7 +36,7 @@ if($thesFilter) $clManager->setThesFilter($thesFilter);
 if($taxonFilter) $clManager->setTaxonFilter($taxonFilter);
 if($searchCommon){
 	$showCommon = 1;
-	$clManager->setSearchCommon();
+	$clManager->setSearchCommon(true);
 }
 if($searchSynonyms) $clManager->setSearchSynonyms(true);
 if($showAuthors) $clManager->setShowAuthors(true);
@@ -176,8 +176,12 @@ if($showImages){
 	}
 }
 else{
-	$voucherArr = $clManager->getVoucherArr();
-	$externalVouchers = $clManager->getExternalVoucherArr();
+	$voucherArr = array();
+	$externalVouchers = array();
+	if($showVouchers){
+		$voucherArr = $clManager->getVoucherArr();
+		$externalVouchers = $clManager->getExternalVoucherArr();
+	}
 
 	foreach($taxaArray as $tid => $sppArr){
 		if(!$showAlphaTaxa){

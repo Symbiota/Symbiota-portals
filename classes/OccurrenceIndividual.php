@@ -54,8 +54,7 @@ class OccurrenceIndividual extends Manager{
 						if($propArr = json_decode($this->metadataArr['dynamicproperties'], true)) {
 							if(isset($propArr['editorProps']['modules-panel'])) {
 								foreach($propArr['editorProps']['modules-panel'] as $k => $modArr) {
-									if(isset($modArr['paleo']['status'])) $this->activeModules['paleo'] = true;
-									elseif (isset($modArr['matSample']['status'])) $this->activeModules['matSample'] = true;
+									if (isset($modArr['matSample']['status'])) $this->activeModules['matSample'] = true;
 								}
 							}
 						}
@@ -280,7 +279,7 @@ class OccurrenceIndividual extends Manager{
 					$tnUrl = $row->thumbnailurl;
 					$lgUrl = $row->originalurl;
 					if($MEDIA_DOMAIN){
-						if(substr($url,0,1)=='/') $url = $MEDIA_DOMAIN . $url;
+						if($url && substr($url,0,1)=='/') $url = $MEDIA_DOMAIN . $url;
 						if($lgUrl && substr($lgUrl, 0, 1) == '/') $lgUrl = $MEDIA_DOMAIN . $lgUrl;
 						if($tnUrl && substr($tnUrl, 0, 1) == '/') $tnUrl = $MEDIA_DOMAIN . $tnUrl;
 					}
@@ -1068,17 +1067,17 @@ class OccurrenceIndividual extends Manager{
 			}
 		}
 
-		$sql2 = 'SELECT datasetid, name, uid FROM omoccurdatasets ';
+		$sql2 = 'SELECT datasetid, IFNULL(datasetName, name) as datasetName, uid FROM omoccurdatasets ';
 		if(!$GLOBALS['IS_ADMIN'] && is_numeric($GLOBALS['SYMB_UID'])){
 			//Only get datasets for current user. Once we have appied isPublic tag, we can extend display to all public datasets
 			$sql2 .= 'WHERE (uid = '.$GLOBALS['SYMB_UID'].') ';
 			if($roleArr) $sql2 .= 'OR (datasetid IN('.implode(',',array_keys($roleArr)).')) ';
 		}
-		$sql2 .= 'ORDER BY name';
+		$sql2 .= 'ORDER BY datasetName, name';
 		$rs2 = $this->conn->query($sql2);
 		if($rs2){
 			while($r2 = $rs2->fetch_object()){
-				$retArr[$r2->datasetid]['name'] = $r2->name;
+				$retArr[$r2->datasetid]['name'] = $r2->datasetName;
 				$roleStr = '';
 				if(isset($GLOBALS['SYMB_UID']) && $GLOBALS['SYMB_UID'] == $r2->uid) $roleStr = 'owner';
 				elseif(isset($roleArr[$r2->datasetid]) && $roleArr[$r2->datasetid])  $roleStr = $roleArr[$r2->datasetid];

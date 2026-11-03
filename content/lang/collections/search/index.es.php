@@ -142,6 +142,6 @@ $LANG['FORMATION'] = 'Formación';
 $LANG['MEMBER'] = 'Miembro';
 $LANG['BED'] = 'Estrato';
 $LANG['POLYGONS'] = 'Polígonos';
-$LANG['NO_POLYGONS_FOUND'] = 'No se encontraron polígonos que se puedan buscar en el tesauro.';
+$LANG['SYNONYM_NOTE'] = 'Al buscar unidades taxonómicas de orden superior, el conjunto de resultados se limita a los taxones hijos aceptados del taxón de rango superior especificado y sus sinónimos.';
 
 ?>

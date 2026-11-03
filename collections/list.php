@@ -23,7 +23,7 @@ if ($comingFrom != 'harvestparams' && $comingFrom != 'newsearch') {
 	$comingFrom = !empty($SHOULD_USE_HARVESTPARAMS) ? 'harvestparams' : 'newsearch';
 }
 
-$_SESSION['datasetid'] = filter_var($datasetid, FILTER_SANITIZE_NUMBER_INT);
+$_SESSION['datasetid'] = $datasetid;
 
 $collManager = new OccurrenceListManager();
 $searchVar = $collManager->getQueryTermStr();
@@ -106,6 +106,7 @@ $_SESSION['citationvar'] = $searchVar;
 </head>
 
 <body>
+	<div id="all_collections_parent_container" data-config='<?= json_encode(['CURRENT_URL' => Sanitize::outString($_SERVER['REQUEST_URI'])]) ?>'></div>
 	<div id="service-container" data-search-var="<?= $searchVar; ?>"></div>
 	<?php
 	$displayLeftMenu = (isset($collections_listMenu) ? $collections_listMenu : false);
@@ -199,7 +200,7 @@ $_SESSION['citationvar'] = $searchVar;
 							</form>
 						</span>
 						<span>
-							<button class="icon-button" onclick="copyUrl()" aria-label="<?= $LANG['COPY_TO_CLIPBOARD'] ?>" title="<?= $LANG['COPY_TO_CLIPBOARD'] ?>">
+							<button class="icon-button" onclick="copyUrl('<?= htmlspecialchars($comingFrom, ENT_QUOTES, 'UTF-8'); ?>')" aria-label="<?= $LANG['COPY_TO_CLIPBOARD'] ?>" title="<?= $LANG['COPY_TO_CLIPBOARD'] ?>">
 								<svg style="width:1.3em;height:1.3em" alt="<?= $LANG['IMG_COPY']; ?>" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
 									<path d="M440-280H280q-83 0-141.5-58.5T80-480q0-83 58.5-141.5T280-680h160v80H280q-50 0-85 35t-35 85q0 50 35 85t85 35h160v80ZM320-440v-80h320v80H320Zm200 160v-80h160q50 0 85-35t35-85q0-50-35-85t-85-35H520v-80h160q83 0 141.5 58.5T880-480q0 83-58.5 141.5T680-280H520Z" />
 								</svg>
@@ -209,6 +210,7 @@ $_SESSION['citationvar'] = $searchVar;
 					<div style="margin:5px;">
 						<?php
 						$collSearchStr = $collManager->getCollectionSearchStr();
+						if(!empty($LANG[$collSearchStr])) $collSearchStr = $LANG[$collSearchStr];
 						if (strlen($collSearchStr) > 100) {
 							$collSearchArr = explode('; ', $collSearchStr);
 							$collSearchStr = '';
@@ -374,9 +376,13 @@ $_SESSION['citationvar'] = $searchVar;
 									}
 									$targetClid = $collManager->getSearchTerm("targetclid");
 									if (isset($fieldArr['has_image']) && $fieldArr['has_image']) {
+										if($MEDIA_DOMAIN && isset($fieldArr['media']['thumbnail']) && (substr($fieldArr['media']['thumbnail'], 0, 4) != 'http')){
+											$thumbnail = $MEDIA_DOMAIN . $fieldArr['media']['thumbnail'];
+										}
+										else $thumbnail = $fieldArr['media']['thumbnail'];
 										echo '<div style="float:right;margin:5px 25px;">';
 										echo '<a href="#" onclick="return openIndPU(' . $occid . ',' . ($targetClid ? $targetClid : "0") . ');">';
-										echo '<img src="' . $fieldArr['media']['thumbnail'] . '" style="height:70px" alt="' . (isset($LANG['IMG_OCC']) ? $LANG['IMG_OCC'] : 'Image Associated With the Occurrence') . '" 
+										echo '<img src="' . $thumbnail . '" style="height:70px" alt="' . (isset($LANG['IMG_OCC']) ? $LANG['IMG_OCC'] : 'Image Associated With the Occurrence') . '"
 											onerror="this.onerror=null; this.src=\'' . $CLIENT_ROOT . '/images/image-icon.svg\';" />';
 										echo '</a></div>';
 									}

@@ -83,7 +83,7 @@ if($SYMB_UID){
 			//Setup header map
 			$recArr = $uploadManager->getPendingImportData(($recLimit*$pageIndex),$recLimit,$searchVar);
 			if($recArr){
-				$excludeKeys = ['eon', 'era', 'period', 'epoch', 'stage'];
+				$excludeKeys = ['paleo_eon', 'paleo_era', 'paleo_period', 'paleo_epoch', 'paleo_stage'];
 				//Check to see which headers have values
 				$headerArr = array();
 				$matSampleHeaderArr = array();
@@ -97,6 +97,8 @@ if($SYMB_UID){
 									}
 								}
 							}
+							elseif (strpos($k, 'paleo_') === 0)
+								$headerArr[$k] = substr($k, 6);
 							else $headerArr[$k] = $k;
 						}
 					}
@@ -106,7 +108,7 @@ if($SYMB_UID){
 					$headerArr[$matFieldName] = $matFieldName;
 				}
 				$translationMap = array('catalognumber' => 'catalogNumber','occurrenceid' => 'occurrenceID','othercatalognumbers' => 'otherCatalogNumbers',
-					'identificationqualifier' => 'identificationQualifier','sciname' => 'scientificName','scientificnameauthorship'=>'scientificNameAuthorship',
+					'identificationqualifier' => 'identificationQualifier','scientificname' => 'scientificName-input','sciname' => 'scientificName','scientificnameauthorship'=>'scientificNameAuthorship',
 					'recordedby' => 'recordedBy (collector)','recordnumber' => 'Number','associatedcollectors' => 'associatedCollectors','eventdate' => 'eventDate',
 					'verbatimeventdate' => 'verbatimEventDate','identificationremarks' => 'identificationRemarks','taxonremarks' => 'taxonRemarks','identifiedby' => 'identifiedBy',
 					'dateidentified' => 'dateIdentified','identificationreferences' => 'identificationReferences','stateprovince' => 'stateProvince',

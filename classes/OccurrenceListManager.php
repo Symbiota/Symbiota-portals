@@ -25,20 +25,22 @@ class OccurrenceListManager extends OccurrenceManager{
 		}
 		$occArr = array();
 		$sqlWhere = $this->getSqlWhere();
+
 		if(!$this->recordCount || $this->reset) $this->setRecordCnt($sqlWhere);
+
 		$sql = "";
 		if (array_key_exists("earlyInterval",$this->searchTermArr) || array_key_exists("lateInterval",$this->searchTermArr)) {
 			$sql .= "WITH searchRange AS (SELECT COALESCE((SELECT myaStart FROM omoccurpaleogts WHERE gtsterm = '"  . ($this->searchTermArr["earlyInterval"] ?? '') . "'), 5000) AS searchStart,";
 			$sql .= "COALESCE((SELECT myaEnd FROM omoccurpaleogts WHERE gtsterm = '" . ($this->searchTermArr["lateInterval"] ?? '') ."'), 0) AS searchEnd)";
 		}
 		$sql .= 'SELECT o.occid, c.collid, c.institutioncode, c.collectioncode, c.collectionname, c.icon, o.institutioncode AS instcodeoverride, o.collectioncode AS collcodeoverride, '.
-			'o.catalognumber, o.family, o.sciname, o.scientificnameauthorship, o.tidinterpreted, o.recordedby, o.recordnumber, o.eventdate, '.
+			'o.catalognumber, o.family, o.sciname, o.scientificnameauthorship, o.tidinterpreted, o.recordedby, o.recordnumber, o.eventdate, o.eventtime, '.
 			'o.country, o.stateprovince, o.county, o.locality, o.decimallatitude, o.decimallongitude, o.recordsecurity, o.securityreason, '.
 			'o.habitat, o.substrate, o.minimumelevationinmeters, o.maximumelevationinmeters, o.observeruid, c.sortseq ';
 		if (!empty($GLOBALS['ACTIVATE_PALEO']) && $sqlWhere)
 			$sql .= ', paleo.formation, paleo.earlyInterval, paleo.lateInterval ';
 		$sql .= 'FROM omoccurrences o INNER JOIN omcollections c ON o.collid = c.collid ';
-		$sql .= $this->getTableJoins($sqlWhere).$sqlWhere;
+		$sql .= $this->getTableJoins($sqlWhere, true) . $sqlWhere;
 		//Don't allow someone to query all occurrences if there are no conditions
 		if(!$sqlWhere) $sql .= 'WHERE o.occid IS NULL ';
 		if($this->sortArr){
@@ -104,6 +106,7 @@ class OccurrenceListManager extends OccurrenceManager{
 					$retArr[$row->occid]['declong'] = $row->decimallongitude;
 					$retArr[$row->occid]['collnum'] = $this->cleanOutStr($row->recordnumber);
 					$retArr[$row->occid]['date'] = $row->eventdate;
+					$retArr[$row->occid]['eventtime'] = $this->cleanOutStr($row->eventtime);
 					$retArr[$row->occid]['habitat'] = $this->cleanOutStr($row->habitat);
 					$retArr[$row->occid]['substrate'] = $this->cleanOutStr($row->substrate);
 					$elevStr = $row->minimumelevationinmeters;
@@ -186,11 +189,11 @@ class OccurrenceListManager extends OccurrenceManager{
 		$retArr = array();
 		$symbUid = $GLOBALS['SYMB_UID'];
 		if($symbUid){
-			$sql = 'SELECT DISTINCT datasetid, name FROM omoccurdatasets WHERE uid = '.$symbUid.' OR datasetid IN(SELECT tablepk FROM userroles WHERE uid = '.$symbUid.' AND role IN("DatasetAdmin","DatasetEditor"))';
+			$sql = 'SELECT DISTINCT datasetid, IFNULL(datasetName, name) as datasetName FROM omoccurdatasets WHERE uid = '.$symbUid.' OR datasetid IN(SELECT tablepk FROM userroles WHERE uid = '.$symbUid.' AND role IN("DatasetAdmin","DatasetEditor"))';
 			//echo "<div>Count sql: ".$sql."</div>";
 			$rs = $this->conn->query($sql);
 			while($r = $rs->fetch_object()){
-				$retArr[$r->datasetid] = $r->name;
+				$retArr[$r->datasetid] = $r->datasetName;
 			}
 			$rs->free();
 		}

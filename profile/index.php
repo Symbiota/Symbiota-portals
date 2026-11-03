@@ -103,22 +103,18 @@ elseif($action == 'login'){
 }
 elseif($action == 'retrieveLogin'){
 	if($emailAddr){
-		if($pHandler->lookupUserName($emailAddr)){
-			$statusStr = $LANG['LOGIN_EMAILED'] . ': ' . $emailAddr;
+		if(!($pHandler->lookupUserName($emailAddr))){
+			error_log("Login lookup failed for $emailAddr" . ' (' . $pHandler->getErrorMessage() . ')');
 		}
-		else{
-			$statusStr = $LANG['EMAIL_ERROR'] . ' (' . $pHandler->getErrorMessage() . ')<ERR/>';
-		}
+		$statusStr = $LANG['RETRIEVE_RESET_MSG'];
 	}
 }
 elseif($resetPwd){
-	if($email = $pHandler->resetPassword($login)){
-		$statusStr = $LANG['PWD_EMAILED'] . ': ' . $email . '<ERR/>';
+	if(!($email = $pHandler->resetPassword($login))){
+		
+		if($pHandler->getErrorMessage()) error_log('Password reset failed:' . '('.$pHandler->getErrorMessage().')');
 	}
-	else{
-		$statusStr = $LANG['RESET_FAILED'] . '<ERR/>';
-		if($pHandler->getErrorMessage()) $statusStr .= ' ('.$pHandler->getErrorMessage().')';
-	}
+	$statusStr = $LANG['RETRIEVE_RESET_MSG'];
 }
 else{
 	$statusStr = $pHandler->getErrorMessage();
@@ -198,6 +194,11 @@ if (array_key_exists('last_message', $_SESSION)){
 			margin-right: auto;
 		}
 	</style>
+	<?php
+		if ($ENABLE_GLOBAL_CAPTCHA ?? false) {
+			include_once($SERVER_ROOT.'/includes/globalcaptchahead.php');
+		}
+	?>
 </head>
 <body>
 <?php
@@ -273,7 +274,7 @@ include($SERVER_ROOT.'/includes/header.php');
 			<?php
 		}
 		?>
-		<div class="flex-item-login" style="text-align:center">
+		<div class="flex-item-login bottom-breathing-room-rel" style="text-align:center">
 			<?php
 			$shouldBeAbleToCreatePublicUser = $SHOULD_BE_ABLE_TO_CREATE_PUBLIC_USER ?? true;
 			if($shouldBeAbleToCreatePublicUser){
@@ -314,6 +315,23 @@ include($SERVER_ROOT.'/includes/header.php');
 			}
 			?>
 		</div>
+		
+
+		<?php
+			if ($ENABLE_GLOBAL_CAPTCHA ?? false) {
+				?>
+				<div class="flex-item-login" style="text-align:center">
+					<fieldset class="profile-fieldset">
+						<legend class="profile-legend"><?= $LANG['CAPTCHA_INFO'] ?></legend>
+				<?php
+				include_once($SERVER_ROOT.'/includes/globalcaptchabody.php');
+				?>
+					</fieldset>
+				</div>
+				<?php
+			}
+		?>
+		
 	</div>
 </div>
 <?php include($SERVER_ROOT.'/includes/footer.php'); ?>

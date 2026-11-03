@@ -7,6 +7,7 @@ include_once($SERVER_ROOT . '/classes/utilities/GeneralUtil.php');
 include_once($SERVER_ROOT . '/classes/Media.php');
 include_once($SERVER_ROOT . '/classes/TaxonomyEditorManager.php');
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+include_once($SERVER_ROOT . '/classes/OmMaterialSample.php');
 
 Language::load([
 	'collections/individual/index',
@@ -180,7 +181,7 @@ $traitArr = $indManager->getTraitArr();
 	<link href="<?= $CSS_BASE_PATH ?>/symbiota/collections/individual/popup.css" type="text/css" rel="stylesheet" >
 	<script src="<?= $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="<?php echo $CLIENT_ROOT . '/collections/individual/domManipulationUtils.js'; ?>" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT; ?>/js/symb/domManipulationUtils.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		var tabIndex = <?= $tabIndex; ?>;
 		var map;
@@ -678,6 +679,11 @@ $traitArr = $indManager->getTraitArr();
 							}
 							echo '</div>';
 						}
+						if($occArr['eventtime']){
+							echo '<div id="eventtime-div" class="bottom-breathing-room-rel-sm">';
+							echo '<label>'.$LANG['EVENT_TIME'].':</label> '.$occArr['eventtime'];
+							echo '</div>';
+						}
 						if($occArr['verbatimeventdate']){
 							echo '<div id="verbeventid-div" class="bottom-breathing-room-rel-sm"><label>'.$LANG['VERBATIM_DATE'].':</label> '.$occArr['verbatimeventdate'].'</div>';
 						}
@@ -981,6 +987,9 @@ $traitArr = $indManager->getTraitArr();
 
 							<?php
 						}
+						if (isset ($collMetadata['colltype']) && $collMetadata['colltype'] == "Fossil Specimens")
+							if($occArr['basisofrecord']) echo '<div class="bottom-breathing-room-rel-sm"><label>'.$LANG['BASIS_OF_RECORD'].':</label> '.$occArr['basisofrecord'].'</div>';
+
 						if(isset($occArr['exs'])){
 							?>
 							<div id="exsiccati-div" class="bottom-breathing-room-rel-sm">
@@ -1242,7 +1251,7 @@ $traitArr = $indManager->getTraitArr();
 						echo '<div style="margin:5px 15px">';
 						if($occArr['recordedby']) echo '<div>'.$occArr['recordedby'].' '.$occArr['recordnumber'].'<span style="margin-left:40px;">'.$occArr['eventdate'].'</span></div>';
 						if($occArr['catalognumber']) echo '<div><label>'.$LANG['CATALOG_NUMBER'].':</label> '.$occArr['catalognumber'].'</div>';
-						if($occArr['occurrenceid']) echo '<div><label>'.$LANG['GUID'].':</label> '.$occArr['occurrenceid'].'</div>';
+						if($occArr['occurrenceid']) echo '<div><label>'.$LANG['OCCURRENCE_ID'].':</label> '.$occArr['occurrenceid'].'</div>';
 						echo '<div><label>'.$LANG['LATEST_ID'].':</label> ';
 						if(!isset($occArr['taxonsecure'])) echo '<i>'.$occArr['sciname'].'</i> '.$occArr['scientificnameauthorship'];
 						else echo $LANG['SPECIES_PROTECTED'];
@@ -1260,7 +1269,7 @@ $traitArr = $indManager->getTraitArr();
 									echo '<div class="title2-div">'.$dupArr['collname'].' ('.$dupArr['instcode'].($dupArr['collcode']?':'.$dupArr['collcode']:'').')</div>';
 									if($dupArr['recordedby']) echo '<div>'.$dupArr['recordedby'].' '.$dupArr['recordnumber'].'<span style="margin-left:40px;">'.$dupArr['eventdate'].'</span></div>';
 									if($dupArr['catalognumber']) echo '<div><label>'.$LANG['CATALOG_NUMBER'].':</label> '.$dupArr['catalognumber'].'</div>';
-									if($dupArr['occurrenceid']) echo '<div><label>'.$LANG['GUID'].':</label> '.$dupArr['occurrenceid'].'</div>';
+									if($dupArr['occurrenceid']) echo '<div><label>'.$LANG['OCCURRENCE_ID'].':</label> '.$dupArr['occurrenceid'].'</div>';
 									echo '<div><label>'.$LANG['LATEST_ID'].':</label> ';
 									if(!isset($occArr['taxonsecure'])) echo '<i>'.$dupArr['sciname'].'</i> '.$dupArr['author'];
 									else echo $LANG['SPECIES_PROTECTED'];

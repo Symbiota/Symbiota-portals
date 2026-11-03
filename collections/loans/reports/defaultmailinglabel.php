@@ -1,7 +1,7 @@
 <?php
 include_once('../../../config/symbini.php');
 include_once($SERVER_ROOT.'/classes/OccurrenceLoans.php');
-require_once $SERVER_ROOT.'/vendor/phpoffice/phpword/bootstrap.php';
+require_once $SERVER_ROOT.'/vendor/autoload.php';
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/loans/reports/defaultmailinglabel');
@@ -60,7 +60,7 @@ if($outputMode == 'doc'){
 	$textrun = $section->addTextRun('toAddress');
 	$textrun->addText(htmlspecialchars($invoiceArr['contact']),'toAddressFont');
 	$textrun->addTextBreak(1);
-	$institutionCodeStr = !empty($addressArr['institutioncode']) ? ' (' . $addressArr['institutioncode'] . ')' : '';
+	$institutionCodeStr = !empty($invoiceArr['institutioncode']) ? ' (' . $invoiceArr['institutioncode'] . ')' : '';
 	$textrun->addText(htmlspecialchars($invoiceArr['institutionname'] .$institutionCodeStr),'toAddressFont');
 	$textrun->addTextBreak(1);
 	if($invoiceArr['institutionname2']){
@@ -153,7 +153,7 @@ else{
 							<div class="toaddress">
 								<?php
 								echo $invoiceArr['contact'].'<br />';
-								$institutionCodeStr = !empty($addressArr['institutioncode']) ? ' (' . $addressArr['institutioncode'] . ')' : '';
+								$institutionCodeStr = !empty($invoiceArr['institutioncode']) ? ' (' . $invoiceArr['institutioncode'] . ')' : '';
 								echo $invoiceArr['institutionname'] . $institutionCodeStr . '<br />';
 								if($invoiceArr['institutionname2']){
 									echo $invoiceArr['institutionname2'].'<br />';

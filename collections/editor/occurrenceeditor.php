@@ -4,6 +4,21 @@ include_once($SERVER_ROOT . '/classes/utilities/Language.php');
 
 Language::load('collections/editor/occurrenceeditor');
 
+//file upload handle
+include_once $SERVER_ROOT . '/classes/Media.php';
+if (isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > UploadUtil::getMaximumPostSize() && empty($_POST) && empty($_FILES)) {
+	$max_size = UploadUtil::formatBytes(UploadUtil::getMaximumFileUploadSize());
+	$ex = new MediaException(MediaException::ExceedMaxSize, $max_size);
+	$_SESSION['upload_error'] = $ex->getMessage();
+
+	if($_SESSION['occurrenceEditorFallbackUrl']) {
+		header('Location: ' . $_SESSION['occurrenceEditorFallbackUrl']);
+	} else {
+		header('Location: ' . $SERVER_ROOT . '/index.php');
+	}
+    exit;
+}
+
 header('Content-Type: text/html; charset=' . $CHARSET);
 
 $occId = array_key_exists('occid', $_REQUEST) ? filter_var($_REQUEST['occid'], FILTER_SANITIZE_NUMBER_INT) : '';
@@ -22,9 +37,6 @@ if(strpos($action,'Determination') || strpos($action,'Verification')){
 	include_once($SERVER_ROOT.'/classes/OccurrenceEditorDeterminations.php');
 	$occManager = new OccurrenceEditorDeterminations();
 } else{
-	if(strpos($action,'Image')) {
-		include_once($SERVER_ROOT . "/classes/Media.php");
-	}
 	include_once($SERVER_ROOT.'/classes/OccurrenceEditorManager.php');
 	$occManager = new OccurrenceEditorManager();
 }
@@ -52,6 +64,9 @@ $CATNUM_DUPE_CHECK = true;
 $OTHER_CATNUM_DUPE_CHECK = true;
 if($SYMB_UID){
 	//Set variables
+	if($occId && $collId) {
+		$_SESSION['occurrenceEditorFallbackUrl'] = GeneralUtil::getDomain() . '/collections/editor/occurrenceeditor.php?occid=' . $occId . '&collid=' . $collId;
+	}
 	$occManager->setOccId($occId);
 	$occManager->setCollId($collId);
 	$collMap = $occManager->getCollMap();
@@ -70,6 +85,12 @@ if($SYMB_UID){
 		if(!empty($collMap['paleoActivated'])){
 			$collType = 'paleo';
 		}
+	}
+
+	//Check for session errors
+	if (!empty($_SESSION['upload_error'])) {
+		$statusStr = 'ERROR: '. $_SESSION['upload_error'];
+		unset($_SESSION['upload_error']);
 	}
 
 	//Set default option variables, will rework later
@@ -230,7 +251,7 @@ if($SYMB_UID){
 				}
 			}
 			elseif($action == 'Submit Image Edits'){
-				Media::update($_POST['imgid'], $_POST, new LocalStorage());
+				Media::update($_POST['imgid'], $_POST, StorageFactory::make());
 
 				if($errors = Media::getErrors()) {
 					$statusStr = 'ERROR: ' . array_pop($errors);
@@ -247,7 +268,7 @@ if($SYMB_UID){
 
 				try {
 					$occur_map = $occManager->getOccurMap()[$occId];
-					$path = get_occurrence_upload_path(
+					$path = Media::get_occurrence_upload_path(
 						$occur_map['institutioncode'],
 						$occur_map['collectioncode'],
 						$occur_map['catalognumber']
@@ -256,7 +277,7 @@ if($SYMB_UID){
 					Media::uploadAndInsert(
 						$_POST,
 						$_FILES['imgfile'],
-						new LocalStorage($path)
+						StorageFactory::make($path)
 					);
 
 					if($errors = Media::getErrors()) {
@@ -294,14 +315,14 @@ if($SYMB_UID){
 					$target_occur_manager = new OccurrenceEditorManager();
 					$target_occur_manager->setOccId($target_occid);
 					$target_occur_map = $target_occur_manager->getOccurMap()[$target_occid];
-					$remap_path	= get_occurrence_upload_path(
+					$remap_path	= Media::get_occurrence_upload_path(
 						$target_occur_map['institutioncode'],
 						$target_occur_map['collectioncode'],
 						$target_occur_map['catalognumber']
 					);
 
 					$occur_map = $occManager->getOccurMap()[$occId];
-					$current_path = get_occurrence_upload_path(
+					$current_path = Media::get_occurrence_upload_path(
 						$occur_map['institutioncode'],
 						$occur_map['collectioncode'],
 						$occur_map['catalognumber']
@@ -309,8 +330,8 @@ if($SYMB_UID){
 					Media::remap(
 						intval($_POST['imgid']),
 						$target_occid,
-						new LocalStorage($current_path),
-						new LocalStorage($remap_path)
+						StorageFactory::make($current_path),
+						StorageFactory::make($remap_path)
 					);
 
 					$statusStr = $LANG['IMAGE_REMAP_SUCCESS'] .' <a href="occurrenceeditor.php?occid=' . htmlspecialchars($target_occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" target="_blank">' . htmlspecialchars($target_occid, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '</a>';
@@ -351,13 +372,23 @@ if($SYMB_UID){
 				$statusStr = $occManager->deleteChecklistVoucher($_REQUEST['delclid']);
 			}
 			elseif($action == 'editgeneticsubmit'){
-				$statusStr = $occManager->editGeneticResource($_POST);
+				if($occManager->editGeneticResource($_POST)){
+					$statusStr = $LANG['GEN_RESOURCE_EDIT_SUCCESS'];
+				}
+				else $statusStr = $LANG['ERROR_EDITING_GENETIC'] . ': ' . $occManager->getErrorStr();
 			}
 			elseif($action == 'deletegeneticsubmit'){
-				$statusStr = $occManager->deleteGeneticResource($_POST['genid']);
+				if($occManager->deleteGeneticResource($_POST['genid'])){
+					$statusStr = $LANG['GEN_RESOURCE_DEL_SUCCESS'];
+				}
+				else $statusStr = $LANG['ERROR_DELETING_GENETIC'] . ': ' . $occManager->getErrorStr();
+
 			}
 			elseif($action == 'addgeneticsubmit'){
-				$statusStr = $occManager->addGeneticResource($_POST);
+				if($occManager->addGeneticResource($_POST)){
+					$statusStr = $LANG['GEN_RES_ADD_SUCCESS'];
+				}
+				else $statusStr = $LANG['ERROR_ADDING_GEN'] . ': ' . $occManager->getErrorStr();
 			}
 		}
 	}
@@ -430,25 +461,25 @@ if($SYMB_UID){
 
 	if($qryCnt !== false){
 		$navStr = '<b>';
-		if($occIndex > 0) $navStr .= '<a href="#" onclick="return submitQueryForm(0);" title="'.(isset($LANG['FIRST_REC'])?$LANG['FIRST_REC']:'First Record').'">';
+		if($occIndex > 0) $navStr .= '<a href="#" onclick="return submitQueryForm(0);" title="'.(isset($LANG['FIRST_REC']) ? $LANG['FIRST_REC'] : 'First Record').'" aria-label="'.(isset($LANG['FIRST_REC']) ? $LANG['FIRST_REC'] : 'First Record').'">';
 		$navStr .= '|&lt;';
 		if($occIndex > 0) $navStr .= '</a>';
 		$navStr .= '&nbsp;&nbsp;&nbsp;&nbsp;';
-		if($occIndex > 0) $navStr .= '<a href="#" onclick="return submitQueryForm(\'back\');" title="'.(isset($LANG['PREV_REC'])?$LANG['PREV_REC']:'Previous Record').'">';
+		if($occIndex > 0) $navStr .= '<a href="#" onclick="return submitQueryForm(\'back\');" title="'.(isset($LANG['PREV_REC']) ? $LANG['PREV_REC'] : 'Previous Record').'" aria-label="'.(isset($LANG['PREV_REC']) ? $LANG['PREV_REC'] : 'Previous Record').'">';
 		$navStr .= '&lt;&lt;';
 		if($occIndex > 0) $navStr .= '</a>';
 		$recIndex = ($occIndex<$qryCnt?($occIndex + 1):'*');
 		$navStr .= '&nbsp;&nbsp;| '.$recIndex.' of '.$qryCnt.' |&nbsp;&nbsp;';
-		if($occIndex<$qryCnt-1) $navStr .= '<a href="#" onclick="return submitQueryForm(\'forward\');"  title="'.(isset($LANG['NEXT_REC'])?$LANG['NEXT_REC']:'Next Record').'">';
+		if($occIndex<$qryCnt-1) $navStr .= '<a href="#" onclick="return submitQueryForm(\'forward\');"  title="'.(isset($LANG['NEXT_REC']) ? $LANG['NEXT_REC'] : 'Next Record').'" aria-label="'.(isset($LANG['NEXT_REC']) ? $LANG['NEXT_REC'] : 'Next Record').'">';
 		$navStr .= '&gt;&gt;';
 		if($occIndex<$qryCnt-1) $navStr .= '</a>';
 		$navStr .= '&nbsp;&nbsp;&nbsp;&nbsp;';
-		if($occIndex<$qryCnt-1) $navStr .= '<a href="#" onclick="return submitQueryForm('.($qryCnt-1).');" title="'.(isset($LANG['LAST_REC'])?$LANG['LAST_REC']:'Last Record').'">';
+		if($occIndex<$qryCnt-1) $navStr .= '<a href="#" onclick="return submitQueryForm('.($qryCnt-1).');" title="'.(isset($LANG['LAST_REC']) ? $LANG['LAST_REC'] : 'Last Record').'" aria-label="'.(isset($LANG['LAST_REC']) ? $LANG['LAST_REC'] : 'Last Record').'">';
 		$navStr .= '&gt;|';
 		if($occIndex<$qryCnt-1) $navStr .= '</a> ';
 		if(!$crowdSourceMode){
 			$navStr .= '&nbsp;&nbsp;&nbsp;&nbsp;';
-			$navStr .= '<a href="occurrenceeditor.php?gotomode=1&collid=' . htmlspecialchars($collId, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" onclick="return verifyLeaveForm()" title="' . htmlspecialchars((isset($LANG['NEW_REC'])?$LANG['NEW_REC']:'New Record'), ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">&gt;*</a>';
+			$navStr .= '<a href="occurrenceeditor.php?gotomode=1&collid=' . htmlspecialchars($collId, ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" onclick="return verifyLeaveForm()" title="' . htmlspecialchars((isset($LANG['NEW_REC']) ? $LANG['NEW_REC'] : 'New Record'), ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '" aria-label="' . htmlspecialchars((isset($LANG['NEW_REC']) ? $LANG['NEW_REC'] : 'New Record'), ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . '">&gt;*</a>';
 		}
 		$navStr .= '</b>';
 	}
@@ -460,7 +491,7 @@ if($SYMB_UID){
 		$imgCnt = 1;
 		foreach($specImgArr as $imgId => $i2){
 			$iUrl = $i2['url'];
-			if($iUrl == 'empty' && $i2['origurl']) $iUrl = $i2['origurl'];
+			if(empty($iUrl) && $i2['origurl']) $iUrl = $i2['origurl'];
 			if($imgUrlPrefix && substr($iUrl,0,4) != 'http') $iUrl = $imgUrlPrefix.$iUrl;
 			$imgArr[$imgCnt]['mediaid'] = $imgId;
 			$imgArr[$imgCnt]['web'] = $iUrl;
@@ -477,11 +508,11 @@ if($SYMB_UID){
 
 	$isLocked = false;
 	if($occId) $isLocked = $occManager->getLock();
-
 }
 else{
 	header('Location: ../../profile/index.php?refurl=../collections/editor/occurrenceeditor.php?'.htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES));
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
@@ -514,6 +545,7 @@ else{
 		}
 	}
 	include_once($SERVER_ROOT.'/includes/googleanalytics.php');
+	include_once($SERVER_ROOT.'/includes/javascript_lang_tags.php');
 	?>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?php echo $CLIENT_ROOT; ?>/js/jquery-ui.min.js" type="text/javascript"></script>
@@ -562,7 +594,7 @@ else{
 	<script src="../../js/symb/collections.editor.tools.js?ver=1" type="text/javascript"></script>
 	<script src="../../js/symb/collections.editor.imgtools.js?ver=4" type="text/javascript"></script>
 	<script src="../../js/jquery.imagetool-1.7.js?ver=140310" type="text/javascript"></script>
-	<script src="../../js/symb/collections.editor.query.js?ver=6" type="text/javascript"></script>
+	<script defer src="../../js/symb/collections.editor.query.js?ver=7" type="text/javascript"></script>
 </head>
 <body>
 	<div role="main" id="innertext">
@@ -650,7 +682,7 @@ else{
 						</div>
 						<?php if($isEditor && $isEditor != 3):?>
 						<div id="querySymbolDiv" style="margin:5px 5px 5px 0px;">
-							<button class="button-toggle" type="button" onclick="toggleQueryForm(); toggleButtonVisuals(this, 'querydiv', [])">
+							<button class="button-toggle" style="padding: 0.4rem 0.75rem;" type="button" onclick="toggleQueryForm(); toggleButtonVisuals(this, 'querydiv', [])">
 								<?= $LANG['SEARCH_FILTER'] ?>
 							</button>
 						</div>
@@ -795,7 +827,7 @@ else{
 																		<input class="idNameInput" name="idname[]" type="text" value="<?php echo $idArr['name']; ?>" onchange="fieldChanged('idname');" autocomplete="off" />
 																	</div>
 																	<div class="divTableCell">
-																		<input class="idValueInput" name="idvalue[]" type="text" value="<?php echo $idArr['value']; ?>" onchange="fieldChanged('idvalue');" autocomplete="off" /><a href="#" onclick="deleteIdentifier(<?php echo "'".$idKey."',".$occId; ?>);return false" tabindex="-1"><img src="../../images/del.png" /></a>
+																		<input class="idValueInput" name="idvalue[]" type="text" value="<?php echo $idArr['value']; ?>" onchange="fieldChanged('idvalue');" autocomplete="off" /><a href="#" onclick="confirmDeleteIdentifier(<?php echo "'".$idKey."',".$occId; ?>);return false" tabindex="-1"><img src="../../images/del.png" /></a>
 																	</div>
 																</div>
 																<?php
@@ -867,6 +899,15 @@ else{
 												</div>
 												<input type="text" name="verbatimeventdate" maxlength="255" value="<?php echo array_key_exists('verbatimeventdate',$occArr)?$occArr['verbatimeventdate']:''; ?>" onchange="verbatimEventDateChanged(this)" />
 											</div>
+											<div id="eventTimeToggleDiv" onclick="toggle('eventTimeDiv');" title="<?= $LANG['TOGG_ADD_FIELDS'] ?>">
+												<img class="seemore" src="../../images/tochild.png" style="width:1.3em;height:1.3em">
+											</div>
+											<div id="eventTimeDiv" class="field-div" style="<?= !empty($occArr['eventtime']) ?: 'display:none' ?>" title="Event Time">
+												<?= $LANG['EVENT_TIME']; ?>
+												<a href="#" onclick="return dwcDoc('event-time')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a>
+												<br/>
+												<input type="text" name="eventtime" value="<?= array_key_exists('eventtime',$occArr)?$occArr['eventtime']:''; ?>" onchange="fieldChanged('eventtime');" >
+											</div>
 											<?php
 											if($loanArr = $occManager->getLoanData()){
 												?>
@@ -886,7 +927,7 @@ else{
 										</div>
 										<?php
 										if(isset($ACTIVATE_EXSICCATI) && $ACTIVATE_EXSICCATI){
-											$exsArr = $occManager->getExsiccati();
+											$exsArr = $occManager->getExsiccati($occId);
 											?>
 											<div id="exsDiv">
 												<div id="ometidDiv" class="field-div">
@@ -1038,7 +1079,7 @@ else{
 												</div>
 												<div id="stateProvinceDiv" class="field-div">
 													<?php echo $LANG['STATEPROVINCE']; ?>
-													<a href="#" onclick="return dwcDoc('stateProvince')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a>
+													<a href="#" onclick="return dwcDoc('stateprovince')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a>
 													<br/>
 													<input type="text" id="ffstate" name="stateprovince" value="<?php echo array_key_exists('stateprovince',$occArr)?$occArr['stateprovince']:''; ?>" onchange="stateProvinceChanged(this.value)" autocomplete="noaction" />
 												</div>
@@ -1147,17 +1188,17 @@ else{
 												<br/>
 												<input type="text" id="coordinateuncertaintyinmeters" name="coordinateuncertaintyinmeters" maxlength="10" value="<?php echo array_key_exists('coordinateuncertaintyinmeters',$occArr)?$occArr['coordinateuncertaintyinmeters']:''; ?>" onchange="coordinateUncertaintyInMetersChanged(this.form);" title="<?php echo (isset($LANG['UNCERTAINTY_METERS'])?$LANG['UNCERTAINTY_METERS']:'Uncertainty in Meters'); ?>" />
 											</div>
-											<div id="mapIconDiv" onclick="openMappingAid();" title="<?= $LANG['MAP_COORDS'] ?>">
-												<img src="../../images/world.png" style="width:1.2em;" />
+											<div id="mapIconDiv" title="<?= $LANG['MAP_COORDS'] ?>">
+												<a href="#" onclick="openMappingAid();" aria-label="<?= isset($LANG['MAP_COORDS']) ? $LANG['MAP_COORDS'] . $LANG['OPENS_NEW_TAB'] : 'Map Coordinates (opens in new tab)' ?>"><img src="../../images/world.png" style="width:1.2em;" /></a>
 											</div>
-											<div id="geoLocateDiv" title="<?php echo (isset($LANG['GEOLOCATE_LOC'])?$LANG['GEOLOCATE_LOC']:'GeoLocate Locality'); ?>">
-												<a href="#" onclick="geoLocateLocality();" tabindex="-1"><img src="../../images/geolocate.png" style="width:1.2em;" /></a>
+											<div id="geoLocateDiv" title="<?php echo (isset($LANG['GEOLOCATE_LOC']) ? $LANG['GEOLOCATE_LOC'] : 'GeoLocate Locality'); ?>">
+												<a href="#" onclick="geoLocateLocality();" aria-label="<?= isset($LANG['GEOLOCATE_LOC']) ? $LANG['GEOLOCATE_LOC'] . $LANG['OPENS_NEW_TAB'] : 'GeoLocate Locality (opens in new tab)' ?>"><img src="../../images/geolocate.png" style="width:1.2em;" /></a>
 											</div>
-											<div id="coordCloningDiv" title="<?php echo (isset($LANG['COORD_CLONE_TOOL'])?$LANG['COORD_CLONE_TOOL']:'Coordinate Cloning Tool'); ?>" >
-												<button type="button" class="button icon-button" value="C" tabindex="-1" onclick="geoCloneTool()" ><?php echo (isset($LANG['C'])?$LANG['C']:'C') ?></button>
+											<div id="coordCloningDiv" title="<?php echo (isset($LANG['COORD_CLONE_TOOL']) ? $LANG['COORD_CLONE_TOOL'] : 'Coordinate Cloning Tool'); ?>" >
+												<button type="button" class="button icon-button" value="C" onclick="geoCloneTool()" aria-label="<?= isset($LANG['COORD_CLONE_TOOL']) ? $LANG['COORD_CLONE_TOOL'] . $LANG['OPENS_NEW_TAB'] : 'Coordinate Cloning Tool (opens in new tab)' ?>"><?php echo (isset($LANG['C'])?$LANG['C']:'C') ?></button>
 											</div>
-											<div id="geoToolsDiv" title="<?php echo (isset($LANG['CONVERSION_TOOLS'])?$LANG['CONVERSION_TOOLS']:'Tools for converting additional formats'); ?>" >
-												<button type="button" class="button icon-button" value="F" tabindex="-1" onclick="toggleCoordDiv()" ><?php echo (isset($LANG['F'])?$LANG['F']:'F') ?></button>
+											<div id="geoToolsDiv" title="<?php echo (isset($LANG['CONVERSION_TOOLS']) ? $LANG['CONVERSION_TOOLS'] : 'Tools for converting additional formats'); ?>" >
+												<button type="button" class="button icon-button" value="F" onclick="toggleCoordDiv()" aria-label="<?= isset($LANG['CONVERSION_TOOLS']) ? $LANG['CONVERSION_TOOLS'] : 'Tools for converting additional formats' ?>" ><?php echo (isset($LANG['F'])?$LANG['F']:'F') ?></button>
 											</div>
 											<div id="geodeticDatumDiv" class="field-div">
 												<?php echo $LANG['GEODETIC_DATUM']; ?>
@@ -1317,7 +1358,7 @@ else{
 											<textarea name="associatedtaxa" onchange="fieldChanged('associatedtaxa');"><?php echo array_key_exists('associatedtaxa',$occArr)?$occArr['associatedtaxa']:''; ?></textarea>
 											<?php
 											if(!isset($ACTIVATEASSOCTAXAAID) || $ACTIVATEASSOCTAXAAID){
-												echo '<a href="#" onclick="openAssocSppAid();return false;"><img class="editimg" src="../../images/list.png"></a>';
+												echo '<a href="#" onclick="openAssocSppAid();return false;" aria-label="'.(isset($LANG['ASSOC_SPP_AID']) ? $LANG['ASSOC_SPP_AID'] . $LANG['OPENS_NEW_TAB'] : 'Associated Species Entry Aid (opens in new tab)').'"><img class="editimg" src="../../images/list.png"></a>';
 											}
 											?>
 										</div>
@@ -1477,7 +1518,7 @@ else{
 										<div style="padding:3px;clear:both;">
 											<div id="storageLocationDiv" class="field-div" title="<?php echo $LANG['STORAGELOCATION_EXPLAIN']; ?>">
 												<?php echo $LANG['STORAGELOCATION_CODE']; ?>
-												<a href="#" onclick="return dwcDoc('storageLocation')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a><br/>
+												<a href="#" onclick="return dwcDoc('storage-location')" tabindex="-1"><img class="docimg" src="../../images/qmark.png" /></a><br/>
 												<input type="text" name="storagelocation" maxlength="32" value="<?php echo array_key_exists('storagelocation',$occArr)?$occArr['storagelocation']:''; ?>" onchange="fieldChanged('storagelocation');" />
 											</div>
 											<div id="basisOfRecordDiv" class="field-div">
@@ -1653,7 +1694,7 @@ else{
 														<?php
 														$targetArr = $occManager->getCollectionList(true);
 														unset($targetArr[$collId]);
-														if(count($targetArr) > 1){
+														if($targetArr){
 															?>
 															<div class="fieldGroup-div">
 																<label><?php echo $LANG['TARGET_COLL']; ?>:</label>

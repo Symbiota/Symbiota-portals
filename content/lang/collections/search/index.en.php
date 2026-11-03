@@ -139,6 +139,6 @@ $LANG['FORMATION'] = 'Formation';
 $LANG['MEMBER'] = 'Member';
 $LANG['BED'] = 'Bed';
 $LANG['POLYGONS'] = 'Polygons';
-$LANG['NO_POLYGONS_FOUND'] = 'No searchable polygons found in thesaurus.';
+$LANG['SYNONYM_NOTE'] = 'When searching for higher-order taxonomic units, the result set is limited to accepted child taxa of the specified higher-rank taxon and its synonyms.';
 
 ?>

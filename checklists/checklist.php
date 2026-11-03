@@ -302,7 +302,7 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 				<?php
 			}
 			?>
-			<div style="clear:both">
+			<div style="clear:both; padding-top: 3px">
 				<hr/>
 			</div>
 			<div id="checklist-container" style="display:flex; gap: 0.5rem">
@@ -336,9 +336,19 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 							echo '<span class="screen-reader-only">.</span>';
 							?>
 						</div>
+						<div style="margin:3px;">
+							<?php
+							if($showVouchers){
+								echo '<b>' . $LANG['VOUCHER_COUNT'] . '</b>: ';
+								echo $clManager->getVoucherCount();
+								echo '<span class="screen-reader-only">.</span>';
+							}
+							?>
+						</div>
 					</div>
 					<hr />
-					<div class="printoff">
+					<div style="display:flex; justify-content:space-between;" class="printoff">
+						<div>
 						<?php
 						$taxaLimit = ($showImages?$clManager->getImageLimit():$clManager->getTaxaLimit());
 						$pageCount = ceil($clManager->getTaxaCount()/$taxaLimit);
@@ -352,7 +362,9 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 							if(($pageNumber) == $x) echo '</b>';
 							else echo '</a>';
 						}
-						if($showImages){
+						?>
+						</div>
+						<?php if($showImages){
 							?>
 							<div style="float:right;">
 								<?php echo $LANG['IMAGE_SRC']; ?>:
@@ -367,12 +379,15 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 					<?php
 					if($showImages){
 						$prevfam = '';
+						?>
+						<div class="checklist-image-grid">
+						<?php
 						foreach($taxaArray as $tid => $sppArr){
 							$tu = (array_key_exists('tnurl',$sppArr) ? $sppArr['tnurl'] : '');
 							$u = (array_key_exists('url',$sppArr) ? $sppArr['url'] : '');
 							$imgSrc = ($tu?$tu:$u);
 							?>
-							<div class="tndiv">
+							<div class="tndiv bottom-breathing-room-rel-sm">
 								<div class="tnimg" style="<?php echo ($imgSrc?'' : 'border:1px solid black;'); ?>">
 									<?php
 									$spUrl = "../taxa/index.php?taxauthid=1&taxon=$tid&clid=".$clid;
@@ -394,7 +409,7 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 								<div style="clear:both">
 									<?php
 									echo '<a href="' . $spUrl . '" target="_blank">';
-									echo '<b>' . $sppArr['sciname'] . '</b>';
+									echo '<b>' . ($sppArr['sciname'] ?? '') . '</b>';
 									echo '</a>';
 									?>
 									<div class="editspp printoff" style="float:left;display:none;">
@@ -431,6 +446,9 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 							</div>
 							<?php
 						}
+						?>
+						</div>
+						<?php
 					}
 					else{
 						//Display taxa
@@ -465,10 +483,10 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 							echo '<div id="tid-'.$tid.'" class="taxon-container">';
 							//Edit species name display style here
 							echo '<div class="taxon-div">';
-							if(!preg_match('/\ssp\d/',$sppArr["sciname"])) echo '<a href="../taxa/index.php?taxauthid=1&taxon=' . $tid . '&clid=' . $clid . '" target="_blank">';
-							echo '<span class="taxon-span">' . $sppArr['sciname'] . '</span> ';
+							if(!preg_match('/\ssp\d/',$sppArr["sciname"] ?? '')) echo '<a href="../taxa/index.php?taxauthid=1&taxon=' . $tid . '&clid=' . $clid . '" target="_blank">';
+							echo '<span class="taxon-span">' . ($sppArr['sciname'] ?? '') . '</span> ';
 							if(array_key_exists("author",$sppArr)) echo $sppArr["author"];
-							if(!preg_match('/\ssp\d/',$sppArr["sciname"])) echo "</a>";
+							if(!preg_match('/\ssp\d/',$sppArr["sciname"] ?? '')) echo "</a>";
 							if(array_key_exists('vern',$sppArr)){
 								echo ' - <span class="vern-span">'.$sppArr['vern'] . '</span>';
 							}
@@ -480,10 +498,10 @@ $taxonFilter = htmlspecialchars($taxonFilter, ENT_COMPAT | ENT_HTML401 | ENT_SUB
 									</a>
 									<?php
 									if(isset($dynamPropsArr) && isset($dynamPropsArr['externalservice']) && $dynamPropsArr['externalservice'] == 'inaturalist'){
-										$scinameasid = str_replace(" ", "-", $sppArr['sciname']);
+										$scinameasid = str_replace(" ", "-", $sppArr['sciname'] ?? '');
 										$arrForExternalServiceApi .= ($arrForExternalServiceApi?',' : '') . "'" . $scinameasid . "'";
 										$url = 'tools/linkExternalVouchers.php?' . http_build_query([
-											'taxon_name' => $sppArr['sciname'],
+											'taxon_name' => $sppArr['sciname'] ?? '',
 											'target_tid' => $tid,
 											'clid' => $clid,
 											'external_id' => $dynamPropsArr['externalserviceid'] ?? null,

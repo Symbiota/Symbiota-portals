@@ -30,7 +30,6 @@ if($collid && is_numeric($collid)){
 		$dwcaHandler->setIncludeAttributes(0);
 		$dwcaHandler->setIncludeIdentifiers(0);
 		$dwcaHandler->setIncludeAssociations(0);
-		$dwcaHandler->setOverrideConditionLimit(true);
 		$dwcaHandler->addCondition('catalognumber','NOT_NULL');
 		$dwcaHandler->addCondition('locality','NOT_NULL');
 		if($processingStatus) $dwcaHandler->addCondition('processingstatus','EQUALS',$processingStatus);
@@ -43,7 +42,7 @@ if($collid && is_numeric($collid)){
 		//Set GeoLocate CoGe variables
 		$dwcaHandler->setGeolocateVariables(array('cogecomm'=>$_POST['cogecomm'],'cogename'=>$_POST['cogename'],'cogedescr'=>$_POST['cogedescr'],));
 
-		$cnt = $dwcaHandler->getOccurrenceCnt();
+		$cnt = $dwcaHandler->getOccurrenceCount();
 		$dwcaHandler->createDwcArchive();
 		$urlPath = $dwcaHandler->getDwcaOutputUrl();
 

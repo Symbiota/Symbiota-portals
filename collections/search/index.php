@@ -8,6 +8,7 @@ include_once($SERVER_ROOT . '/classes/OccurrenceManager.php');
 include_once($SERVER_ROOT . '/classes/OccurrenceAttributeSearch.php');
 include_once($SERVER_ROOT . '/classes/AssociationManager.php');
 include_once($SERVER_ROOT . '/classes/utilities/Language.php');
+include_once($SERVER_ROOT . '/classes/CollectionFormManager.php');
 
 Language::load('collections/search/index');
 
@@ -39,6 +40,12 @@ $obsArr = (isset($collList['obs']) ? $collList['obs'] : null);
 $associationManager = new AssociationManager();
 $characters = $collManager->getCharacters();
 $relationshipTypes = $associationManager->getRelationshipTypes();
+
+$collectionFormManager = new CollectionFormManager();
+$requestSuppliedCatOrd = (array_key_exists('catOrd', $_REQUEST) && $collectionFormManager->areCollectionIdsValid($_REQUEST['catOrd'])) ? explode(',', $_REQUEST['catOrd']) : null;
+$requestSuppliedCatExpnd = (array_key_exists('catExpnd', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catExpnd'])) ? explode(',', $_REQUEST['catExpnd']) : null;
+$requestSuppliedCatChk = (array_key_exists('catChk', $_REQUEST) && $collectionFormManager->areCollectionCategoriesValid($_REQUEST['catChk'])) ? explode(',', $_REQUEST['catChk']) : null;
+
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
@@ -56,7 +63,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-3.7.1.min.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/symb/mapAidUtils.js?ver=1" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="<?= $CLIENT_ROOT ?>/collections/individual/domManipulationUtils.js" type="text/javascript"></script>
+	<script src="<?= $CLIENT_ROOT ?>/js/symb/domManipulationUtils.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/symb/localitySuggest.js" type="text/javascript"></script>
 	<script src="<?= $CLIENT_ROOT ?>/js/symb/collections.list.js?ver=20251002>" type="text/javascript"></script>
 	<script>
@@ -88,6 +95,20 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 			const expandButton = document.getElementById("expand-all-button");
 			expandButton.removeAttribute('style', 'display: none;');
 		};
+
+		document.addEventListener('DOMContentLoaded', () => {			
+			document.querySelectorAll('.accordion-header').forEach(accordionHeader => {
+				accordionHeader.addEventListener('keydown', (e) => {
+					if (e.key === 'Enter' || e.key === ' ') {
+						if (e.key === ' ') {
+							e.preventDefault();
+						}
+						const selector = accordionHeader.previousElementSibling;
+						selector.checked = !selector.checked;
+					}
+				});
+			});
+		});
 	</script>
 
 	<?php include_once($SERVER_ROOT . '/includes/googleanalytics.php'); ?>
@@ -126,35 +147,38 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<input type="checkbox" id="taxonomy" class="accordion-selector" checked />
 
 					<!-- Accordion header -->
-					<label for="taxonomy" class="accordion-header"><?php echo $LANG['TAXONOMY'] ?></label>
+					<label for="taxonomy" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['TAXONOMY'] ?></label>
 
 					<!-- Taxonomy -->
-					<div id="search-form-taxonomy" class="content">
-						<div id="taxa-text" class="input-text-container">
-							<label for="taxa" class="input-text--outlined">
-								<span class="screen-reader-only"><?php echo $LANG['TAXON'] ?></span>
-								<input type="text" name="taxa" id="taxa" data-chip="<?php echo $LANG['TAXON'] ?>" />
-								<span class="inset-input-label"><?php echo $LANG['TAXON'] ?></span>
-							</label>
-						</div>
-						<span class="assistive-text"><?php echo $LANG['TYPE_CHAR_FOR_SUGGESTIONS'] ?></span>
-						<div style="padding-top:14px">
-							<div class="select-container" style="position: relative">
-								<label for="taxontype" class="screen-reader-only"><?php echo $LANG['TAXON_TYPE'] ?></label>
-								<select name="taxontype" id="taxontype" style="margin-top:0;padding-top:0; margin-bottom: 0.5rem">
-									<option id="taxontype-scientific" value="2" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['SCIENTIFIC_NAME'] ?></option>
-									<option id="taxontype-family" value="3" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['FAMILY'] ?></option>
-									<option id="taxontype-group" value="4" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['TAXONOMIC_GROUP'] ?></option>
-									<option id="taxontype-common" value="5" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['COMMON_NAME'] ?></option>
-								</select>
-								<span class="inset-input-label"><?php echo $LANG['TAXON_TYPE'] ?></span>
+					<div class="content">
+						<div id="search-form-taxonomy">
+							<div id="taxa-text" class="input-text-container">
+								<label for="taxa" class="input-text--outlined">
+									<span class="screen-reader-only"><?php echo $LANG['TAXON'] ?></span>
+									<input type="text" name="taxa" id="taxa" data-chip="<?php echo $LANG['TAXON'] ?>" />
+									<span class="inset-input-label"><?php echo $LANG['TAXON'] ?></span>
+								</label>
 							</div>
-						</div>
-						<div>
-							<input type="checkbox" name="usethes" id="usethes" data-chip="<?php echo $LANG['INCLUDE_SYNONYMS'] ?>" value="1" checked />
-							<label for="usethes">
-								<span class="ml-1"><?php echo $LANG['INCLUDE_SYNONYMS'] ?></span>
-							</label>
+							<span class="assistive-text"><?php echo $LANG['TYPE_CHAR_FOR_SUGGESTIONS'] ?></span>
+							<div style="padding-top:14px">
+								<div class="select-container" style="position: relative">
+									<label for="taxontype" class="screen-reader-only"><?php echo $LANG['TAXON_TYPE'] ?></label>
+									<select name="taxontype" id="taxontype" style="margin-top:0;padding-top:0; margin-bottom: 0.5rem">
+										<option id="taxontype-scientific" value="2" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['SCIENTIFIC_NAME'] ?></option>
+										<option id="taxontype-family" value="3" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['FAMILY'] ?></option>
+										<option id="taxontype-group" value="4" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['TAXONOMIC_GROUP'] ?></option>
+										<option id="taxontype-common" value="5" data-chip="<?php echo $LANG['TAXON']?>"><?php echo $LANG['COMMON_NAME'] ?></option>
+									</select>
+									<span class="inset-input-label"><?php echo $LANG['TAXON_TYPE'] ?></span>
+								</div>
+							</div>
+							<div>
+								<input type="checkbox" name="usethes" id="usethes" data-chip="<?php echo $LANG['INCLUDE_SYNONYMS'] ?>" value="1" checked />
+								<label for="usethes">
+									<span class="ml-1"><?php echo $LANG['INCLUDE_SYNONYMS'] ?></span>
+								</label>
+								<img src="../../images/info.png" style="width:1em; margin-left:1px;" alt="<?php echo $LANG['SYNONYM_NOTE'] ?>" title="<?php echo $LANG['SYNONYM_NOTE'] ?>" onclick="alert('<?php echo addslashes($LANG['SYNONYM_NOTE']) ?>')"/>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -164,7 +188,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<!-- Accordion selector -->
 					<input type="checkbox" id="locality" name="locality" class="accordion-selector" />
 					<!-- Accordion header -->
-					<label for="locality" class="accordion-header"><?php echo $LANG['LOCALITY'] ?></label>
+					<label for="locality" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['LOCALITY'] ?></label>
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-locality">
@@ -216,9 +240,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 									</div>
 								</div>
 							</div>
-							<?php if (empty($polygonList)): ?>
-								<p><?php echo $LANG['NO_POLYGONS_FOUND']; ?></p>
-							<?php else: ?>
+							<?php if (!empty($polygonList)): ?>
 							<div class="input-text-container">
 								<label for="polygons" class="input-text--outlined">
 									<span class="screen-reader-only"><?php echo $LANG['POLYGONS'] ?></span>
@@ -243,7 +265,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<!-- Accordion selector -->
 					<input type="checkbox" id="lat-long" class="accordion-selector" />
 					<!-- Accordion header -->
-					<label for="lat-long" class="accordion-header"><?php echo $LANG['LATITUDE_LONGITUDE'] ?></label>
+					<label for="lat-long" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['LATITUDE_LONGITUDE'] ?></label>
 					<!-- Accordion content -->
 					<div class="content">
 						<p class="assistive-text"><?= $LANG['LAT_LONG_SEARCH_EXPLAIN'] ?></p>
@@ -385,7 +407,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<!-- Accordion selector -->
 					<input type="checkbox" id="coll-event" class="accordion-selector" />
 					<!-- Accordion header -->
-					<label for="coll-event" class="accordion-header"><?php echo $LANG['COLLECTING_EVENT'] ?></label>
+					<label for="coll-event" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['COLLECTING_EVENT'] ?></label>
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-coll-event">
@@ -428,7 +450,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<!-- Accordion selector -->
 					<input type="checkbox" id="sample" class="accordion-selector" />
 					<!-- Accordion header -->
-					<label for="sample" class="accordion-header"><?php echo $LANG['SAMPLE_PROPERTIES'] ?></label>
+					<label for="sample" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['SAMPLE_PROPERTIES'] ?></label>
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-sample">
@@ -479,10 +501,10 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 									<label for="materialsampletype"><?= $LANG['MATERIAL_SAMPLE_TYPE'] ?></label>
 									<select name="materialsampletype" id="materialsampletype">
 										<option id="materialsampletype-none" data-chip="<?php echo $LANG['MATERIAL_SAMPLE'] . ': ---' ?>" value="">---------------</option>
-										<option id="materialsampletype-all-ms" data-chip="<?php echo $LANG['MATERIAL_SAMPLE'] . ': ' . $LANG['ALL_MATERIAL_SAMPLE'] ?>" value="all-ms"><?= $LANG['ALL_MATERIAL_SAMPLE'] ?></option>
+										<option id="materialsampletype-all-ms" data-chip="<?php echo $LANG['MATERIAL_SAMPLE']?>" value="all-ms"><?= $LANG['ALL_MATERIAL_SAMPLE'] ?></option>
 										<?php
 										foreach ($matSampleTypeArr as $matSampeType) {
-											echo '<option id="materialsampletype-' . $matSampeType . '" data-chip="' . $LANG['MATERIAL_SAMPLE'] . ': ' . $matSampeType . '" value="' . $matSampeType . '">' . $matSampeType . '</option>';
+											echo '<option id="materialsampletype-' . $matSampeType . '" data-chip="' . $LANG['MATERIAL_SAMPLE'] . '" value="' . $matSampeType . '">' . $matSampeType . '</option>';
 										}
 										?>
 									</select>
@@ -505,7 +527,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 							<!-- Accordion selector -->
 							<input type="checkbox" id="trait" class="accordion-selector" />
 							<!-- Accordion header -->
-							<label for="trait" class="accordion-header"><?php echo $LANG['TRAIT_CRITERIA'] ?> <a href="https://docs.symbiota.org/User_Guide/traits" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+							<label for="trait" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['TRAIT_CRITERIA'] ?> <a href="https://docs.symbiota.org/User_Guide/traits" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
 							<!-- Accordion content -->
 							<div class="content">
 								<div id="search-form-trait">
@@ -547,7 +569,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<input type="checkbox" id="associations" class="accordion-selector" />
 
 					<!-- Accordion header -->
-					<label for="associations" class="accordion-header"><?php echo $LANG['ASSOCIATIONS'] ?> <a href="https://docs.symbiota.org/User_Guide/associations" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+					<label for="associations" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['ASSOCIATIONS'] ?> <a href="https://docs.symbiota.org/User_Guide/associations" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
 
 					<!-- Taxonomy -->
 					<div id="search-form-associations" class="content">
@@ -613,7 +635,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<input type="checkbox" id="characters" class="accordion-selector" />
 
 					<!-- Character header -->
-					<label for="characters" class="accordion-header"><?php echo $LANG['CHARACTERS'] ?> <a href="https://docs.symbiota.org/docs/User_Guide/searching_records#taxon-character-criteria" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
+					<label for="characters" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['CHARACTERS'] ?> <a href="https://docs.symbiota.org/User_Guide/searching_records/#taxon-character-criteria" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
 
 					<div id="search-form-characters" class="content">
 						<div>
@@ -636,13 +658,13 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 										<a href="#" onclick="toggleCharacterGroup('<?php echo $idStr; ?>'); return false;" class="condense-expand">
 											<span class="heading-text"><?php echo htmlspecialchars($heading); ?></span>
 											<span class="icon-wrapper">
-												<img id="plus-<?php echo $idStr; ?>" src="../../images/plus.png" alt="Expand" style="display:inline; width:1em;">
-												<img id="minus-<?php echo $idStr; ?>" src="../../images/minus.png" alt="Collapse" style="display:none; width:1em;">
+												<img id="plus-<?php echo $idStr; ?>" src="../../images/plus.png" alt="Expand" style="display:none; width:1em;">
+												<img id="minus-<?php echo $idStr; ?>" src="../../images/minus.png" alt="Collapse" style="display:inline; width:1em;">
 											</span>
 										</a>
 									</div>
 
-									<div id="char-block-<?php echo $idStr; ?>" style="display:none;">
+									<div id="char-block-<?php echo $idStr; ?>" style="display:block;">
 									<?php foreach ($charGroup as $cid => $char): ?>
 										<div class="character-block">
 											<div class="char-names"><?php echo htmlspecialchars($char['charName']); ?></div>
@@ -679,7 +701,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 						<input type="checkbox" id="geocontext" class="accordion-selector" />
 
 						<!-- Accordion header -->
-						<label for="geocontext" class="accordion-header"><?php echo $LANG['GEO_CONTEXT'] ?></label>
+						<label for="geocontext" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['GEO_CONTEXT'] ?> <a href="https://docs.symbiota.org//User_Guide/searching_records#geological-context" target="_blank" title="<?= $LANG['MORE_INFO'] ?>" alt="<?= $LANG['MORE_INFO'] ?>"><img class="docimg" src="../../images/qmark.png" /></a></label>
 
 						<!-- Content -->
 						<div id="search-form-geocontext" class="content">
@@ -761,14 +783,14 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 					<!-- Accordion selector -->
 					<input type="checkbox" id="collections" class="accordion-selector" />
 					<!-- Accordion header -->
-					<label for="collections" class="accordion-header"><?php echo $LANG['COLLECTIONS'] ?></label>
+					<label for="collections" class="accordion-header" tabindex="0" role="button"><?php echo $LANG['COLLECTIONS'] ?></label>
 					<!-- Accordion content -->
 					<div class="content">
 						<div id="search-form-colls">
 							<!-- Open Collections modal -->
 							<div id="specobsdiv">
 								<?php
-								include_once(__DIR__ . '/collectionContent.php');
+								include($SERVER_ROOT . '/collections/collectionForm.php');
 								?>
 							</div>
 						</div>
@@ -806,7 +828,7 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 	?>
 </body>
 <script src="<?= $JS_LANG_FILENAME ?>" type="text/javascript"></script>
-<script src="<?= $CLIENT_ROOT ?>/js/searchform.js?ver=2" type="text/javascript"></script>
+<script src="<?= $CLIENT_ROOT ?>/js/symb/searchform.js?ver=2" type="text/javascript"></script>
 <script src="<?= $CLIENT_ROOT ?>/js/alerts.js?v=202107" type="text/javascript"></script>
 <script src="<?= $CLIENT_ROOT ?>/js/symb/api.taxonomy.taxasuggest.js" type="text/javascript"></script>
 <script src="<?= $CLIENT_ROOT ?>/js/symb/collections.index.js?ver=20171215>" type="text/javascript"></script>
@@ -814,8 +836,21 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 	$(document).ready(function() {
 		setSessionQueryStr();
 		setSearchForm(document.getElementById("params-form"));
-		toggleTheNonDefaultsClosed(<?php echo $DEFAULTCATID ?>);
 		toggleAccordionsFromSessionStorage(localStorage?.accordionIds?.split(",") || []);
+		document.getElementById("params-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			simpleSearch();
+		});
+		document.getElementById("reset-btn").addEventListener("click", function (event) {
+			document.getElementById("params-form").reset();
+			// sessionStorage.clear();
+			// localStorage.clear();
+			clearPageSpecificSessionStorageItems();
+			checkTheCollectionsThatShouldBeCheckedBasedOnConfig();
+			closeAllCategories();
+			expandCategoriesBasedOnConfig();
+			updateChip(event, isInitialConfig=true);
+		});
 	});
 </script>
 <script>
@@ -827,13 +862,17 @@ $relationshipTypes = $associationManager->getRelationshipTypes();
 	const collectionSource = <?php echo isset($collectionSource) ? json_encode($collectionSource) : 'null'; ?>;
 	const collIdsFromUrl = <?php echo isset($collIdsFromUrl) ? json_encode($collIdsFromUrl) : 'null'; ?>;
 	if (collIdsFromUrl && Array.isArray(collIdsFromUrl) && collIdsFromUrl.length > 0) {
-		uncheckEverything();
+		uncheckEverythingInCollections();
 		checkTheCollectionsThatShouldBeChecked(collIdsFromUrl);
+		closeAllCategories();
+        expandCategoriesWithSomeCheckedChildren();
 	}
 	const sanitizedCollectionSource = collectionSource.replace('db=', '');
 	if (collectionSource) {
-		uncheckEverything();
-		checkTheCollectionsThatShouldBeChecked(sanitizedCollectionSource);
+		uncheckEverythingInCollections();
+		checkTheCollectionsThatShouldBeChecked([sanitizedCollectionSource]);
+		closeAllCategories();
+        expandCategoriesWithSomeCheckedChildren();
 		updateChip();
 	}
 
