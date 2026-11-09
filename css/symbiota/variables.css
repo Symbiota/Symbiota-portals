@@ -1,24 +1,24 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
+  --header-bg-image: url('../../images/layout/SCIBG_Pipeline_Header_Color_Hi-Res_11_09_2026.png');
+  --header-bg-color: #07095600;
   --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
-  --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
-  --menu-font-size: 1rem;
+  --brand-font-size: 3rem;
+  --title-font-family: 'Alata', sans-serif;
+  --logo-width: 150px;
+  --menu-top-bg-color: #07095670;
   --body-bg-color: #fafafa;
-  --body-text-color: #000000;
-  --body-font-size: 1rem;
-  --body-font-family: "Open Sans", sans-serif;
-  --footer-bg-color: #f2f0e9;
-  --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --body-text-color: #222;
+  --body-font-size: 12pt;
+  --body-font-family: "Roboto", sans-serif;
+  --footer-bg-color: #04063715;
+  --heading-font-family: 'Alata', sans-serif;
+  --link-color: #054fb9;
+  --darkest-color: #070956;
+  --medium-color: #054fb9;
+  --light-color: #8babf1;
+  --bright-color: #8babf1;
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }
