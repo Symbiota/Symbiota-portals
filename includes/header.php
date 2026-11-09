@@ -30,7 +30,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 				} else {
 					?>
 					<span id="contactUs">
-						<button class="button button-tertiary bottom-breathing-room-rel left-breathing-room-rel" onclick="window.location.href='#'"><?= $LANG['H_CONTACT_US'] ?></button>
+						<button class="button button-secondary bottom-breathing-room-rel left-breathing-room-rel" onclick="window.location.href='#'"><?= $LANG['H_CONTACT_US'] ?></button>
 					</span>
 					<span id="login">
 						<form name="loginForm" method="post" action="<?= $CLIENT_ROOT . "/profile/index.php" ?>">
@@ -48,9 +48,9 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						<img src="<?= $CLIENT_ROOT ?>/images/layout/logo_symbiota.png" alt="Symbiota logo">
 					</div>
 				</a>
-				<div class="brand-name">
-					<h1>Symbiota Brand New Portal</h1>
-					<h2>Redesigned by the Symbiota Support Hub</h2>
+				<div class="brand-name" style="text-shadow: 1px 1px 5px black, -1px -1px 5px black, 0 0 25px black;">
+					<h1>SCIBG Symbiota Portal</h1>
+					<h2>SCIBG: Scalable Community-Driven Infrastructure to Support Biodiversity Genomics</h2>
 				</div>
 			</div>
 		</div>
