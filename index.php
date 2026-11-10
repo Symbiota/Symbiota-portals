@@ -33,8 +33,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 		<h1>North American Network of Small Herbaria</h1>
 		<p>
 			The North American Network of Small Herbaria is an open access data portal provided by Symbiota and intended to foster digitization of small collections and 
-			facilitate collaboration among institutions. The establishment of this portal is the result of collaboration between the <a href="http://symbiota.org/docs/seinet/" target="_blank">SEINet Herbarium Network</a> and iDigBio's Small Herbarium Working Group 
-			(<a href="https://www.idigbio.org/wiki/index.php/Small_Herbarium_Interest_Group">https://www.idigbio.org/wiki/index.php/Small_Herbarium_Interest_Group</a>). 
+			facilitate collaboration among institutions. The establishment of this portal is the result of collaboration between the <a href="http://symbiota.org/docs/seinet/" target="_blank">SEINet Herbarium Network</a> and, historically, iDigBio's Small Herbarium Working Group. 
 			For help with NANSH data or to join the network, contact the Symbiota Support Hub (<a href="mailto:help@symbiota.org?subject=NANSH Feedback">help@symbiota.org</a>). 
 		</p>
 		<?php
