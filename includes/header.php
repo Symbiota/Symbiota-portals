@@ -50,7 +50,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 				</a>
 				<div class="brand-name" style="text-shadow: 1px 1px 5px black, -1px -1px 5px black, 0 0 25px black;">
 					<h1>SCIBG Symbiota Portal</h1>
-					<h2>SCIBG: Scalable Community-Driven Infrastructure to Support Biodiversity Genomics</h2>
+					<h2>Scalable Community-Driven Infrastructure to Support Biodiversity Genomics</h2>
 				</div>
 			</div>
 		</div>

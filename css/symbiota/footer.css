@@ -29,7 +29,8 @@ footer {
 /* Medium screens and up */
 @media (min-width: 768px) {
   .logo-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+    grid-template-columns: repeat(5, 1fr);
     column-gap: 3rem;
     justify-content: center;
   }
