@@ -21,7 +21,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	?>
 	<div class="navpath"></div>
 	<main id="innertext">
-		<h1 class="page-heading"><?php echo $DEFAULT_TITLE; ?>SCIBIG <?php echo $LANG['HOME']; ?></h1>
+		<h1 class="page-heading"><?php echo $DEFAULT_TITLE; ?> <?php echo $LANG['HOME']; ?></h1>
 		<?php
 		if($LANG_TAG == 'es'){
 			?>
