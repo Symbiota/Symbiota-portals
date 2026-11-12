@@ -9,7 +9,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 <!DOCTYPE html>
 <html lang="<?php echo $LANG_TAG ?>">
 <head>
-	<title><?php echo $DEFAULT_TITLE; ?>SCIBIG <?php echo $LANG['HOME']; ?></title>
+	<title><?php echo $DEFAULT_TITLE; ?><?php echo $LANG['HOME']; ?></title>
 	<?php
 	include_once($SERVER_ROOT . '/includes/head.php');
 	include_once($SERVER_ROOT . '/includes/googleanalytics.php');
