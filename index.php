@@ -21,7 +21,7 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 	?>
 	<div class="navpath"></div>
 	<main id="innertext">
-		<h1 class="page-heading"><?php echo $DEFAULT_TITLE; ?> <?php echo $LANG['HOME']; ?></h1>
+		<h1 class="page-heading screen-reader-only"><?php echo $DEFAULT_TITLE; ?> <?php echo $LANG['HOME']; ?></h1>
 		<?php
 		if($LANG_TAG == 'es'){
 			?>
@@ -43,11 +43,9 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 			//Default Language
 			?>
 			<div>
-				<h1>Welcome</h1>
-				<p>
-					This data portal has been established to promote collaborative... Replace
-					with introductory text in English. If the portal is not meant to be
-					multilingual, remove the unneeded language sections
+				<!--<h1>Welcome</h1>-->
+				<p style="margin:10rem 0rem">
+					CryptoNITE2 brings together specimens, images, barcodes, and checklist data for cryptobenthic coral reef fishes. It allows us to search collections, identify species, map records, and explore checklists from contributers worldwide. The project is funded by the National Science Foundation. 
 				</p>
 			</div>
 			<?php

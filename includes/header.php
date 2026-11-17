@@ -29,9 +29,6 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 					<?php
 				} else {
 					?>
-					<span id="contactUs">
-						<button class="button button-tertiary bottom-breathing-room-rel left-breathing-room-rel" onclick="window.location.href='#'"><?= $LANG['H_CONTACT_US'] ?></button>
-					</span>
 					<span id="login">
 						<form name="loginForm" method="post" action="<?= $CLIENT_ROOT . "/profile/index.php" ?>">
 							<input name="refurl" type="hidden" value="<?= htmlspecialchars($_SERVER['SCRIPT_NAME'], ENT_COMPAT | ENT_HTML401 | ENT_SUBSTITUTE) . "?" . htmlspecialchars($_SERVER['QUERY_STRING'], ENT_QUOTES) ?>">
@@ -49,8 +46,8 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 					</div>
 				</a>
 				<div class="brand-name">
-					<h1 style="color:#fff">Symbiota Brand New Portal</h1>
-					<h2 style="color:#fff">Redesigned by the Symbiota Support Hub</h2>
+					<h1 style="color:#fff">CryptoNITE<sup>2</sup></h1>
+					<!--<h2 style="color:#fff">Redesigned by the Symbiota Support Hub</h2>-->
 				</div>
 			</div>
 		</div>
@@ -67,14 +64,19 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</a>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT . $collectionSearchPage ?>">
-							<?= $LANG['H_SEARCH'] ?>
-						</a>
-					</li>
-					<li>
-						<a href="<?= $CLIENT_ROOT ?>/collections/map/index.php" rel="noopener noreferrer">
-							<?= $LANG['H_MAP_SEARCH'] ?>
-						</a>
+						<a href="#"><?= $LANG['H_SEARCH'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/collections/search/index.php">
+									<?= $LANG['H_COLLECTIONS'] ?>
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/collections/map/index.php" rel="noopener noreferrer">
+									<?= $LANG['H_MAP_SEARCH'] ?>
+								</a>
+							</li>
+						</ul>
 					</li>
 					<li>
 						<a href="<?= $CLIENT_ROOT ?>/checklists/index.php">
@@ -87,38 +89,44 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 						</a>
 					</li>
 					<li>
-						<a href="<?= $CLIENT_ROOT ?>/includes/usagepolicy.php">
-							<?= $LANG['H_DATA_USAGE'] ?>
+						<a href="<?= $CLIENT_ROOT ?>/taxa/taxonomy/taxonomydynamicdisplay.php">
+							<?= $LANG['H_TAXONOMY'] ?>
 						</a>
 					</li>
 					<li>
-						<a href="https://docs.symbiota.org/about/" target="_blank" rel="noopener noreferrer">
-							<?= $LANG['H_HELP'] ?>
+						<a href="<?= $CLIENT_ROOT ?>/collections/misc/collprofiles.php">
+							<?= $LANG['H_DATASETS'] ?>
 						</a>
 					</li>
 					<li>
+						<a href="#"><?= $LANG['H_ABOUT'] ?></a>
+						<ul>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/misc/contacts.php">
+									<?= $LANG['H_CONTACTS'] ?>
+								</a>
+							</li>
+							<li>
+								<a href="<?= $CLIENT_ROOT ?>/includes/usagepolicy.php">
+									<?= $LANG['H_DATA_USAGE'] ?>
+								</a>
+							</li>
+							<li>
+								<a href="https://docs.google.com/forms/d/e/1FAIpQLSf-QywdugIAAxzBLkoKX8er-JkW06Rv4C_Rkm2efPiryTHLGw/viewform" target="_blank">
+									<?= $LANG['H_JOIN'] ?>
+								</a>
+							</li>
+							<li>
+								<a href="https://docs.symbiota.org/" target="_blank" rel="noopener noreferrer">
+									<?= $LANG['H_HELP'] ?>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<!--<li>
 						<a href='<?= $CLIENT_ROOT ?>/sitemap.php'>
 							<?= $LANG['H_SITEMAP'] ?>
 						</a>
-					</li>
-					<li>
-						<a href="#">Example Dropdown</a>
-						<ul>
-							<li>
-								<a href="#">Link 1</a>
-							</li>
-							<li>
-								<a href="#">Link 2</a>
-							</li>
-							<li>
-								<a href="#">Sub Menu</a>
-								<ul>
-									<li>
-										<a href="#">Link 3</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
 					</li>
 					<li id="lang-select-li">
 						<label for="language-selection" class="screen-reader-only"><?= $LANG['H_SELECT_LANGUAGE'] ?>: </label>
@@ -128,6 +136,7 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 							<option value="fr" <?= ($LANG_TAG=='fr'?'SELECTED':'') ?>>Français</option>
 						</select>
 					</li>
+					-->
 				</ul>
 			</nav>
 		</div>

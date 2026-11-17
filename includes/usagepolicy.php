@@ -31,7 +31,7 @@ $serverHost = GeneralUtil::getDomain();
 	<div role="main" id="innertext">
 		<h1 class="page-heading"><?php echo $LANG ['GUIDE_ACCESSIBLE']; ?></h1>
 		<h2><?php echo $LANG ['REC_CITATION']; ?></h2>
-		<p><?php echo $LANG ['USE_FOLLOWING'] . " " . $DEFAULT_TITLE . " " . $LANG ['NETWORK']; ?>:</p>
+		<p>Data users should cite both the portal (as described below) and the original collections:</p>
 		<h3><?php echo $LANG ['GENERAL_CITATION']; ?></h3>
 		<blockquote>
 			<?php
