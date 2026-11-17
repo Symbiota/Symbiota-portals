@@ -1,24 +1,24 @@
 /* Variables
    ========================================================================== */
 :root {
-  --header-bg-image: url("../../images/layout/jonathan-borba-Ui73wdp0wok-unsplash.jpg");
-  --header-bg-color: #2f6e5378; /** Transparent color if adding header bg-image **/
-  --header-font-color: #fff;
-  --brand-font-size: 1.5rem;
+  --header-bg-image: url("");
+  --header-bg-color: #1F3A5F; /** Transparent color if adding header bg-image **/
+  --header-font-color: #ffffffd9;
+  --brand-font-size: 1.8667rem;
   --logo-width: 120px;
-  --menu-top-bg-color: #1b3d2f;
+  --menu-top-bg-color: #1F3A5F;
   --menu-font-size: 1rem;
   --body-bg-color: #fafafa;
-  --body-text-color: #000000;
-  --body-font-size: 1rem;
-  --body-font-family: "Open Sans", sans-serif;
-  --footer-bg-color: #f2f0e9;
-  --heading-font-family: "Open Sans", sans-serif;
-  --link-color: #126c00;
-  --darkest-color: #1b3d2f;
-  --medium-color: #5a5a53;
-  --light-color: #f2f0e9;
-  --bright-color: #b9d432;
+  --body-text-color: #1F3A5F;
+  --body-font-size: 1.067rem;
+  --body-font-family: 'Inter', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --footer-bg-color: #E4EEF5;
+  --heading-font-family: 'Plus Jakarta Sans', system-ui, -apple-system, "Segoe UI", sans-serif;
+  --link-color: #3D6E99;
+  --darkest-color: #1F3A5F;
+  --medium-color: #3D6E99;
+  --light-color: #E4EEF5;
+  --bright-color: #C9A44C; /* use use #A8862F on white backgrounds */
   --danger-color: #b31b1b;
   --max-innertext-width: 1024px;
 }

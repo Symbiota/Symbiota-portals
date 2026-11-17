@@ -3,3 +3,49 @@ Place your CSS customizations here.
 This stylesheet is defined last and will override all previously loaded sheets. You may reference variables defined in variables.css 
  */
  
+ html {
+  font-size: 15px; /* This is what 1 rem will be base off of */
+  height: 100%;
+}
+
+#innertext p {
+  color: var(--body-text-color);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.menu a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #C9A44C;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #1F3A5F;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.brand-name h1 {
+  letter-spacing: -0.01em;
+}
+
+.brand-name h2 {
+  font-size: 0.866667rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+footer {
+  text-align: center;
+  background-color: var(--footer-bg-color);
+  padding: 2rem 0;
+  border-top: 2px solid #C9D9E5;
+
+}
