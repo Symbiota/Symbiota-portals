@@ -42,10 +42,16 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 		else{
 			//Default Language
 			?>
-			<div>
+			<div style="margin:5rem 0rem">
 				<!--<h1>Welcome</h1>-->
-				<p style="margin:10rem 0rem">
-					CryptoNITE2 brings together specimens, images, barcodes, and checklist data for cryptobenthic coral reef fishes. It allows us to search collections, identify species, map records, and explore checklists from contributers worldwide. The project is funded by the National Science Foundation. 
+				<p>
+					Welcome to CryptoNITE2 (Cryptobenthic Fish Natural History, Identification, Taxonomy, Ecology and Evolution) a new home for research on cryptobenthic fish biodiversity. CryptoNITE2 brings together specimens, images, barcodes, and checklist data for cryptobenthic coral reef fishes. It allows us to search collections, identify species, map records, and explore checklists from contributors worldwide. The project is funded by the National Science Foundation.
+				</p>
+				<p>
+					Fishes account for half of all vertebrates, but our understanding of fish biodiversity is skewed towards large, mobile species. Small-bodied, bottom-dwelling ('cryptobenthic') coral reef fishes are an overlooked and undersampled functional group that accounts for most marine fish species described since the turn of the century. In fact, hundreds of species of cryptobenthics are likely to be discovered over the next ten years if we simply continue on our current trajectory based on traditional taxonomic efforts by an ever-diminishing workforce of venerable ichthyologists. The proposed project aims to drastically alter this trajectory. 
+				</p>
+				<p>
+					Specifically, by performing the first comprehensive standardized sampling of cryptobenthic fishes across four locations in the Indo-Pacific that promise particularly rich rewards (Philippines, Solomon Islands, Guam, and the Marianas Islands), we seek to describe scores of new species, resolve species boundaries, phylogenetic relationships, and speciation patterns in a particularly diverse 'flagship' cryptobenthic genus (dwarfgobies in <i>Eviota</i>), and lay the foundation for a deeper understanding of the biogeography, hidden biodiversity, and vulnerability of cryptobenthic fishes to global change. We tightly integrate traditional taxonomic approaches with innovative genomic techniques for species delimitation, while couching our work in detailed field-based assessments of species' ecologies.” 
 				</p>
 			</div>
 			<?php
