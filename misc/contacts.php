@@ -26,11 +26,16 @@ header("Content-Type: text/html; charset=".$CHARSET);
 			<b><?php echo (isset($LANG['CONTACTS'])?$LANG['CONTACTS']:'Contacts'); ?></b>
 		</div>
 		<!-- This is inner text! -->
-		<div role="main" id="innertext" style="margin:10px 20px">
-			<h1 class="page-heading"><?php echo $LANG['CONTACTS']; ?>:</h1>
-
-			<p></p>
-
+		<div role="main" id="innertext">
+			<h1 class="page-heading"><?php echo $LANG['CONTACTS']; ?></h1>
+				<div style="margin:5rem">
+					<p>
+						<b>Principal Investigator:</b> <a href="https://marinescience.utexas.edu/directory/simon-brandl target="_blank">Simon Brandl</a>
+					</p>
+					<p>
+						<b>Principal Investigator:</b> <a href="https://fish.uw.edu/faculty/luke-tornabene/" target="_blank">Luke Tornabene</a>
+					</p>
+				</div>
 		</div>
 		<?php
 		include($SERVER_ROOT.'/includes/footer.php');

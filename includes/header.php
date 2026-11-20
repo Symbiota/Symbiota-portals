@@ -112,13 +112,18 @@ $collectionSearchPage = !empty($SHOULD_USE_HARVESTPARAMS) ? '/collections/index.
 								</a>
 							</li>
 							<li>
+								<a href="https://docs.symbiota.org/" target="_blank" rel="noopener noreferrer">
+									<?= $LANG['H_HELP'] ?>
+								</a>
+							</li>
+							<li>
 								<a href="https://docs.google.com/forms/d/e/1FAIpQLSf-QywdugIAAxzBLkoKX8er-JkW06Rv4C_Rkm2efPiryTHLGw/viewform" target="_blank">
 									<?= $LANG['H_JOIN'] ?>
 								</a>
 							</li>
 							<li>
-								<a href="https://docs.symbiota.org/" target="_blank" rel="noopener noreferrer">
-									<?= $LANG['H_HELP'] ?>
+								<a href="<?= $CLIENT_ROOT ?>/misc/loans.php">
+									<?= $LANG['H_LOANS'] ?>
 								</a>
 							</li>
 						</ul>

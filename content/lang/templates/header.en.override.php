@@ -17,5 +17,6 @@ $LANG['H_DATASETS'] = 'Datasets';
 $LANG['H_ABOUT'] = 'About';
 $LANG['H_JOIN'] = 'Join';
 $LANG['H_HELP'] = 'Help';
+$LANG['H_LOANS'] = 'Loans';
 
 ?>

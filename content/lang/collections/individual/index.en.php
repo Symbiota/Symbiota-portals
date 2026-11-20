@@ -178,4 +178,9 @@ $LANG['UNABLE_TO_VERIFY_TARGET'] = 'ERROR deleting voucher: unable to verify tar
 $LANG['PERMISSION_ERROR'] = 'ERROR deleting voucher: permission error';
 $LANG['CULT_STATUS'] = 'Cultivation Status';
 $LANG['CULTIVATED'] = 'Cultivated';
+
+$LANG['SEE'] = 'See';
+$LANG['THIS_PAGE'] = 'this page';
+$LANG['TO_REQUEST_LOAN'] = 'for more information about specimen loans.';
+
 ?>

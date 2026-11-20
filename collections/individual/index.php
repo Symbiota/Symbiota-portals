@@ -1191,6 +1191,9 @@ $traitArr = $indManager->getTraitArr();
 								}
 								?>
 							</div>
+						<div>
+							<?= $LANG['SEE'] . ' <a href="' . $CLIENT_ROOT . '/misc/loans.php" target="_blank">' . $LANG['THIS_PAGE'] . '</a> ' . $LANG['TO_REQUEST_LOAN']; ?>
+						</div>
 							<?php
 						}
 						if(array_key_exists('ref',$occArr)){
