@@ -6,11 +6,8 @@
 		<a href="https://www.nsf.gov" target="_blank" aria-label="<?= $LANG['F_VISIT_NSF'] ?>">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo_nsf.gif" alt="<?= $LANG['F_NSF_LOGO'] ?>" />
 		</a>
-		<a href="http://idigbio.org" target="_blank" title="iDigBio" aria-label="<?= $LANG['F_VISIT_IDIGBIO'] ?>">
-			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo_idig.png" alt="<?= $LANG['F_IDIGBIO_LOGO'] ?>" />
-		</a>
-		<a href="https://biokic.asu.edu/" target="_blank" title="ASU BioKIC" aria-label="Visit ASU BioKIC website">
-			<img src="<?= $CLIENT_ROOT; ?>/images/layout/logo-asu-biokic.png"  alt="ASU BioKIC logo" />
+		<a href="https://biocollections.asu.edu/" target="_blank" title="ASU BioKIC" aria-label="Visit ASU Biocollections website">
+			<img src="<?= $CLIENT_ROOT; ?>/images/layout/asu_biocollections.png"  alt="ASU Biocollections logo" />
 		</a>
 		<a href="https://biodiversity.ku.edu/" target="_blank" title="Visit KU BI website" aria-label="Visit KU BI website">
 			<img src="<?= $CLIENT_ROOT; ?>/images/layout/KU_BI.png"  alt="KU BI Logo" />
