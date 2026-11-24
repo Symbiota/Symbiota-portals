@@ -47,6 +47,10 @@ header('Content-Type: text/html; charset=' . $CHARSET);
 				<p>
 					Welcome to CryptoNITE2 (Cryptobenthic Fish Natural History, Identification, Taxonomy, Ecology and Evolution) a new home for research on cryptobenthic fish biodiversity. CryptoNITE2 brings together specimens, images, barcodes, and checklist data for cryptobenthic coral reef fishes. It allows us to search collections, identify species, map records, and explore checklists from contributors worldwide. The project is funded by the National Science Foundation.
 				</p>
+					<figure style="float:right;margin:0">
+    					<img src="images/layout/cryptocollage.jpg" style="width:500px;margin:0px 20px 5px 20px"/>
+    					<figcaption style="font-size:0.5rem;text-align:center">PC: Kyra Jean Cipolla</figcaption>
+					</figure>
 				<p>
 					Fishes account for half of all vertebrates, but our understanding of fish biodiversity is skewed towards large, mobile species. Small-bodied, bottom-dwelling ('cryptobenthic') coral reef fishes are an overlooked and undersampled functional group that accounts for most marine fish species described since the turn of the century. In fact, hundreds of species of cryptobenthics are likely to be discovered over the next ten years if we simply continue on our current trajectory based on traditional taxonomic efforts by an ever-diminishing workforce of venerable ichthyologists. The proposed project aims to drastically alter this trajectory. 
 				</p>
